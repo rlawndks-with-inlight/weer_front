@@ -33,7 +33,7 @@ margin-bottom:5rem;
 `
 const Content = styled.div`
 margin:1rem auto;
-width:50%;
+width: 100%;
 @media screen and (max-width:700px) { 
     width:90%;
 }
