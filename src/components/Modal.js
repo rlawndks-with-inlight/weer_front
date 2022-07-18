@@ -82,11 +82,11 @@ const Modal = (props) => {
                 
                 <ModalOverlay onClick={handleModal} />
                 <ModalContent>
-                <img src={logo} style={{position:'absolute',zIndex:5,top:'-24px',width:'48px'}} />
+                <img src={logo} style={{position:'absolute',zIndex:5,top:'28px',width:'48px'}} />
                     <XButton onClick={handleModal}>
                         X
                     </XButton>
-                    <div style={{ width: '12rem', padding: '2rem' }}>
+                    <div style={{ width: '12rem', padding: '7rem 2rem 3rem 2rem' }}>
                         {props.comment}
                     </div>
 
