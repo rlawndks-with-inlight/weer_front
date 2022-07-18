@@ -28,6 +28,7 @@ text-align:center;
 padding: 0.75rem 0;
 font-weight:bold;
 cursor:pointer;
+font-size:1rem;
 `
 
 

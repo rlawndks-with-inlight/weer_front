@@ -7,11 +7,11 @@ import { Wrappers } from '../../components/elements/Wrappers';
 import Modal from '../../components/Modal';
 
 const Office = () => {
-    
+    const [isLogin, setIsLogin] = useState(false)
     return (
         <>
             <Wrappers>
-               <Modal comment={'로그인이 필요합니다.'} />
+               <Modal comment={'로그인이 필요합니다.'} modal={!isLogin} />
             </Wrappers>
         </>
     )

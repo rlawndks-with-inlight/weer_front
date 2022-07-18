@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useEffect, useState } from 'react';
 import { useHistory, Link, useParams } from 'react-router-dom';
 import '../styles/style.css'
-
+import logo from '../assets/images/test/test_logo.png'
 const ModalContainer = styled.div`
 
 position: fixed;
@@ -79,8 +79,10 @@ const Modal = (props) => {
     return (
         <>
             <ModalContainer modal={modal}>
+                
                 <ModalOverlay onClick={handleModal} />
                 <ModalContent>
+                <img src={logo} style={{position:'absolute',zIndex:5,top:'-24px',width:'48px'}} />
                     <XButton onClick={handleModal}>
                         X
                     </XButton>

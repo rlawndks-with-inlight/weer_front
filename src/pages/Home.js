@@ -6,6 +6,7 @@ import '../styles/style.css'
 import logoGif from '../assets/images/test/logo.gif'
 import TalkContent from '../components/TalkContent';
 import { zTalk } from '../data/TestData';
+import { shuffleArray } from '../functions/utils';
 const Wrappers = styled.div`
 position:relative;
 display:flex;
@@ -32,7 +33,7 @@ margin-bottom:5rem;
 }
 `
 const Content = styled.div`
-margin:1rem auto;
+margin:0 auto 1rem auto;
 width: 100%;
 @media screen and (max-width:700px) { 
     width:90%;
@@ -54,15 +55,14 @@ width:100%;
 const Home = () => {
     const [channelNum, setChannelNum] = useState(0)
 
+    
     return (
         <>
             <Wrappers>
-                <Content>
-                    <Img src={logoGif} />
-                </Content>
+                
                 <Title>지금 뜨는 뉴스</Title>
                 <Content>
-                    {zTalk.map((item, index)=>(
+                    {shuffleArray(zTalk).map((item, index)=>(
                         <>
                         <TalkContent item={item}/>
                         </>

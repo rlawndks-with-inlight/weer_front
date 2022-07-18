@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import '../styles/style.css'
 import {IoChatbubbleEllipsesSharp} from 'react-icons/io5'
+import { shuffleArray } from '../functions/utils';
 const Wrappers = styled.div`
 position:relative;
 background: #0c2461;
@@ -44,11 +45,12 @@ background:#ccc;
 bottom:-32px;
 width:9rem;
 height:7rem;
+-webkit-transform-style: preserve-3d;
 transform: rotateZ(0deg) rotateX(49deg) rotateY(13deg);
 `
 const TalkContent = (props) => {
+    const [posts, setPosts] = useState([])
     const obj = props.item ?? {};
-    console.log(props.item)
     const settings = {
         infinite: false,
         speed: 500,
@@ -57,11 +59,15 @@ const TalkContent = (props) => {
         slidesToShow: 1,
         slidesToScroll: 1,
     };
+    useEffect(()=>{
+        setPosts(shuffleArray(obj.image_list))
+        console.log(shuffleArray(obj.image_list))
+    },[])
     return (
         <>
             <Wrappers>
                 <Slider {...settings}>
-                    {obj.image_list.map((item, index) => (
+                    {posts.map((item, index) => (
                         <>
                         <Img style={{ backgroundImage: `url(${item})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center' }}/>
                         </>
