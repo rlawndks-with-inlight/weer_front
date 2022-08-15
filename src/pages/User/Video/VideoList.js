@@ -1,16 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react';
-import { useHistory, Link, useParams } from 'react-router-dom';
-import '../../styles/style.css'
-import { Wrappers } from '../../components/elements/Wrappers';
-import { zVideo,zChannel, zColor } from '../../data/TestData';
-import VideoContent from '../../components/VideoContent';
-import SelectSubType from '../../components/elements/SelectSubType';
-import SubType from '../../components/elements/SubType';
-import { ContentWrappers } from '../../components/elements/ContentWrappers';
-import logo from '../../assets/images/test/test_logo.png'
-import { shuffleArray } from '../../functions/utils';
+import { useNavigate, Link, useParams } from 'react-router-dom';
+import '../../../styles/style.css'
+import { Wrappers } from '../../../components/elements/Wrappers';
+import { zVideo,zChannel, zColor } from '../../../data/TestData';
+import VideoContent from '../../../components/VideoContent';
+import SelectSubType from '../../../components/elements/SelectSubType';
+import SubType from '../../../components/elements/SubType';
+import { ContentWrappers } from '../../../components/elements/ContentWrappers';
+import logo from '../../../assets/images/test/test_logo.png'
+import { shuffleArray } from '../../../functions/utils';
 const VideoList = () => {
     const [channelNum, setChannelNum] = useState(0)
     const [posts, setPosts] = useState([])

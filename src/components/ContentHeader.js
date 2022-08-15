@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react';
-import { useHistory, Link, useParams } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import '../styles/style.css'
 import {ImSpinner11} from 'react-icons/im'
 import {IoChevronBackOutline} from 'react-icons/io5'
@@ -17,12 +17,12 @@ justify-content:space-between;
 }
 `
 const ContentHeader = (props) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const params = useParams();
     return (
         <>
         <Wrappers>
-        <IoChevronBackOutline onClick={()=>{history.push(`/${params.franchise}`)}} style={{marginLeft:'1.2rem',fontSize:'1.2rem'}} />
+        <IoChevronBackOutline onClick={()=>{navigate(`/${params.franchise}`)}} style={{marginLeft:'1.2rem',fontSize:'1.2rem'}} />
         <div style={{fontSize:'0.8rem',fontWeight:'bold'}}>{props?.title}</div>
         <ImSpinner11 onClick={()=>{window.location.reload()}} style={{marginRight:'1.2rem'}} />
         </Wrappers>

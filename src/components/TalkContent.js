@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { useHistory, useRouteMatch, useLocation } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

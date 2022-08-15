@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react';
-import { useHistory, Link, useParams } from 'react-router-dom';
-import '../../styles/style.css'
-import { Wrappers } from '../../components/elements/Wrappers';
-import Modal from '../../components/Modal';
+import { useNavigate, Link, useParams } from 'react-router-dom';
+import '../../../styles/style.css'
+import { Wrappers } from '../../../components/elements/Wrappers';
+import Modal from '../../../components/Modal';
 
 const Office = () => {
     const [isLogin, setIsLogin] = useState(false)

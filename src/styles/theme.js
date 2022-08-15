@@ -16,7 +16,12 @@ const theme = {
     third: "#cd84f1",
     strong: "#1a1a1a",
     light: "#ababab",
-
+    background1:"#81ecec",
+    background2:"#81ecec",
+    background3:"#00cec911",
+    font1:"#000",
+    font2:"#5a5a5a",
+    font3:"#cccccc"
   },
   size: {
     mobileS: `(max-width: ${size.mobileS})`,

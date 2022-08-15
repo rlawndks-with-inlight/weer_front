@@ -1,18 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react';
-import { useHistory, Link, useParams } from 'react-router-dom';
-import { Wrappers } from '../../components/elements/Wrappers';
+import { useNavigate, Link, useParams } from 'react-router-dom';
+import { Wrappers } from '../../../components/elements/Wrappers';
 import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import '../../styles/style.css'
-import { zTheme, zLetter, zColor } from '../../data/TestData';
-import { ContentWrappers } from '../../components/elements/ContentWrappers';
-import LetterContent from '../../components/LetterContent';
-import SelectSubType from '../../components/elements/SelectSubType';
-import SubType from '../../components/elements/SubType';
-import { shuffleArray } from '../../functions/utils';
+import '../../../styles/style.css'
+import { zTheme, zLetter, zColor } from '../../../data/TestData';
+import { ContentWrappers } from '../../../components/elements/ContentWrappers';
+import LetterContent from '../../../components/LetterContent';
+import SelectSubType from '../../../components/elements/SelectSubType';
+import SubType from '../../../components/elements/SubType';
+import { shuffleArray } from '../../../functions/utils';
 const SelectType = styled.div`
 position:fixed;
 top:3rem;
@@ -34,7 +34,7 @@ font-size:1rem;
 
 const LetterList = () => {
     const params = useParams();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const [modal, setModal] = useState("none");
     const [side, setSide] = useState("none")

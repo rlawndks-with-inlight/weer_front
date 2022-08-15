@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react';
-import { useHistory, Link, useParams } from 'react-router-dom';
-import '../styles/style.css'
-import logoGif from '../assets/images/test/logo.gif'
-import TalkContent from '../components/TalkContent';
-import { zTalk } from '../data/TestData';
-import { shuffleArray } from '../functions/utils';
+import { useNavigate, Link, useParams } from 'react-router-dom';
+import '../../styles/style.css'
+import logoGif from '../../assets/images/test/logo.gif'
+import TalkContent from '../../components/TalkContent';
+import { zTalk } from '../../data/TestData';
+import { shuffleArray } from '../../functions/utils';
 const Wrappers = styled.div`
 position:relative;
 display:flex;

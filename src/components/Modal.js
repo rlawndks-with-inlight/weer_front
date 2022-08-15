@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react';
-import { useHistory, Link, useParams } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import '../styles/style.css'
 import logo from '../assets/images/test/test_logo.png'
 const ModalContainer = styled.div`

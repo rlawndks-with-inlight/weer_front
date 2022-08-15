@@ -1,15 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react';
-import { useHistory, Link, useParams } from 'react-router-dom';
-import '../../styles/style.css'
-import { Wrappers } from '../../components/elements/Wrappers';
-import { zTheme, zCard, zColor } from '../../data/TestData';
-import SelectSubType from '../../components/elements/SelectSubType';
-import SubType from '../../components/elements/SubType';
-import { ContentWrappers } from '../../components/elements/ContentWrappers';
-import CardContent from '../../components/CardContent';
-import { shuffleArray } from '../../functions/utils';
+import { useNavigate, Link, useParams } from 'react-router-dom';
+import '../../../styles/style.css'
+import { Wrappers } from '../../../components/elements/Wrappers';
+import { zTheme, zCard, zColor } from '../../../data/TestData';
+import SelectSubType from '../../../components/elements/SelectSubType';
+import SubType from '../../../components/elements/SubType';
+import { ContentWrappers } from '../../../components/elements/ContentWrappers';
+import CardContent from '../../../components/CardContent';
+import { shuffleArray } from '../../../functions/utils';
 const CardList = () => {
 
     const [subTypeNum, setSubTypeNum] = useState(0)

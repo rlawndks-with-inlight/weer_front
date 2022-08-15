@@ -1,12 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react';
-import { useHistory, Link, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, Link, useParams, useLocation } from 'react-router-dom';
 import '../styles/style.css'
 import logo from '../assets/images/test/test_logo.png'
 import { Wrappers } from '../components/elements/Wrappers';
 import { AiOutlineBell, AiOutlineSearch, AiOutlineSetting } from 'react-icons/ai'
 import Modal from '../components/Modal';
+import axios from 'axios'
 const Header = styled.header`
 position:fixed;
 height:3rem;
@@ -72,66 +73,64 @@ width:500px;
 `
 
 const Headers = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const [type, setType] = useState(1)
-  const [isModal, setIsModal] = useState(false)
+  const [isModal, setIsModal] = useState(false);
+  const [display, setDisplay] = useState('flex')
   useEffect(() => {
-    if (location.pathname.includes('list') || location.pathname == '/'|| location.pathname == '/my/office') {
-      setType(1)
+  
+    if (location.pathname.includes('/manager')) {
+      setDisplay('none');
+
     } else {
-      setType(2)
+      setDisplay('flex')
     }
   }, [location])
   const [modal, setModal] = useState("none");
-    
-    const handleModal = async () => {
-        if (modal == "none") {
-            setModal("flex");
-        }
-        else {
-            
-            setModal("none");
-        }
-    };
+
+  const handleModal = async () => {
+    if (modal == "none") {
+      setModal("flex");
+    }
+    else {
+
+      setModal("none");
+    }
+  };
   return (
     <>
-      <Wrappers style={{ marginTop: '0' }}>
-        {type == 1 ?
+      <Wrappers style={{ marginTop: '0', display: `${display}` }}>
+
+        <Header>
+          <div style={{ marginLeft: '0.5rem' }}>
+            <img src={logo} style={{ height: '2.5rem', marginTop: '0.5rem', marginLeft: '0.5rem' }} onClick={() => { navigate('/') }} />
+          </div>
+          <div style={{ display: 'flex', marginRight: '0.5rem', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between' }}>
+            <AiOutlineBell onClick={handleModal} style={{ width: '2rem', height: '1.5rem' }} />
+            <AiOutlineSearch onClick={() => { setIsModal(!isModal) }} style={{ width: '2rem', height: '1.5rem' }} />
+            <AiOutlineSetting onClick={() => { setIsModal(!isModal) }} style={{ width: '2rem', height: '1.5rem' }} />
+          </div>
+        </Header>
+
+        <ModalContainer modal={modal}>
+          <ModalOverlay onClick={handleModal} />
+          <ModalContent>
+            <div style={{ margin: '1rem 0 0 1rem', fontSize: '0.9rem', fontWeight: 'bold' }}>2022.07.15</div>
+            <div style={{ margin: '1rem 0 0 1rem', paddingLeft: '1rem', fontSize: '0.9rem' }}>7월 15일 뉴스레터</div>
+            <div style={{ margin: '1rem 0 0 1rem', fontSize: '0.9rem', fontWeight: 'bold' }}>2022.07.13</div>
+            <div style={{ margin: '1rem 0 0 1rem', paddingLeft: '1rem', fontSize: '0.9rem' }}>7월 13일 뉴스레터</div>
+            <button style={{ position: 'absolute', bottom: '2rem', left: '3rem', right: '3rem', border: 'none', padding: '0.7rem 0', background: '#000', color: '#fff', fontSize: '1rem' }} onClick={() => { setIsModal(!isModal) }}>앱 설정</button>
+          </ModalContent>
+        </ModalContainer>
+        {isModal ?
           <>
-            <Header>
-              <div style={{ marginLeft: '0.5rem' }}>
-                <img src={logo} style={{ height: '2.5rem', marginTop: '0.5rem',marginLeft:'0.5rem' }} onClick={() => { history.push('/') }} />
-              </div>
-              <div style={{ display: 'flex', marginRight: '0.5rem', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between' }}>
-                <AiOutlineBell onClick={handleModal} style={{width:'2rem',height:'1.5rem'}}/>
-                <AiOutlineSearch onClick={()=>{setIsModal(!isModal)}} style={{width:'2rem',height:'1.5rem'}}/>
-                <AiOutlineSetting onClick={()=>{setIsModal(!isModal)}} style={{width:'2rem',height:'1.5rem'}}/>
-              </div>
-            </Header>
+            <Modal comment={'준비중입니다.'} modal={isModal} />
           </>
           :
           <>
           </>
         }
-          <ModalContainer modal={modal}>
-                <ModalOverlay onClick={handleModal} />
-                <ModalContent>
-                    <div style={{margin:'1rem 0 0 1rem',fontSize:'0.9rem',fontWeight:'bold'}}>2022.07.15</div>
-                    <div style={{margin:'1rem 0 0 1rem',paddingLeft:'1rem',fontSize:'0.9rem'}}>7월 15일 뉴스레터</div>
-                    <div style={{margin:'1rem 0 0 1rem',fontSize:'0.9rem',fontWeight:'bold'}}>2022.07.13</div>
-                    <div style={{margin:'1rem 0 0 1rem',paddingLeft:'1rem',fontSize:'0.9rem'}}>7월 13일 뉴스레터</div>
-                    <button style={{position:'absolute',bottom:'2rem',left:'3rem',right:'3rem',border:'none',padding:'0.7rem 0',background:'#000',color:'#fff',fontSize:'1rem'}}  onClick={()=>{setIsModal(!isModal)}}>앱 설정</button>
-                </ModalContent>
-           </ModalContainer>
-           {isModal?
-           <>
-          <Modal comment={'준비중입니다.'} modal={isModal} />
-           </>
-           :
-           <>
-           </>
-           }
       </Wrappers>
     </>
   )

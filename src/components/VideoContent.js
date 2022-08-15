@@ -1,6 +1,6 @@
 import React, { useState,  useEffect } from 'react'
 import styled from 'styled-components'
-import {useHistory,useRouteMatch,useLocation } from "react-router-dom"
+import {useNavigate,useLocation } from "react-router-dom"
 import '../styles/style.css'
 import {AiFillHeart} from 'react-icons/ai'
 const Wrappers = styled.div`

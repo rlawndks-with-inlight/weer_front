@@ -1,12 +1,9 @@
-import React, { useState,  useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import {useHistory,useRouteMatch,useLocation } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import '../styles/style.css'
-import {AiOutlineMail} from 'react-icons/ai'
-import { IoVideocamOutline, IoChatbubbleOutline } from "react-icons/io5"
-import {BsWallet2} from 'react-icons/bs'
-import {MdPersonOutline} from 'react-icons/md'
-import { zColor } from '../data/TestData'
+import { zBottomMenu } from '../data/Data'
+import theme from '../styles/theme'
 const Container = styled.aside`
     background: #fff;
     border-top: 0.1rem solid #e6e6e6;
@@ -51,80 +48,53 @@ font-weight:bold;
     font-size:0.7rem;
   }
 `
-// 회색 글씨 #ababab
-// 진한글씨 #1a1a1a
-// 진한 보라색 #8e44ad
-// 연한 보라색 #9b59b6
-// 제일 연한 보라 #cd84f1
+
 const BottomMenu = () => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const location = useLocation();
-    const match = useRouteMatch();
-    const [display, setDisplay] = useState("none");
     const [modal, setModal] = useState("none");
-    
+
     const [beforeCount, setBeforeCount] = useState(0)
     const [colorList, setColorList] = useState([])
-    
-    useEffect(()=>{
-        let arr = ['#ababab','#ababab','#ababab','#ababab','#ababab']
-        if(location.pathname.includes('letter')){
-            arr[0] = zColor[0]
-            setBeforeCount(0)
+    const [display, setDisplay] = useState('flex')
+    useEffect(() => {
+        if(location.pathname.includes('/manager')){
+          setDisplay('none');
+        }else{
+          setDisplay('flex')
         }
-        else if(location.pathname.includes('card')){
-            arr[1] = zColor[0]
-            setBeforeCount(1)
+        let arr = [];
+
+        for(var i = 0;i<zBottomMenu.length;i++){
+            for(var j=0;j<zBottomMenu[i].allowList.length;j++){
+                if(zBottomMenu[i].allowList[j]==location.pathname){
+                    break;
+                }
+            }
+            if(j==zBottomMenu[i].allowList.length){
+                arr.push("#ababab");
+            }else{
+                arr.push(theme.color.background1);
+            }
         }
-        else if(location.pathname.includes('video')){
-            arr[2] = zColor[0]
-            setBeforeCount(2)
-        }
-        else if(location.pathname.includes('talk')){
-            arr[3] = zColor[0]
-            setBeforeCount(3)
-        }
-        else if(location.pathname.includes('my')){
-            arr[4] = zColor[0]
-            setBeforeCount(4)
-        }
-        setColorList(arr)
-    },[location])
+        setColorList(arr);
+    }, [location])
 
     return (
 
-        <Container className='menu-container'>
+        <Container className='menu-container' style={{display:`${display}`}}>
             <MenuContainer>
-                <OneMenuContainer onClick={()=>{history.push('/letterlist')}}> 
-                    <AiOutlineMail className='menu-icon' style={{color:`${colorList[0]}`}} />
-                    <OneMenuName style={{color:`${colorList[0]}`}}>
-                        뉴스레터
-                    </OneMenuName>
-                </OneMenuContainer>
-                <OneMenuContainer onClick={()=>{history.push('/cardlist')}}>
-                    <BsWallet2 className='menu-icon' style={{color:`${colorList[1]}`}} />
-                    <OneMenuName style={{color:`${colorList[1]}`}}>
-                        카드뉴스
-                    </OneMenuName>
-                </OneMenuContainer>
-                <OneMenuContainer onClick={()=>{history.push('/videolist')}}>
-                    <IoVideocamOutline className='menu-icon' style={{color:`${colorList[2]}`}} />
-                    <OneMenuName style={{color:`${colorList[2]}`}}>
-                        비디오
-                    </OneMenuName>
-                </OneMenuContainer>
-                <OneMenuContainer onClick={()=>{history.push('/talklist')}}>
-                    <IoChatbubbleOutline className='menu-icon' style={{color:`${colorList[3]}`}} />
-                    <OneMenuName style={{color:`${colorList[3]}`}}>
-                        Talk
-                    </OneMenuName>
-                </OneMenuContainer>
-                <OneMenuContainer onClick={()=>{history.push('/my/office')}}>
-                    <MdPersonOutline className='menu-icon' style={{color:`${colorList[4]}`}} />
-                    <OneMenuName style={{color:`${colorList[4]}`}}>
-                        마이오피스
-                    </OneMenuName>
-                </OneMenuContainer>
+                {zBottomMenu.map((item, index) => (
+                    <>
+                        <OneMenuContainer onClick={() => { navigate(item.link) }} style={{ color: `${colorList[index]}` }}>
+                            {item.icon}
+                            <OneMenuName style={{ color: `${colorList[index]}` }}>
+                                {item.name}
+                            </OneMenuName>
+                        </OneMenuContainer>
+                    </>
+                ))}
+
             </MenuContainer>
         </Container>
 

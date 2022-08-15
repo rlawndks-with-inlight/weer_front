@@ -1,62 +1,33 @@
 import React from 'react';
-import { BrowserRouter as Router, Route,Redirect,Switch, useLocation} from "react-router-dom";
-import styled from 'styled-components';
+import { BrowserRouter as Router, Route, Redirect, Routes } from "react-router-dom";
 import ScrollToTop from '../components/ScrollToTop';
 import Headers from '../common/Headers';
 import BottomMenu from '../common/BottomMenu';
 
-import Home from './Home';
-
-import Letter from './Letter/Letter';
-import LetterList from './Letter/LetterList';
-
-import Card from './Card/Card';
-import CardList from './Card/CardList';
-
-import Office from './My/Office';
-
-import Talk from './Talk/Talk';
-import TalkList from './Talk/TalkList';
-
-import Video from './Video/Video';
-import VideoList from './Video/VideoList';
-
-
+import { zRoute } from '../routes/route';
 const App = () => {
-  
+
     return (
-        
+        <>
             <Router>
-                <ScrollToTop/>
-                <Headers/> 
+                <Headers />
+                <ScrollToTop />
+
                 <>
+                    <Routes>
+                        {zRoute.map((route, idx) => (
+                            <>
+                                <Route exact key={idx} path={route.link} element={route.element} />
+                            </>
+                        ))}
 
-                <Switch>
-                
-              
-                <Route exact path="/" component={Home} />
-                <Route exact path="/letterlist" component={LetterList} />
-                <Route exact path="/letter/:pk" component={Letter} />
-                
-                <Route exact path="/cardlist" component={CardList} />
-                <Route exact path="/card/:pk" component={Card} />
-
-                <Route exact path="/talklist" component={TalkList} />
-                <Route exact path="/talk/:pk" component={Talk} />
-
-                <Route exact path="/videolist" component={VideoList} />
-                <Route exact path="/video/:pk" component={Video} />
-
-                <Route exact path="/my/office" component={Office} />
-                </Switch>
-                
-            
+                    </Routes>
                 </>
-                <BottomMenu/>
+                <BottomMenu />
                 {/* <Footer/> */}
-                
+
             </Router>
-       
+        </>
     );
 }
 
