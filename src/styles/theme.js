@@ -16,14 +16,27 @@ const theme = {
     third: "#cd84f1",
     strong: "#1a1a1a",
     light: "#ababab",
-    background1:"#81ecec",
-    background2:"#81ecec",
-    background3:"#00cec911",
-    font1:"#000",
-    font2:"#5a5a5a",
-    font3:"#cccccc"
+    background1: "#4CDAD8",
+    background2: "#7DFACE",
+    background3: "#F4F4F4",
+    font1: "#2c2c2c",
+    font2: "#71706F",
+    font3: "#cccccc",
+    manager: {
+      background1: "#5873e8",
+      background2: "#eef1fd",
+      background3: "#f5f6f8",
+      font1: "#495057",
+      font2: "#596275",
+      font3: "#7b8190",
+    }
   },
   size: {
+    font1:'27px',
+    font2:'25px',
+    font3:'17px',
+    font4:'14px',
+    font5:'12px',
     mobileS: `(max-width: ${size.mobileS})`,
     mobileL: `(max-width: ${size.mobileL})`,
     tabletS: `(max-width: ${size.tabletS})`,
@@ -36,7 +49,7 @@ const theme = {
     light: "SpoqaHanSansNeo-Light",
     regular: "SpoqaHanSansNeo-Regular",
     medium: "SpoqaHanSansNeo-Medium",
-    
+
   },
   boxShadow: "0px 3px 6px #00000029"
 }

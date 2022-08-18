@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useEffect, useState } from 'react';
 import { useNavigate, Link, useParams, useLocation } from 'react-router-dom';
 import '../styles/style.css'
-import logo from '../assets/images/test/test_logo.png'
+import logo from '../assets/images/test/logo.svg'
 import { Wrappers } from '../components/elements/Wrappers';
 import { AiOutlineBell, AiOutlineSearch, AiOutlineSetting } from 'react-icons/ai'
 import Modal from '../components/Modal';
@@ -12,12 +12,17 @@ const Header = styled.header`
 position:fixed;
 height:3rem;
 width:100%;
-display:flex;
-align-items:center;
-justify-content: space-between;
+
 z-index:10;
 max-width:700px;
 background:#fff;
+`
+const HeaderContainer = styled.div`
+width:90%;
+display:flex;
+align-items:center;
+justify-content: space-between;
+margin:0 auto;
 `
 const ModalContainer = styled.div`
 
@@ -103,14 +108,16 @@ const Headers = () => {
       <Wrappers style={{ marginTop: '0', display: `${display}` }}>
 
         <Header>
-          <div style={{ marginLeft: '0.5rem' }}>
-            <img src={logo} style={{ height: '2.5rem', marginTop: '0.5rem', marginLeft: '0.5rem' }} onClick={() => { navigate('/') }} />
+          <HeaderContainer>
+          <div>
+            <img src={logo} style={{ height: '2.5rem', marginTop: '0.5rem' }} onClick={() => { navigate('/') }} />
           </div>
-          <div style={{ display: 'flex', marginRight: '0.5rem', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between' }}>
             <AiOutlineBell onClick={handleModal} style={{ width: '2rem', height: '1.5rem' }} />
             <AiOutlineSearch onClick={() => { setIsModal(!isModal) }} style={{ width: '2rem', height: '1.5rem' }} />
             <AiOutlineSetting onClick={() => { setIsModal(!isModal) }} style={{ width: '2rem', height: '1.5rem' }} />
           </div>
+          </HeaderContainer>
         </Header>
 
         <ModalContainer modal={modal}>

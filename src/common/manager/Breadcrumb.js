@@ -14,7 +14,7 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 width:95%;
-color:${props=>props.theme.color.font2};
+color:${props=>props.theme.color.manager.font1};
 @media screen and (max-width:700px) {
     width:92%;
 }
@@ -35,9 +35,12 @@ padding:6px;
 transition: 0.2s;
 margin-right:24px;
 &:hover{  
-    background-color: ${(props) => props.theme.color.background1};
+    background-color: ${(props) => props.theme.color.manager.background1};
     color:#fff;
     font-weight:bold;
+}
+@media screen and (max-width:1000px) {
+    margin-right:0;
 }
 `
 const Breadcrumb = (props) => {
@@ -62,7 +65,7 @@ const Breadcrumb = (props) => {
     }
     return (
         <>
-            <div style={{ width: '100%', boxShadow: '4px 0px 2px #cccccc', background: '#fff' }}>
+            <div style={{ width: '100%', boxShadow: '0 2px 4px rgb(15 34 58 / 12%)', background: '#fff' }}>
                 <Wrappers>
                     <div style={{ marginLeft:'24px' }}>{props.title}</div>
                     <div style={{ display: 'flex', alignItems: 'center' }}>

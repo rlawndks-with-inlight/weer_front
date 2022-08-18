@@ -6,6 +6,7 @@ import { BiEditAlt } from 'react-icons/bi'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import axios from 'axios';
 import theme from '../../styles/theme';
+import { backUrl } from '../../data/Data';
 const Table = styled.table`
 width:95%;
 margin:0 auto;
@@ -13,11 +14,10 @@ border-spacing: 0 10px;
 min-width:700px;
 `
 const Tr = styled.tr`
-box-shadow:0px 0px 2px #cccccc;
-border-radius:16px;
+box-shadow:1px 1px 1px #00000029;
 font-size:14px;
 background:#fff;
-color:${props=>props.theme.color.font2};
+color:${props=>props.theme.color.manager.font2};
 
 `
 const Td = styled.td`
@@ -45,7 +45,7 @@ const DataTable = (props) => {
         <>
             <div style={{ minHeight: '70vh', marginBottom: '16px',overflowX:'auto' }}>
                 <Table>
-                    <Tr style={{ fontWeight: 'bold', background: `${theme.color.background2}`, fontSize: '16px' }}>
+                    <Tr style={{ fontWeight: 'bold', background: `${theme.color.manager.background2}`, fontSize: '16px' }}>
                         {props.column.map((item, index) => (
                             <>
                                 <Td style={{ width: `${item.width}%` }}>{item.name}</Td>
@@ -66,7 +66,7 @@ const DataTable = (props) => {
                                             </>}
                                             {column.type == 'level' ?
                                             <>
-                                                <Td style={{ width: `${column.width}%` }}>{data[column.column]==0?'일반유저':data[column.column]==40?'관리자':'개발자'}</Td>
+                                                <Td style={{ width: `${column.width}%` }}>{data[column.column]==0?'일반유저':data[column.column]==40?'관리자':data[column.column]==30?'대가':'개발자'}</Td>
                                             </>
                                             :
                                             <>
@@ -76,7 +76,7 @@ const DataTable = (props) => {
                                                 <Td style={{ width: `${column.width}%` }}>
                                                     {data[`${column.column}`] ?
                                                         <>
-                                                            <img src={data[`${column.column}`]} style={{width:'80%'}} />
+                                                            <img src={backUrl+data[`${column.column}`]} style={{width:'80%'}} />
                                                         </>
                                                         :
                                                         <>

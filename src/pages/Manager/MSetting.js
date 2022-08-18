@@ -16,7 +16,7 @@ import { addItem, updateItem } from '../../functions/utils';
 import { Card, Title, Input, Select, Row, Col, ImageContainer } from '../../components/elements/ManagerTemplete';
 
 
-const MMasterEdit = () => {
+const MSetting = () => {
     const params = useParams();
     const navigate = useNavigate();
     const [myNick, setMyNick] = useState("")
@@ -76,46 +76,9 @@ const MMasterEdit = () => {
             <ManagerWrappers>
                 <SideBar />
                 <ManagerContentWrappers>
-                    <Breadcrumb title={params.pk == 0 ? '전문가 추가' : '전문가 수정'} nickname={myNick} />
+                    <Breadcrumb title={'환경설정'} nickname={myNick} />
                     <Card>
-                        <Row>
-                            <Col>
-                                <Title>아이디</Title>
-                                <Input className='id' />
-                            </Col>
-                            <Col>
-                                <Title>비밀번호 {params.pk == 0 ? '' : '(빈 값으로 두면 원래 값을 유지)'}</Title>
-                                <Input className='pw' type={'password'} />
-                            </Col>
-                            <Col>
-                                <Title>이름</Title>
-                                <Input className='name' />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Title>프로필 이미지</Title>
-                                <ImageContainer for="file1">
-
-                                    {url ?
-                                        <>
-                                            <img src={url} alt="#"
-                                                style={{
-                                                    width: '200px', height: '150px',
-                                                    margin: '24px'
-                                                }} />
-                                        </>
-                                        :
-                                        <>
-                                            <AiFillFileImage style={{ margin: '4rem', fontSize: '4rem', color: '#009432' }} />
-                                        </>}
-                                </ImageContainer>
-                                <div>
-                                    <input type="file" id="file1" onChange={addFile} style={{ display: 'none' }} />
-                                </div>
-                            </Col>
-                        </Row>
-
+                        
                     </Card>
                     <ButtonContainer>
                         <CancelButton onClick={() => navigate(-1)}>x 취소</CancelButton>
@@ -126,4 +89,4 @@ const MMasterEdit = () => {
         </>
     )
 }
-export default MMasterEdit;
+export default MSetting;

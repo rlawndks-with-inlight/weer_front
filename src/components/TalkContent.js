@@ -16,7 +16,7 @@ width: 45%;
 margin:2rem auto 0 auto;
 
 @media screen and (max-width:500px) { 
-    width: 90%;
+    width: 100%;
 }
 z-index:2;
 color:#fff;

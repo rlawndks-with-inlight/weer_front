@@ -18,7 +18,16 @@ import theme from '../../styles/theme';
 
 const MUserList = () => {
     const navigate = useNavigate();
-    const zColumn = [{ name: '아이디', width: 11, type: 'text', column: 'id' }, { name: '닉네임', width: 11, type: 'text', column: 'nickname' }, { name: '이름', width: 11, type: 'text', column: 'name' }, { name: '폰번호', width: 22, type: 'text', column: 'phone' }, { name: '레벨', width: 11, type: 'level', column: 'level' }, { name: '로그인시간', width: 22, type: 'text', column: 'last_login' }, { name: '수정', width: 6, type: 'edit', column: 'edit' }, { name: '삭제', width: 6, type: 'delete', column: 'delete' }];
+    const zColumn = [
+        { name: '아이디', width: 11, type: 'text', column: 'id' },
+        { name: '닉네임', width: 11, type: 'text', column: 'nickname' },
+        { name: '이름', width: 11, type: 'text', column: 'name' },
+        { name: '폰번호', width: 22, type: 'text', column: 'phone' },
+        { name: '레벨', width: 11, type: 'level', column: 'user_level' },
+        { name: '로그인시간', width: 22, type: 'text', column: 'last_login' },
+        { name: '수정', width: 6, type: 'edit', column: 'edit' },
+        { name: '삭제', width: 6, type: 'delete', column: 'delete' }
+    ];
     const [posts, setPosts] = useState([])
     const [page, setPage] = useState(1)
     const [pageList, setPageList] = useState([])
@@ -66,7 +75,7 @@ const MUserList = () => {
                             </PageButton>
                             {pageList.map((item, index) => (
                                 <>
-                                    <PageButton onClick={() => changePage(item)} style={{ color: `${page == item ? '#fff' : ''}`, background: `${page == item ? theme.color.background1 : ''}` }}>
+                                    <PageButton onClick={() => changePage(item)} style={{ color: `${page == item ? '#fff' : ''}`, background: `${page == item ? theme.color.manager.background1 : ''}` }}>
                                         {item}
                                     </PageButton>
                                 </>

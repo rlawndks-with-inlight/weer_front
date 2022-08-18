@@ -16,7 +16,7 @@ import AddButton from '../../components/elements/button/AddButton';
 import Loading from '../../components/Loading';
 import theme from '../../styles/theme';
 
-const MItemList = () => {
+const MIssueList = () => {
     const navigate = useNavigate();
     const zColumn = [{ name: '아이디', width: 11, type: 'text', column: 'id' }, { name: '닉네임', width: 11, type: 'text', column: 'nickname' }, { name: '폰번호', width: 22, type: 'text', column: 'phone' }, { name: '레벨', width: 11, type: 'level', column: 'level' }, { name: '로그인시간', width: 33, type: 'text', column: 'last_login' }, { name: '수정', width: 6, type: 'edit', column: 'edit' }, { name: '삭제', width: 6, type: 'delete', column: 'delete' }];
     const [posts, setPosts] = useState([])
@@ -42,13 +42,12 @@ const MItemList = () => {
         setPageList(range(1, response.data.maxPage))
         setLoading(false)
     }
-
     return (
         <>
             <ManagerWrappers>
                 <SideBar />
                 <ManagerContentWrappers>
-                    <Breadcrumb title={'게시물 관리'} />
+                    <Breadcrumb title={'이슈 관리'} />
                     {loading ?
                         <>
                             <Loading />
@@ -58,7 +57,7 @@ const MItemList = () => {
                             <DataTable data={posts} column={zColumn} schema={'user'} />
                         </>}
 
-                    <MBottomContent>
+                    {/* <MBottomContent>
                         <div />
                         <PageContainer>
                             <PageButton onClick={() => changePage(1)}>
@@ -76,10 +75,10 @@ const MItemList = () => {
                             </PageButton>
                         </PageContainer>
                         <AddButton onClick={() => navigate(`/manager/user/0`)}>+ 추가</AddButton>
-                    </MBottomContent>
+                    </MBottomContent> */}
                 </ManagerContentWrappers>
             </ManagerWrappers>
         </>
     )
 }
-export default MItemList;
+export default MIssueList;

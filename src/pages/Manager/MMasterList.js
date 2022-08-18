@@ -18,7 +18,13 @@ import theme from '../../styles/theme';
 
 const MMasterList = () => {
     const navigate = useNavigate();
-    const zColumn = [{ name: '아이디', width: 11, type: 'text', column: 'id' }, { name: '닉네임', width: 11, type: 'text', column: 'nickname' }, { name: '폰번호', width: 22, type: 'text', column: 'phone' }, { name: '레벨', width: 11, type: 'level', column: 'level' }, { name: '로그인시간', width: 33, type: 'text', column: 'last_login' }, { name: '수정', width: 6, type: 'edit', column: 'edit' }, { name: '삭제', width: 6, type: 'delete', column: 'delete' }];
+    const zColumn = [
+        { name: '프로필이미지', width: 16, type: 'img', column: 'profile_img' }, 
+        { name: '아이디', width: 16, type: 'text', column: 'id' }, 
+        { name: '이름', width: 16, type: 'text', column: 'name' }, 
+        { name: '생성시간', width: 28, type: 'text', column: 'date' }, 
+        { name: '수정', width: 12, type: 'edit', column: 'edit' }, 
+        { name: '삭제', width: 12, type: 'delete', column: 'delete' }];
     const [posts, setPosts] = useState([])
     const [page, setPage] = useState(1)
     const [pageList, setPageList] = useState([])
@@ -66,7 +72,7 @@ const MMasterList = () => {
                             </PageButton>
                             {pageList.map((item, index) => (
                                 <>
-                                    <PageButton onClick={() => changePage(item)} style={{ color: `${page == item ? '#fff' : ''}`, background: `${page == item ? theme.color.background1 : ''}` }}>
+                                    <PageButton onClick={() => changePage(item)} style={{ color: `${page == item ? '#fff' : ''}`, background: `${page == item ? theme.color.manager.background1 : ''}` }}>
                                         {item}
                                     </PageButton>
                                 </>
@@ -75,7 +81,7 @@ const MMasterList = () => {
                                 마지막
                             </PageButton>
                         </PageContainer>
-                        <AddButton onClick={() => navigate(`/manager/user/0`)}>+ 추가</AddButton>
+                        <AddButton onClick={() => navigate(`/manager/master/0`)}>+ 추가</AddButton>
                     </MBottomContent>
                 </ManagerContentWrappers>
             </ManagerWrappers>

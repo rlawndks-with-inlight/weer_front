@@ -14,7 +14,7 @@ const Loading = () => {
     return (
         <>
             <LoadingContainer>
-                <Circles color={`${theme.color.background1}`} height={50} width={50} />
+                <Circles color={`${theme.color.manager.background1}`} height={50} width={50} />
             </LoadingContainer>
         </>
     )
