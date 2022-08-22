@@ -36,16 +36,26 @@ const MItemEdit = () => {
     const [url, setUrl] = useState('')
     const [content, setContent] = useState(undefined)
     const [formData] = useState(new FormData())
+
+    const [noteFormData] = useState(new FormData());
     const [item, setItem] = useState({})
     const [loading, setLoading] = useState(false)
     const [zCategory, setZCategory] = useState([])
     useEffect(() => {
         async function fetchPost() {
+            if (params.table == 'issue') {
+                const { data: response } = await axios.get('/api/items?table=issue_category');
+                setZCategory(response.data)
+            }
             if (params.pk > 0) {
-                const { data: response } = await axios.get(`/api/item?table=${params.table}`)
+                const { data: response } = await axios.get(`/api/item?table=${params.table}&pk=${params.pk}`);
+                console.log(response)
                 $(`.title`).val(response.data.title);
                 $(`.hash`).val(response.data.hash);
                 $(`.suggest-title`).val(response.data.suggest_title);
+                if (params.table == 'issue') {
+                    $(`.category`).val(response.data.category_pk);
+                }
                 editorRef.current.getInstance().setHTML(response.data.note)
                 setUrl(backUrl + response.data.main_img);
                 setItem(response.data)
@@ -70,10 +80,7 @@ const MItemEdit = () => {
 
                 }
             }
-            if (params.table == 'issue') {
-                const { data: response } = await axios.get('/api/items?table=issue_category');
-                setZCategory(response.data)
-            }
+
         }
         fetchPost();
     }, [pathname])
@@ -88,6 +95,9 @@ const MItemEdit = () => {
             formData.append('title', $(`.title`).val())
             formData.append('hash', $(`.hash`).val())
             formData.append('suggest_title', $(`.suggest-title`).val())
+            if (params.table == 'issue') {
+                formData.append('category', $(`.category`).val());
+            }
             formData.append('user_pk', auth.pk ?? 0)
             formData.append('note', editorRef.current.getInstance().getHTML());
 
@@ -107,12 +117,14 @@ const MItemEdit = () => {
                         console.log(response)
                         if (response.result > 0) {
                             alert('성공적으로 저장되었습니다.')
+                            navigate(-1);
                         }
                     } else {
                         const { data: response } = await axios.post(`/api/additem`, formData)
                         console.log(response)
                         if (response.result > 0) {
-                            alert('성공적으로 추가 되었습니다.')
+                            alert('성공적으로 추가 되었습니다.');
+                            navigate(-1);
                         }
 
                     }
@@ -128,7 +140,7 @@ const MItemEdit = () => {
             setUrl(URL.createObjectURL(e.target.files[0]))
         }
     };
-    const onChangeEditor = () => {
+    const onChangeEditor = (e) => {
         const data = editorRef.current.getInstance().getHTML();
         console.log(data)
     }
@@ -211,6 +223,21 @@ const MItemEdit = () => {
                                         language="ko-KR"
                                         ref={editorRef}
                                         onChange={onChangeEditor}
+                                        hooks={{
+                                            addImageBlobHook: async (blob, callback) => {
+
+                                                noteFormData.append('note', blob);
+                                                const { data: response } = await axios.post('/api/addimage', noteFormData);
+                                                console.log(response)
+                                                if (response.result > 0) {
+                                                    callback(backUrl + response.data.filename)
+                                                    noteFormData.delete('note');
+                                                } else {
+                                                    noteFormData.delete('note');
+                                                    return;
+                                                }
+                                            }
+                                        }}
                                     />
                                 </div>
                             </Col>

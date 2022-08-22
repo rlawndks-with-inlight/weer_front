@@ -67,3 +67,9 @@ export const returnMoment = (num,type) => {//num 0: 오늘, num -1: 어제 ,  ty
     let moment = dateString + ' ' + timeString;
     return moment;
 }
+export const getIframeLinkByLink = (str) =>{
+    let list = str.split("/");
+    let hash = list[3].split("=");
+    hash = hash[1];
+    return `https://www.youtube.com/embed/${hash}`
+}

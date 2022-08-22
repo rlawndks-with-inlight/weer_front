@@ -64,6 +64,13 @@ const DataTable = (props) => {
                                             :
                                             <>
                                             </>}
+                                            {column.type == 'link' ?
+                                            <>
+                                                <Td style={{ width: `${column.width}%`,cursor:'pointer',textDecoration:'underline' }} onClick={()=>{window.open(data[`${column.column}`])}}>{data[`${column.column}`]}</Td>
+                                            </>
+                                            :
+                                            <>
+                                            </>}
                                             {column.type == 'level' ?
                                             <>
                                                 <Td style={{ width: `${column.width}%` }}>{data[column.column]==0?'일반유저':data[column.column]==40?'관리자':data[column.column]==30?'대가':'개발자'}</Td>

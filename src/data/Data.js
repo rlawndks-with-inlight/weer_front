@@ -61,9 +61,9 @@ export const objManagerListContent = {
     theme: {
         breadcrumb: '핵심테마',
         zColumn: [
-            { name: '프로필이미지', width: 16, type: 'img', column: 'profile_img' },
-            { name: '아이디', width: 16, type: 'text', column: 'id' },
-            { name: '이름', width: 16, type: 'text', column: 'name' },
+            { name: '메인이미지', width: 16, type: 'img', column: 'main_img' },
+            { name: '제목', width: 16, type: 'text', column: 'title' },
+            { name: '추천제목', width: 16, type: 'text', column: 'suggest_title' },
             { name: '생성시간', width: 28, type: 'text', column: 'date' },
             { name: '수정', width: 12, type: 'edit', column: 'edit' },
             { name: '삭제', width: 12, type: 'delete', column: 'delete' }
@@ -72,7 +72,9 @@ export const objManagerListContent = {
     issue: {
         breadcrumb: '핵심이슈&공시',
         zColumn: [
-            { name: '이름', width: 48, type: 'text', column: 'title' },
+            { name: '메인이미지', width: 16, type: 'img', column: 'main_img' },
+            { name: '제목', width: 16, type: 'text', column: 'title' },
+            { name: '추천제목', width: 16, type: 'text', column: 'suggest_title' },
             { name: '생성시간', width: 28, type: 'text', column: 'date' },
             { name: '수정', width: 12, type: 'edit', column: 'edit' },
             { name: '삭제', width: 12, type: 'delete', column: 'delete' }
@@ -90,9 +92,8 @@ export const objManagerListContent = {
     video: {
         breadcrumb: '핵심비디오',
         zColumn: [
-            { name: '프로필이미지', width: 16, type: 'img', column: 'profile_img' },
-            { name: '아이디', width: 16, type: 'text', column: 'id' },
-            { name: '이름', width: 16, type: 'text', column: 'name' },
+            { name: '제목', width: 16, type: 'text', column: 'title' },
+            { name: '링크', width: 32, type: 'link', column: 'link' },
             { name: '생성시간', width: 28, type: 'text', column: 'date' },
             { name: '수정', width: 12, type: 'edit', column: 'edit' },
             { name: '삭제', width: 12, type: 'delete', column: 'delete' }

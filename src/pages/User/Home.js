@@ -12,6 +12,8 @@ import SubType from '../../components/elements/SubType';
 import testImg from '../../assets/images/test/test5.jpg';
 import masterImg from '../../assets/images/test/master.png';
 import axios from 'axios';
+import { backUrl } from '../../data/Data';
+import { getIframeLinkByLink } from '../../functions/utils';
 const Wrappers = styled.div`
 position:relative;
 display:flex;
@@ -67,6 +69,10 @@ const Home = () => {
     const [subTypeNum, setSubTypeNum] = useState(0)
     const [posts, setPosts] = useState([]);
     const [oneWord, setOneWord] = useState({});
+    const [issues, setIssues] = useState([]);
+    const [oneEvent, setOneEvent] = useState({});
+    const [themes, setThemes] = useState([]);
+    const [videos, setVideos] = useState([]);
     const zMasterContent = [
         { date: '7월 11일', title: '오늘의 TOP PICK', sub_title: '차트영웅이 알려주는오늘의 TOP 주식은!?', hash_list: '["우크라 재건관련주","컨텐츠","식품가격인상"]', img: testImg },
         { date: '7월 11일', title: '오늘의 TOP PICK', sub_title: '차트영웅이 알려주는오늘의 TOP 주식은!?', hash_list: '["우크라 재건관련주","컨텐츠","식품가격인상"]', img: testImg },
@@ -101,10 +107,18 @@ const Home = () => {
         async function fetchPost() {
             const { data: response } = await axios.get('/api/gethomecontent')
             console.log(response);
-            setOneWord(response.data.oneWord)
+            setOneWord(response.data.oneWord);
+            setIssues(response.data.issues);
+            setOneEvent(response.data.oneEvent);
+            setThemes(response.data.themes);
+            
+            let videoObj = response.data.videos[0];
+            videoObj.link = getIframeLinkByLink(videoObj.link);
+            setVideos(videoObj);
         }
         fetchPost();
     }, [])
+
     return (
         <>
             <Wrappers>
@@ -130,22 +144,17 @@ const Home = () => {
                 </Content>
                 <Title>핵심 이슈{'&'}공시</Title>
                 <Content>
+                    
                     <div style={{ maxWidth: '400px', width: '100%', background: `${theme.color.background3}` }}>
-                        <Slider {...settings}>
-                            {posts.map((item, index) => (
-                                <>
-                                    <Img style={{ backgroundImage: `url(${item})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center' }} />
-                                </>
-                            ))}
-                        </Slider>
-                        <div style={{ padding: '16px 16px 0 16px' }}>7월 11일(월) 장전 이슈 체크</div>
-                        <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>#원전주 #디지털화폐 #우주항공</div>
+                        <Img style={{ backgroundImage: `url(${backUrl+issues[0]?.main_img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center' }} />
+                        <div style={{ padding: '16px 16px 0 16px' }}>{issues[0]?.date} {issues[0]?.title}</div>
+                        <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{issues[0]?.hash}</div>
                     </div>
                 </Content>
                 <Title>하루 1종목</Title>
                 <Content>
-                    <div>{""}</div>
-                    <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{""}</div>
+                    <div>{oneEvent.title}</div>
+                    <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneEvent.hash}</div>
                 </Content>
                 <Title>퍼스트 전문가</Title>
                 <SelectSubType className='subtype-container' style={{ top: '5.9rem' }}>
@@ -184,13 +193,13 @@ const Home = () => {
                 <Content>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
 
-                        {zThemeContent.map((item, idx) => (
+                        {themes.map((item, idx) => (
                             <>
                                 <div style={{ display: 'flex', flexDirection: 'column', width: '47.5%', background: `${theme.color.background3}` }}>
-                                    <img src={item.img} />
+                                    <img src={backUrl+item.main_img} />
                                     <div style={{ padding: '16px', minHeight: '50px', justifyContent: 'space-between', display: 'flex', flexDirection: 'column' }}>
-                                        <div style={{ fontSize: `${theme.size.font4}`, fontWeight: 'bold' }}>{item.title}</div>
-                                        <div style={{ fontSize: `${theme.size.font5}` }}>{item.date}</div>
+                                        <div style={{ fontSize: `${theme.size.font4}`, fontWeight: 'bold' }}>{item?.title}</div>
+                                        <div style={{ fontSize: `${theme.size.font5}` }}>{item?.date}</div>
                                     </div>
 
                                 </div>
@@ -200,7 +209,7 @@ const Home = () => {
 
                 </Content>
                 <Title>핵심 비디오</Title>
-                <iframe style={{ width: '100%', height: 'auto', height: '80vw', maxHeight: '450px' }} src="https://www.youtube.com/embed/0GrbDjHT84k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe style={{ width: '100%', height: 'auto', height: '80vw', maxHeight: '450px' }} src={videos.link} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
             </Wrappers>
         </>
