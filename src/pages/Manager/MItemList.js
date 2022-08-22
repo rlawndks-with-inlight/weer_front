@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react';
-import { useNavigate, Link, useParams } from 'react-router-dom';
+import { useNavigate, Link, useParams, useLocation } from 'react-router-dom';
 import ManagerWrappers from '../../components/elements/ManagerWrappers';
 import SideBar from '../../common/manager/SideBar';
 import ManagerContentWrappers from '../../components/elements/ManagerContentWrappers';
@@ -16,48 +16,73 @@ import AddButton from '../../components/elements/button/AddButton';
 import Loading from '../../components/Loading';
 import theme from '../../styles/theme';
 
-const MAccessorList = () => {
+import { objManagerListContent } from '../../data/Data';
+
+const MItemList = () => {
+
+    const { pathname } = useLocation();
+    const params = useParams();
     const navigate = useNavigate();
-    const zColumn = [{ name: '아이디', width: 11, type: 'text', column: 'id' }, { name: '닉네임', width: 11, type: 'text', column: 'nickname' }, { name: '폰번호', width: 22, type: 'text', column: 'phone' }, { name: '레벨', width: 11, type: 'level', column: 'level' }, { name: '로그인시간', width: 33, type: 'text', column: 'last_login' }, { name: '수정', width: 6, type: 'edit', column: 'edit' }, { name: '삭제', width: 6, type: 'delete', column: 'delete' }];
+
+    const [zColumn, setZColumn] = useState([])
     const [posts, setPosts] = useState([])
     const [page, setPage] = useState(1)
     const [pageList, setPageList] = useState([])
     const [loading, setLoading] = useState(false)
     useEffect(() => {
+        console.log(params)
+        setZColumn(objManagerListContent[`${params.table}`].zColumn??{})
         async function fetchPost() {
             setLoading(true)
-            const { data: response } = await axios.get(`/api/users?page=1`)
+            let str = '';
+            if (params.table == 'master') {
+                str = `/api/users?page=1&level=30`
+            } else if(params.table == 'user'){
+                str = `/api/users?page=1&level=0`
+            } else {
+                str = `/api/items?table=${params.table}&page=1`
+            }
+            const { data: response } = await axios.get(str)
             console.log(response)
             setPosts(response.data.data)
             setPageList(range(1, response.data.maxPage))
             setLoading(false)
         }
         fetchPost();
-    }, [])
+    }, [pathname])
     const changePage = async (num) => {
         setLoading(true)
         setPage(num)
-        const { data: response } = await axios.get(`/api/users?page=${num}`)
+        let str = '';
+        if (params.table == 'master') {
+            str = `/api/users?page=${num}&level=30`
+        } else if(params.table == 'user'){
+            str = `/api/users?page=${num}&level=0`
+        }else {
+            str = `/api/items?table=${params.table}&page=${num}`
+        }
+        const { data: response } = await axios.get(str)
         setPosts(response.data.data)
         setPageList(range(1, response.data.maxPage))
         setLoading(false)
     }
+
     return (
         <>
             <ManagerWrappers>
                 <SideBar />
                 <ManagerContentWrappers>
-                    <Breadcrumb title={'접속자 현황'} />
+                    <Breadcrumb title={objManagerListContent[`${params.table}`].breadcrumb+'관리'} />
                     {loading ?
                         <>
                             <Loading />
                         </>
                         :
                         <>
-                            <DataTable data={posts} column={zColumn} schema={'user'} />
+                            <DataTable data={posts} column={zColumn} schema={params.table} />
                         </>}
 
-                    {/* <MBottomContent>
+                    <MBottomContent>
                         <div />
                         <PageContainer>
                             <PageButton onClick={() => changePage(1)}>
@@ -65,7 +90,7 @@ const MAccessorList = () => {
                             </PageButton>
                             {pageList.map((item, index) => (
                                 <>
-                                    <PageButton onClick={() => changePage(item)} style={{ color: `${page == item ? '#fff' : ''}`, background: `${page == item ? theme.color.background1 : ''}` }}>
+                                    <PageButton onClick={() => changePage(item)} style={{ color: `${page == item ? '#fff' : ''}`, background: `${page == item ? theme.color.manager.background1 : ''}` }}>
                                         {item}
                                     </PageButton>
                                 </>
@@ -74,11 +99,11 @@ const MAccessorList = () => {
                                 마지막
                             </PageButton>
                         </PageContainer>
-                        <AddButton onClick={() => navigate(`/manager/user/0`)}>+ 추가</AddButton>
-                    </MBottomContent> */}
+                        <AddButton onClick={() => navigate(`/manager/edit/${params.table}/0`)}>+ 추가</AddButton>
+                    </MBottomContent>
                 </ManagerContentWrappers>
             </ManagerWrappers>
         </>
     )
 }
-export default MAccessorList;
+export default MItemList;

@@ -2,12 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react';
 import { useNavigate, Link, useParams } from 'react-router-dom';
+import Slider from 'react-slick'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import theme from '../../styles/theme';
 import SelectSubType from '../../components/elements/SelectSubType';
-import { zTheme } from '../../data/TestData';
+import { zTalk, zTheme } from '../../data/TestData';
 import SubType from '../../components/elements/SubType';
 import testImg from '../../assets/images/test/test5.jpg';
 import masterImg from '../../assets/images/test/master.png';
+import axios from 'axios';
 const Wrappers = styled.div`
 position:relative;
 display:flex;
@@ -45,12 +49,24 @@ font-weight:normal;
     
 }
 `
+const Img = styled.div`
+width:100%;
+height:67.5vw;
+max-height:300px;
+z-index:2;
+`
+const ProFileImg1 = styled.img`
 
+`
+const ProFileImg2 = styled.img`
+
+`
 const Home = () => {
     const [channelNum, setChannelNum] = useState(0)
     const [typeNum, setTypeNum] = useState(1)
     const [subTypeNum, setSubTypeNum] = useState(0)
-
+    const [posts, setPosts] = useState([]);
+    const [oneWord, setOneWord] = useState({});
     const zMasterContent = [
         { date: '7월 11일', title: '오늘의 TOP PICK', sub_title: '차트영웅이 알려주는오늘의 TOP 주식은!?', hash_list: '["우크라 재건관련주","컨텐츠","식품가격인상"]', img: testImg },
         { date: '7월 11일', title: '오늘의 TOP PICK', sub_title: '차트영웅이 알려주는오늘의 TOP 주식은!?', hash_list: '["우크라 재건관련주","컨텐츠","식품가격인상"]', img: testImg },
@@ -70,31 +86,66 @@ const Home = () => {
         { img: masterImg },
         { img: masterImg },
         { img: masterImg },
-
     ]
+    const settings = {
+        infinite: false,
+        speed: 500,
+        autoplay: false,
+        autoplaySpeed: 2500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+    };
+
+    useEffect(() => {
+        setPosts(zTalk[0].image_list);
+        async function fetchPost() {
+            const { data: response } = await axios.get('/api/gethomecontent')
+            console.log(response);
+            setOneWord(response.data.oneWord)
+        }
+        fetchPost();
+    }, [])
     return (
         <>
             <Wrappers>
-                <div style={{ display: 'flex', flexWrap: 'wrap',position:'relative',minHeight:'120px' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', position: 'relative', minHeight: '120px', width: '100%', maxWidth: '350px', margin: '0 auto' }}>
                     {zMaster.map((item, idx) => (
                         <>
-                            <img src={item.img} style={{position:'absolute',top:`${idx<4?'0':'40px'}`,width:'25%',left:`${idx<4?`${(idx+1)*20-15}%`:`${(idx-4)*20-5}%`}`}} />
+                            {idx < 4 ?
+                                <>
+                                    <ProFileImg1 src={item.img} style={{ position: 'absolute', bottom: `25px`, width: '100px', left: `${(idx + 1) * 21 - 20}%` }} />
+                                </>
+                                :
+                                <>
+                                    <ProFileImg2 src={item.img} style={{ position: 'absolute', bottom: `0`, width: '100px', left: `${(idx - 4) * 21 - 10}%` }} />
+                                </>
+                            }
                         </>
                     ))}
                 </div>
                 <Title>하루 1단어</Title>
-                <Content>
-                    <div>[주식용어] 유상증자</div>
-                    <div style={{ fontSize: `${theme.size.font4}` }}>#주린이를 위한 #하루 #한단어</div>
+                <Content onClick={()=>{}}>
+                    <div >{oneWord?.title??""}</div>
+                    <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneWord?.hash??""}</div>
                 </Content>
                 <Title>핵심 이슈{'&'}공시</Title>
                 <Content>
-
+                    <div style={{ maxWidth: '400px', width: '100%', background: `${theme.color.background3}` }}>
+                        <Slider {...settings}>
+                            {posts.map((item, index) => (
+                                <>
+                                    <Img style={{ backgroundImage: `url(${item})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center' }} />
+                                </>
+                            ))}
+                        </Slider>
+                        <div style={{ padding: '16px 16px 0 16px' }}>7월 11일(월) 장전 이슈 체크</div>
+                        <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>#원전주 #디지털화폐 #우주항공</div>
+                    </div>
                 </Content>
                 <Title>하루 1종목</Title>
                 <Content>
-                    <div>[주식] HMM</div>
-                    <div style={{ fontSize: `${theme.size.font4}` }}>#주린이를 위한 #하루 #한종목 #종목분석</div>
+                    <div>{""}</div>
+                    <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{""}</div>
                 </Content>
                 <Title>퍼스트 전문가</Title>
                 <SelectSubType className='subtype-container' style={{ top: '5.9rem' }}>
@@ -109,8 +160,8 @@ const Home = () => {
 
                 {zMasterContent.map((item, idx) => (
                     <>
-                        <div style={{ display: 'flex', width: '100%', marginTop: '24px', minHeight: '150px' }}>
-                        <img src={item.img} style={{ width: '37.5%' }} />
+                        <div style={{ display: 'flex', width: '100%', maxWidth: '450px', marginTop: '24px', minHeight: '150px', height: '45vw', maxHeight: '200px' }}>
+                            <img src={item.img} style={{ width: '37.5%' }} />
 
                             <div style={{ width: 'auto', padding: '16px', background: `${theme.color.background3}`, display: 'flex', flexDirection: 'column', width: '62.5%', justifyContent: 'space-between' }}>
                                 <div style={{ fontSize: `${theme.size.font4}`, fontWeight: 'bold' }}>{item.date} {item.title}</div>

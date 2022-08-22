@@ -51,14 +51,17 @@ const MUserEdit = () => {
     const [content, setContent] = useState(undefined)
     const [formData] = useState(new FormData())
     useEffect(() => {
+
         async function fetchPost() {
             if (params.pk > 0) {
-                const { data: response } = await axios.get(`/api/user/${params.pk}`)
+                const { data: response } = await axios.get(`/api/item?table=user&pk=${params.pk}`)
+                console.log(response)
                 $('.id').val(response.data.id)
+                $('.pw').val("")
                 $('.name').val(response.data.name)
                 $('.nickname').val(response.data.nickname)
                 $('.phone').val(response.data.phone)
-                $('.level').val(response.data.level)
+                $('.level').val(response.data.user_level)
             }
         }
         fetchPost();
@@ -92,7 +95,7 @@ const MUserEdit = () => {
                         <Title style={{ margintop: '32px' }}>아이디</Title>
                         <Input className='id' />
                         <Title style={{ margintop: '32px' }}>비밀번호 {params.pk == 0 ? '' : '(빈 값으로 두면 원래 값을 유지)'}</Title>
-                        <Input className='pw' type={'password'} />
+                        <Input className='pw' type={'password'}  />
                         <Title style={{ margintop: '32px' }}>이름</Title>
                         <Input className='name' />
                         <Title style={{ margintop: '32px' }}>닉네임</Title>

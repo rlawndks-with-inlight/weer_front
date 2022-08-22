@@ -90,15 +90,17 @@ const SideBar = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const zSidebar = [
-        { name: '회원관리', link: '/manager/userlist', icon: <BsPerson /> },
-        { name: '접속자현황', link: '/manager/accessorlist', icon: <MdOutlineAccessTime /> },
-        { name: '회원통계', link: '/manager/userstatistics', icon: <IoStatsChartSharp /> },
-        { name: '하루1단어 1종목', link: '/manager/oneday', icon: <WiDayHaze /> },
-        { name: '전문가관리', link: '/manager/masterlist', icon: <FaChalkboardTeacher /> },
-        { name: '테마관리', link: '/manager/themelist', icon: <IoLogoReact /> },
-        { name: '이슈관리', link: '/manager/issuelist', icon: <MdNotificationImportant /> },
-        { name: '비디오관리', link: '/manager/videolist', icon: <BsCameraVideo /> },
-        { name: '문의관리', link: '/manager/inquirylist', icon: <AiOutlineQuestionCircle /> },
+        { name: '회원관리', link: '/manager/list/user', icon: <BsPerson /> },
+        //{ name: '접속자현황', link: '/manager/list/user', icon: <MdOutlineAccessTime /> },
+        //{ name: '회원통계', link: '/manager/list/user', icon: <IoStatsChartSharp /> },
+        { name: '전문가관리', link: '/manager/list/master', icon: <FaChalkboardTeacher /> },
+        { name: '하루1단어', link: '/manager/edit/oneword/0', icon: <WiDayHaze /> },
+        { name: '하루1종목', link: '/manager/edit/oneevent/0', icon: <WiDayHaze /> },
+        { name: '핵심테마', link: '/manager/list/theme', icon: <IoLogoReact /> },
+        { name: '핵심이슈&공시 카테고리', link: '/manager/list/issue_category', icon: <MdNotificationImportant /> },
+        { name: '핵심이슈&공시', link: '/manager/list/issue', icon: <MdNotificationImportant /> },
+        { name: '핵심비디오', link: '/manager/list/video', icon: <BsCameraVideo /> },
+        { name: '문의관리', link: '/manager/list/inquiry', icon: <AiOutlineQuestionCircle /> },
         { name: '환경설정', link: '/manager/setting', icon: <FiSettings /> },
     ];
     const [display, setDisplay] = useState('none');
@@ -114,7 +116,7 @@ const SideBar = () => {
                 <LogoWrappers>
                     <img src={logo} style={{ height: '40px', width: 'auto' }} />
                 </LogoWrappers>
-
+                <div style={{maxHeight:'80vh'}}>
                 {zSidebar.map((item, index) => (
                     <>
                         {item.link == location.pathname ?
@@ -134,6 +136,7 @@ const SideBar = () => {
 
                     </>
                 ))}
+                </div>
             </Wrappers>
         </>
     )

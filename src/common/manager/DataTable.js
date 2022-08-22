@@ -91,7 +91,7 @@ const DataTable = (props) => {
                                         {column.type == 'edit' ?
                                             <>
                                                 <Td style={{ width: `${column.width}%`, fontSize: '20px' }}>
-                                                    <BiEditAlt style={{ cursor: 'pointer', color: '#546de5' }} onClick={() => navigate(`/manager/${props.schema}/${data.pk}`)} />
+                                                    <BiEditAlt style={{ cursor: 'pointer', color: '#546de5' }} onClick={() => navigate(`/manager/edit/${props.schema}/${data.pk}`)} />
                                                 </Td>
                                             </>
                                             :

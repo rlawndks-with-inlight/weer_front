@@ -12,7 +12,7 @@ const Header = styled.header`
 position:fixed;
 height:3rem;
 width:100%;
-
+top:0;
 z-index:10;
 max-width:700px;
 background:#fff;
@@ -110,7 +110,7 @@ const Headers = () => {
         <Header>
           <HeaderContainer>
           <div>
-            <img src={logo} style={{ height: '2.5rem', marginTop: '0.5rem' }} onClick={() => { navigate('/') }} />
+            <img src={logo} style={{ height: '2.5rem', marginTop: '0.25rem' }} onClick={() => { navigate('/') }} />
           </div>
           <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between' }}>
             <AiOutlineBell onClick={handleModal} style={{ width: '2rem', height: '1.5rem' }} />
