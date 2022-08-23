@@ -16,6 +16,7 @@ const Post = () =>{
             let obj = response.data;
             obj.note = stringToHTML(obj.note)
             $('.note').append(obj.note)
+            $('.note > img').css("width","100%")
             setPost(obj);
             
         }
@@ -23,8 +24,8 @@ const Post = () =>{
     },[])
     const stringToHTML = (str) => {
         let parser = new DOMParser();
-        str = str.replace('http://localhost:8001',backUrl)
-        str = str.replace('http://127.0.0.1:8001',backUrl)
+        str = str.replaceAll('http://localhost:8001',backUrl)
+        str = str.replaceAll('http://127.0.0.1:8001',backUrl)
         let doc = parser.parseFromString(str, 'text/html');
         return doc.body;
     };

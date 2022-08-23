@@ -54,6 +54,12 @@ div.board-container img{
     width: 100%;
     margin: 16px 0;
 }
+div.note > img{
+    width: 100%;
+}
+div.note > p > img{
+    width: 100% !important;
+}
 @media screen and (max-width:1200px) { 
    
 }
