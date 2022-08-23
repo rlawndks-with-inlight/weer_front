@@ -6,7 +6,7 @@ const LeftImgCard = (props) => {
 
     return (
         <>
-            <div style={{ display: 'flex', width: '100%', maxWidth: '450px', marginTop: '24px', minHeight: '150px', height: '45vw', maxHeight: '200px' }}>
+            <div style={{ display: 'flex', width: '100%', marginTop: '24px', minHeight: '150px', height: '45vw', maxHeight: '200px' }}>
                 <img src={props.item?.img??""} style={{ width: '37.5%' }} />
 
                 <div style={{ width: 'auto', padding: '16px', background: `${theme.color.background3}`, display: 'flex', flexDirection: 'column', width: '62.5%', justifyContent: 'space-between' }}>

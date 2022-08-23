@@ -19,7 +19,7 @@ import { Wrappers, Title, Content } from '../../components/elements/UserContentT
 const Img = styled.div`
 width:100%;
 height:67.5vw;
-max-height:300px;
+max-height:500px;
 z-index:2;
 `
 const ProFileImg1 = styled.img`
@@ -99,7 +99,7 @@ const Home = () => {
                 <Title onClick={()=>navigate('/selectissuecategory')}>핵심 이슈{'&'}공시</Title>
                 <Content>
 
-                    <div style={{ maxWidth: '400px', width: '100%', background: `${theme.color.background3}` }} onClick={()=>navigate(`/post/issue/${issues[0]?.pk}`)}>
+                    <div style={{ width: '100%', background: `${theme.color.background3}` }} onClick={()=>navigate(`/post/issue/${issues[0]?.pk}`)}>
                         <Img style={{ backgroundImage: `url(${backUrl + issues[0]?.main_img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center' }} />
                         <div style={{ padding: '16px 16px 0 16px' }}>{issues[0]?.date} {issues[0]?.title}</div>
                         <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{issues[0]?.hash}</div>
