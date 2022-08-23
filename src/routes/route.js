@@ -1,18 +1,14 @@
 import Home from '../pages/User/Home';
 
-import Letter from '../pages/User/Letter/Letter';
-import LetterList from '../pages/User/Letter/LetterList';
+import SelectIssueCategory from '../pages/User/SelectIssueCategory';
+import MasterList from '../pages/User/MasterList';
+import ThemeList from '../pages/User/ThemeList';
+import VideoList from '../pages/User/VideoList';
+import Inquiry from '../pages/User/Inquiry';
 
-import Card from '../pages/User/Card/Card';
-import CardList from '../pages/User/Card/CardList';
+import IssueList from '../pages/User/Issues/IssueList';
 
-import Office from '../pages/User/My/Office';
-
-import Talk from '../pages/User/Talk/Talk';
-import TalkList from '../pages/User/Talk/TalkList';
-
-import Video from '../pages/User/Video/Video';
-import VideoList from '../pages/User/Video/VideoList';
+import Post from '../pages/User/Posts/Post';
 
 import MLogin from '../pages/Manager/MLogin';
 import MUserEdit from '../pages/Manager/MUserEdit';
@@ -27,17 +23,14 @@ import MItemList from '../pages/Manager/MItemList';
 const zRoute = [
     { link: '/', element: <Home /> },
 
-    // { link: '/letterlist', element: <LetterList /> },
-    // { link: '/letter/:pk', element: <Letter /> },
-    // { link: '/cardlist', element: <CardList /> },
-    // { link: '/card/:pk', element: <Card /> },
-    // { link: '/talklist', element: <TalkList /> },
-    // { link: '/talk/:pk', element: <Talk /> },
-    // { link: '/videolist', element: <VideoList /> },
-    // { link: '/talk/:pk', element: <Talk /> },
-    // { link: '/video/:pk', element: <Video /> },
-    // { link: '/my/office', element: <Office /> },
+    { link: '/selectissuecategory', element: <SelectIssueCategory /> },
+    { link: '/masterlist', element: <MasterList /> },
+    { link: '/themelist', element: <ThemeList /> },
+    { link: '/videolist', element: <VideoList /> },
+    { link: '/inquiry', element: <Inquiry /> },
+    { link: '/issuelist/:pk', element: <IssueList /> },
 
+    { link: '/post/:table/:pk', element: <Post /> },
 
     { link: '/manager', element: <MLogin /> },
     { link: '/manager/login', element: <MLogin /> },

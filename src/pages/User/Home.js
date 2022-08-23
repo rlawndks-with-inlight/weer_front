@@ -14,43 +14,8 @@ import masterImg from '../../assets/images/test/master.png';
 import axios from 'axios';
 import { backUrl } from '../../data/Data';
 import { getIframeLinkByLink } from '../../functions/utils';
-const Wrappers = styled.div`
-position:relative;
-display:flex;
-flex-direction:column;
-width:90%;
-max-width:700px;
-background:#fff;
-margin-top:4rem;
-margin-left:auto;
-margin-right:auto;
-margin-bottom:6rem;
-@media screen and (max-width:900px) { 
-    margin-top:3.5rem;
-}
-`
-
-const Title = styled.div`
-margin:1rem auto 1rem 0;
-width:50%;
-font-size:${props => props.theme.size.font2};
-font-weight:bold;
-@media screen and (max-width:700px) { 
-    width:90%;
-}
-
-`
-const Content = styled.div`
-margin:1rem auto 1rem 0;
-width:100%;
-font-size:${props => props.theme.size.font3};
-display:flex;
-flex-direction:column;
-font-weight:normal;
-@media screen and (max-width:700px) { 
-    
-}
-`
+import LeftImgCard from '../../components/LeftImgCard';
+import { Wrappers, Title, Content } from '../../components/elements/UserContentTemplete';
 const Img = styled.div`
 width:100%;
 height:67.5vw;
@@ -111,7 +76,7 @@ const Home = () => {
             setIssues(response.data.issues);
             setOneEvent(response.data.oneEvent);
             setThemes(response.data.themes);
-            
+
             let videoObj = response.data.videos[0];
             videoObj.link = getIframeLinkByLink(videoObj.link);
             setVideos(videoObj);
@@ -138,15 +103,15 @@ const Home = () => {
                     ))}
                 </div>
                 <Title>하루 1단어</Title>
-                <Content onClick={()=>{}}>
-                    <div >{oneWord?.title??""}</div>
-                    <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneWord?.hash??""}</div>
+                <Content onClick={() => { }}>
+                    <div >{oneWord?.title ?? ""}</div>
+                    <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneWord?.hash ?? ""}</div>
                 </Content>
                 <Title>핵심 이슈{'&'}공시</Title>
                 <Content>
-                    
+
                     <div style={{ maxWidth: '400px', width: '100%', background: `${theme.color.background3}` }}>
-                        <Img style={{ backgroundImage: `url(${backUrl+issues[0]?.main_img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center' }} />
+                        <Img style={{ backgroundImage: `url(${backUrl + issues[0]?.main_img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center' }} />
                         <div style={{ padding: '16px 16px 0 16px' }}>{issues[0]?.date} {issues[0]?.title}</div>
                         <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{issues[0]?.hash}</div>
                     </div>
@@ -169,23 +134,7 @@ const Home = () => {
 
                 {zMasterContent.map((item, idx) => (
                     <>
-                        <div style={{ display: 'flex', width: '100%', maxWidth: '450px', marginTop: '24px', minHeight: '150px', height: '45vw', maxHeight: '200px' }}>
-                            <img src={item.img} style={{ width: '37.5%' }} />
-
-                            <div style={{ width: 'auto', padding: '16px', background: `${theme.color.background3}`, display: 'flex', flexDirection: 'column', width: '62.5%', justifyContent: 'space-between' }}>
-                                <div style={{ fontSize: `${theme.size.font4}`, fontWeight: 'bold' }}>{item.date} {item.title}</div>
-                                <div style={{ fontSize: `${theme.size.font5}` }}>{item.sub_title}</div>
-                                <div style={{ fontSize: `${theme.size.font5}`, display: 'flex', flexWrap: 'wrap' }}>
-                                    {JSON.parse(item.hash_list).map((hash, index) => (
-                                        <>
-                                            <div>
-                                                #{hash}
-                                            </div>
-                                        </>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
+                        <LeftImgCard item={item} />
                     </>
                 ))}
 
@@ -196,13 +145,14 @@ const Home = () => {
                         {themes.map((item, idx) => (
                             <>
                                 <div style={{ display: 'flex', flexDirection: 'column', width: '47.5%', background: `${theme.color.background3}` }}>
-                                    <img src={backUrl+item.main_img} />
+                                    <img src={backUrl + item.main_img} />
                                     <div style={{ padding: '16px', minHeight: '50px', justifyContent: 'space-between', display: 'flex', flexDirection: 'column' }}>
                                         <div style={{ fontSize: `${theme.size.font4}`, fontWeight: 'bold' }}>{item?.title}</div>
                                         <div style={{ fontSize: `${theme.size.font5}` }}>{item?.date}</div>
                                     </div>
 
                                 </div>
+
                             </>
                         ))}
                     </div>

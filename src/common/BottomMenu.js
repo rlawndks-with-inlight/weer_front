@@ -62,11 +62,11 @@ const BottomMenu = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const zBottomMenu = [
-        { name: '핵심이슈', link: '/coreissue', imgRoot: bulbImg, activeImgRoot: bulbActiveImg, allowList: ['/coreissue'] },
-        { name: '퍼스트전문가', link: '/firstexpert', imgRoot: thumbImg, activeImgRoot: thumbActiveImg, allowList: ['/firstexpert'] },
-        { name: '핵심테마', link: '/coretheme', imgRoot: albumImg, activeImgRoot: albumActiveImg, allowList: ['/coretheme'] },
-        { name: '핵심비디오', link: '/corevideo', imgRoot: playImg, activeImgRoot: playActiveImg, allowList: ['/corevideo'] },
-        { name: '상담문의', link: '/require', imgRoot: talkImg, activeImgRoot: talkActiveImg, allowList: ['/require'] }
+        { name: '핵심이슈', link: '/selectissuecategory', imgRoot: bulbImg, activeImgRoot: bulbActiveImg, allowList: ['/selectissuecategory'] },
+        { name: '퍼스트전문가', link: '/masterlist', imgRoot: thumbImg, activeImgRoot: thumbActiveImg, allowList: ['/masterlist'] },
+        { name: '핵심테마', link: '/themelist', imgRoot: albumImg, activeImgRoot: albumActiveImg, allowList: ['/themelist'] },
+        { name: '핵심비디오', link: '/videolist', imgRoot: playImg, activeImgRoot: playActiveImg, allowList: ['/videolist'] },
+        { name: '상담문의', link: '/inquiry', imgRoot: talkImg, activeImgRoot: talkActiveImg, allowList: ['/inquiry'] }
     ];
     const [modal, setModal] = useState("none");
 
