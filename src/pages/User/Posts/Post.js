@@ -14,15 +14,18 @@ const Post = () =>{
         async function fetchPost(){
             const {data:response} = await axios.get(`/api/item?table=${params.table}&pk=${params.pk}`)
             let obj = response.data;
-            $('.note').append(obj.note)
             obj.note = stringToHTML(obj.note)
+            $('.note').append(obj.note)
             setPost(obj);
+            
         }
         fetchPost();
     },[])
     const stringToHTML = (str) => {
         let parser = new DOMParser();
-        let doc = parser.parseFromString(str, 'text/html');
+        str = str.replace('localhost',backUrl)
+        str = str.replace('127.0.0.1',backUrl)
+        let doc = parser.parseFromString(strr, 'text/html');
         return doc.body;
     };
     return (

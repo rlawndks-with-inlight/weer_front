@@ -16,14 +16,17 @@ const Video = () =>{
             const {data:response} = await axios.get(`/api/item?table=video&pk=${params.pk}`)
             let obj = response.data;
             obj.link = getIframeLinkByLink(obj.link);
-            $('.note').append(obj.note)
             obj.note = stringToHTML(obj.note)
+            $('.note').append(obj.note)
+
             setPost(obj);
         }
         fetchPost();
     },[])
     const stringToHTML = (str) => {
         let parser = new DOMParser();
+        str = str.replace('localhost',backUrl)
+        str = str.replace('127.0.0.1',backUrl)
         let doc = parser.parseFromString(str, 'text/html');
         return doc.body;
     };

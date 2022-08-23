@@ -3,7 +3,7 @@ import { HiOutlineLightBulb } from 'react-icons/hi'
 import { FaRegThumbsUp } from 'react-icons/fa'
 import { TbMessageDots } from 'react-icons/tb'
 import thumbImg from '../assets/images/icon/thumb.svg'
-export const backUrl = "http://localhost:8001";
+export const backUrl = "http://210.114.1.28:8001";
 export const zBottomMenu = [
     { name: '핵심이슈', link: '/coreissue', icon: <HiOutlineLightBulb className='menu-icon' style={{ fontSize: '32px' }} />, allowList: ['/coreissue'] },
     { name: '퍼스트전문가', link: '/firstexpert', icon: <FaRegThumbsUp className='menu-icon' />, allowList: ['/firstexpert'] },
