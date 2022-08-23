@@ -34,7 +34,7 @@ const ThemeList = () => {
     return (
         <>
             <Wrappers>
-                <Title>핵심 테마</Title>
+                <Title></Title>
                 {posts.map((item, idx) => (
                     <>
                         <ThemeCard item={item} category={'theme'}/>

@@ -5,7 +5,7 @@ position:relative;
 display:flex;
 flex-direction:column;
 width:100%;
-max-width:700px;
+max-width:900px;
 
 margin:0 auto;
 background:#fff;

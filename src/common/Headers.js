@@ -14,15 +14,20 @@ height:3rem;
 width:100%;
 top:0;
 z-index:10;
-max-width:700px;
+max-width:900px;
 background:#fff;
+margin:0 auto;
+border-bottom: 0.1rem solid #e6e6e6;
+@media screen and (max-width:900px) { 
+  border-bottom: none;
+}
 `
 const HeaderContainer = styled.div`
 width:90%;
+margin:0 auto;
 display:flex;
 align-items:center;
 justify-content: space-between;
-margin:0 auto;
 `
 const ModalContainer = styled.div`
 

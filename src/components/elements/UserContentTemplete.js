@@ -5,14 +5,18 @@ position:relative;
 display:flex;
 flex-direction:column;
 width:90%;
-max-width:700px;
+max-width:900px;
 background:#fff;
 margin-top:4rem;
 margin-left:auto;
 margin-right:auto;
 margin-bottom:6rem;
+
 @media screen and (max-width:900px) { 
     margin-top:3.5rem;
+}
+@media screen and (max-width:700px) { 
+    margin-bottom:2rem;
 }
 `
 

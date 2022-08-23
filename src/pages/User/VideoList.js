@@ -43,7 +43,7 @@ const VideoList = () => {
     return (
         <>
             <Wrappers>
-                <Title>핵심 비디오</Title>
+                <Title></Title>
                 <SelectSubType className='subtype-container' style={{ top: '3rem', height: '4rem', alignItems: 'center',marginBottom:'16px' }}>
                     <SubType onClick={() => { setChannelNum(0) }} style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center', width: '2rem', height: '2rem', margin: '0.5rem', borderRadius: '50%', border: `1px solid ${theme.color.background1}`, opacity: `${channelNum == 0 ? '1' : '0.4'}` }} />
                     {channels.map((item, index) => (

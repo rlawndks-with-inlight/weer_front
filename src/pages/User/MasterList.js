@@ -32,7 +32,7 @@ const MasterList = () => {
     return (
         <>
             <Wrappers>
-                <Title>퍼스트 전문가</Title>
+                <Title></Title>
                 {posts.map((item, idx) => (
                     <>
                         <Card onClick={() => { navigate(`/master/${item.pk}`) }}>

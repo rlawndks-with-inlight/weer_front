@@ -21,10 +21,13 @@ const Container = styled.aside`
     bottom: 0;
     left: 0;
     z-index: 5;
-    display:flex;
+    display:none;
     width:100%;
-    max-width:700px;
+    max-width:900px;
     margin: 0 auto;
+    @media screen and (max-width:900px) { 
+        display:flex;
+    }
 `
 const MenuContainer = styled.nav`
 width: 100%;
@@ -97,8 +100,10 @@ const BottomMenu = () => {
     }, [location])
 
     return (
-
-        <Container className='menu-container' style={{ display: `${display}` }}>
+        <>
+        {display=='flex'?
+        <>
+        <Container className='menu-container'>
             <MenuContainer>
                 {zBottomMenu.map((item, index) => (
                     <>
@@ -113,7 +118,12 @@ const BottomMenu = () => {
 
             </MenuContainer>
         </Container>
-
+        </>
+    :
+    <>
+    </>}
+        
+        </>
     )
 }
 
