@@ -50,6 +50,10 @@ div.board-container img{
 .subtype-container::-webkit-scrollbar{
     display: none;
 }
+.note{
+    width: 100%;
+    margin: 16px 0;
+}
 @media screen and (max-width:1200px) { 
    
 }

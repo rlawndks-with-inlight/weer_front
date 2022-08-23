@@ -9,6 +9,7 @@ import Inquiry from '../pages/User/Inquiry';
 import IssueList from '../pages/User/Issues/IssueList';
 
 import Post from '../pages/User/Posts/Post';
+import Video from '../pages/User/Posts/Video';
 
 import MLogin from '../pages/Manager/MLogin';
 import MUserEdit from '../pages/Manager/MUserEdit';
@@ -31,6 +32,7 @@ const zRoute = [
     { link: '/issuelist/:pk', element: <IssueList /> },
 
     { link: '/post/:table/:pk', element: <Post /> },
+    { link: '/video/:pk', element: <Video /> },
 
     { link: '/manager', element: <MLogin /> },
     { link: '/manager/login', element: <MLogin /> },

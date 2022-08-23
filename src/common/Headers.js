@@ -114,8 +114,8 @@ const Headers = () => {
           </div>
           <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between' }}>
             <AiOutlineBell onClick={handleModal} style={{ width: '2rem', height: '1.5rem' }} />
-            <AiOutlineSearch onClick={() => { setIsModal(!isModal) }} style={{ width: '2rem', height: '1.5rem' }} />
-            <AiOutlineSetting onClick={() => { setIsModal(!isModal) }} style={{ width: '2rem', height: '1.5rem' }} />
+            <AiOutlineSearch onClick={() => { }} style={{ width: '2rem', height: '1.5rem' }} />
+            <AiOutlineSetting onClick={() => {  }} style={{ width: '2rem', height: '1.5rem' }} />
           </div>
           </HeaderContainer>
         </Header>

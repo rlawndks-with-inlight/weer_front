@@ -27,7 +27,6 @@ const ThemeList = () => {
     useEffect(() => {
         async function fetchPosts() {
             const { data: response } = await axios.get('/api/items?table=theme');
-            console.log(response)
             setPosts(response.data);
         }
         fetchPosts();

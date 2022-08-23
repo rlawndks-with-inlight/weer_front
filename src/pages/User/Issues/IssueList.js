@@ -30,7 +30,6 @@ const IssueList = () => {
 
         async function fetchPosts() {
             const { data: response } = await axios.get(`/api/items?table=issue&category_pk=${params.pk}`);
-            console.log(response)
             setPosts(response.data);
         }
         fetchPosts();

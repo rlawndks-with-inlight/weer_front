@@ -30,7 +30,6 @@ const MItemList = () => {
     const [pageList, setPageList] = useState([])
     const [loading, setLoading] = useState(false)
     useEffect(() => {
-        console.log(params)
         setZColumn(objManagerListContent[`${params.table}`].zColumn??{})
         async function fetchPost() {
             setLoading(true)
@@ -43,7 +42,6 @@ const MItemList = () => {
                 str = `/api/items?table=${params.table}&page=1`
             }
             const { data: response } = await axios.get(str)
-            console.log(response)
             setPosts(response.data.data)
             setPageList(range(1, response.data.maxPage))
             setLoading(false)

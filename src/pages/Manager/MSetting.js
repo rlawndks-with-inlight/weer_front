@@ -55,7 +55,6 @@ const MSetting = () => {
 
                 } else {
                     const { data: response } = await axios.post('/api/updatemaster', formData);
-                    console.log(response)
                     if (response.result > 0) {
                         navigate('/manager/masterlist');
                     }

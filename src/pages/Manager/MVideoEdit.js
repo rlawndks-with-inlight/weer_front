@@ -45,7 +45,6 @@ const MVideoEdit = () => {
 
             if (params.pk > 0) {
                 const { data: response } = await axios.get(`/api/item?table=video&pk=${params.pk}`);
-                console.log(response)
                 $(`.title`).val(response.data.title);
                 $(`.link`).val(response.data.link);
                 editorRef.current.getInstance().setHTML(response.data.note)
@@ -82,7 +81,6 @@ const MVideoEdit = () => {
 
     const onChangeEditor = (e) => {
         const data = editorRef.current.getInstance().getHTML();
-        console.log(data)
     }
     return (
         <>
@@ -126,7 +124,6 @@ const MVideoEdit = () => {
 
                                                 noteFormData.append('note', blob);
                                                 const { data: response } = await axios.post('/api/addimage', noteFormData);
-                                                console.log(response)
                                                 if (response.result > 0) {
                                                     callback(backUrl + response.data.filename)
                                                     noteFormData.delete('note');

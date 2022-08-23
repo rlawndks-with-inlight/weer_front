@@ -30,7 +30,6 @@ font-weight:bold;
 `
 const NewsContent = (props) =>{
     const obj = props.item ?? {};
-    console.log(props.item)
     return (
         <>
         <Wrappers>

@@ -49,7 +49,6 @@ const MItemEdit = () => {
             }
             if (params.pk > 0) {
                 const { data: response } = await axios.get(`/api/item?table=${params.table}&pk=${params.pk}`);
-                console.log(response)
                 $(`.title`).val(response.data.title);
                 $(`.hash`).val(response.data.hash);
                 $(`.suggest-title`).val(response.data.suggest_title);
@@ -107,21 +106,18 @@ const MItemEdit = () => {
             if (window.confirm(`저장하시겠습니까?`)) {
                 if (params.table == 'oneword' || params.table == 'oneevent') {
                     const { data: response } = await axios.post(`/api/add${params.table}`, formData)
-                    console.log(response)
                     if (response.result > 0) {
                         alert('성공적으로 저장되었습니다.')
                     }
                 } else {
                     if (params.pk > 0) {
                         const { data: response } = await axios.post(`/api/updateitem`, formData)
-                        console.log(response)
                         if (response.result > 0) {
                             alert('성공적으로 저장되었습니다.')
                             navigate(-1);
                         }
                     } else {
                         const { data: response } = await axios.post(`/api/additem`, formData)
-                        console.log(response)
                         if (response.result > 0) {
                             alert('성공적으로 추가 되었습니다.');
                             navigate(-1);
@@ -142,7 +138,6 @@ const MItemEdit = () => {
     };
     const onChangeEditor = (e) => {
         const data = editorRef.current.getInstance().getHTML();
-        console.log(data)
     }
     return (
         <>
@@ -228,7 +223,6 @@ const MItemEdit = () => {
 
                                                 noteFormData.append('note', blob);
                                                 const { data: response } = await axios.post('/api/addimage', noteFormData);
-                                                console.log(response)
                                                 if (response.result > 0) {
                                                     callback(backUrl + response.data.filename)
                                                     noteFormData.delete('note');

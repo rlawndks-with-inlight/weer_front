@@ -14,6 +14,7 @@ import CancelButton from '../../components/elements/button/CancelButton';
 import $ from 'jquery';
 import { addItem, updateItem } from '../../functions/utils';
 import { Card, Title, Input, Select, Row, Col, ImageContainer } from '../../components/elements/ManagerTemplete';
+import { backUrl } from '../../data/Data';
 
 
 const MMasterEdit = () => {
@@ -26,10 +27,12 @@ const MMasterEdit = () => {
     useEffect(() => {
         async function fetchPost() {
             if (params.pk > 0) {
-                const { data: response } = await axios.get(`/api/user/${params.pk}`)
+                const { data: response } = await axios.get(`/api/item?table=user&pk=${params.pk}`)
                 $('.id').val(response.data.id)
+                $('.pw').val("")
                 $('.name').val(response.data.name)
-                setUrl(response.data.profile_img)
+                $('.nickname').val(response.data.nickname)
+                setUrl(backUrl + response.data.profile_img)
             }
         }
         fetchPost();
@@ -42,22 +45,22 @@ const MMasterEdit = () => {
             formData.append("id", $(`.id`).val());
             formData.append("pw", $(`.pw`).val());
             formData.append("name", $(`.name`).val());
+            formData.append("nickname", $(`.nickname`).val());
             formData.append("user_level", 30);
             formData.append("master", content);
-
+            if (params.pk > 0) formData.append("pk", params.pk)
             if (window.confirm(`${params.pk == 0 ? '추가하시겠습니까?' : '수정하시겠습니까?'}`)) {
                 if (params.pk <= 0) {
                     const { data: response } = await axios.post('/api/addmaster', formData);
                     alert(response.message);
                     if (response.result > 0) {
-                        navigate('/manager/masterlist');
+                        navigate('/manager/list/master');
                     }
 
                 } else {
                     const { data: response } = await axios.post('/api/updatemaster', formData);
-                    console.log(response)
                     if (response.result > 0) {
-                        navigate('/manager/masterlist');
+                        navigate('/manager/list/master');
                     }
                 }
             }
@@ -84,12 +87,19 @@ const MMasterEdit = () => {
                                 <Input className='id' />
                             </Col>
                             <Col>
-                                <Title>비밀번호 {params.pk == 0 ? '' : '(빈 값으로 두면 원래 값을 유지)'}</Title>
+                                <Title>비밀번호</Title>
                                 <Input className='pw' type={'password'} />
                             </Col>
+
+                        </Row>
+                        <Row>
                             <Col>
                                 <Title>이름</Title>
                                 <Input className='name' />
+                            </Col>
+                            <Col>
+                                <Title>닉네임</Title>
+                                <Input className='nickname' />
                             </Col>
                         </Row>
                         <Row>
