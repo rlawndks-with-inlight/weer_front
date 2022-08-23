@@ -55,7 +55,7 @@ const MItemEdit = () => {
                 if (params.table == 'issue') {
                     $(`.category`).val(response.data.category_pk);
                 }
-                editorRef.current.getInstance().setHTML(response.data.note)
+                editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001',backUrl));
                 setUrl(backUrl + response.data.main_img);
                 setItem(response.data)
             } else {

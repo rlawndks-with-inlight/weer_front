@@ -47,7 +47,7 @@ const MVideoEdit = () => {
                 const { data: response } = await axios.get(`/api/item?table=video&pk=${params.pk}`);
                 $(`.title`).val(response.data.title);
                 $(`.link`).val(response.data.link);
-                editorRef.current.getInstance().setHTML(response.data.note)
+                editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001',backUrl));
             }
         }
         fetchPost();
