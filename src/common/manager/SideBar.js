@@ -109,6 +109,7 @@ const SideBar = () => {
     const [display, setDisplay] = useState('none');
     useEffect(() => {
         setAuth(JSON.parse(localStorage.getItem('auth')));
+        
     }, [location]);
     return (
         <>
