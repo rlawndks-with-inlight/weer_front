@@ -6,7 +6,10 @@ import ThemeList from '../pages/User/ThemeList';
 import VideoList from '../pages/User/VideoList';
 import Inquiry from '../pages/User/Inquiry';
 
+import OneEventList from '../pages/User/OneEvent/OneEventList';
+import OneWordList from '../pages/User/OneWord/OneWordList';
 import IssueList from '../pages/User/Issues/IssueList';
+import Master from '../pages/User/Master/Master';
 
 import Post from '../pages/User/Posts/Post';
 import Video from '../pages/User/Posts/Video';
@@ -30,6 +33,9 @@ const zRoute = [
     { link: '/videolist', element: <VideoList /> },
     { link: '/inquiry', element: <Inquiry /> },
     { link: '/issuelist/:pk', element: <IssueList /> },
+    { link: '/onewordlist', element: <OneWordList /> },
+    { link: '/oneeventlist', element: <OneEventList /> },
+    { link: '/master/:pk', element: <Master /> },
 
     { link: '/post/:table/:pk', element: <Post /> },
     { link: '/video/:pk', element: <Video /> },

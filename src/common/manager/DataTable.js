@@ -43,7 +43,7 @@ const DataTable = (props) => {
 
     return (
         <>
-            <div style={{ minHeight: '70vh', marginBottom: '16px',overflowX:'auto' }}>
+            <div style={{ marginBottom: '16px',overflowX:'auto' }}>
                 <Table>
                     <Tr style={{ fontWeight: 'bold', background: `${theme.color.manager.background2}`, fontSize: '16px' }}>
                         {props.column.map((item, index) => (
@@ -83,7 +83,7 @@ const DataTable = (props) => {
                                                 <Td style={{ width: `${column.width}%` }}>
                                                     {data[`${column.column}`] ?
                                                         <>
-                                                            <img src={backUrl+data[`${column.column}`]} style={{width:'80%'}} />
+                                                            <img src={backUrl+data[`${column.column}`]} style={{height:'5rem'}} />
                                                         </>
                                                         :
                                                         <>

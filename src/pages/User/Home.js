@@ -91,13 +91,13 @@ const Home = () => {
                         </>
                     ))}
                 </div>
-                <Title>하루 1단어</Title>
-                <Content onClick={() => {navigate(`/post/oneword/${oneWord?.pk}`) }}>
+                <Title className='pointer' onClick={()=>{navigate('/onewordlist')}}>하루 1단어</Title>
+                <Content onClick={() => {navigate(`/post/oneword/${oneWord?.pk}`) }} className='pointer'>
                     <div >{oneWord?.title ?? ""}</div>
                     <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneWord?.hash ?? ""}</div>
                 </Content>
-                <Title onClick={()=>navigate('/selectissuecategory')}>핵심 이슈{'&'}공시</Title>
-                <Content>
+                <Title className='pointer' onClick={()=>navigate('/selectissuecategory')}>핵심 이슈{'&'}공시</Title>
+                <Content className='pointer'>
 
                     <div style={{ width: '100%', background: `${theme.color.background3}` }} onClick={()=>navigate(`/post/issue/${issues[0]?.pk}`)}>
                         <Img style={{ backgroundImage: `url(${backUrl + issues[0]?.main_img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center' }} />
@@ -105,16 +105,16 @@ const Home = () => {
                         <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{issues[0]?.hash}</div>
                     </div>
                 </Content>
-                <Title>하루 1종목</Title>
-                <Content onClick={() => {navigate(`/post/oneevent/${oneWord?.pk}`) }}>
+                <Title onClick={()=>{navigate('/oneeventlist')}} className='pointer'>하루 1종목</Title>
+                <Content onClick={() => {navigate(`/post/oneevent/${oneWord?.pk}`) }} className='pointer'>
                     <div>{oneEvent.title}</div>
                     <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneEvent.hash}</div>
                 </Content>
-                <Title onClick={()=>{navigate('/masterlist')}}>퍼스트 전문가</Title>
+                <Title onClick={()=>{navigate('/masterlist')}} className='pointer'>퍼스트 전문가</Title>
                 <SelectSubType className='subtype-container' style={{ top: '5.9rem' }}>
                     {masters.map((item, index) => (
                         <>
-                            <SubType style={{ borderBottom: `2px solid ${index == subTypeNum ? theme.color.background1 : '#fff'}` }} onClick={() => { setSubTypeNum(index) }}>
+                            <SubType style={{ borderBottom: `2px solid ${index == subTypeNum ? theme.color.background1 : '#fff'}` , fontWeight:`${index == subTypeNum ?'bold':'normal'}` }} onClick={() => { setSubTypeNum(index) }}>
                                 {item.nickname}
                             </SubType>
                         </>

@@ -12,6 +12,7 @@ import { FaChalkboardTeacher } from 'react-icons/fa'
 import { FiSettings } from 'react-icons/fi'
 import { AiOutlineQuestionCircle } from 'react-icons/ai'
 import { WiDayHaze } from 'react-icons/wi'
+import { SiMicrostrategy } from 'react-icons/si'
 const Wrappers = styled.div`
 display:flex;
 flex-direction:column;
@@ -89,21 +90,26 @@ padding:12px;
 const SideBar = () => {
     const location = useLocation();
     const navigate = useNavigate();
+
+    const [auth, setAuth] = useState({})
     const zSidebar = [
-        { name: '회원관리', link: '/manager/list/user', icon: <BsPerson /> },
+        { name: '회원관리', link: '/manager/list/user', icon: <BsPerson />, level: 40 },
         //{ name: '접속자현황', link: '/manager/list/user', icon: <MdOutlineAccessTime /> },
         //{ name: '회원통계', link: '/manager/list/user', icon: <IoStatsChartSharp /> },
-        { name: '전문가관리', link: '/manager/list/master', icon: <FaChalkboardTeacher /> },
-        { name: '하루1단어', link: '/manager/edit/oneword/0', icon: <WiDayHaze /> },
-        { name: '하루1종목', link: '/manager/edit/oneevent/0', icon: <WiDayHaze /> },
-        { name: '핵심테마', link: '/manager/list/theme', icon: <IoLogoReact /> },
-        { name: '핵심이슈&공시 카테고리', link: '/manager/list/issue_category', icon: <MdNotificationImportant /> },
-        { name: '핵심이슈&공시', link: '/manager/list/issue', icon: <MdNotificationImportant /> },
-        { name: '핵심비디오', link: '/manager/list/video', icon: <BsCameraVideo /> },
-        { name: '문의관리', link: '/manager/list/inquiry', icon: <AiOutlineQuestionCircle /> },
-        { name: '환경설정', link: '/manager/setting', icon: <FiSettings /> },
+        { name: '전문가관리', link: '/manager/list/master', icon: <FaChalkboardTeacher />, level: 40 },
+        { name: '하루1단어', link: '/manager/list/oneword', icon: <WiDayHaze />, level: 40 },
+        { name: '하루1종목', link: '/manager/list/oneevent', icon: <WiDayHaze />, level: 40 },
+        { name: '핵심테마', link: '/manager/list/theme', icon: <IoLogoReact />, level: 30 },
+        { name: '투자전략', link: '/manager/list/strategy', icon: <SiMicrostrategy />, level: 30 },
+        { name: '핵심이슈&공시 카테고리', link: '/manager/list/issue_category', icon: <MdNotificationImportant />, level: 40 },
+        { name: '핵심이슈&공시', link: '/manager/list/issue', icon: <MdNotificationImportant />, level: 30 },
+        { name: '핵심비디오', link: '/manager/list/video', icon: <BsCameraVideo />, level: 30 },
+        { name: '문의관리', link: '/manager/list/inquiry', icon: <AiOutlineQuestionCircle />, level: 40 },
     ];
     const [display, setDisplay] = useState('none');
+    useEffect(() => {
+        setAuth(JSON.parse(localStorage.getItem('auth')));
+    }, [location]);
     return (
         <>
             <HambergurContainer onClick={() => { setDisplay('flex') }}>
@@ -116,26 +122,34 @@ const SideBar = () => {
                 <LogoWrappers>
                     <img src={logo} style={{ height: '40px', width: 'auto' }} />
                 </LogoWrappers>
-                <div style={{maxHeight:'80vh'}}>
-                {zSidebar.map((item, index) => (
-                    <>
-                        {item.link == location.pathname ?
-                            <>
-                                <SelectMenuContent onClick={() => { navigate(`${item.link}`) }}>
-                                    {item.icon}
-                                    <MenuText>{item.name}</MenuText>
-                                </SelectMenuContent>
-                            </>
-                            :
-                            <>
-                                <MenuContent onClick={() => { navigate(`${item.link}`) }}>
-                                    {item.icon}
-                                    <MenuText>{item.name}</MenuText>
-                                </MenuContent>
-                            </>}
+                <div style={{ maxHeight: '80vh' }}>
+                    {zSidebar.map((item, index) => (
+                        <>
+                            {auth.user_level >= item.level ?
+                                <>
+                                    {item.link == location.pathname ?
+                                        <>
+                                            <SelectMenuContent onClick={() => { navigate(`${item.link}`) }}>
+                                                {item.icon}
+                                                <MenuText>{item.name}</MenuText>
+                                            </SelectMenuContent>
+                                        </>
+                                        :
+                                        <>
+                                            <MenuContent onClick={() => { navigate(`${item.link}`) }}>
+                                                {item.icon}
+                                                <MenuText>{item.name}</MenuText>
+                                            </MenuContent>
+                                        </>}
+                                </>
+                                :
+                                <>
+                                </>
+                            }
 
-                    </>
-                ))}
+
+                        </>
+                    ))}
                 </div>
             </Wrappers>
         </>

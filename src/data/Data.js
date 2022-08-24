@@ -2,14 +2,24 @@ import { IoCaretForwardCircleOutline, IoAlbumsOutline } from "react-icons/io5"
 import { HiOutlineLightBulb } from 'react-icons/hi'
 import { FaRegThumbsUp } from 'react-icons/fa'
 import { TbMessageDots } from 'react-icons/tb'
-import thumbImg from '../assets/images/icon/thumb.svg'
-export const backUrl = "http://210.114.1.28:8001";
+import albumImg from '../assets/images/icon/albums.svg';
+import albumActiveImg from '../assets/images/icon/albums-active.svg';
+import bulbImg from '../assets/images/icon/bulb.svg';
+import bulbActiveImg from '../assets/images/icon/bulb-active.svg';
+import playImg from '../assets/images/icon/play.svg';
+import playActiveImg from '../assets/images/icon/play-active.svg';
+import talkImg from '../assets/images/icon/talk.svg';
+import talkActiveImg from '../assets/images/icon/talk-active.svg';
+import thumbImg from '../assets/images/icon/thumb.svg';
+import thumbActiveImg from '../assets/images/icon/thumb-active.svg';
+export const backUrl = "http://localhost:8001";
+//http://210.114.1.28:8001
 export const zBottomMenu = [
-    { name: '핵심이슈', link: '/coreissue', icon: <HiOutlineLightBulb className='menu-icon' style={{ fontSize: '32px' }} />, allowList: ['/coreissue'] },
-    { name: '퍼스트전문가', link: '/firstexpert', icon: <FaRegThumbsUp className='menu-icon' />, allowList: ['/firstexpert'] },
-    { name: '핵심테마', link: '/coretheme', icon: <IoAlbumsOutline className='menu-icon' />, allowList: ['/coretheme'] },
-    { name: '핵심비디오', link: '/corevideo', icon: <IoCaretForwardCircleOutline className='menu-icon' />, allowList: ['/corevideo'] },
-    { name: '상담문의', link: '/require', icon: <TbMessageDots className='menu-icon' />, allowList: ['/require'] }
+    { name: '핵심이슈', link: '/selectissuecategory', icon: <img src={bulbImg} className='menu-icon' />, activeIcon: <img src={bulbActiveImg} className='menu-icon' />, allowList: ['/selectissuecategory'] },
+    { name: '퍼스트전문가', link: '/masterlist', icon: <img src={thumbImg} className='menu-icon' />, activeIcon: <img src={thumbActiveImg} className='menu-icon' />, allowList: ['/masterlist'] },
+    { name: '핵심테마', link: '/themelist', icon: <img src={albumImg} className='menu-icon' />, activeIcon: <img src={albumActiveImg} className='menu-icon' />, allowList: ['/themelist'] },
+    { name: '핵심비디오', link: '/videolist', icon: <img src={playImg} className='menu-icon' />, activeIcon: <img src={playActiveImg} className='menu-icon' />, allowList: ['/videolist'] },
+    { name: '상담문의', link: '/inquiry', icon: <img src={talkImg} className='menu-icon' />, activeIcon: <img src={talkActiveImg} className='menu-icon' />, allowList: ['/inquiry'] }
 ];
 export const objManagerListContent = {
     user: {
@@ -39,9 +49,9 @@ export const objManagerListContent = {
     oneword: {
         breadcrumb: '하루1단어',
         zColumn: [
-            { name: '프로필이미지', width: 16, type: 'img', column: 'profile_img' },
-            { name: '아이디', width: 16, type: 'text', column: 'id' },
-            { name: '이름', width: 16, type: 'text', column: 'name' },
+            { name: '메인이미지', width: 16, type: 'img', column: 'main_img' },
+            { name: '제목', width: 16, type: 'text', column: 'title' },
+            { name: '추천제목', width: 16, type: 'text', column: 'suggest_title' },
             { name: '생성시간', width: 28, type: 'text', column: 'date' },
             { name: '수정', width: 12, type: 'edit', column: 'edit' },
             { name: '삭제', width: 12, type: 'delete', column: 'delete' }
@@ -50,9 +60,9 @@ export const objManagerListContent = {
     oneevent: {
         breadcrumb: '하루1종목',
         zColumn: [
-            { name: '프로필이미지', width: 16, type: 'img', column: 'profile_img' },
-            { name: '아이디', width: 16, type: 'text', column: 'id' },
-            { name: '이름', width: 16, type: 'text', column: 'name' },
+            { name: '메인이미지', width: 16, type: 'img', column: 'main_img' },
+            { name: '제목', width: 16, type: 'text', column: 'title' },
+            { name: '추천제목', width: 16, type: 'text', column: 'suggest_title' },
             { name: '생성시간', width: 28, type: 'text', column: 'date' },
             { name: '수정', width: 12, type: 'edit', column: 'edit' },
             { name: '삭제', width: 12, type: 'delete', column: 'delete' }
@@ -60,6 +70,17 @@ export const objManagerListContent = {
     },
     theme: {
         breadcrumb: '핵심테마',
+        zColumn: [
+            { name: '메인이미지', width: 16, type: 'img', column: 'main_img' },
+            { name: '제목', width: 16, type: 'text', column: 'title' },
+            { name: '추천제목', width: 16, type: 'text', column: 'suggest_title' },
+            { name: '생성시간', width: 28, type: 'text', column: 'date' },
+            { name: '수정', width: 12, type: 'edit', column: 'edit' },
+            { name: '삭제', width: 12, type: 'delete', column: 'delete' }
+        ],
+    },
+    strategy: {
+        breadcrumb: '투자전략',
         zColumn: [
             { name: '메인이미지', width: 16, type: 'img', column: 'main_img' },
             { name: '제목', width: 16, type: 'text', column: 'title' },

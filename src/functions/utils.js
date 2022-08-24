@@ -68,8 +68,15 @@ export const returnMoment = (num,type) => {//num 0: 오늘, num -1: 어제 ,  ty
     return moment;
 }
 export const getIframeLinkByLink = (str) =>{
-    let list = str.split("/");
-    let hash = list[3].split("=");
-    hash = hash[1];
-    return hash;
+    let ans = "";
+    for(var i = 0;i<str.length;i++){
+        if(str[i]=='v'&&str[i+1]=='='){
+            for(var j=i+2;j<str.length;j++){
+                if(str[j]=='&') break;
+                ans += str[j];
+            }
+        }
+    }
+    
+    return ans;
 }

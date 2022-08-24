@@ -4,10 +4,10 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://210.114.1.28:8001',
+      target: 'http://localhost:8001',
       changeOrigin: true,
       
     })
   );
 };
-//https://mern-back-ten.vercel.app
+//http://210.114.1.28:8001

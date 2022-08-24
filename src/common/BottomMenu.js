@@ -3,16 +3,7 @@ import styled from 'styled-components'
 import { useNavigate, useLocation } from "react-router-dom"
 import '../styles/style.css'
 import theme from '../styles/theme'
-import albumImg from '../assets/images/icon/albums.svg';
-import albumActiveImg from '../assets/images/icon/albums-active.svg';
-import bulbImg from '../assets/images/icon/bulb.svg';
-import bulbActiveImg from '../assets/images/icon/bulb-active.svg';
-import playImg from '../assets/images/icon/play.svg';
-import playActiveImg from '../assets/images/icon/play-active.svg';
-import talkImg from '../assets/images/icon/talk.svg';
-import talkActiveImg from '../assets/images/icon/talk-active.svg';
-import thumbImg from '../assets/images/icon/thumb.svg';
-import thumbActiveImg from '../assets/images/icon/thumb-active.svg';
+import { zBottomMenu } from '../data/Data'
 const Container = styled.aside`
     background: #fff;
     border-top: 0.1rem solid #e6e6e6;
@@ -23,9 +14,9 @@ const Container = styled.aside`
     z-index: 5;
     display:none;
     width:100%;
-    max-width:900px;
+    max-width:1000px;
     margin: 0 auto;
-    @media screen and (max-width:900px) { 
+    @media screen and (max-width:1000px) { 
         display:flex;
     }
 `
@@ -64,13 +55,7 @@ font-weight:400;
 const BottomMenu = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const zBottomMenu = [
-        { name: '핵심이슈', link: '/selectissuecategory', imgRoot: bulbImg, activeImgRoot: bulbActiveImg, allowList: ['/selectissuecategory'] },
-        { name: '퍼스트전문가', link: '/masterlist', imgRoot: thumbImg, activeImgRoot: thumbActiveImg, allowList: ['/masterlist'] },
-        { name: '핵심테마', link: '/themelist', imgRoot: albumImg, activeImgRoot: albumActiveImg, allowList: ['/themelist'] },
-        { name: '핵심비디오', link: '/videolist', imgRoot: playImg, activeImgRoot: playActiveImg, allowList: ['/videolist'] },
-        { name: '상담문의', link: '/inquiry', imgRoot: talkImg, activeImgRoot: talkActiveImg, allowList: ['/inquiry'] }
-    ];
+   
     const [modal, setModal] = useState("none");
 
     const [beforeCount, setBeforeCount] = useState(0)
@@ -108,7 +93,7 @@ const BottomMenu = () => {
                 {zBottomMenu.map((item, index) => (
                     <>
                         <OneMenuContainer onClick={() => { navigate(item.link) }} style={{ color: `${colorList[index]}` }}>
-                            <img src={colorList[index] == theme.color.font1 ? item.imgRoot : item.activeImgRoot} className='menu-icon' />
+                            {colorList[index]==theme.color.background1?item.activeIcon:item.icon}
                             <OneMenuName style={{ color: `${colorList[index]}` }}>
                                 {item.name}
                             </OneMenuName>

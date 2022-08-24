@@ -24,8 +24,9 @@ const Video = () =>{
     },[])
     const stringToHTML = (str) => {
         let parser = new DOMParser();
-        str = str.replaceAll('http://localhost:8001',backUrl)
-        str = str.replaceAll('http://127.0.0.1:8001',backUrl)
+        str = str.replaceAll('http://localhost:8001',backUrl);
+        str = str.replaceAll('http://127.0.0.1:8001',backUrl);
+        str = str.replaceAll('<img','<img style="width:100%;" ');
         let doc = parser.parseFromString(str, 'text/html');
         return doc.body;
     };

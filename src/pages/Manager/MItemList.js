@@ -39,7 +39,12 @@ const MItemList = () => {
             } else if(params.table == 'user'){
                 str = `/api/users?page=1&level=0`
             } else {
+                let auth = JSON.parse(localStorage.getItem('auth'))
                 str = `/api/items?table=${params.table}&page=1`
+                if(auth?.user_level<40){
+                    str += `&user_pk=${auth.pk}`
+                }
+                
             }
             const { data: response } = await axios.get(str)
             setPosts(response.data.data)
@@ -93,7 +98,7 @@ const MItemList = () => {
                                     </PageButton>
                                 </>
                             ))}
-                            <PageButton onClick={() => changePage(pageList.length)}>
+                            <PageButton onClick={() => changePage(pageList.length??1)}>
                                 마지막
                             </PageButton>
                         </PageContainer>

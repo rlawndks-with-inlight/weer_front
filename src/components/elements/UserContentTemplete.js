@@ -5,19 +5,17 @@ position:relative;
 display:flex;
 flex-direction:column;
 width:90%;
-max-width:900px;
+max-width:1000px;
 background:#fff;
-margin-top:4rem;
+margin-top:8rem;
 margin-left:auto;
 margin-right:auto;
 margin-bottom:6rem;
 
-@media screen and (max-width:900px) { 
+@media screen and (max-width:1000px) { 
     margin-top:3.5rem;
 }
-@media screen and (max-width:700px) { 
-    margin-bottom:2rem;
-}
+
 `
 
 export const Title = styled.div`

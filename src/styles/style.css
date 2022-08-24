@@ -60,11 +60,14 @@ div.note > img{
 div.note > p > img{
     width: 100% !important;
 }
+.pointer{
+    cursor: pointer;
+}
 @media screen and (max-width:1200px) { 
    
 }
 
-@media screen and (max-width:900px) { 
+@media screen and (max-width:1000px) { 
     #editor {
         width:90%;
     }
