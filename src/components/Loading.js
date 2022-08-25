@@ -8,7 +8,7 @@ margin: 15vw auto;
     margin: 25vw auto;
 }
 @media (max-width: 650px) {
-    margin: 30vh auto;
+    margin: 40vh auto;
 }
 `
 const Loading = () => {

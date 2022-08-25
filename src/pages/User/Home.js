@@ -72,8 +72,7 @@ const Home = () => {
                 video_list[i].link = getIframeLinkByLink(video_list[i].link);
             }
             setVideos(video_list);
-            setLoading(false)
-            
+            setTimeout(() => setLoading(false), 1500);
         }
         fetchPost();
     }, [])
