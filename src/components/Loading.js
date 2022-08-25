@@ -10,6 +10,9 @@ margin: 15vw auto;
 @media (max-width: 650px) {
     margin: 40vh auto;
 }
+@media (max-width: 375px) {
+    margin: 30vh auto;
+}
 `
 const Loading = () => {
     return (
