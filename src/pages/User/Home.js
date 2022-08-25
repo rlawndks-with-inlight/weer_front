@@ -18,7 +18,7 @@ import LeftImgCard from '../../components/LeftImgCard';
 import { Wrappers, Title, Content, Card, Img } from '../../components/elements/UserContentTemplete';
 import ThemeCard from '../../components/ThemeCard'
 import VideoCard from '../../components/VideoCard';
-
+import Loading from '../../components/Loading';
 const ProFileImg1 = styled.img`
 
 `
@@ -38,6 +38,7 @@ const Home = () => {
     const [themes, setThemes] = useState([]);
     const [videos, setVideos] = useState([]);
     const [strategies, setStrategies] = useState([]);
+    const [loading, setLoading] = useState(false);
     const zMasterContent = [
         { date: '7월 11일', title: '오늘의 TOP PICK', sub_title: '차트영웅이 알려주는오늘의 TOP 주식은!?', hash_list: '["우크라 재건관련주","컨텐츠","식품가격인상"]', img: testImg },
         { date: '7월 11일', title: '오늘의 TOP PICK', sub_title: '차트영웅이 알려주는오늘의 TOP 주식은!?', hash_list: '["우크라 재건관련주","컨텐츠","식품가격인상"]', img: testImg },
@@ -57,6 +58,8 @@ const Home = () => {
     useEffect(() => {
         setPosts(zTalk[0].image_list);
         async function fetchPost() {
+            setLoading(true)
+            
             const { data: response } = await axios.get('/api/gethomecontent')
             setMasters(response.data.masters)
             setOneWord(response.data.oneWord);
@@ -69,6 +72,8 @@ const Home = () => {
                 video_list[i].link = getIframeLinkByLink(video_list[i].link);
             }
             setVideos(video_list);
+            setLoading(false)
+            
         }
         fetchPost();
     }, [])
@@ -84,96 +89,104 @@ const Home = () => {
     return (
         <>
             <Wrappers>
-                <div style={{ display: 'flex', flexWrap: 'wrap', position: 'relative', minHeight: '120px', width: '100%', maxWidth: '350px', margin: '0 auto' }}>
-                    {masters.map((item, idx) => (
-                        <>
-                            {idx < 4 ?
+                {loading ?
+                    <>
+                        <Loading />
+                    </>
+                    :
+                    <>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', position: 'relative', minHeight: '120px', width: '100%', maxWidth: '350px', margin: '0 auto' }}>
+                            {masters.map((item, idx) => (
                                 <>
-                                    <ProFileImg1 src={backUrl + item.profile_img} style={{ position: 'absolute', bottom: `25px`, width: '100px', left: `${(idx + 1) * 21 - 20}%` }} />
+                                    {idx < 4 ?
+                                        <>
+                                            <ProFileImg1 src={backUrl + item.profile_img} style={{ position: 'absolute', bottom: `25px`, width: '100px', left: `${(idx + 1) * 21 - 20}%` }} />
+                                        </>
+                                        :
+                                        <>
+                                            <ProFileImg2 src={backUrl + item.profile_img} style={{ position: 'absolute', bottom: `0`, width: '100px', left: `${(idx - 4) * 21 - 10}%` }} />
+                                        </>
+                                    }
                                 </>
-                                :
-                                <>
-                                    <ProFileImg2 src={backUrl + item.profile_img} style={{ position: 'absolute', bottom: `0`, width: '100px', left: `${(idx - 4) * 21 - 10}%` }} />
-                                </>
-                            }
-                        </>
-                    ))}
-                </div>
-                <Title className='pointer' onClick={() => { navigate('/onewordlist') }}>하루 1단어</Title>
-                <Content onClick={() => { navigate(`/post/oneword/${oneWord?.pk}`) }} className='pointer'>
-                    <div >{oneWord?.title ?? ""}</div>
-                    <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneWord?.hash ?? ""}</div>
-                </Content>
-                <Title className='pointer' onClick={() => navigate('/selectissuecategory')}>핵심 이슈{'&'}공시</Title>
-                <Content className='pointer'>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                        {issues.map((item, idx) => (
-                            <>
-                                <Card onClick={() => navigate(`/post/issue/${item?.pk}`)}>
-                                    <Img src={backUrl + item?.main_img} />
-                                    <div style={{ padding: '16px 16px 0 16px' }}>{item?.date} {issues[0]?.title}</div>
-                                    <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
-                                </Card>
-                            </>
-                        ))}
-                    </div>
-                </Content>
-                <Title onClick={() => { navigate('/oneeventlist') }} className='pointer'>하루 1종목</Title>
-                <Content onClick={() => { navigate(`/post/oneevent/${oneWord?.pk}`) }} className='pointer'>
-                    <div>{oneEvent?.title}</div>
-                    <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneEvent?.hash}</div>
-                </Content>
-                <Title onClick={() => { navigate('/masterlist') }} className='pointer'>퍼스트 전문가</Title>
+                            ))}
+                        </div>
+                        <Title className='pointer' onClick={() => { navigate('/onewordlist') }}>하루 1단어</Title>
+                        <Content onClick={() => { navigate(`/post/oneword/${oneWord?.pk}`) }} className='pointer'>
+                            <div >{oneWord?.title ?? ""}</div>
+                            <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneWord?.hash ?? ""}</div>
+                        </Content>
+                        <Title className='pointer' onClick={() => navigate('/selectissuecategory')}>핵심 이슈{'&'}공시</Title>
+                        <Content className='pointer'>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                                {issues.map((item, idx) => (
+                                    <>
+                                        <Card onClick={() => navigate(`/post/issue/${item?.pk}`)}>
+                                            <Img src={backUrl + item?.main_img} />
+                                            <div style={{ padding: '16px 16px 0 16px' }}>{item?.date} {issues[0]?.title}</div>
+                                            <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
+                                        </Card>
+                                    </>
+                                ))}
+                            </div>
+                        </Content>
+                        <Title onClick={() => { navigate('/oneeventlist') }} className='pointer'>하루 1종목</Title>
+                        <Content onClick={() => { navigate(`/post/oneevent/${oneWord?.pk}`) }} className='pointer'>
+                            <div>{oneEvent?.title}</div>
+                            <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneEvent?.hash}</div>
+                        </Content>
+                        <Title onClick={() => { navigate('/masterlist') }} className='pointer'>퍼스트 전문가</Title>
 
-                <SelectSubType className='subtype-container' style={{ marginBottom: '16px' }}>
-                    <SubType style={{ borderBottom: `2px solid ${0 == subTypeNum ? theme.color.background1 : '#fff'}`, fontWeight: `${0 == subTypeNum ? 'bold' : 'normal'}` }} onClick={() => { onChangeStrategyNum(0, 0) }}>
-                        All
-                    </SubType>
-                    {masters.map((item, index) => (
-                        <>
-                            <SubType style={{ borderBottom: `2px solid ${index + 1 == subTypeNum ? theme.color.background1 : '#fff'}`, fontWeight: `${index + 1 == subTypeNum ? 'bold' : 'normal'}` }} onClick={() => { onChangeStrategyNum(index + 1, item.pk) }}>
-                                {item.nickname}
+                        <SelectSubType className='subtype-container' style={{ marginBottom: '16px' }}>
+                            <SubType style={{ borderBottom: `2px solid ${0 == subTypeNum ? theme.color.background1 : '#fff'}`, fontWeight: `${0 == subTypeNum ? 'bold' : 'normal'}` }} onClick={() => { onChangeStrategyNum(0, 0) }}>
+                                All
                             </SubType>
-                        </>
-                    ))}
-                </SelectSubType>
-                <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                    {strategies.map((item, idx) => (
-                        <>
-                            <ThemeCard item={item} category='strategy' />
-                        </>
-                    ))}
-                </div>
-                <Title onClick={() => { navigate('/themelist') }}>핵심 테마</Title>
-                <Content>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                            {masters.map((item, index) => (
+                                <>
+                                    <SubType style={{ borderBottom: `2px solid ${index + 1 == subTypeNum ? theme.color.background1 : '#fff'}`, fontWeight: `${index + 1 == subTypeNum ? 'bold' : 'normal'}` }} onClick={() => { onChangeStrategyNum(index + 1, item.pk) }}>
+                                        {item.nickname}
+                                    </SubType>
+                                </>
+                            ))}
+                        </SelectSubType>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                            {strategies.map((item, idx) => (
+                                <>
+                                    <ThemeCard item={item} category='strategy' />
+                                </>
+                            ))}
+                        </div>
+                        <Title onClick={() => { navigate('/themelist') }}>핵심 테마</Title>
+                        <Content>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
 
-                        {themes.map((item, idx) => (
-                            <>
-                                <Card onClick={() => navigate(`/post/theme/${item?.pk}`)}>
-                                    <Img src={backUrl + item.main_img} />
-                                    <div style={{ padding: '16px', minHeight: '50px', justifyContent: 'space-between', display: 'flex', flexDirection: 'column' }}>
-                                        <div style={{ fontSize: `${theme.size.font4}`, fontWeight: 'bold' }}>{item?.title}</div>
-                                        <div style={{ fontSize: `${theme.size.font5}` }}>{item?.date}</div>
-                                    </div>
+                                {themes.map((item, idx) => (
+                                    <>
+                                        <Card onClick={() => navigate(`/post/theme/${item?.pk}`)}>
+                                            <Img src={backUrl + item.main_img} />
+                                            <div style={{ padding: '16px', minHeight: '50px', justifyContent: 'space-between', display: 'flex', flexDirection: 'column' }}>
+                                                <div style={{ fontSize: `${theme.size.font4}`, fontWeight: 'bold' }}>{item?.title}</div>
+                                                <div style={{ fontSize: `${theme.size.font5}` }}>{item?.date}</div>
+                                            </div>
 
-                                </Card>
+                                        </Card>
 
-                            </>
-                        ))}
-                    </div>
+                                    </>
+                                ))}
+                            </div>
 
-                </Content>
-                <Title onClick={() => { navigate('/videolist') }}>핵심 비디오</Title>
-                <Content>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                        {videos.map((item, idx) => (
-                            <>
-                                <VideoCard item={item} />
-                            </>
-                        ))}
-                    </div>
-                </Content>
+                        </Content>
+                        <Title onClick={() => { navigate('/videolist') }}>핵심 비디오</Title>
+                        <Content>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                                {videos.map((item, idx) => (
+                                    <>
+                                        <VideoCard item={item} />
+                                    </>
+                                ))}
+                            </div>
+                        </Content>
+                    </>}
+
 
             </Wrappers>
         </>

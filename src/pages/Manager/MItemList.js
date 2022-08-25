@@ -30,23 +30,23 @@ const MItemList = () => {
     const [pageList, setPageList] = useState([])
     const [loading, setLoading] = useState(false)
     useEffect(() => {
-        setZColumn(objManagerListContent[`${params.table}`].zColumn??{})
+        setZColumn(objManagerListContent[`${params.table}`].zColumn ?? {})
         async function fetchPost() {
             setLoading(true)
             let str = '';
             if (params.table == 'master') {
                 str = `/api/users?page=1&level=30`
-            } else if(params.table == 'user'){
+            } else if (params.table == 'user') {
                 str = `/api/users?page=1&level=0`
-            } else if(params.table == 'issue'&&params.pk){
-                str =  `/api/items?table=issue&page=1&category_pk=${params.pk}`
-            }else {
+            } else if (params.table == 'issue' && params.pk) {
+                str = `/api/items?table=issue&page=1&category_pk=${params.pk}`
+            } else {
                 let auth = JSON.parse(localStorage.getItem('auth'))
                 str = `/api/items?table=${params.table}&page=1`
-                if(auth?.user_level<40){
+                if (auth?.user_level < 40) {
                     str += `&user_pk=${auth.pk}`
                 }
-                
+
             }
             const { data: response } = await axios.get(str)
             setPosts(response.data.data)
@@ -61,11 +61,11 @@ const MItemList = () => {
         let str = '';
         if (params.table == 'master') {
             str = `/api/users?page=${num}&level=30`
-        } else if(params.table == 'user'){
+        } else if (params.table == 'user') {
             str = `/api/users?page=${num}&level=0`
-        }else if(params.table == 'issue'&&params.pk){
+        } else if (params.table == 'issue' && params.pk) {
             str = `/api/items?table=issue&page=${num}$category_pk=${params.pk}`
-        }else {
+        } else {
             str = `/api/items?table=${params.table}&page=${num}`
         }
         const { data: response } = await axios.get(str)
@@ -79,7 +79,7 @@ const MItemList = () => {
             <ManagerWrappers>
                 <SideBar />
                 <ManagerContentWrappers>
-                    <Breadcrumb title={objManagerListContent[`${params.table}`].breadcrumb+'관리'} />
+                    <Breadcrumb title={objManagerListContent[`${params.table}`].breadcrumb + '관리'} />
                     {loading ?
                         <>
                             <Loading />
@@ -102,7 +102,7 @@ const MItemList = () => {
                                     </PageButton>
                                 </>
                             ))}
-                            <PageButton onClick={() => changePage(pageList.length??1)}>
+                            <PageButton onClick={() => changePage(pageList.length ?? 1)}>
                                 마지막
                             </PageButton>
                         </PageContainer>

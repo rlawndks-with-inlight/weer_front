@@ -38,11 +38,13 @@ const IssueList = () => {
         <>
             <Wrappers>
                 <Title>{state}</Title>
+                <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
                 {posts.map((item, idx) => (
                     <>
                         <ThemeCard item={item} category={'issue'} />
                     </>
                 ))}
+                </div>
             </Wrappers>
         </>
     )

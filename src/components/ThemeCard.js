@@ -27,6 +27,17 @@ background:#fff;
     width:37.5vw;
 }
 `
+const Title = styled.div`
+font-size:${theme.size.font4}; 
+font-weight: bold;
+width:250px;
+@media screen and (max-width:1200px) {
+    width:20vw;
+}
+@media screen and (max-width:700px) {
+    width:47.5vw;
+}
+`
 const ThemeCard = (props) => {
     const navigate = useNavigate();
     return (
@@ -37,7 +48,7 @@ const ThemeCard = (props) => {
                 }} />
 
                 <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                    <div style={{ fontSize: `${theme.size.font4}`, fontWeight: 'bold' }}> {props.item?.title ?? ""}</div>
+                    <Title> {props.item?.title ?? ""}</Title>
                     <div style={{ fontSize: `${theme.size.font5}`, display: 'flex', flexWrap: 'wrap' }}>
                         {props.item?.hash}
                     </div>

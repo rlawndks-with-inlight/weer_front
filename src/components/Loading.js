@@ -1,6 +1,7 @@
 import { Circles } from 'react-loader-spinner';
 import styled from 'styled-components';
 import theme from '../styles/theme';
+import loadingGif from '../assets/images/test/loading.gif'
 const LoadingContainer = styled.div`
 margin: 15vw auto;
 @media (max-width: 1000px) {
@@ -14,7 +15,7 @@ const Loading = () => {
     return (
         <>
             <LoadingContainer>
-                <Circles color={`${theme.color.manager.background1}`} height={50} width={50} />
+                <img src={loadingGif} style={{width:'100px'}}/>
             </LoadingContainer>
         </>
     )
