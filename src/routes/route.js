@@ -48,6 +48,7 @@ const zRoute = [
     { link: '/manager/edit/video/:pk', element: <MVideoEdit /> },
     { link: '/manager/edit/issue_category/:pk', element: <MIssueCategoryEdit /> },
     { link: '/manager/edit/:table/:pk', element: <MItemEdit /> },
+    { link: '/manager/list/:table/:pk', element: <MItemList /> },
     { link: '/manager/list/:table', element: <MItemList /> },
 ]
 export { zRoute }

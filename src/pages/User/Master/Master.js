@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Wrappers } from "../../../components/elements/UserContentTemplete";
+import { Wrappers, Card, Img } from "../../../components/elements/UserContentTemplete";
 import styled from "styled-components";
 import theme from "../../../styles/theme";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -7,6 +7,7 @@ import axios from "axios";
 import ThemeCard from "../../../components/ThemeCard";
 import { getIframeLinkByLink } from "../../../functions/utils";
 import { backUrl } from "../../../data/Data";
+import VideoCard from "../../../components/VideoCard";
 
 const SelectType = styled.div`
 display:flex;
@@ -23,7 +24,7 @@ font-weight:bold;
 cursor:pointer;
 font-size:1rem;
 `
-const Card = styled.div`
+const Card2 = styled.div`
 width:100%;
 background:${props => props.theme.color.background3};
 text-align:left;
@@ -47,7 +48,6 @@ const Master = () => {
         async function fetchPosts() {
             const { data: response } = await axios.get(`/api/items?table=strategy&user_pk=${params.pk}`);
             setPosts(response.data)
-            console.log(response);
         }
         fetchPosts();
     }, [])
@@ -58,7 +58,6 @@ const Master = () => {
         if (num == 1) {
             str = `/api/items?table=strategy&user_pk=${params.pk}`
             const { data: response } = await axios.get(str);
-            console.log(response)
             setPosts(response.data);
         } else {
             str = `/api/items?table=video&user_pk=${params.pk}`
@@ -73,37 +72,34 @@ const Master = () => {
     return (
         <>
             <Wrappers>
-                <Card onClick={() => {}}>
+                <Card2 onClick={() => { }}>
                     <div style={{ width: '50%', padding: '20px' }}>
                         <div>{state.nickname}</div>
                         <div style={{ fontSize: `${theme.size.font5}`, marginTop: '8px', color: `${theme.color.font2}` }}>{state.name} 전문가</div>
                     </div>
                     <img style={{ position: 'absolute', bottom: '0', right: '5%', height: '80%' }} src={backUrl + state.img} />
-                </Card>
+                </Card2>
                 <SelectType>
                     <Type style={{ borderBottom: `4px solid ${typeNum == 1 ? theme.color.background1 : '#fff'}`, color: `${typeNum == 1 ? theme.color.background1 : '#ccc'}` }} onClick={() => { changeType(1) }}>투자전략</Type>
                     <Type style={{ borderBottom: `4px solid ${typeNum == 2 ? theme.color.background1 : '#fff'}`, color: `${typeNum == 2 ? theme.color.background1 : '#ccc'}` }} onClick={() => { changeType(2) }}>핵심비디오</Type>
                 </SelectType>
-                {posts.map((item, idx) => (
-                    <>
-                        {typeNum == 1 ?
-                            <>
-                                <ThemeCard item={item} category={'strategy'} />
-                            </>
-                            :
-                            <>
-                                <div style={{ width: '100%', background: `${theme.color.background3}`, fontSize: `${theme.size.font4}` }} onClick={() => { navigate(`/video/${item.pk}`) }}>
-                                    <img src={`https://img.youtube.com/vi/${item?.link}/mqdefault.jpg`} style={{ width: '100%' }} />
-                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                                        <div style={{ padding: '6px 0' }}>{item.title}</div>
-                                        <div style={{ padding: '6px 0', fontSize: `${theme.size.font5}` }}>자세히보기 {'>'}</div>
-                                    </div>
-                                </div>
-                            </>
-                        }
-                    </>
-                ))}
+                <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                    {posts.map((item, idx) => (
+                        <>
+                            {typeNum == 1 ?
+                                <>
 
+                                    <ThemeCard item={item} category={'strategy'} />
+
+                                </>
+                                :
+                                <>
+                                    <VideoCard item={item} />
+                                </>
+                            }
+                        </>
+                    ))}
+                </div>
             </Wrappers>
         </>
     )

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Title, Wrappers } from "../../components/elements/UserContentTemplete";
+import { Title, Wrappers, Card, Img } from "../../components/elements/UserContentTemplete";
 import SelectSubType from "../../components/elements/SelectSubType";
 import SubType from "../../components/elements/SubType";
 import { zColor, zChannel } from "../../data/TestData";
@@ -10,18 +10,8 @@ import logo from '../../assets/images/test/logo.svg'
 import { getIframeLinkByLink, shuffleArray } from '../../functions/utils';
 import theme from "../../styles/theme";
 import { backUrl } from "../../data/Data";
-const Card = styled.div`
-width:100%;
-background:${props => props.theme.color.background3};
-text-align:left;
-height:112px;
-margin:6px 0;
-color:${props => props.theme.color.font1};
-font-weight:bold;
-font-size:${props => props.theme.size.font3};
-cursor:pointer;
-position:relative;
-`
+import VideoCard from "../../components/VideoCard";
+
 const VideoList = () => {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
@@ -67,17 +57,14 @@ const VideoList = () => {
                     ))}
 
                 </SelectSubType>
-                {posts.map((item, idx) => (
-                    <>
-                        <div style={{ width: '100%', background: `${theme.color.background3}`, fontSize: `${theme.size.font4}` }} onClick={() => { navigate(`/video/${item.pk}`) }}>
-                            <img src={`https://img.youtube.com/vi/${item.link}/mqdefault.jpg`} style={{ width: '100%' }} />
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                                <div style={{ padding: '6px 0' }}>{item.title}</div>
-                                <div style={{ padding: '6px 0', fontSize: `${theme.size.font5}` }}>자세히보기 {'>'}</div>
-                            </div>
-                        </div>
-                    </>
-                ))}
+                <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                    {posts.map((item, idx) => (
+                        <>
+                            <VideoCard item={item} />
+
+                        </>
+                    ))}
+                </div>
             </Wrappers>
         </>
     )

@@ -107,7 +107,8 @@ const MItemEdit = () => {
                 if (params.table == 'oneword' || params.table == 'oneevent') {
                     const { data: response } = await axios.post(`/api/add${params.table}`, formData)
                     if (response.result > 0) {
-                        alert('성공적으로 저장되었습니다.')
+                        alert('성공적으로 저장되었습니다.');
+                        navigate(-1);
                     }
                 } else {
                     if (params.pk > 0) {

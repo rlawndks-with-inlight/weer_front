@@ -24,6 +24,7 @@ export const zBottomMenu = [
 export const objManagerListContent = {
     user: {
         breadcrumb: '회원',
+        schema:'user',
         zColumn: [
             { name: '아이디', width: 11, type: 'text', column: 'id' },
             { name: '닉네임', width: 11, type: 'text', column: 'nickname' },
@@ -37,6 +38,7 @@ export const objManagerListContent = {
     },
     master: {
         breadcrumb: '전문가',
+        schema:'user',
         zColumn: [
             { name: '프로필이미지', width: 16, type: 'img', column: 'profile_img' },
             { name: '아이디', width: 16, type: 'text', column: 'id' },
@@ -48,6 +50,7 @@ export const objManagerListContent = {
     },
     oneword: {
         breadcrumb: '하루1단어',
+        schema:'oneword',
         zColumn: [
             { name: '메인이미지', width: 16, type: 'img', column: 'main_img' },
             { name: '제목', width: 16, type: 'text', column: 'title' },
@@ -59,6 +62,7 @@ export const objManagerListContent = {
     },
     oneevent: {
         breadcrumb: '하루1종목',
+        schema:'oneevent',
         zColumn: [
             { name: '메인이미지', width: 16, type: 'img', column: 'main_img' },
             { name: '제목', width: 16, type: 'text', column: 'title' },
@@ -70,6 +74,7 @@ export const objManagerListContent = {
     },
     theme: {
         breadcrumb: '핵심테마',
+        schema:'theme',
         zColumn: [
             { name: '메인이미지', width: 16, type: 'img', column: 'main_img' },
             { name: '제목', width: 16, type: 'text', column: 'title' },
@@ -81,6 +86,7 @@ export const objManagerListContent = {
     },
     strategy: {
         breadcrumb: '투자전략',
+        schema:'strategy',
         zColumn: [
             { name: '메인이미지', width: 16, type: 'img', column: 'main_img' },
             { name: '제목', width: 16, type: 'text', column: 'title' },
@@ -92,6 +98,7 @@ export const objManagerListContent = {
     },
     issue: {
         breadcrumb: '핵심이슈&공시',
+        schema:'issue',
         zColumn: [
             { name: '메인이미지', width: 16, type: 'img', column: 'main_img' },
             { name: '제목', width: 16, type: 'text', column: 'title' },
@@ -103,6 +110,7 @@ export const objManagerListContent = {
     },
     issue_category: {
         breadcrumb: '핵심이슈&공시 카테고리',
+        schema:'issue_category',
         zColumn: [
             { name: '제목', width: 48, type: 'text', column: 'title' },
             { name: '생성시간', width: 28, type: 'text', column: 'date' },
@@ -112,6 +120,7 @@ export const objManagerListContent = {
     },
     video: {
         breadcrumb: '핵심비디오',
+        schema:'video',
         zColumn: [
             { name: '제목', width: 16, type: 'text', column: 'title' },
             { name: '링크', width: 32, type: 'link', column: 'link' },
@@ -122,6 +131,7 @@ export const objManagerListContent = {
     },
     inquiry: {
         breadcrumb: '문의',
+        schema:'inquiry',
         zColumn: [
             { name: '프로필이미지', width: 16, type: 'img', column: 'profile_img' },
             { name: '아이디', width: 16, type: 'text', column: 'id' },

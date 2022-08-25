@@ -38,7 +38,9 @@ const MItemList = () => {
                 str = `/api/users?page=1&level=30`
             } else if(params.table == 'user'){
                 str = `/api/users?page=1&level=0`
-            } else {
+            } else if(params.table == 'issue'&&params.pk){
+                str =  `/api/items?table=issue&page=1&category_pk=${params.pk}`
+            }else {
                 let auth = JSON.parse(localStorage.getItem('auth'))
                 str = `/api/items?table=${params.table}&page=1`
                 if(auth?.user_level<40){
@@ -61,6 +63,8 @@ const MItemList = () => {
             str = `/api/users?page=${num}&level=30`
         } else if(params.table == 'user'){
             str = `/api/users?page=${num}&level=0`
+        }else if(params.table == 'issue'&&params.pk){
+            str = `/api/items?table=issue&page=${num}$category_pk=${params.pk}`
         }else {
             str = `/api/items?table=${params.table}&page=${num}`
         }
@@ -93,7 +97,7 @@ const MItemList = () => {
                             </PageButton>
                             {pageList.map((item, index) => (
                                 <>
-                                    <PageButton onClick={() => changePage(item)} style={{ color: `${page == item ? '#fff' : ''}`, background: `${page == item ? theme.color.manager.background1 : ''}` }}>
+                                    <PageButton onClick={() => changePage(item)} style={{ color: `${page == item ? '#fff' : ''}`, background: `${page == item ? theme.color.background1 : ''}` }}>
                                         {item}
                                     </PageButton>
                                 </>

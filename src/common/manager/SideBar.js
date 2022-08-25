@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi'
 import logo from '../../assets/images/test/logo.svg'
-
+import {BiRadioCircle} from 'react-icons/bi'
 import { BsPerson, BsCameraVideo } from 'react-icons/bs'
 import { MdOutlineAccessTime, MdNotificationImportant } from 'react-icons/md'
 import { IoStatsChartSharp, IoLogoReact } from 'react-icons/io5'
@@ -13,6 +13,7 @@ import { FiSettings } from 'react-icons/fi'
 import { AiOutlineQuestionCircle } from 'react-icons/ai'
 import { WiDayHaze } from 'react-icons/wi'
 import { SiMicrostrategy } from 'react-icons/si'
+import axios from 'axios';
 const Wrappers = styled.div`
 display:flex;
 flex-direction:column;
@@ -92,25 +93,45 @@ const SideBar = () => {
     const navigate = useNavigate();
 
     const [auth, setAuth] = useState({})
+    const [zIssueCategory, setZIssueCategory] = useState([])
+    const [issueCategoryDisplay, setIssueCategoryDisplay] = useState(false);
+
     const zSidebar = [
-        { name: '회원관리', link: '/manager/list/user', icon: <BsPerson />, level: 40 },
+        { name: '회원관리', link: '/manager/list/user', icon: <BsPerson />, level: 40,allow_list:['/manager/list/user'] },
         //{ name: '접속자현황', link: '/manager/list/user', icon: <MdOutlineAccessTime /> },
         //{ name: '회원통계', link: '/manager/list/user', icon: <IoStatsChartSharp /> },
-        { name: '전문가관리', link: '/manager/list/master', icon: <FaChalkboardTeacher />, level: 40 },
-        { name: '하루1단어', link: '/manager/list/oneword', icon: <WiDayHaze />, level: 40 },
-        { name: '하루1종목', link: '/manager/list/oneevent', icon: <WiDayHaze />, level: 40 },
-        { name: '핵심테마', link: '/manager/list/theme', icon: <IoLogoReact />, level: 30 },
-        { name: '투자전략', link: '/manager/list/strategy', icon: <SiMicrostrategy />, level: 30 },
-        { name: '핵심이슈&공시 카테고리', link: '/manager/list/issue_category', icon: <MdNotificationImportant />, level: 40 },
-        { name: '핵심이슈&공시', link: '/manager/list/issue', icon: <MdNotificationImportant />, level: 30 },
-        { name: '핵심비디오', link: '/manager/list/video', icon: <BsCameraVideo />, level: 30 },
-        { name: '문의관리', link: '/manager/list/inquiry', icon: <AiOutlineQuestionCircle />, level: 40 },
+        { name: '전문가관리', link: '/manager/list/master', icon: <FaChalkboardTeacher />, level: 40 ,allow_list:['/manager/list/master']},
+        { name: '하루1단어', link: '/manager/list/oneword', icon: <WiDayHaze />, level: 40 ,allow_list:['/manager/list/oneword']},
+        { name: '하루1종목', link: '/manager/list/oneevent', icon: <WiDayHaze />, level: 40 ,allow_list:['/manager/list/oneevent']},
+        { name: '핵심테마', link: '/manager/list/theme', icon: <IoLogoReact />, level: 30 ,allow_list:['/manager/list/theme']},
+        { name: '투자전략', link: '/manager/list/strategy', icon: <SiMicrostrategy />, level: 30 ,allow_list:['/manager/list/strategy']},
+        { name: '핵심이슈&공시 카테고리', link: '/manager/list/issue_category', icon: <MdNotificationImportant />, level: 40 ,allow_list:['/manager/list/issue_category']},
+        { name: '핵심이슈&공시', link: '/manager/list/issue', icon: <MdNotificationImportant />, level: 30 ,allow_list:['/manager/list/issue','/manager/list/issue/1','/manager/list/issue/2','/manager/list/issue/3','/manager/list/issue/4','/manager/list/issue/5']},
+        // { name: '핵심비디오', link: '/manager/list/video', icon: <BsCameraVideo />, level: 30 },
+        //{ name: '문의관리', link: '/manager/list/inquiry', icon: <AiOutlineQuestionCircle />, level: 40 },
     ];
     const [display, setDisplay] = useState('none');
     useEffect(() => {
         setAuth(JSON.parse(localStorage.getItem('auth')));
-        
     }, [location]);
+    useEffect(() => {
+
+        async function fetchPost() {
+            const { data: response } = await axios.get('/api/items?table=issue_category')
+            setZIssueCategory(response?.data);
+        }
+        fetchPost()
+    }, [])
+    const onClickMenu = (link) => {
+        if (link == '/manager/list/issue') {
+            changeIssueCategoryDisplay();
+        } else {
+            navigate(link);
+        }
+    }
+    const changeIssueCategoryDisplay = () => {
+        setIssueCategoryDisplay(!issueCategoryDisplay);
+    }
     return (
         <>
             <HambergurContainer onClick={() => { setDisplay('flex') }}>
@@ -128,16 +149,16 @@ const SideBar = () => {
                         <>
                             {auth.user_level >= item.level ?
                                 <>
-                                    {item.link == location.pathname ?
+                                    {item.allow_list.includes(location.pathname) ?
                                         <>
-                                            <SelectMenuContent onClick={() => { navigate(`${item.link}`) }}>
+                                            <SelectMenuContent onClick={() => { onClickMenu(`${item.link}`) }}>
                                                 {item.icon}
                                                 <MenuText>{item.name}</MenuText>
                                             </SelectMenuContent>
                                         </>
                                         :
                                         <>
-                                            <MenuContent onClick={() => { navigate(`${item.link}`) }}>
+                                            <MenuContent onClick={() => { onClickMenu(`${item.link}`) }}>
                                                 {item.icon}
                                                 <MenuText>{item.name}</MenuText>
                                             </MenuContent>
@@ -151,6 +172,47 @@ const SideBar = () => {
 
                         </>
                     ))}
+                    {issueCategoryDisplay ?
+                        <>
+                            {zIssueCategory.map((item, idx) => (
+                                <>
+                                    <MenuContent onClick={() => { navigate(`/manager/list/issue/${item.pk}`) }} style={{color:`${location.pathname==`/manager/list/issue/${item.pk}`?'#000':''}`}}>
+                                        <MenuText style={{marginLeft:'15px'}}>{item.title}</MenuText>
+                                    </MenuContent>
+                                </>
+                            ))}
+                        </>
+                        :
+                        <>
+                        </>}
+                    {'/manager/list/video' == location.pathname ?
+                        <>
+                            <SelectMenuContent onClick={() => { onClickMenu(`/manager/list/video`) }}>
+                                <BsCameraVideo />
+                                <MenuText>핵심비디오</MenuText>
+                            </SelectMenuContent>
+                        </>
+                        :
+                        <>
+                            <MenuContent onClick={() => { onClickMenu(`/manager/list/video`) }}>
+                                <BsCameraVideo />
+                                <MenuText>핵심비디오</MenuText>
+                            </MenuContent>
+                        </>}
+                    {'/manager/list/inquiry' == location.pathname ?
+                        <>
+                            <SelectMenuContent onClick={() => { onClickMenu('/manager/list/inquiry') }}>
+                                <AiOutlineQuestionCircle />
+                                <MenuText>문의관리</MenuText>
+                            </SelectMenuContent>
+                        </>
+                        :
+                        <>
+                            <MenuContent onClick={() => { onClickMenu('/manager/list/inquiry') }}>
+                                <AiOutlineQuestionCircle />
+                                <MenuText>문의관리</MenuText>
+                            </MenuContent>
+                        </>}
                 </div>
             </Wrappers>
         </>

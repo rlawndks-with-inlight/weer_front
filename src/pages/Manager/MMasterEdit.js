@@ -15,7 +15,7 @@ import $ from 'jquery';
 import { addItem, updateItem } from '../../functions/utils';
 import { Card, Title, Input, Select, Row, Col, ImageContainer } from '../../components/elements/ManagerTemplete';
 import { backUrl } from '../../data/Data';
-
+import theme from '../../styles/theme';
 
 const MMasterEdit = () => {
     const params = useParams();
@@ -117,7 +117,7 @@ const MMasterEdit = () => {
                                         </>
                                         :
                                         <>
-                                            <AiFillFileImage style={{ margin: '4rem', fontSize: '4rem', color: '#009432' }} />
+                                            <AiFillFileImage style={{ margin: '4rem', fontSize: '4rem', color: `${theme.color.manager.font3}` }} />
                                         </>}
                                 </ImageContainer>
                                 <div>

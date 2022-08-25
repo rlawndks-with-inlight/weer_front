@@ -17,7 +17,7 @@ top:0;
 z-index:10;
 background:#fff;
 border-bottom: 0.1rem solid #e6e6e6;
-@media screen and (max-width:1000px) { 
+@media screen and (max-width:1050px) { 
   border-bottom: none;
   height:3rem;
 }
@@ -29,7 +29,7 @@ margin:0 auto;
 display:none;
 align-items:center;
 justify-content: space-between;
-@media screen and (max-width:1000px) { 
+@media screen and (max-width:1050px) { 
   display:flex;
 }
 `
@@ -39,7 +39,7 @@ margin:0 auto;
 display:flex;
 align-items:center;
 justify-content: space-between;
-@media screen and (max-width:1000px) { 
+@media screen and (max-width:1050px) { 
   display:none;
 }
 `

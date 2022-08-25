@@ -12,7 +12,7 @@ margin-left:auto;
 margin-right:auto;
 margin-bottom:6rem;
 
-@media screen and (max-width:1000px) { 
+@media screen and (max-width:1050px) { 
     margin-top:3.5rem;
 }
 
@@ -37,5 +37,24 @@ flex-direction:column;
 font-weight:normal;
 @media screen and (max-width:700px) { 
     
+}
+`
+export const Img = styled.img`
+width:100%;
+height:360px;
+z-index:2;
+@media screen and (max-width:1000px) {
+height:31.8vw;
+}
+@media screen and (max-width:600px) {
+    height:65.61vw;
+}
+`
+export const Card = styled.div`
+width: 48%; 
+margin-bottom:16px;
+background: ${props => props.theme.color.background3};
+@media screen and (max-width:600px) {
+    width:100%;
 }
 `

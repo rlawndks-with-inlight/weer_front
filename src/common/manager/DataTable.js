@@ -17,7 +17,7 @@ const Tr = styled.tr`
 box-shadow:1px 1px 1px #00000029;
 font-size:14px;
 background:#fff;
-color:${props=>props.theme.color.manager.font2};
+color:${props => props.theme.color.manager.font2};
 
 `
 const Td = styled.td`
@@ -31,7 +31,14 @@ const DataTable = (props) => {
     }, [])
 
     const deleteItem = async (pk, schema) => {
-        const { data: response } = await axios.post(`/api/delete${schema}`, { pk: pk })
+        let obj = { 
+            pk: pk, 
+            table: schema 
+        }
+        if(schema=='master'){
+            obj.table = 'user';
+        }
+        const { data: response } = await axios.post(`/api/deleteitem`, obj)
 
         if (response.result > 0) {
             alert('has been deleted');
@@ -43,7 +50,7 @@ const DataTable = (props) => {
 
     return (
         <>
-            <div style={{ marginBottom: '16px',overflowX:'auto' }}>
+            <div style={{ marginBottom: '16px', overflowX: 'auto' }}>
                 <Table>
                     <Tr style={{ fontWeight: 'bold', background: `${theme.color.manager.background2}`, fontSize: '16px' }}>
                         {props.column.map((item, index) => (
@@ -64,16 +71,16 @@ const DataTable = (props) => {
                                             :
                                             <>
                                             </>}
-                                            {column.type == 'link' ?
+                                        {column.type == 'link' ?
                                             <>
-                                                <Td style={{ width: `${column.width}%`,cursor:'pointer',textDecoration:'underline' }} onClick={()=>{window.open(data[`${column.column}`])}}>{data[`${column.column}`]}</Td>
+                                                <Td style={{ width: `${column.width}%`, cursor: 'pointer', textDecoration: 'underline' }} onClick={() => { window.open(data[`${column.column}`]) }}>{data[`${column.column}`]}</Td>
                                             </>
                                             :
                                             <>
                                             </>}
-                                            {column.type == 'level' ?
+                                        {column.type == 'level' ?
                                             <>
-                                                <Td style={{ width: `${column.width}%` }}>{data[column.column]==0?'일반유저':data[column.column]==40?'관리자':data[column.column]==30?'대가':'개발자'}</Td>
+                                                <Td style={{ width: `${column.width}%` }}>{data[column.column] == 0 ? '일반유저' : data[column.column] == 40 ? '관리자' : data[column.column] == 30 ? '대가' : '개발자'}</Td>
                                             </>
                                             :
                                             <>
@@ -83,7 +90,7 @@ const DataTable = (props) => {
                                                 <Td style={{ width: `${column.width}%` }}>
                                                     {data[`${column.column}`] ?
                                                         <>
-                                                            <img src={backUrl+data[`${column.column}`]} style={{height:'5rem'}} />
+                                                            <img src={backUrl + data[`${column.column}`]} style={{ height: '5rem' }} />
                                                         </>
                                                         :
                                                         <>
