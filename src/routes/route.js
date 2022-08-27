@@ -20,6 +20,7 @@ import MMasterEdit from '../pages/Manager/MMasterEdit';
 import MSetting from '../pages/Manager/MSetting';
 import MIssueCategoryEdit from '../pages/Manager/MIssueCategoryEdit';
 import MVideoEdit from '../pages/Manager/MVideoEdit';
+import MSettingEdit from '../pages/Manager/MSettingEdit';
 
 import MItemEdit from '../pages/Manager/MItemEdit';
 import MItemList from '../pages/Manager/MItemList';
@@ -47,6 +48,7 @@ const zRoute = [
     { link: '/manager/setting', element: <MSetting /> },
     { link: '/manager/edit/video/:pk', element: <MVideoEdit /> },
     { link: '/manager/edit/issue_category/:pk', element: <MIssueCategoryEdit /> },
+    { link: '/manager/edit/setting', element: <MSettingEdit /> },
     { link: '/manager/edit/:table/:pk', element: <MItemEdit /> },
     { link: '/manager/list/:table/:pk', element: <MItemList /> },
     { link: '/manager/list/:table', element: <MItemList /> },

@@ -31,6 +31,7 @@ const Home = () => {
     const [typeNum, setTypeNum] = useState(1)
     const [subTypeNum, setSubTypeNum] = useState(0)
     const [posts, setPosts] = useState([]);
+    const [setting, setSetting] = useState({});
     const [masters, setMasters] = useState([])
     const [oneWord, setOneWord] = useState({});
     const [issues, setIssues] = useState([]);
@@ -61,6 +62,7 @@ const Home = () => {
             setLoading(true)
             
             const { data: response } = await axios.get('/api/gethomecontent')
+            setSetting(response.data.setting);
             setMasters(response.data.masters)
             setOneWord(response.data.oneWord);
             setIssues(response.data.issues);
@@ -94,21 +96,9 @@ const Home = () => {
                     </>
                     :
                     <>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', position: 'relative', minHeight: '120px', width: '100%', maxWidth: '350px', margin: '0 auto' }}>
-                            {masters.map((item, idx) => (
-                                <>
-                                    {idx < 4 ?
-                                        <>
-                                            <ProFileImg1 src={backUrl + item.profile_img} style={{ position: 'absolute', bottom: `25px`, width: '100px', left: `${(idx + 1) * 21 - 20}%` }} />
-                                        </>
-                                        :
-                                        <>
-                                            <ProFileImg2 src={backUrl + item.profile_img} style={{ position: 'absolute', bottom: `0`, width: '100px', left: `${(idx - 4) * 21 - 10}%` }} />
-                                        </>
-                                    }
-                                </>
-                            ))}
-                        </div>
+                        <Content>
+                            <img src={backUrl+setting?.main_img} style={{width:'100%',maxWidth:'500px',margin:'0 auto'}} />
+                        </Content>
                         <Title className='pointer' onClick={() => { navigate('/onewordlist') }}>하루 1단어</Title>
                         <Content onClick={() => { navigate(`/post/oneword/${oneWord?.pk}`) }} className='pointer'>
                             <div >{oneWord?.title ?? ""}</div>

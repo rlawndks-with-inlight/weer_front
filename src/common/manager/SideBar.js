@@ -10,7 +10,7 @@ import { MdOutlineAccessTime, MdNotificationImportant } from 'react-icons/md'
 import { IoStatsChartSharp, IoLogoReact } from 'react-icons/io5'
 import { FaChalkboardTeacher } from 'react-icons/fa'
 import { FiSettings } from 'react-icons/fi'
-import { AiOutlineQuestionCircle } from 'react-icons/ai'
+import { AiOutlineQuestionCircle,AiOutlineRotateLeft } from 'react-icons/ai'
 import { WiDayHaze } from 'react-icons/wi'
 import { SiMicrostrategy } from 'react-icons/si'
 import axios from 'axios';
@@ -100,6 +100,7 @@ const SideBar = () => {
         { name: '회원관리', link: '/manager/list/user', icon: <BsPerson />, level: 40,allow_list:['/manager/list/user'] },
         //{ name: '접속자현황', link: '/manager/list/user', icon: <MdOutlineAccessTime /> },
         //{ name: '회원통계', link: '/manager/list/user', icon: <IoStatsChartSharp /> },
+        { name: '메인이미지관리', link: '/manager/edit/setting', icon: <AiOutlineRotateLeft />, level: 40 ,allow_list:['/manager/edit/setting']},
         { name: '전문가관리', link: '/manager/list/master', icon: <FaChalkboardTeacher />, level: 40 ,allow_list:['/manager/list/master']},
         { name: '하루1단어', link: '/manager/list/oneword', icon: <WiDayHaze />, level: 40 ,allow_list:['/manager/list/oneword']},
         { name: '하루1종목', link: '/manager/list/oneevent', icon: <WiDayHaze />, level: 40 ,allow_list:['/manager/list/oneevent']},
