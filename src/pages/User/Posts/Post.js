@@ -14,6 +14,8 @@ const Post = () =>{
         async function fetchPost(){
             const {data:response} = await axios.get(`/api/item?table=${params.table}&pk=${params.pk}`)
             let obj = response.data;
+            console.log(response)
+
             obj.note = stringToHTML(obj.note)
             $('.note').append(obj.note)
             $('.note > img').css("width","100%")

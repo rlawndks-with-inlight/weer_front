@@ -129,7 +129,7 @@ const Home = () => {
                             </div>
                         </Content>
                         <Title onClick={() => { navigate('/oneeventlist') }} className='pointer'>하루 1종목</Title>
-                        <Content onClick={() => { navigate(`/post/oneevent/${oneWord?.pk}`) }} className='pointer'>
+                        <Content onClick={() => { navigate(`/post/oneevent/${oneEvent?.pk}`) }} className='pointer'>
                             <div>{oneEvent?.title}</div>
                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneEvent?.hash}</div>
                         </Content>
