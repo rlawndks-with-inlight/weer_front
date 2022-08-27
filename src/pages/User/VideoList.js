@@ -1,11 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { Title, Wrappers, Card, Img } from "../../components/elements/UserContentTemplete";
 import SelectSubType from "../../components/elements/SelectSubType";
 import SubType from "../../components/elements/SubType";
-import { zColor, zChannel } from "../../data/TestData";
 import logo from '../../assets/images/test/logo.svg'
 import { getIframeLinkByLink, shuffleArray } from '../../functions/utils';
 import theme from "../../styles/theme";
@@ -21,7 +19,7 @@ const VideoList = () => {
         async function fetchPosts() {
             const { data: response0 } = await axios.get('/api/items?table=user&level=30')
             setChannels(response0.data);
-            const { data: response } = await axios.get('/api/items?table=video');
+            const { data: response } = await axios.get('/api/items?table=video&status=1');
             let list = response.data;
             for (var i = 0; i < list.length; i++) {
                 list[i].link = getIframeLinkByLink(list[i].link);
@@ -32,7 +30,7 @@ const VideoList = () => {
     }, [])
     const getVideoListByNum = async (num, pk) => {
         setChannelNum(num);
-        let str = '/api/items?table=video';
+        let str = '/api/items?table=video&status=1';
         if (num > 0) {
             str += `&user_pk=${pk}`
         }

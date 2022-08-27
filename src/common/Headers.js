@@ -16,9 +16,9 @@ width:100%;
 top:0;
 z-index:10;
 background:#fff;
-border-bottom: 0.1rem solid #e6e6e6;
+box-shadow: 5px 10px 10px rgb(0 0 0 / 3%);
 @media screen and (max-width:1050px) { 
-  border-bottom: none;
+  box-shadow:none;
   height:3rem;
 }
 `

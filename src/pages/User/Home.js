@@ -10,25 +10,29 @@ import SelectSubType from '../../components/elements/SelectSubType';
 import { zTalk, zTheme } from '../../data/TestData';
 import SubType from '../../components/elements/SubType';
 import testImg from '../../assets/images/test/test5.jpg';
-import masterImg from '../../assets/images/test/master.png';
 import axios from 'axios';
 import { backUrl } from '../../data/Data';
 import { getIframeLinkByLink } from '../../functions/utils';
-import LeftImgCard from '../../components/LeftImgCard';
 import { Wrappers, Title, Content, Card, Img } from '../../components/elements/UserContentTemplete';
 import ThemeCard from '../../components/ThemeCard'
 import VideoCard from '../../components/VideoCard';
 import Loading from '../../components/Loading';
-const ProFileImg1 = styled.img`
-
+const WrapDiv = styled.div`
+display: flex;
+justify-content: space-between;
+flex-wrap: wrap;
+@media screen and (max-width:600px) { 
+    display:none;
+}
 `
-const ProFileImg2 = styled.img`
-
+const SliderDiv = styled.div`
+display:none;
+@media screen and (max-width:602px) { 
+    display:flex;
+}
 `
 const Home = () => {
     const navigate = useNavigate();
-    const [channelNum, setChannelNum] = useState(0)
-    const [typeNum, setTypeNum] = useState(1)
     const [subTypeNum, setSubTypeNum] = useState(0)
     const [posts, setPosts] = useState([]);
     const [setting, setSetting] = useState({});
@@ -40,15 +44,11 @@ const Home = () => {
     const [videos, setVideos] = useState([]);
     const [strategies, setStrategies] = useState([]);
     const [loading, setLoading] = useState(false);
-    const zMasterContent = [
-        { date: '7월 11일', title: '오늘의 TOP PICK', sub_title: '차트영웅이 알려주는오늘의 TOP 주식은!?', hash_list: '["우크라 재건관련주","컨텐츠","식품가격인상"]', img: testImg },
-        { date: '7월 11일', title: '오늘의 TOP PICK', sub_title: '차트영웅이 알려주는오늘의 TOP 주식은!?', hash_list: '["우크라 재건관련주","컨텐츠","식품가격인상"]', img: testImg },
-        { date: '7월 11일', title: '오늘의 TOP PICK', sub_title: '차트영웅이 알려주는오늘의 TOP 주식은!?', hash_list: '["우크라 재건관련주","컨텐츠","식품가격인상"]', img: testImg },
-    ]
+    
 
 
     const settings = {
-        infinite: false,
+        infinite: true,
         speed: 500,
         autoplay: false,
         autoplaySpeed: 2500,
@@ -60,7 +60,7 @@ const Home = () => {
         setPosts(zTalk[0].image_list);
         async function fetchPost() {
             setLoading(true)
-            
+
             const { data: response } = await axios.get('/api/gethomecontent')
             setSetting(response.data.setting);
             setMasters(response.data.masters)
@@ -80,7 +80,7 @@ const Home = () => {
     }, [])
     const onChangeStrategyNum = async (num, pk) => {
         setSubTypeNum(num)
-        let str = `/api/items?table=strategy&limit=3`;
+        let str = `/api/items?table=strategy&limit=3&status=1`;
         if (pk != 0) {
             str += `&user_pk=${pk}`;
         }
@@ -97,7 +97,7 @@ const Home = () => {
                     :
                     <>
                         <Content>
-                            <img src={backUrl+setting?.main_img} style={{width:'100%',maxWidth:'500px',margin:'0 auto'}} />
+                            <img src={backUrl + setting?.main_img} style={{ width: '100%', maxWidth: '500px', margin: '0 auto' }} />
                         </Content>
                         <Title className='pointer' onClick={() => { navigate('/onewordlist') }}>하루 1단어</Title>
                         <Content onClick={() => { navigate(`/post/oneword/${oneWord?.pk}`) }} className='pointer'>
@@ -106,7 +106,7 @@ const Home = () => {
                         </Content>
                         <Title className='pointer' onClick={() => navigate('/selectissuecategory')}>핵심 이슈{'&'}공시</Title>
                         <Content className='pointer'>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                            <WrapDiv>
                                 {issues.map((item, idx) => (
                                     <>
                                         <Card onClick={() => navigate(`/post/issue/${item?.pk}`)}>
@@ -116,7 +116,21 @@ const Home = () => {
                                         </Card>
                                     </>
                                 ))}
-                            </div>
+
+                            </WrapDiv>
+                            <SliderDiv>
+                                <Slider {...settings} className='board-container'>
+                                    {issues.map((item, idx) => (
+                                        <>
+                                            <Card onClick={() => navigate(`/post/issue/${item?.pk}`)}>
+                                                <Img src={backUrl + item?.main_img} />
+                                                <div style={{ padding: '16px 16px 0 16px' }}>{item?.date} {issues[0]?.title}</div>
+                                                <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
+                                            </Card>
+                                        </>
+                                    ))}
+                                </Slider>
+                            </SliderDiv>
                         </Content>
                         <Title onClick={() => { navigate('/oneeventlist') }} className='pointer'>하루 1종목</Title>
                         <Content onClick={() => { navigate(`/post/oneevent/${oneEvent?.pk}`) }} className='pointer'>
@@ -146,7 +160,7 @@ const Home = () => {
                         </div>
                         <Title onClick={() => { navigate('/themelist') }}>핵심 테마</Title>
                         <Content>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                            <WrapDiv>
 
                                 {themes.map((item, idx) => (
                                     <>
@@ -161,18 +175,43 @@ const Home = () => {
 
                                     </>
                                 ))}
-                            </div>
+                            </WrapDiv>
+                            <SliderDiv>
+                                <Slider {...settings} className='board-container'>
+                                    {themes.map((item, idx) => (
+                                        <>
+                                            <Card onClick={() => navigate(`/post/theme/${item?.pk}`)}>
+                                                <Img src={backUrl + item.main_img} />
+                                                <div style={{ padding: '16px', minHeight: '50px', justifyContent: 'space-between', display: 'flex', flexDirection: 'column' }}>
+                                                    <div style={{ fontSize: `${theme.size.font4}`, fontWeight: 'bold' }}>{item?.title}</div>
+                                                    <div style={{ fontSize: `${theme.size.font5}` }}>{item?.date}</div>
+                                                </div>
 
+                                            </Card>
+
+                                        </>
+                                    ))}
+                                </Slider>
+                            </SliderDiv>
                         </Content>
                         <Title onClick={() => { navigate('/videolist') }}>핵심 비디오</Title>
                         <Content>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                            <WrapDiv>
                                 {videos.map((item, idx) => (
                                     <>
                                         <VideoCard item={item} />
                                     </>
                                 ))}
-                            </div>
+                            </WrapDiv>
+                            <SliderDiv>
+                                <Slider {...settings} className='board-container'>
+                                    {videos.map((item, idx) => (
+                                        <>
+                                            <VideoCard item={item} />
+                                        </>
+                                    ))}
+                                </Slider>
+                            </SliderDiv>
                         </Content>
                     </>}
 

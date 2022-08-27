@@ -1,11 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { Title, Wrappers,Content } from "../../../components/elements/UserContentTemplete";
-import LeftImgCard from "../../../components/LeftImgCard";
-import ThemeCard from "../../../components/ThemeCard";
-import { backUrl } from "../../../data/Data";
 import theme from "../../../styles/theme";
 
 
@@ -15,7 +11,7 @@ const OneWordList = () => {
 
     useEffect(() => {
         async function fetchPosts() {
-            const { data: response } = await axios.get('/api/items?table=oneword');
+            const { data: response } = await axios.get('/api/items?table=oneword&status=1');
             setPosts(response.data);
         }
         fetchPosts();

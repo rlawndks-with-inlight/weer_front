@@ -13,7 +13,7 @@ import talkActiveImg from '../assets/images/icon/talk-active.svg';
 import thumbImg from '../assets/images/icon/thumb.svg';
 import thumbActiveImg from '../assets/images/icon/thumb-active.svg';
 export const backUrl = "http://210.114.1.28:8001";
-//http://210.114.1.28:8001
+//http://weare-first.com:8001
 export const zBottomMenu = [
     { name: '핵심이슈', link: '/selectissuecategory', icon: <img src={bulbImg} className='menu-icon' />, activeIcon: <img src={bulbActiveImg} className='menu-icon' />, allowList: ['/selectissuecategory'] },
     { name: '퍼스트전문가', link: '/masterlist', icon: <img src={thumbImg} className='menu-icon' />, activeIcon: <img src={thumbActiveImg} className='menu-icon' />, allowList: ['/masterlist'] },
@@ -56,8 +56,9 @@ export const objManagerListContent = {
             { name: '제목', width: 16, type: 'text', column: 'title' },
             { name: '추천제목', width: 16, type: 'text', column: 'suggest_title' },
             { name: '생성시간', width: 28, type: 'text', column: 'date' },
-            { name: '수정', width: 12, type: 'edit', column: 'edit' },
-            { name: '삭제', width: 12, type: 'delete', column: 'delete' }
+            { name: '노출여부', width: 8, type: 'status', column: 'status' },
+            { name: '수정', width: 8, type: 'edit', column: 'edit' },
+            { name: '삭제', width: 8, type: 'delete', column: 'delete' }
         ],
     },
     oneevent: {
@@ -68,8 +69,9 @@ export const objManagerListContent = {
             { name: '제목', width: 16, type: 'text', column: 'title' },
             { name: '추천제목', width: 16, type: 'text', column: 'suggest_title' },
             { name: '생성시간', width: 28, type: 'text', column: 'date' },
-            { name: '수정', width: 12, type: 'edit', column: 'edit' },
-            { name: '삭제', width: 12, type: 'delete', column: 'delete' }
+            { name: '노출여부', width: 8, type: 'status', column: 'status' },
+            { name: '수정', width: 8, type: 'edit', column: 'edit' },
+            { name: '삭제', width: 8, type: 'delete', column: 'delete' }
         ],
     },
     theme: {
@@ -80,8 +82,9 @@ export const objManagerListContent = {
             { name: '제목', width: 16, type: 'text', column: 'title' },
             { name: '추천제목', width: 16, type: 'text', column: 'suggest_title' },
             { name: '생성시간', width: 28, type: 'text', column: 'date' },
-            { name: '수정', width: 12, type: 'edit', column: 'edit' },
-            { name: '삭제', width: 12, type: 'delete', column: 'delete' }
+            { name: '노출여부', width: 8, type: 'status', column: 'status' },
+            { name: '수정', width: 8, type: 'edit', column: 'edit' },
+            { name: '삭제', width: 8, type: 'delete', column: 'delete' }
         ],
     },
     strategy: {
@@ -92,8 +95,9 @@ export const objManagerListContent = {
             { name: '제목', width: 16, type: 'text', column: 'title' },
             { name: '추천제목', width: 16, type: 'text', column: 'suggest_title' },
             { name: '생성시간', width: 28, type: 'text', column: 'date' },
-            { name: '수정', width: 12, type: 'edit', column: 'edit' },
-            { name: '삭제', width: 12, type: 'delete', column: 'delete' }
+            { name: '노출여부', width: 8, type: 'status', column: 'status' },
+            { name: '수정', width: 8, type: 'edit', column: 'edit' },
+            { name: '삭제', width: 8, type: 'delete', column: 'delete' }
         ],
     },
     issue: {
@@ -104,8 +108,9 @@ export const objManagerListContent = {
             { name: '제목', width: 16, type: 'text', column: 'title' },
             { name: '추천제목', width: 16, type: 'text', column: 'suggest_title' },
             { name: '생성시간', width: 28, type: 'text', column: 'date' },
-            { name: '수정', width: 12, type: 'edit', column: 'edit' },
-            { name: '삭제', width: 12, type: 'delete', column: 'delete' }
+            { name: '노출여부', width: 8, type: 'status', column: 'status' },
+            { name: '수정', width: 8, type: 'edit', column: 'edit' },
+            { name: '삭제', width: 8, type: 'delete', column: 'delete' }
         ],
     },
     issue_category: {
@@ -122,11 +127,12 @@ export const objManagerListContent = {
         breadcrumb: '핵심비디오',
         schema:'video',
         zColumn: [
-            { name: '제목', width: 16, type: 'text', column: 'title' },
-            { name: '링크', width: 32, type: 'link', column: 'link' },
-            { name: '생성시간', width: 28, type: 'text', column: 'date' },
-            { name: '수정', width: 12, type: 'edit', column: 'edit' },
-            { name: '삭제', width: 12, type: 'delete', column: 'delete' }
+            { name: '제목', width: 28, type: 'text', column: 'title' },
+            { name: '링크', width: 28, type: 'link', column: 'link' },
+            { name: '생성시간', width: 20, type: 'text', column: 'date' },
+            { name: '노출여부', width: 8, type: 'status', column: 'status' },
+            { name: '수정', width: 8, type: 'edit', column: 'edit' },
+            { name: '삭제', width: 8, type: 'delete', column: 'delete' }
         ],
     },
     inquiry: {

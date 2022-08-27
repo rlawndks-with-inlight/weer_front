@@ -4,10 +4,10 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://210.114.1.28:8001',
+      target: 'http://weare-first.com:8001',
       changeOrigin: true,
       
     })
   );
 };
-//http://210.114.1.28:8001
+//http://weare-first.com:8001

@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { Title, Wrappers } from "../../../components/elements/UserContentTemplete";
 import { backUrl } from "../../../data/Data";
 import theme from "../../../styles/theme";
-import { Viewer } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { getIframeLinkByLink } from "../../../functions/utils";
 import $ from 'jquery';

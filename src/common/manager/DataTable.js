@@ -4,9 +4,11 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { BiEditAlt } from 'react-icons/bi'
 import { RiDeleteBinLine } from 'react-icons/ri'
+import { CgToggleOn, CgToggleOff } from 'react-icons/cg'
 import axios from 'axios';
 import theme from '../../styles/theme';
 import { backUrl } from '../../data/Data';
+import $ from 'jquery'
 const Table = styled.table`
 width:95%;
 margin:0 auto;
@@ -27,15 +29,21 @@ margin-bottom:6px;
 `
 const DataTable = (props) => {
     const navigate = useNavigate();
+    const [zStatus, setZStatus] = useState([]);
     useEffect(() => {
+        let list = [];
+        for (var i = 0; i < props.data.length; i++) {
+            list[i] = props.data[i].status;
+        }
+        setZStatus(list);
     }, [])
 
     const deleteItem = async (pk, schema) => {
-        let obj = { 
-            pk: pk, 
-            table: schema 
+        let obj = {
+            pk: pk,
+            table: schema
         }
-        if(schema=='master'){
+        if (schema == 'master') {
             obj.table = 'user';
         }
         const { data: response } = await axios.post(`/api/deleteitem`, obj)
@@ -46,6 +54,23 @@ const DataTable = (props) => {
         } else {
             alert('error')
         }
+    }
+
+
+    const changeStatus = async (num, idx, pk) => {
+        let list = [...zStatus];
+        if (num == 1) {
+            list[idx] = 0;
+        } else {
+            list[idx] = 1;
+        }
+        setZStatus(list)
+        const { data: response } = await axios.post('/api/updatestatus', {
+            table: props.schema,
+            pk: pk,
+            num:num
+        })
+        console.log(response)
     }
 
     return (
@@ -59,7 +84,7 @@ const DataTable = (props) => {
                             </>
                         ))}
                     </Tr>
-                    {props.data.map((data, index) => (
+                    {props.data.map((data, idx) => (
                         <>
                             <Tr>
                                 {props.column.map((column, index) => (
@@ -78,6 +103,7 @@ const DataTable = (props) => {
                                             :
                                             <>
                                             </>}
+
                                         {column.type == 'level' ?
                                             <>
                                                 <Td style={{ width: `${column.width}%` }}>{data[column.column] == 0 ? '일반유저' : data[column.column] == 40 ? '관리자' : data[column.column] == 30 ? '대가' : '개발자'}</Td>
@@ -96,7 +122,17 @@ const DataTable = (props) => {
                                                         <>
                                                             ---
                                                         </>}
-
+                                                </Td>
+                                            </>
+                                            :
+                                            <>
+                                            </>}
+                                        {column.type == 'status' ?
+                                            <>
+                                                <Td style={{ width: `${column.width}%`, fontSize: '28px' }}>
+                                                    {zStatus[idx] > 0 ?
+                                                        <CgToggleOn style={{ color: `${theme.color.background1}`, cursor: 'pointer' }} onClick={() => { changeStatus(1, idx, props?.data[idx]?.pk) }} /> :
+                                                        <CgToggleOff style={{ color: '#aaaaaa', cursor: 'pointer' }} onClick={() => { changeStatus(0, idx, props?.data[idx]?.pk) }} />}
                                                 </Td>
                                             </>
                                             :

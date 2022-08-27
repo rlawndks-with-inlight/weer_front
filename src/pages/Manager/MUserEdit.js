@@ -7,42 +7,14 @@ import SideBar from '../../common/manager/SideBar';
 import ManagerContentWrappers from '../../components/elements/ManagerContentWrappers';
 import axios from 'axios';
 import Breadcrumb from '../../common/manager/Breadcrumb';
-import { AiFillFileImage } from 'react-icons/ai'
 import ButtonContainer from '../../components/elements/button/ButtonContainer';
 import AddButton from '../../components/elements/button/AddButton';
 import CancelButton from '../../components/elements/button/CancelButton';
 import $ from 'jquery';
 import { addItem, updateItem } from '../../functions/utils';
-const Card = styled.div`
-background:#fff;
-display:flex;
-flex-direction:column;
-width:95%;
-margin:12px auto;
-box-shadow:0px 0px 16px #dddddd;
-border-radius:24px;
-padding: 24px 0;
-min-height:640px;
-`
-const Title = styled.div`
-margin:12px auto 6px 24px;
-width:90%;
-color:#009432;
-font-weight:bold;
-`
-const Input = styled.input`
-margin:12px auto 6px 24px;
-width:200px;
-padding:8px;
-outline:none;
-`
+import { Card, Title, Input, Row, Col, ImageContainer, Select } from '../../components/elements/ManagerTemplete';
 
-const Select = styled.select`
-margin:12px auto 6px 24px;
-width:218px;
-padding:8px;
-outline:none;
-`
+
 const MUserEdit = () => {
     const params = useParams();
     const navigate = useNavigate();
@@ -75,7 +47,7 @@ const MUserEdit = () => {
             }
             if (window.confirm(`${params.pk == 0 ? '추가하시겠습니까?' : '수정하시겠습니까?'}`)) {
                 params.pk == 0 ?
-                    addItem('user', { id: $(`.id`).val(), pw: $(`.pw`).val(),  name: $(`.name`).val(), nickname: $(`.nickname`).val(), phone: $(`.phone`).val(), level: $(`.level`).val() }) :
+                    addItem('user', { id: $(`.id`).val(), pw: $(`.pw`).val(), name: $(`.name`).val(), nickname: $(`.nickname`).val(), phone: $(`.phone`).val(), level: $(`.level`).val() }) :
                     updateItem('user', {
                         id: $(`.id`).val(), pw: $(`.pw`).val(), name: $(`.name`).val(), nickname: $(`.nickname`).val(), phone: $(`.phone`).val(), level: $(`.level`).val(), pk: params.pk
                     })
@@ -91,22 +63,38 @@ const MUserEdit = () => {
                 <ManagerContentWrappers>
                     <Breadcrumb title={params.pk == 0 ? '회원 추가' : '회원 수정'} nickname={myNick} />
                     <Card>
-                        <Title style={{ margintop: '32px' }}>아이디</Title>
-                        <Input className='id' />
-                        <Title style={{ margintop: '32px' }}>비밀번호 {params.pk == 0 ? '' : '(빈 값으로 두면 원래 값을 유지)'}</Title>
-                        <Input className='pw' type={'password'}  />
-                        <Title style={{ margintop: '32px' }}>이름</Title>
-                        <Input className='name' />
-                        <Title style={{ margintop: '32px' }}>닉네임</Title>
-                        <Input className='nickname' />
-                        <Title style={{ margintop: '32px' }}>폰번호</Title>
-                        <Input className='phone' />
-                      
-                        <Title style={{ margintop: '32px' }}>유저레벨</Title>
-                        <Select className='level'>
-                            <option value={0}>일반유저</option>
-                            <option value={40}>관리자</option>
-                        </Select>
+                        <Row>
+                            <Col>
+                                <Title style={{ margintop: '32px' }}>아이디</Title>
+                                <Input className='id' />
+                            </Col>
+                            <Col>
+                                <Title style={{ margintop: '32px' }}>비밀번호</Title>
+                                <Input className='pw' type={'password'} placeholder='****' />
+                            </Col>
+                            <Col>
+                                <Title style={{ margintop: '32px' }}>이름</Title>
+                                <Input className='name' />
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col>
+                                <Title style={{ margintop: '32px' }}>닉네임</Title>
+                                <Input className='nickname' />
+                            </Col>
+                            <Col>
+                                <Title style={{ margintop: '32px' }}>폰번호</Title>
+                                <Input className='phone' />
+                            </Col>
+                            <Col>
+                                <Title style={{ margintop: '32px' }}>유저레벨</Title>
+                                <Select className='level'>
+                                    <option value={0}>일반유저</option>
+                                    <option value={40}>관리자</option>
+                                </Select>
+                            </Col>
+                        </Row>
                     </Card>
                     <ButtonContainer>
                         <CancelButton onClick={() => navigate(-1)}>x 취소</CancelButton>

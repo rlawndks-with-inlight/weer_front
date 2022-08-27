@@ -3,10 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Title, Wrappers } from "../../components/elements/UserContentTemplete";
-import LeftImgCard from "../../components/LeftImgCard";
 import ThemeCard from "../../components/ThemeCard";
-import { backUrl } from "../../data/Data";
-import theme from "../../styles/theme";
 
 const Card = styled.div`
 width:100%;
@@ -26,7 +23,7 @@ const ThemeList = () => {
 
     useEffect(() => {
         async function fetchPosts() {
-            const { data: response } = await axios.get('/api/items?table=theme');
+            const { data: response } = await axios.get('/api/items?table=theme&status=1');
             setPosts(response.data);
         }
         fetchPosts();
