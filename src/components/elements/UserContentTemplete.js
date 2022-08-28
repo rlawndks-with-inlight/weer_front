@@ -39,15 +39,19 @@ font-weight:normal;
     
 }
 `
-export const Img = styled.img`
-width:100%;
-height:360px;
-z-index:2;
-@media screen and (max-width:1000px) {
-height:31.8vw;
+export const Img = styled.div`
+width: 100%;
+height:320px;
+background:#fff;
+background-size: cover;
+background-repeat: no-repeat;
+background-position: center center;
+background-blend-mode: multiply;
+@media screen and (max-width:1200px) {
+    height: 28.266666666vw;
 }
 @media screen and (max-width:600px) {
-    height:65.61vw;
+    height: 60vw;
 }
 `
 export const Card = styled.div`
@@ -56,5 +60,19 @@ margin-bottom:16px;
 background: ${props => props.theme.color.background3};
 @media screen and (max-width:600px) {
     width:100%;
+}
+`
+export const WrapDiv = styled.div`
+display: flex;
+justify-content: space-between;
+flex-wrap: wrap;
+@media screen and (max-width:600px) { 
+    display:none;
+}
+`
+export const SliderDiv = styled.div`
+display:none;
+@media screen and (max-width:602px) { 
+    display:flex;
 }
 `

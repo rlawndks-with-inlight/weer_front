@@ -1,28 +1,13 @@
-
-
-.board-container{
+.board-container {
     width: 100%;
 }
-div.board-container button{
-}
-#root > div > div:nth-child(5) > div.sc-gicCDI.hLrCJw > div > button.slick-arrow.slick-next{
 
-}
-#root > div > div:nth-child(5) > div.sc-gicCDI.hLrCJw > div > button.slick-arrow.slick-prev{
-    
-}
-.slick-prev{
-    position:absolute !important;
-    left: 6px !important;
-    z-index: 3;
-}
-.slick-next{
-    /* display: none !important; */
-    position:absolute !important;
-    right: 6px !important;
-    z-index: 3;
-}
-.menu-icon{
+div.board-container button {}
+
+.slick-prev.slick-disabled:before,
+.slick-next.slick-disabled:before {}
+
+.menu-icon {
     width: 2rem;
     height: 1.5rem;
     background: 50% no-repeat;
@@ -31,53 +16,98 @@ div.board-container button{
     position: relative;
     padding: 0.6rem;
 }
+
 #editor {
-    margin : 24px auto 0 24px;
+    margin: 24px auto 0 24px;
 }
-.slick-arrow {
-    display: none;
-}
-.slick-prev{
-    display: none;
-}
-#board-content{
-    width:2.2rem;
+
+#board-content {
+    width: 2.2rem;
     font-size: 2rem;
-    margin:1.5rem 0 0.5rem 0;
+    margin: 1.5rem 0 0.5rem 0;
 }
-#board-text{
+
+#board-text {
     font-size: 12px;
 }
-.subtype-container::-webkit-scrollbar{
+
+.subtype-container::-webkit-scrollbar {
     display: none;
 }
-.note{
+
+.note {
     width: 100%;
     margin: 16px 0;
 }
-div.note > img{
+
+div.note>img {
     width: 100%;
 }
-div.note > p > img{
+
+div.note>p>img {
     width: 100% !important;
 }
-.pointer{
+
+.pointer {
     cursor: pointer;
 }
-@media screen and (max-width:1200px) { 
-   
-}
 
-@media screen and (max-width:1000px) { 
+@media screen and (max-width:1200px) {}
+
+@media screen and (max-width:1000px) {
     #editor {
-        width:90%;
+        width: 90%;
     }
 }
-@media screen and (max-width:700px) { 
-   
-    
-}
-@media screen and (max-width:600px) { 
-  
 
+@media screen and (max-width:700px) {}
+
+@media screen and (max-width:600px) {
+    .prevArrow {
+        position: absolute;
+        top: 30vw;
+        left: 6px;
+        z-index: 2;
+        cursor: pointer;
+        font-size: 28px;
+        padding: 4px 6px 0px 3px;
+        border-radius: 50%;
+        background: #aaaaaa55;
+        color: #fff !important;
+
+    }
+
+    .nextArrow {
+        position: absolute;
+        top: 30vw;
+        right: 6px;
+        z-index: 2;
+        cursor: pointer;
+        font-size: 28px;
+        padding: 4px 4px 0px 5px;
+        border-radius: 50%;
+        background: #aaaaaa55;
+        color: #fff !important;
+
+    }
+
+    .progress-bar {
+        appearance: none;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        left: 0;
+        right: 0;
+
+    }
+
+    .progress-bar::-webkit-progress-bar {
+        background: #f0f0f0;
+        border-radius: 0;
+    }
+
+    .progress-bar::-webkit-progress-value {
+        border-radius: 0;
+        background: #4CDAD8;
+    }
 }

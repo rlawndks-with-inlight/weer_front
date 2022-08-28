@@ -5,6 +5,7 @@ import Headers from '../common/Headers';
 import BottomMenu from '../common/BottomMenu';
 
 import { zRoute } from '../routes/route';
+import ScrollToTopButton from '../components/ScrollToTopButton';
 const App = () => {
 
     return (
@@ -23,6 +24,7 @@ const App = () => {
 
                     </Routes>
                 </>
+                <ScrollToTopButton/>
                 <BottomMenu />
                 {/* <Footer/> */}
 

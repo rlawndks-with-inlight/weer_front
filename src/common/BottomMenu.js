@@ -55,17 +55,24 @@ font-weight:400;
 const BottomMenu = () => {
     const navigate = useNavigate();
     const location = useLocation();
-   
+
     const [modal, setModal] = useState("none");
 
     const [beforeCount, setBeforeCount] = useState(0)
     const [colorList, setColorList] = useState([])
-    const [display, setDisplay] = useState('flex')
+    const [display, setDisplay] = useState('flex');
+    const [isPost, setIsPost] = useState(false);
+
     useEffect(() => {
         if (location.pathname.includes('/manager')) {
             setDisplay('none');
         } else {
             setDisplay('flex')
+        }
+        if (location.pathname.substring(0, 6) == '/post/' || location.pathname.substring(0, 7) == '/video/') {
+            setIsPost(true);
+        } else {
+            setIsPost(false)
         }
         let arr = [];
 
@@ -86,28 +93,36 @@ const BottomMenu = () => {
 
     return (
         <>
-        {display=='flex'?
-        <>
-        <Container className='menu-container'>
-            <MenuContainer>
-                {zBottomMenu.map((item, index) => (
-                    <>
-                        <OneMenuContainer onClick={() => { navigate(item.link) }} style={{ color: `${colorList[index]}` }}>
-                            {colorList[index]==theme.color.background1?item.activeIcon:item.icon}
-                            <OneMenuName style={{ color: `${colorList[index]}` }}>
-                                {item.name}
-                            </OneMenuName>
-                        </OneMenuContainer>
-                    </>
-                ))}
+            {display == 'flex' ?
+                <>
+                    {isPost ?
+                        <>
+                        </>
+                        :
+                        <>
+                            <Container className='menu-container'>
+                                <MenuContainer>
+                                    {zBottomMenu.map((item, index) => (
+                                        <>
+                                            <OneMenuContainer onClick={() => { navigate(item.link) }} style={{ color: `${colorList[index]}` }}>
+                                                {colorList[index] == theme.color.background1 ? item.activeIcon : item.icon}
+                                                <OneMenuName style={{ color: `${colorList[index]}` }}>
+                                                    {item.name}
+                                                </OneMenuName>
+                                            </OneMenuContainer>
+                                        </>
+                                    ))}
 
-            </MenuContainer>
-        </Container>
-        </>
-    :
-    <>
-    </>}
-        
+                                </MenuContainer>
+                            </Container>
+                        </>
+                    }
+
+                </>
+                :
+                <>
+                </>}
+
         </>
     )
 }

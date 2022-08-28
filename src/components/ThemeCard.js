@@ -52,7 +52,7 @@ const ThemeCard = (props) => {
                     <div style={{ fontSize: `${theme.size.font5}`, display: 'flex', flexWrap: 'wrap' }}>
                         {props.item?.hash}
                     </div>
-                    <div style={{ fontSize: `${theme.size.font5}` }}>{props.item?.date ?? ""}</div>
+                    <div style={{ fontSize: `${theme.size.font5}` }}>{props.item?.date.substring(0,10) ?? ""}</div>
                 </div>
             </Card>
         </>

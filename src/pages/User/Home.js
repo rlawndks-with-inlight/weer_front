@@ -13,24 +13,11 @@ import testImg from '../../assets/images/test/test5.jpg';
 import axios from 'axios';
 import { backUrl } from '../../data/Data';
 import { getIframeLinkByLink } from '../../functions/utils';
-import { Wrappers, Title, Content, Card, Img } from '../../components/elements/UserContentTemplete';
+import { Wrappers, Title, Content, Card, Img, WrapDiv, SliderDiv } from '../../components/elements/UserContentTemplete';
 import ThemeCard from '../../components/ThemeCard'
 import VideoCard from '../../components/VideoCard';
 import Loading from '../../components/Loading';
-const WrapDiv = styled.div`
-display: flex;
-justify-content: space-between;
-flex-wrap: wrap;
-@media screen and (max-width:600px) { 
-    display:none;
-}
-`
-const SliderDiv = styled.div`
-display:none;
-@media screen and (max-width:602px) { 
-    display:flex;
-}
-`
+
 const Home = () => {
     const navigate = useNavigate();
     const [subTypeNum, setSubTypeNum] = useState(0)
@@ -44,7 +31,7 @@ const Home = () => {
     const [videos, setVideos] = useState([]);
     const [strategies, setStrategies] = useState([]);
     const [loading, setLoading] = useState(false);
-    
+
 
 
     const settings = {
@@ -59,7 +46,7 @@ const Home = () => {
     useEffect(() => {
         setPosts(zTalk[0].image_list);
         async function fetchPost() {
-            setLoading(true)
+           // setLoading(true)
 
             const { data: response } = await axios.get('/api/gethomecontent')
             setSetting(response.data.setting);
@@ -74,7 +61,7 @@ const Home = () => {
                 video_list[i].link = getIframeLinkByLink(video_list[i].link);
             }
             setVideos(video_list);
-            setTimeout(() => setLoading(false), 1500);
+           // setTimeout(() => setLoading(false), 1500);
         }
         fetchPost();
     }, [])
@@ -110,8 +97,8 @@ const Home = () => {
                                 {issues.map((item, idx) => (
                                     <>
                                         <Card onClick={() => navigate(`/post/issue/${item?.pk}`)}>
-                                            <Img src={backUrl + item?.main_img} />
-                                            <div style={{ padding: '16px 16px 0 16px' }}>{item?.date} {issues[0]?.title}</div>
+                                            <Img style={{backgroundImage: `url(${backUrl + item?.main_img})`}} />
+                                            <div style={{ padding: '16px 16px 0 16px' }}>{item?.date.substring(0,10) ?? ""} {issues[0]?.title}</div>
                                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
                                         </Card>
                                     </>
@@ -123,7 +110,7 @@ const Home = () => {
                                     {issues.map((item, idx) => (
                                         <>
                                             <Card onClick={() => navigate(`/post/issue/${item?.pk}`)}>
-                                                <Img src={backUrl + item?.main_img} />
+                                                <Img style={{backgroundImage: `url(${backUrl + item?.main_img})`}} />
                                                 <div style={{ padding: '16px 16px 0 16px' }}>{item?.date} {issues[0]?.title}</div>
                                                 <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
                                             </Card>
@@ -165,10 +152,10 @@ const Home = () => {
                                 {themes.map((item, idx) => (
                                     <>
                                         <Card onClick={() => navigate(`/post/theme/${item?.pk}`)}>
-                                            <Img src={backUrl + item.main_img} />
+                                            <Img style={{backgroundImage: `url(${backUrl + item?.main_img})`}} />
                                             <div style={{ padding: '16px', minHeight: '50px', justifyContent: 'space-between', display: 'flex', flexDirection: 'column' }}>
                                                 <div style={{ fontSize: `${theme.size.font4}`, fontWeight: 'bold' }}>{item?.title}</div>
-                                                <div style={{ fontSize: `${theme.size.font5}` }}>{item?.date}</div>
+                                                <div style={{ fontSize: `${theme.size.font5}` }}>{item?.date.substring(0,10) ?? ""}</div>
                                             </div>
 
                                         </Card>
@@ -181,10 +168,10 @@ const Home = () => {
                                     {themes.map((item, idx) => (
                                         <>
                                             <Card onClick={() => navigate(`/post/theme/${item?.pk}`)}>
-                                                <Img src={backUrl + item.main_img} />
+                                                <Img style={{backgroundImage: `url(${backUrl + item?.main_img})`}} />
                                                 <div style={{ padding: '16px', minHeight: '50px', justifyContent: 'space-between', display: 'flex', flexDirection: 'column' }}>
                                                     <div style={{ fontSize: `${theme.size.font4}`, fontWeight: 'bold' }}>{item?.title}</div>
-                                                    <div style={{ fontSize: `${theme.size.font5}` }}>{item?.date}</div>
+                                                    <div style={{ fontSize: `${theme.size.font5}` }}>{item?.date.substring(0,10) ?? ""}</div>
                                                 </div>
 
                                             </Card>

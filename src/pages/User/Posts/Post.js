@@ -8,19 +8,41 @@ import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import $ from 'jquery'
 import styled from "styled-components";
 import { BsFillShareFill } from 'react-icons/bs';
-const ToTopButton = styled.div`
-position:fixed;
-bottom:5rem;
-right:0;
+import logo from '../../../assets/images/test/logo.svg'
+const Logo = styled.img`
+position: fixed;
+bottom: 0;
+height:18px;
+`
+const Progress = styled.progress`
+
+appearance: none;
+position: fixed;
+bottom: 0;
+width: 100%;
+left: 0;
+right: 0;
+height:16px;
+
+::-webkit-progress-bar {
+background: #f0f0f0;
+border-radius: 0;
+}
+
+::-webkit-progress-value {
+background:transparent;
+border-bottom: 16px solid #4CDAD8;
+border-right: 10px solid transparent;
+}
 `
 const Post = () => {
     const params = useParams();
     const [post, setPost] = useState({})
+    const [percent, setPercent] = useState(0);
     useEffect(() => {
         async function fetchPost() {
             const { data: response } = await axios.get(`/api/item?table=${params.table}&pk=${params.pk}`)
             let obj = response.data;
-            console.log(response)
 
             obj.note = stringToHTML(obj.note)
             $('.note').append(obj.note)
@@ -29,6 +51,11 @@ const Post = () => {
 
         }
         fetchPost();
+        
+        window.addEventListener('scroll', function (el) {
+            let per = Math.floor(($(window).scrollTop() / ($(document).height() - $(window).height())) * 100);
+            setPercent(per);
+        })
     }, [])
     const stringToHTML = (str) => {
         let parser = new DOMParser();
@@ -38,18 +65,26 @@ const Post = () => {
         let doc = parser.parseFromString(str, 'text/html');
         return doc.body;
     };
+    
     return (
         <>
-            <Wrappers>
-                <div style={{ width: '100%', textAlign: 'end' }}>{post.nickname} / {post?.date?.substring(5, 10)} / 7,777</div>
+            <Wrappers className="wrapper">
+                <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'end', fontSize: `${theme.size.font4}` }}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <div style={{ margin: '0 4px' }}>{post.nickname}</div> /
+                        <div style={{ margin: '0 4px' }}>{post?.date?.substring(5, 10)}</div> /
+                        <div style={{ margin: '0 8px 0 4px' }}>7,777</div>
+                        <BsFillShareFill style={{ cursor: 'pointer' }} />
+                    </div>
+                </div>
                 <img src={backUrl + post.main_img} style={{ width: '100%', margin: '16px 0' }} />
                 <div>{post.suggest_title}</div>
                 <Title>{post.title}</Title>
                 <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post.hash}</div>
                 <div className="note">
                 </div>
-                <ToTopButton>aaa</ToTopButton>
-
+                <Progress value={`${percent}`} max="100"></Progress>
+                {/* <Logo src={logo} style={{left:`${percent-1}.7%`}}/> */}
             </Wrappers>
         </>
     )
