@@ -46,7 +46,7 @@ const Home = () => {
     useEffect(() => {
         setPosts(zTalk[0].image_list);
         async function fetchPost() {
-           // setLoading(true)
+           setLoading(true)
 
             const { data: response } = await axios.get('/api/gethomecontent')
             setSetting(response.data.setting);
@@ -61,7 +61,7 @@ const Home = () => {
                 video_list[i].link = getIframeLinkByLink(video_list[i].link);
             }
             setVideos(video_list);
-           // setTimeout(() => setLoading(false), 1500);
+           setTimeout(() => setLoading(false), 1500);
         }
         fetchPost();
     }, [])
