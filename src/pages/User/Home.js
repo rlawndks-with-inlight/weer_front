@@ -89,7 +89,7 @@ const Home = () => {
     }
     return (
         <>
-            <Wrappers>
+            <Wrappers className='wrappers'>
                 {loading ?
                     <>
                         <Loading />

@@ -6,42 +6,51 @@ import { backUrl } from "../../../data/Data";
 import theme from "../../../styles/theme";
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import $ from 'jquery'
-const Post = () =>{
+import styled from "styled-components";
+import { BsFillShareFill } from 'react-icons/bs';
+const ToTopButton = styled.div`
+position:fixed;
+bottom:5rem;
+right:0;
+`
+const Post = () => {
     const params = useParams();
     const [post, setPost] = useState({})
-    useEffect(()=>{
-        async function fetchPost(){
-            const {data:response} = await axios.get(`/api/item?table=${params.table}&pk=${params.pk}`)
+    useEffect(() => {
+        async function fetchPost() {
+            const { data: response } = await axios.get(`/api/item?table=${params.table}&pk=${params.pk}`)
             let obj = response.data;
             console.log(response)
 
             obj.note = stringToHTML(obj.note)
             $('.note').append(obj.note)
-            $('.note > img').css("width","100%")
+            $('.note > img').css("width", "100%")
             setPost(obj);
-            
+
         }
         fetchPost();
-    },[])
+    }, [])
     const stringToHTML = (str) => {
         let parser = new DOMParser();
-        str = str.replaceAll('http://localhost:8001',backUrl);
-        str = str.replaceAll('http://127.0.0.1:8001',backUrl);
-        str = str.replaceAll('<img','<img style="width:100%;" ');
+        str = str.replaceAll('http://localhost:8001', backUrl);
+        str = str.replaceAll('http://127.0.0.1:8001', backUrl);
+        str = str.replaceAll('<img', '<img style="width:100%;" ');
         let doc = parser.parseFromString(str, 'text/html');
         return doc.body;
     };
     return (
         <>
-        <Wrappers>
-            <div style={{width:'100%',textAlign:'end'}}>{post.nickname} / {post?.date?.substring(5,10)} / 7,777</div>
-            <img src={backUrl+post.main_img} style={{width:'100%',margin:'16px 0'}} />
-            <div>{post.suggest_title}</div>
-            <Title>{post.title}</Title>
-            <div style={{fontSize:`${theme.size.font4}`,color:`${theme.color.font2}`}}>{post.hash}</div>
-            <div className="note">
-            </div>
-        </Wrappers>
+            <Wrappers>
+                <div style={{ width: '100%', textAlign: 'end' }}>{post.nickname} / {post?.date?.substring(5, 10)} / 7,777</div>
+                <img src={backUrl + post.main_img} style={{ width: '100%', margin: '16px 0' }} />
+                <div>{post.suggest_title}</div>
+                <Title>{post.title}</Title>
+                <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post.hash}</div>
+                <div className="note">
+                </div>
+                <ToTopButton>aaa</ToTopButton>
+
+            </Wrappers>
         </>
     )
 }

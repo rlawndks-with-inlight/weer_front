@@ -5,7 +5,12 @@
 }
 div.board-container button{
 }
+#root > div > div:nth-child(5) > div.sc-gicCDI.hLrCJw > div > button.slick-arrow.slick-next{
 
+}
+#root > div > div:nth-child(5) > div.sc-gicCDI.hLrCJw > div > button.slick-arrow.slick-prev{
+    
+}
 .slick-prev{
     position:absolute !important;
     left: 6px !important;

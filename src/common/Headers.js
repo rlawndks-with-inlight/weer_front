@@ -8,7 +8,7 @@ import { AiOutlineBell, AiOutlineSearch, AiOutlineSetting } from 'react-icons/ai
 import Modal from '../components/Modal';
 import axios from 'axios'
 import { zBottomMenu } from '../data/Data';
-
+import { MdNavigateBefore } from 'react-icons/md';
 const Header = styled.header`
 position:fixed;
 height:6rem;
@@ -45,7 +45,7 @@ justify-content: space-between;
 `
 const HeaderMenu = styled.div`
 text-align:center;
-font-size:${props=>props.theme.size.font3};
+font-size:${props => props.theme.size.font3};
 padding:0.3rem;
 margin-right:0.5rem;
 font-weight:bold;
@@ -54,7 +54,7 @@ cursor:pointer;
   color:${(props) => props.theme.color.background1};
 }
 @media screen and (max-width:1200px) { 
-  font-size:${props=>props.theme.size.font4};
+  font-size:${props => props.theme.size.font4};
 }
 `
 const ModalContainer = styled.div`
@@ -115,9 +115,14 @@ const Headers = () => {
   const location = useLocation();
   const [type, setType] = useState(1)
   const [isModal, setIsModal] = useState(false);
-  const [display, setDisplay] = useState('flex')
+  const [display, setDisplay] = useState('flex');
+  const [isPost, setIsPost] = useState(false);
   useEffect(() => {
-
+    if (location.pathname.substring(0, 6) == '/post/' || location.pathname.substring(0, 7) == '/video/') {
+      setIsPost(true);
+    } else {
+      setIsPost(false)
+    }
     if (location.pathname.includes('/manager')) {
       setDisplay('none');
 
@@ -139,34 +144,53 @@ const Headers = () => {
   return (
     <>
 
-      <Header style={{display:`${display}`}}>
-        <HeaderContainer>
-          <div>
-            <img src={logo} style={{ height: '2.5rem', marginTop: '0.25rem' }} onClick={() => { navigate('/') }} />
-          </div>
-          <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between' }}>
-            <AiOutlineBell onClick={handleModal} style={{ width: '2rem', height: '1.5rem' }} />
-            <AiOutlineSearch onClick={() => { }} style={{ width: '2rem', height: '1.5rem' }} />
-            <AiOutlineSetting onClick={() => { }} style={{ width: '2rem', height: '1.5rem' }} />
-          </div>
-        </HeaderContainer>
-        <HeaderMenuContainer>
-          <div style={{ display: 'flex',margin:'2rem 0',height:'2rem' }}>
-            {zBottomMenu.map((item, idx) => (
-              <>
-                <HeaderMenu onClick={() => { navigate(item.link) }}>{item.name}</HeaderMenu>
-              </>
-            ))}
-          </div>
-          <div style={{position:'absolute',right:'48%',top:'0.5rem'}}>
-            <img src={logo} style={{ height: '5rem'}} onClick={() => { navigate('/') }} />
-          </div>
-          <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between' }}>
-            <AiOutlineBell onClick={handleModal} style={{ width: '2rem', height: '1.5rem' }} />
-            <AiOutlineSearch onClick={() => { }} style={{ width: '2rem', height: '1.5rem' }} />
-            <AiOutlineSetting onClick={() => { }} style={{ width: '2rem', height: '1.5rem' }} />
-          </div>
-        </HeaderMenuContainer>
+      <Header style={{ display: `${display}` }}>
+        {isPost && window.innerWidth <= 600 ?
+          <>
+
+            <HeaderContainer>
+              <div style={{ width: '90%' }}>
+                <MdNavigateBefore style={{ fontSize:'24px',marginLeft:'-7px' }} onClick={()=>{navigate(-1);}} />
+              </div>
+              <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between' }}>
+                <AiOutlineBell onClick={handleModal} style={{ width: '2rem', height: '1.5rem' }} />
+                <AiOutlineSearch onClick={() => { }} style={{ width: '2rem', height: '1.5rem' }} />
+                <AiOutlineSetting onClick={() => { }} style={{ width: '2rem', height: '1.5rem' }} />
+              </div>
+            </HeaderContainer>
+          </>
+          :
+          <>
+            <HeaderContainer>
+              <div>
+                <img src={logo} style={{ height: '2.5rem', marginTop: '0.25rem' }} onClick={() => { navigate('/') }} />
+              </div>
+              <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between' }}>
+                <AiOutlineBell onClick={handleModal} style={{ width: '2rem', height: '1.5rem' }} />
+                <AiOutlineSearch onClick={() => { }} style={{ width: '2rem', height: '1.5rem' }} />
+                <AiOutlineSetting onClick={() => { }} style={{ width: '2rem', height: '1.5rem' }} />
+              </div>
+            </HeaderContainer>
+            <HeaderMenuContainer>
+              <div style={{ display: 'flex', margin: '2rem 0', height: '2rem' }}>
+                {zBottomMenu.map((item, idx) => (
+                  <>
+                    <HeaderMenu onClick={() => { navigate(item.link) }}>{item.name}</HeaderMenu>
+                  </>
+                ))}
+              </div>
+              <div style={{ position: 'absolute', right: '48%', top: '0.5rem' }}>
+                <img src={logo} style={{ height: '5rem' }} onClick={() => { navigate('/') }} />
+              </div>
+              <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between' }}>
+                <AiOutlineBell onClick={handleModal} style={{ width: '2rem', height: '1.5rem' }} />
+                <AiOutlineSearch onClick={() => { }} style={{ width: '2rem', height: '1.5rem' }} />
+                <AiOutlineSetting onClick={() => { }} style={{ width: '2rem', height: '1.5rem' }} />
+              </div>
+            </HeaderMenuContainer>
+          </>
+        }
+
       </Header>
 
       {/* <ModalContainer modal={modal}>
