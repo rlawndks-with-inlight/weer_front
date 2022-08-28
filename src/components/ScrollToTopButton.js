@@ -42,7 +42,7 @@ const ScrollToTopButton = () => {
         } else {
             setDisplay('')
         }
-        if (pathname.substring(0, 6) == '/post/' || pathname.substring(0, 7) == '/video/') {
+        if (pathname.substring(0, 6) == '/post/' || pathname.substring(0, 7) == '/video/' || window.innerWidth > 600) {
             setIsPost(true);
         } else {
             setIsPost(false);
