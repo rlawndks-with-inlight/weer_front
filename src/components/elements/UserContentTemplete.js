@@ -18,16 +18,24 @@ margin-bottom:6rem;
 
 `
 
-export const Title = styled.div`
-margin:1rem auto 1rem 0;
-width:50%;
+export const TitleStyle = styled.div`
 font-size:${props => props.theme.size.font2};
 font-weight:bold;
-@media screen and (max-width:700px) { 
-    width:90%;
-}
-
+margin-right:16px;
 `
+export const Title = (props) =>{
+    return (
+        <>
+        <div style={{display:'flex',alignItems:'center',marginTop:'16px'}}>
+        <TitleStyle>
+            {props.children}
+        </TitleStyle>
+        <hr className="bar"/>
+        </div>
+        
+        </>
+    )
+}
 export const Content = styled.div`
 margin:1rem auto 1rem 0;
 width:100%;

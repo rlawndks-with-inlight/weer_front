@@ -11,7 +11,7 @@ import { zTalk, zTheme } from '../../data/TestData';
 import SubType from '../../components/elements/SubType';
 import testImg from '../../assets/images/test/test5.jpg';
 import axios from 'axios';
-import { backUrl } from '../../data/Data';
+import { backUrl, slideSetting } from '../../data/Data';
 import { getIframeLinkByLink } from '../../functions/utils';
 import { Wrappers, Title, Content, Card, Img, WrapDiv, SliderDiv } from '../../components/elements/UserContentTemplete';
 import ThemeCard from '../../components/ThemeCard'
@@ -46,7 +46,7 @@ const Home = () => {
     useEffect(() => {
         setPosts(zTalk[0].image_list);
         async function fetchPost() {
-           setLoading(true)
+           //setLoading(true)
 
             const { data: response } = await axios.get('/api/gethomecontent')
             setSetting(response.data.setting);
@@ -61,7 +61,7 @@ const Home = () => {
                 video_list[i].link = getIframeLinkByLink(video_list[i].link);
             }
             setVideos(video_list);
-           setTimeout(() => setLoading(false), 1500);
+           //setTimeout(() => setLoading(false), 1500);
         }
         fetchPost();
     }, [])
@@ -106,7 +106,7 @@ const Home = () => {
 
                             </WrapDiv>
                             <SliderDiv>
-                                <Slider {...settings} className='board-container'>
+                                <Slider {...slideSetting} className='board-container'>
                                     {issues.map((item, idx) => (
                                         <>
                                             <Card onClick={() => navigate(`/post/issue/${item?.pk}`)}>
@@ -164,7 +164,7 @@ const Home = () => {
                                 ))}
                             </WrapDiv>
                             <SliderDiv>
-                                <Slider {...settings} className='board-container'>
+                                <Slider {...slideSetting} className='board-container'>
                                     {themes.map((item, idx) => (
                                         <>
                                             <Card onClick={() => navigate(`/post/theme/${item?.pk}`)}>
@@ -191,7 +191,7 @@ const Home = () => {
                                 ))}
                             </WrapDiv>
                             <SliderDiv>
-                                <Slider {...settings} className='board-container'>
+                                <Slider {...slideSetting} className='board-container'>
                                     {videos.map((item, idx) => (
                                         <>
                                             <VideoCard item={item} />

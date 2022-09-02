@@ -31,7 +31,6 @@ const ThemeList = () => {
     return (
         <>
             <Wrappers>
-                <Title></Title>
                 <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
                 {posts.map((item, idx) => (
                     <>

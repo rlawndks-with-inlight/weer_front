@@ -32,7 +32,6 @@ const MasterList = () => {
     return (
         <>
             <Wrappers>
-                <Title></Title>
                 {posts.map((item, idx) => (
                     <>
                         <Card onClick={() => { navigate(`/master/${item.pk}`,{state:{name:item.name,nickname:item.nickname,img:item.profile_img}}) }}>

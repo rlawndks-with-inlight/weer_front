@@ -29,7 +29,6 @@ const SelectIssueCategory = () => {
     return (
         <>
             <Wrappers>
-                <Title></Title>
                 {posts.map((item, idx)=>(
                     <>
                     <Card onClick={()=>{navigate(`/issuelist/${item.pk}`,{state:item.title})}}>

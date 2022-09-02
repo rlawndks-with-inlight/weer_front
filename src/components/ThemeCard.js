@@ -18,17 +18,17 @@ background: ${theme.color.background3};
 }
 `
 const Img = styled.div`
-width: 200px;
+width: 150px;
 background:#fff;
 @media screen and (max-width:1000px) {
-    width:20vw;
+    width:15vw;
 }
 @media screen and (max-width:700px) {
-    width:37.5vw;
+    width:28.125vw;
 }
 `
 const Title = styled.div`
-font-size:${theme.size.font4}; 
+font-size:${theme.size.font3}; 
 font-weight: bold;
 width:250px;
 @media screen and (max-width:1200px) {

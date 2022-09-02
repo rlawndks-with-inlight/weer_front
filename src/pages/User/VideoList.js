@@ -43,8 +43,7 @@ const VideoList = () => {
     }
     return (
         <>
-            <Wrappers>
-                <Title></Title>
+            <Wrappers style={{width:'100%',background:`${theme.color.background3}`}}>
                 <SelectSubType className='subtype-container' style={{ top: '3rem', height: '4rem', alignItems: 'center', marginBottom: '16px' }}>
                     <SubType onClick={() => { getVideoListByNum(0, 0) }} style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center', width: '2rem', height: '2rem', margin: '0.5rem', borderRadius: '50%', border: `1px solid ${theme.color.background1}`, opacity: `${channelNum == 0 ? '1' : '0.4'}` }} />
                     {channels.map((item, index) => (
@@ -58,7 +57,7 @@ const VideoList = () => {
                 <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
                     {posts.map((item, idx) => (
                         <>
-                            <VideoCard item={item} />
+                            <VideoCard item={item} background={'#fff'} />
 
                         </>
                     ))}

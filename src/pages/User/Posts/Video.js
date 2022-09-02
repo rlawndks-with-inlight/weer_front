@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { Title, Wrappers } from "../../../components/elements/UserContentTemplete";
-import { backUrl } from "../../../data/Data";
+import { backUrl, slideSetting } from "../../../data/Data";
 import theme from "../../../styles/theme";
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { getIframeLinkByLink } from "../../../functions/utils";
@@ -134,7 +134,7 @@ const Video = () => {
                         ))}
                     </WrapDiv>
                     <SliderDiv>
-                        <Slider {...settings} className='board-container'>
+                        <Slider {...slideSetting} className='board-container'>
                             {latests.map((item, idx) => (
                                 <>
                                     <VideoCard item={item} />
