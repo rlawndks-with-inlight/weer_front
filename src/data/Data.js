@@ -16,9 +16,9 @@ export const backUrl = "http://weare-first.com:8001";
 //http://weare-first.com:8001
 export const zBottomMenu = [
     { name: '핵심이슈', link: '/selectissuecategory', icon: <img src={bulbImg} className='menu-icon' />, activeIcon: <img src={bulbActiveImg} className='menu-icon' />, allowList: ['/selectissuecategory'] },
-    { name: '퍼스트전문가', link: '/masterlist', icon: <img src={thumbImg} className='menu-icon' />, activeIcon: <img src={thumbActiveImg} className='menu-icon' />, allowList: ['/masterlist'] },
-    { name: '핵심테마', link: '/themelist', icon: <img src={albumImg} className='menu-icon' />, activeIcon: <img src={albumActiveImg} className='menu-icon' />, allowList: ['/themelist'] },
     { name: '핵심비디오', link: '/videolist', icon: <img src={playImg} className='menu-icon' />, activeIcon: <img src={playActiveImg} className='menu-icon' />, allowList: ['/videolist'] },
+    { name: '핵심테마', link: '/themelist', icon: <img src={albumImg} className='menu-icon' />, activeIcon: <img src={albumActiveImg} className='menu-icon' />, allowList: ['/themelist'] },
+    { name: '전문가칼럼', link: '/masterlist', icon: <img src={thumbImg} className='menu-icon' />, activeIcon: <img src={thumbActiveImg} className='menu-icon' />, allowList: ['/masterlist'] },
     { name: '상담문의', link: '/inquiry', icon: <img src={talkImg} className='menu-icon' />, activeIcon: <img src={talkActiveImg} className='menu-icon' />, allowList: ['/inquiry'] }
 ];
 export const objManagerListContent = {

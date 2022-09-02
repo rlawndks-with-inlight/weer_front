@@ -15,18 +15,27 @@ const VideoList = () => {
     const [posts, setPosts] = useState([]);
     const [channels, setChannels] = useState([])
     const [channelNum, setChannelNum] = useState(0)
+    const [channelVideoConnectObj, setChannelVideoConnectObj] = useState({});
     useEffect(() => {
         async function fetchPosts() {
-            const { data: response0 } = await axios.get('/api/items?table=user&level=30')
+            const { data: response0 } = await axios.get('/api/items?table=user&level=30');
             setChannels(response0.data);
+            console.log(response0)
+            let obj = {};
+            let channel_list = response0?.data ?? [];
+            for(var i =0;i<channel_list.length;i++){
+                obj[`${channel_list[i].pk}`] = channel_list[i]?.profile_img ?? "";
+            }
+            setChannelVideoConnectObj(obj);
             const { data: response } = await axios.get('/api/items?table=video&status=1');
             let list = response.data;
             for (var i = 0; i < list.length; i++) {
                 list[i].link = getIframeLinkByLink(list[i].link);
             }
-            setPosts(list)
+            setPosts(list);
         }
         fetchPosts();
+
     }, [])
     const getVideoListByNum = async (num, pk) => {
         setChannelNum(num);
@@ -43,7 +52,7 @@ const VideoList = () => {
     }
     return (
         <>
-            <Wrappers style={{width:'100%',background:`${theme.color.background3}`}}>
+            <Wrappers style={{width:'100%',background:`${window.innerWidth>600?'#fff':theme.color.background3}`}}>
                 <SelectSubType className='subtype-container' style={{ top: '3rem', height: '4rem', alignItems: 'center', marginBottom: '16px' }}>
                     <SubType onClick={() => { getVideoListByNum(0, 0) }} style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center', width: '2rem', height: '2rem', margin: '0.5rem', borderRadius: '50%', border: `1px solid ${theme.color.background1}`, opacity: `${channelNum == 0 ? '1' : '0.4'}` }} />
                     {channels.map((item, index) => (
@@ -57,7 +66,7 @@ const VideoList = () => {
                 <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
                     {posts.map((item, idx) => (
                         <>
-                            <VideoCard item={item} background={'#fff'} />
+                            <VideoCard item={item} background={window.innerWidth>600?'':'#fff'} isVideoList={true} channelImg={channelVideoConnectObj[`${item?.user_pk}`]} />
 
                         </>
                     ))}

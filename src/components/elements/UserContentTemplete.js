@@ -28,7 +28,7 @@ export const Title = (props) =>{
         <>
         <div style={{display:'flex',alignItems:'center',marginTop:'16px'}}>
         <TitleStyle>
-            {props.children}
+            {props?.children??""}
         </TitleStyle>
         <hr className="bar"/>
         </div>

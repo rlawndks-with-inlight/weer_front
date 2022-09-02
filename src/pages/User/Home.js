@@ -112,7 +112,7 @@ const Home = () => {
                                             <Card onClick={() => navigate(`/post/issue/${item?.pk}`)}>
                                                 <Img style={{backgroundImage: `url(${backUrl + item?.main_img})`}} />
                                                 <div style={{ padding: '16px 16px 0 16px' }}>{item?.date} {issues[0]?.title}</div>
-                                                <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
+                                                <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 40px 16px' }}>{item?.hash}</div>
                                             </Card>
                                         </>
                                     ))}
@@ -130,7 +130,7 @@ const Home = () => {
                             <SubType style={{ borderBottom: `2px solid ${0 == subTypeNum ? theme.color.background1 : '#fff'}`, fontWeight: `${0 == subTypeNum ? 'bold' : 'normal'}` }} onClick={() => { onChangeStrategyNum(0, 0) }}>
                                 All
                             </SubType>
-                            {masters.map((item, index) => (
+                            {masters && masters.map((item, index) => (
                                 <>
                                     <SubType style={{ borderBottom: `2px solid ${index + 1 == subTypeNum ? theme.color.background1 : '#fff'}`, fontWeight: `${index + 1 == subTypeNum ? 'bold' : 'normal'}` }} onClick={() => { onChangeStrategyNum(index + 1, item.pk) }}>
                                         {item.nickname}
@@ -171,7 +171,7 @@ const Home = () => {
                                                 <Img style={{backgroundImage: `url(${backUrl + item?.main_img})`}} />
                                                 <div style={{ padding: '16px', minHeight: '50px', justifyContent: 'space-between', display: 'flex', flexDirection: 'column' }}>
                                                     <div style={{ fontSize: `${theme.size.font4}`, fontWeight: 'bold' }}>{item?.title}</div>
-                                                    <div style={{ fontSize: `${theme.size.font5}` }}>{item?.date.substring(0,10) ?? ""}</div>
+                                                    <div style={{ fontSize: `${theme.size.font5}`,padding:'16px 0 32px 0' }}>{item?.date.substring(0,10) ?? ""}</div>
                                                 </div>
 
                                             </Card>
@@ -194,7 +194,7 @@ const Home = () => {
                                 <Slider {...slideSetting} className='board-container'>
                                     {videos.map((item, idx) => (
                                         <>
-                                            <VideoCard item={item} />
+                                            <VideoCard item={item} paddingBottom={'32px'} isSlide={true} />
                                         </>
                                     ))}
                                 </Slider>

@@ -1,7 +1,13 @@
 .board-container {
     width: 100%;
 }
-
+.slick-dots{
+    bottom: 26px !important;
+    left: -4vw !important;
+}
+.slick-dots li.slick-active button:before{
+    color: #4CDAD8 !important;
+}
 div.board-container button {}
 
 .slick-prev.slick-disabled:before,
