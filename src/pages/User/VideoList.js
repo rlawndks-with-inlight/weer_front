@@ -66,7 +66,7 @@ const VideoList = () => {
                 <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
                     {posts.map((item, idx) => (
                         <>
-                            <VideoCard item={item} background={window.innerWidth>600?'':'#fff'} isVideoList={true} channelImg={channelVideoConnectObj[`${item?.user_pk}`]} />
+                            <VideoCard item={item} background={window.innerWidth>600?'':'#fff'} isVideoList={true} channelImg={channelVideoConnectObj[`${item?.user_pk}`]} isImgDiv={true} />
 
                         </>
                     ))}
