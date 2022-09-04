@@ -12,7 +12,7 @@ import talkImg from '../assets/images/icon/talk.svg';
 import talkActiveImg from '../assets/images/icon/talk-active.svg';
 import thumbImg from '../assets/images/icon/thumb.svg';
 import thumbActiveImg from '../assets/images/icon/thumb-active.svg';
-export const backUrl = "http://localhost:8001";
+export const backUrl = "http://weare-first.com:8001";
 //http://weare-first.com:8001
 export const zBottomMenu = [
     { name: '핵심이슈', link: '/selectissuecategory', icon: <img src={bulbImg} className='menu-icon' />, activeIcon: <img src={bulbActiveImg} className='menu-icon' />, allowList: ['/selectissuecategory'] },
