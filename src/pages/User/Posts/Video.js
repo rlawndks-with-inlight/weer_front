@@ -137,7 +137,7 @@ const Video = () => {
                         <Slider {...slideSetting} className='board-container'>
                             {latests.map((item, idx) => (
                                 <>
-                                    <VideoCard item={item} isSlide={true}  />
+                                    <VideoCard item={item} isSlide={true} isImgPadding={true}  />
                                 </>
                             ))}
                         </Slider>

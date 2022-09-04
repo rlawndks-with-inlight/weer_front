@@ -186,7 +186,7 @@ const Home = () => {
                             <WrapDiv>
                                 {videos.map((item, idx) => (
                                     <>
-                                        <VideoCard item={item}  />
+                                        <VideoCard item={item} isImgPadding={true}  />
                                     </>
                                 ))}
                             </WrapDiv>
@@ -194,7 +194,7 @@ const Home = () => {
                                 <Slider {...slideSetting} className='board-container'>
                                     {videos.map((item, idx) => (
                                         <>
-                                            <VideoCard item={item} paddingBottom={'32px'} isSlide={true} />
+                                            <VideoCard item={item} paddingBottom={'32px'} isSlide={true} isImgPadding={true} />
                                         </>
                                     ))}
                                 </Slider>
