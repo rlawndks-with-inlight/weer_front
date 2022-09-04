@@ -20,10 +20,8 @@ import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
-import { backUrl } from '../../data/Data';
+import { backUrl, cardDefaultColor } from '../../data/Data';
 import { objManagerListContent } from '../../data/Data';
-import Loading from '../../components/Loading';
-
 const MVideoEdit = () => {
     const { pathname } = useLocation();
     const params = useParams();
@@ -32,23 +30,31 @@ const MVideoEdit = () => {
     const editorRef = useRef();
 
     const [myNick, setMyNick] = useState("")
-    const [url, setUrl] = useState('')
-    const [content, setContent] = useState(undefined)
-    const [formData] = useState(new FormData())
-
+    const [auth, setAuth] = useState({});
     const [noteFormData] = useState(new FormData());
-    const [item, setItem] = useState({})
-    const [loading, setLoading] = useState(false)
-    const [zCategory, setZCategory] = useState([])
+    const [channelList, setChannelList] = useState([]);
     useEffect(() => {
-        async function fetchPost() {
+        let authObj = JSON.parse(localStorage.getItem('auth'));
+        setAuth(authObj);
 
+        async function fetchPost() {
+            if (authObj?.user_level >= 40) {
+                const { data: channelResponse } = await axios.get(`/api/getchannel`)
+                setChannelList(channelResponse.data);
+            }
             if (params.pk > 0) {
                 const { data: response } = await axios.get(`/api/item?table=video&pk=${params.pk}`);
                 $(`.title`).val(response.data.title);
                 $(`.link`).val(response.data.link);
-                editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001',backUrl));
+                $(`.channel`).val(response.data.user_pk);
+                $('.font-color').val(response.data.font_color)
+                $('.background-color').val(response.data.background_color)
+                editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001', backUrl));
+            } else {
+                $('.font-color').val(cardDefaultColor.font)
+                $('.background-color').val(cardDefaultColor.background)
             }
+
         }
         fetchPost();
     }, [pathname])
@@ -56,11 +62,12 @@ const MVideoEdit = () => {
         if (!$(`.title`).val() || !$(`.link`).val()) {
             alert('필요값이 비어있습니다.');
         } else {
-            let auth = JSON.parse(localStorage.getItem('auth'))
             let obj = {
-                user_pk: auth.pk,
+                user_pk: auth.user_level < 40 ? auth.pk : $('.channel').val(),
                 title: $('.title').val(),
                 link: $('.link').val(),
+                font_color:$('.font-color').val(),
+                background_color:$('.background-color').val(),
                 note: editorRef.current.getInstance().getHTML()
             }
             if (params.pk > 0) obj.pk = params.pk;
@@ -98,10 +105,38 @@ const MVideoEdit = () => {
                                 <Title>유튜브 링크</Title>
                                 <Input className='link' placeholder='https://www.youtube.com/watch?v=9kaCAbIXuyg&list=RDVWbYRiF44Dc&index=2' />
                             </Col>
+                            {auth.user_level >= 40 ?
+                                <>
+                                    <Col>
+                                        <Title>채널명</Title>
+                                        <Select className='channel'>
+                                            {channelList.map((item, idx) => (
+                                                <>
+                                                    <option value={item.pk} key={idx}>{item.nickname}</option>
+                                                </>
+                                            ))}
+                                        </Select>
+                                    </Col>
+                                </>
+                                :
+                                <>
+                                </>
+                            }
+
                         </Row>
                         <Row>
                             <Col>
                                 <Title><img src={youtubeShare} style={{ width: '100%', maxWidth: '500px' }} /></Title>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Title>카드 글자색</Title>
+                                <Input type={'color'} className='font-color' style={{ background: '#fff', height: '36px', width: '220px' }} />
+                            </Col>
+                            <Col>
+                                <Title>카드 배경색</Title>
+                                <Input type={'color'} className='background-color' style={{ background: '#fff', height: '36px', width: '220px' }} />
                             </Col>
                         </Row>
                         <Row>

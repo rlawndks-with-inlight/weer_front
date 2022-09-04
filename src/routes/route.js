@@ -24,6 +24,7 @@ import MSettingEdit from '../pages/Manager/MSettingEdit';
 
 import MItemEdit from '../pages/Manager/MItemEdit';
 import MItemList from '../pages/Manager/MItemList';
+import MChannelEdit from '../pages/Manager/MChannelEdit';
 
 const zRoute = [
     { link: '/', element: <Home /> },
@@ -45,6 +46,7 @@ const zRoute = [
     { link: '/manager/login', element: <MLogin /> },
     { link: '/manager/edit/user/:pk', element: <MUserEdit /> },
     { link: '/manager/edit/master/:pk', element: <MMasterEdit /> },
+    { link: '/manager/edit/channel/:pk', element: <MChannelEdit /> },
     { link: '/manager/setting', element: <MSetting /> },
     { link: '/manager/edit/video/:pk', element: <MVideoEdit /> },
     { link: '/manager/edit/issue_category/:pk', element: <MIssueCategoryEdit /> },

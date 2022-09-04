@@ -19,12 +19,12 @@ const VideoList = () => {
     useEffect(() => {
         async function fetchPosts() {
             const { data: response0 } = await axios.get('/api/items?table=user&level=30');
-            setChannels(response0.data);
-            console.log(response0)
+            const { data: response1 } = await axios.get('/api/items?table=user&level=25');
+            setChannels( [...response0?.data, ...response1?.data ]);
             let obj = {};
-            let channel_list = response0?.data ?? [];
+            let channel_list = [...response0?.data, ...response1?.data ] ?? [];
             for(var i =0;i<channel_list.length;i++){
-                obj[`${channel_list[i].pk}`] = channel_list[i]?.profile_img ?? "";
+                obj[`${channel_list[i].pk}`] = channel_list[i]?.channel_img ?? "";
             }
             setChannelVideoConnectObj(obj);
             const { data: response } = await axios.get('/api/items?table=video&status=1');
@@ -57,7 +57,7 @@ const VideoList = () => {
                     <SubType onClick={() => { getVideoListByNum(0, 0) }} style={{ backgroundImage: `url(${logo})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center', width: '2rem', height: '2rem', margin: '0.5rem', borderRadius: '50%', border: `1px solid ${theme.color.background1}`, opacity: `${channelNum == 0 ? '1' : '0.4'}` }} />
                     {channels.map((item, index) => (
                         <>
-                            <SubType onClick={() => { getVideoListByNum(index + 1, item.pk) }} style={{ backgroundImage: `url(${backUrl + item.profile_img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center', width: '2rem', height: '2rem', margin: '0.5rem', borderRadius: '50%', border: `1px solid ${theme.color.background1}`, opacity: `${index + 1 == channelNum ? '1' : '0.4'}` }} >
+                            <SubType onClick={() => { getVideoListByNum(index + 1, item.pk) }} style={{ backgroundImage: `url(${backUrl + item.channel_img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center', width: '2rem', height: '2rem', margin: '0.5rem', borderRadius: '50%', border: `1px solid ${theme.color.background1}`, opacity: `${index + 1 == channelNum ? '1' : '0.4'}` }} >
                             </SubType>
                         </>
                     ))}

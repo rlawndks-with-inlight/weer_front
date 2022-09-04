@@ -22,6 +22,12 @@ const theme = {
     font1: "#2c2c2c",
     font2: "#71706F",
     font3: "#cccccc",
+    cardColor:[
+      {font:'#fff',background:'#024643'},
+      {font:'#fff',background:'#31125A'},
+      {font:'#fff',background:'#4A02CC'},
+      {font:'#000',background:'#f5f6f8'},
+    ],
     manager: {
       background1: "#5873e8",
       background2: "#eef1fd",

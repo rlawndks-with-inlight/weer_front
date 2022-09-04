@@ -36,7 +36,9 @@ const MItemList = () => {
             let str = '';
             if (params.table == 'master') {
                 str = `/api/users?page=1&level=30`
-            } else if (params.table == 'user') {
+            } else if (params.table == 'channel') {
+                str = `/api/users?page=1&level=25`
+            }  else if (params.table == 'user') {
                 str = `/api/users?page=1&level=0`
             } else if (params.table == 'issue' && params.pk) {
                 str = `/api/items?table=issue&page=1&category_pk=${params.pk}`
@@ -61,6 +63,8 @@ const MItemList = () => {
         let str = '';
         if (params.table == 'master') {
             str = `/api/users?page=${num}&level=30`
+        } else if (params.table == 'channel') {
+            str = `/api/users?page=${num}&level=25`
         } else if (params.table == 'user') {
             str = `/api/users?page=${num}&level=0`
         } else if (params.table == 'issue' && params.pk) {

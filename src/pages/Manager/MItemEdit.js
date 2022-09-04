@@ -10,7 +10,6 @@ import Breadcrumb from '../../common/manager/Breadcrumb';
 import ButtonContainer from '../../components/elements/button/ButtonContainer';
 import AddButton from '../../components/elements/button/AddButton';
 import $ from 'jquery';
-import { addItem, updateItem } from '../../functions/utils';
 import { Card, Title, Input, Row, Col, ImageContainer, Select } from '../../components/elements/ManagerTemplete';
 import { AiFillFileImage } from 'react-icons/ai'
 import theme from '../../styles/theme';
@@ -22,7 +21,7 @@ import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import { backUrl } from '../../data/Data';
-import { objManagerListContent } from '../../data/Data';
+import { objManagerListContent, cardDefaultColor } from '../../data/Data';
 import Loading from '../../components/Loading';
 
 const MItemEdit = () => {
@@ -41,24 +40,31 @@ const MItemEdit = () => {
     const [item, setItem] = useState({})
     const [loading, setLoading] = useState(false)
     const [zCategory, setZCategory] = useState([])
+    const [fontColor, setFontColor] = useState(cardDefaultColor.font);
+    const [backgroundColor, setBackgroundColor] = useState(cardDefaultColor.background)
     useEffect(() => {
         async function fetchPost() {
             if (params.table == 'issue') {
                 const { data: response } = await axios.get('/api/items?table=issue_category');
                 setZCategory(response.data)
             }
+
             if (params.pk > 0) {
                 const { data: response } = await axios.get(`/api/item?table=${params.table}&pk=${params.pk}`);
                 $(`.title`).val(response.data.title);
                 $(`.hash`).val(response.data.hash);
                 $(`.suggest-title`).val(response.data.suggest_title);
+                $('.font-color').val(response.data.font_color)
+                $('.background-color').val(response.data.background_color)
                 if (params.table == 'issue') {
                     $(`.category`).val(response.data.category_pk);
                 }
-                editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001',backUrl));
+                editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001', backUrl));
                 setUrl(backUrl + response.data.main_img);
                 setItem(response.data)
             } else {
+                $('.font-color').val(cardDefaultColor.font)
+                $('.background-color').val(cardDefaultColor.background)
                 if (params.table == 'oneword' || params.table == 'oneevent') {
                     const { data: response } = await axios.get(`/api/${params.table}`)
                     if (response.data) {
@@ -77,6 +83,9 @@ const MItemEdit = () => {
                         setItem({ main_img: '' })
                     }
 
+                } else {
+                    $('.font-color').val(cardDefaultColor.font)
+                    $('.background-color').val(cardDefaultColor.background)
                 }
             }
 
@@ -111,6 +120,8 @@ const MItemEdit = () => {
                         navigate(-1);
                     }
                 } else {
+                    formData.append('font_color',$('.font-color').val());
+                    formData.append('background_color',$('.background-color').val())
                     if (params.pk > 0) {
                         const { data: response } = await axios.post(`/api/updateitem`, formData)
                         if (response.result > 0) {
@@ -204,6 +215,23 @@ const MItemEdit = () => {
                                 <Input className='hash' placeholder='#사과 #수박' />
                             </Col>
                         </Row>
+                        {params.table != 'oneword' && params.table != 'oneevent' ?
+                            <>
+                                <Row>
+                                    <Col>
+                                        <Title>카드 글자색</Title>
+                                        <Input type={'color'} className='font-color' style={{ background: '#fff', height: '36px', width: '220px' }} />
+                                    </Col>
+                                    <Col>
+                                        <Title>카드 배경색</Title>
+                                        <Input type={'color'} className='background-color' style={{ background: '#fff', height: '36px', width: '220px' }} />
+                                    </Col>
+                                </Row>
+                            </>
+                            :
+                            <>
+                            </>}
+
                         <Row>
                             <Col>
                                 <Title>내용</Title>

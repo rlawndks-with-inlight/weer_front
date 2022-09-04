@@ -9,6 +9,7 @@ import Modal from '../components/Modal';
 import axios from 'axios'
 import { zBottomMenu } from '../data/Data';
 import { MdNavigateBefore } from 'react-icons/md';
+import theme from '../styles/theme';
 const Header = styled.header`
 position:fixed;
 height:6rem;
@@ -176,7 +177,7 @@ const Headers = () => {
               <div style={{ display: 'flex', margin: '2rem 0', height: '2rem' }}>
                 {zBottomMenu.map((item, idx) => (
                   <>
-                    <HeaderMenu onClick={() => { navigate(item.link) }}>{item.name}</HeaderMenu>
+                    <HeaderMenu onClick={() => { navigate(item.link) }} style={{color:`${item.allowList.includes(location.pathname)?theme.color.background1:''}`}}>{item.name}</HeaderMenu>
                   </>
                 ))}
               </div>

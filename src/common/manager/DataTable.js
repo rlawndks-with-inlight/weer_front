@@ -43,7 +43,7 @@ const DataTable = (props) => {
             pk: pk,
             table: schema
         }
-        if (schema == 'master') {
+        if (schema == 'master' || schema == 'channel') {
             obj.table = 'user';
         }
         const { data: response } = await axios.post(`/api/deleteitem`, obj)
@@ -70,7 +70,6 @@ const DataTable = (props) => {
             pk: pk,
             num:num
         })
-        console.log(response)
     }
 
     return (

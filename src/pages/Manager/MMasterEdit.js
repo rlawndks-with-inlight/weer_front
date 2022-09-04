@@ -23,6 +23,8 @@ const MMasterEdit = () => {
     const [myNick, setMyNick] = useState("")
     const [url, setUrl] = useState('')
     const [content, setContent] = useState(undefined)
+    const [channelUrl, setChannelUrl] = useState('')
+    const [channelContent, setChannelContent] = useState(undefined)
     const [formData] = useState(new FormData())
     useEffect(() => {
         async function fetchPost() {
@@ -33,12 +35,13 @@ const MMasterEdit = () => {
                 $('.name').val(response.data.name)
                 $('.nickname').val(response.data.nickname)
                 setUrl(backUrl + response.data.profile_img)
+                setChannelUrl(backUrl + response.data.channel_img)
             }
         }
         fetchPost();
     }, [])
     const editMaster = async () => {
-        if ((!$(`.id`).val() || !$(`.name`).val() || !$(`.pw`).val() || !content) && params.pk == 0) {
+        if ((!$(`.id`).val() || !$(`.name`).val() || !$(`.pw`).val() || !content || !channelContent) && params.pk == 0) {
             alert('필요값이 비어있습니다.');
         } else {
 
@@ -48,6 +51,7 @@ const MMasterEdit = () => {
             formData.append("nickname", $(`.nickname`).val());
             formData.append("user_level", 30);
             formData.append("master", content);
+            formData.append("channel", channelContent);
             if (params.pk > 0) formData.append("pk", params.pk)
             if (window.confirm(`${params.pk == 0 ? '추가하시겠습니까?' : '수정하시겠습니까?'}`)) {
                 if (params.pk <= 0) {
@@ -59,6 +63,7 @@ const MMasterEdit = () => {
 
                 } else {
                     const { data: response } = await axios.post('/api/updatemaster', formData);
+                    alert(response.message);
                     if (response.result > 0) {
                         navigate('/manager/list/master');
                     }
@@ -72,6 +77,12 @@ const MMasterEdit = () => {
         if (e.target.files[0]) {
             setContent(e.target.files[0]);
             setUrl(URL.createObjectURL(e.target.files[0]))
+        }
+    };
+    const addChannelFile = (e) => {
+        if (e.target.files[0]) {
+            setChannelContent(e.target.files[0]);
+            setChannelUrl(URL.createObjectURL(e.target.files[0]))
         }
     };
     return (
@@ -98,7 +109,7 @@ const MMasterEdit = () => {
                                 <Input className='name' />
                             </Col>
                             <Col>
-                                <Title>닉네임</Title>
+                                <Title>닉네임(채널명)</Title>
                                 <Input className='nickname' />
                             </Col>
                         </Row>
@@ -124,8 +135,32 @@ const MMasterEdit = () => {
                                     <input type="file" id="file1" onChange={addFile} style={{ display: 'none' }} />
                                 </div>
                             </Col>
-                        </Row>
 
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Title>채널 이미지</Title>
+                                <ImageContainer for="file2">
+
+                                    {channelUrl ?
+                                        <>
+                                            <img src={channelUrl} alt="#"
+                                                style={{
+                                                    width: '200px', height: '150px',
+                                                    margin: '24px'
+                                                }} />
+                                        </>
+                                        :
+                                        <>
+                                            <AiFillFileImage style={{ margin: '4rem', fontSize: '4rem', color: `${theme.color.manager.font3}` }} />
+                                        </>}
+                                </ImageContainer>
+                                <div>
+                                    <input type="file" id="file2" onChange={addChannelFile} style={{ display: 'none' }} />
+                                </div>
+                            </Col>
+
+                        </Row>
                     </Card>
                     <ButtonContainer>
                         <CancelButton onClick={() => navigate(-1)}>x 취소</CancelButton>

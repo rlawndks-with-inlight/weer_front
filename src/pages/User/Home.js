@@ -96,7 +96,7 @@ const Home = () => {
                             <WrapDiv>
                                 {issues.map((item, idx) => (
                                     <>
-                                        <Card onClick={() => navigate(`/post/issue/${item?.pk}`)}>
+                                        <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} >
                                             <Img style={{backgroundImage: `url(${backUrl + item?.main_img})`}} />
                                             <div style={{ padding: '16px 16px 0 16px' }}>{item?.date.substring(0,10) ?? ""} {issues[0]?.title}</div>
                                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
@@ -109,10 +109,10 @@ const Home = () => {
                                 <Slider {...slideSetting} className='board-container'>
                                     {issues.map((item, idx) => (
                                         <>
-                                            <Card onClick={() => navigate(`/post/issue/${item?.pk}`)}>
+                                            <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} style={{color:`${item?.font_color}`,background:`${item?.background_color}`}} >
                                                 <Img style={{backgroundImage: `url(${backUrl + item?.main_img})`}} />
-                                                <div style={{ padding: '16px 16px 0 16px' }}>{item?.date} {issues[0]?.title}</div>
-                                                <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 40px 16px' }}>{item?.hash}</div>
+                                                <div style={{ padding: '16px',height:'70px' }}>{item?.date} {item?.title}</div>
+                                                <div style={{ fontSize: `${theme.size.font4}`, padding: '8px 16px',height:'50px' }}>{item?.hash}</div>
                                             </Card>
                                         </>
                                     ))}
@@ -151,7 +151,7 @@ const Home = () => {
 
                                 {themes.map((item, idx) => (
                                     <>
-                                        <Card onClick={() => navigate(`/post/theme/${item?.pk}`)}>
+                                        <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{color:`${item?.font_color}`,background:`${item?.background_color}`}}>
                                             <Img style={{backgroundImage: `url(${backUrl + item?.main_img})`}} />
                                             <div style={{ padding: '16px', minHeight: '50px', justifyContent: 'space-between', display: 'flex', flexDirection: 'column' }}>
                                                 <div style={{ fontSize: `${theme.size.font4}`, fontWeight: 'bold' }}>{item?.title}</div>
@@ -167,7 +167,7 @@ const Home = () => {
                                 <Slider {...slideSetting} className='board-container'>
                                     {themes.map((item, idx) => (
                                         <>
-                                            <Card onClick={() => navigate(`/post/theme/${item?.pk}`)}>
+                                            <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{color:`${item?.font_color}`,background:`${item?.background_color}`}}>
                                                 <Img style={{backgroundImage: `url(${backUrl + item?.main_img})`}} />
                                                 <div style={{ padding: '16px', minHeight: '50px', justifyContent: 'space-between', display: 'flex', flexDirection: 'column' }}>
                                                     <div style={{ fontSize: `${theme.size.font4}`, fontWeight: 'bold' }}>{item?.title}</div>
@@ -186,7 +186,7 @@ const Home = () => {
                             <WrapDiv>
                                 {videos.map((item, idx) => (
                                     <>
-                                        <VideoCard item={item} />
+                                        <VideoCard item={item}  />
                                     </>
                                 ))}
                             </WrapDiv>
