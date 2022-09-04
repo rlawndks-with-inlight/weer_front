@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Redirect, Routes } from "react-router-d
 import ScrollToTop from '../components/ScrollToTop';
 import Headers from '../common/Headers';
 import BottomMenu from '../common/BottomMenu';
+import Footer from '../common/Footer';
 
 import { zRoute } from '../routes/route';
 import ScrollToTopButton from '../components/ScrollToTopButton';
@@ -26,7 +27,7 @@ const App = () => {
                 </>
                 <ScrollToTopButton/>
                 <BottomMenu />
-                {/* <Footer/> */}
+                <Footer/>
 
             </Router>
         </>

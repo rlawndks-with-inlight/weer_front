@@ -117,7 +117,6 @@ const SideBar = () => {
         setAuth(JSON.parse(localStorage.getItem('auth')));
     }, [location]);
     useEffect(() => {
-
         async function fetchPost() {
             const { data: response } = await axios.get('/api/items?table=issue_category')
             setZIssueCategory(response?.data);
@@ -149,7 +148,7 @@ const SideBar = () => {
                 <div style={{ maxHeight: '80vh' }}>
                     {zSidebar.map((item, index) => (
                         <>
-                            {auth.user_level >= item.level ?
+                            {auth.level >= item.level ?
                                 <>
                                     {item.allow_list.includes(location.pathname) ?
                                         <>

@@ -47,6 +47,19 @@ const Breadcrumb = (props) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [nickname, setNickname] = useState('')
+    useEffect(()=>{
+        async function isAuth(){
+            const {data:response} = await axios.get('/api/auth');
+            if(location.pathname.includes('/manager')&&location.pathname!='/manager/login'&&location.pathname!='/manager'){
+                if(response.level>=30){
+                    localStorage.setItem('auth',JSON.stringify(response));
+                }else{
+                    localStorage.removeItem('auth')
+                }
+            }
+        }
+        isAuth();
+    },[])
     useEffect(() => {
         if (!localStorage.getItem('auth')) {
             window.location.href = '/manager';

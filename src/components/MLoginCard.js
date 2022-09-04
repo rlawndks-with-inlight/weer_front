@@ -80,7 +80,7 @@ const MLoginCard = () => {
                 { withCredentials: true });
             if (response.level >= 30) {
                 localStorage.setItem('auth', JSON.stringify(response))
-                navigate('/manager/list/strategy');
+                window.location.href = '/manager/list/strategy';
             } else {
                 localStorage.removeItem('auth')
             }
@@ -96,7 +96,7 @@ const MLoginCard = () => {
         })
         alert(response.message);
         if (response.result > 0) {
-            localStorage.setItem('auth',JSON.stringify(response.data))
+            await localStorage.setItem('auth',JSON.stringify(response.data));
             navigate('/manager/list/strategy');
         }
     }
