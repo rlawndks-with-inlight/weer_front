@@ -6,6 +6,10 @@ import ThemeList from '../pages/User/ThemeList';
 import VideoList from '../pages/User/VideoList';
 import Inquiry from '../pages/User/Inquiry';
 
+import Login from '../pages/User/Auth/Login';
+import MyPage from '../pages/User/Auth/MyPage';
+import SignUp from '../pages/User/Auth/SignUp';
+
 import OneEventList from '../pages/User/OneEvent/OneEventList';
 import OneWordList from '../pages/User/OneWord/OneWordList';
 import IssueList from '../pages/User/Issues/IssueList';
@@ -38,6 +42,10 @@ const zRoute = [
     { link: '/onewordlist', element: <OneWordList /> },
     { link: '/oneeventlist', element: <OneEventList /> },
     { link: '/master/:pk', element: <Master /> },
+
+    { link: '/login', element: <Login /> },
+    { link: '/mypage', element: <MyPage /> },
+    { link: '/signup', element: <SignUp /> },
 
     { link: '/post/:table/:pk', element: <Post /> },
     { link: '/video/:pk', element: <Video /> },
