@@ -71,6 +71,7 @@ const Video = () => {
     const { pathname } = useLocation();
     const [post, setPost] = useState({});
     const [latests, setLatests] = useState([]);
+    const [relates, setRelates] = useState([]);
     const [percent, setPercent] = useState(0);
 
     const settings = {
@@ -92,12 +93,18 @@ const Video = () => {
     useEffect(() => {
         async function fetchPost() {
             const { data: response } = await axios.get(`/api/getvideocontent?pk=${params.pk}`);
+            console.log(response)
             let obj = response.data.item;
             obj.link = getIframeLinkByLink(obj.link);
             obj.note = stringToHTML(obj.note)
             $('.note').append(obj.note)
             setPost(obj);
-            let video_list = response.data?.latests
+            let relate_list = response.data?.relates ?? [];
+            for (var i = 0; i < relate_list.length; i++) {
+                relate_list[i].link = getIframeLinkByLink(relate_list[i].link);
+            }
+            setRelates(relate_list);
+            let video_list = response.data?.latests ?? []
             for (var i = 0; i < video_list.length; i++) {
                 video_list[i].link = getIframeLinkByLink(video_list[i].link);
             }
@@ -124,6 +131,25 @@ const Video = () => {
                 <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post.hash}</div>
                 <div className="note">
                 </div>
+                <Title>관련 영상</Title>
+                <Content>
+                    <WrapDiv>
+                        {relates.map((item, idx) => (
+                            <>
+                                <VideoCard item={item} />
+                            </>
+                        ))}
+                    </WrapDiv>
+                    <SliderDiv>
+                        <Slider {...slideSetting} className='board-container'>
+                            {relates.map((item, idx) => (
+                                <>
+                                    <VideoCard item={item} isSlide={true} isImgPadding={true}  />
+                                </>
+                            ))}
+                        </Slider>
+                    </SliderDiv>
+                </Content>
                 <Title>최신 영상</Title>
                 <Content>
                     <WrapDiv>

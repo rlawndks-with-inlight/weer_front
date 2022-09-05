@@ -78,7 +78,6 @@ const Post = () => {
                     </div>
                 </div>
                 <img src={backUrl + post.main_img} style={{ width: '100%', margin: '16px 0' }} />
-                <div>{post.suggest_title}</div>
                 <Title>{post.title}</Title>
                 <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post.hash}</div>
                 <div className="note">

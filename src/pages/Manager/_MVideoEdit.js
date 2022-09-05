@@ -23,6 +23,34 @@ import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import { backUrl, cardDefaultColor } from '../../data/Data';
 import { objManagerListContent } from '../../data/Data';
+
+const SearchInput = styled.input`
+margin:12px 0 6px 24px;
+width:300px;
+padding:8px;
+outline:none;
+::placeholder {
+    color: #cccccc;
+}
+@media screen and (max-width:500px) {
+width:150px;
+}
+`
+const Button = styled.button`
+width:80px;
+height:36px;
+margin:12px 0 6px 0;
+background:#fff;
+border:1px solid #aaa;
+cursor:pointer;
+@media screen and (max-width:500px) {
+    width:60px;
+}
+`
+const SearchContent = styled.div`
+margin:12px 0 6px 24px;
+
+`
 const MVideoEdit = () => {
     const { pathname } = useLocation();
     const params = useParams();
@@ -34,6 +62,9 @@ const MVideoEdit = () => {
     const [auth, setAuth] = useState({});
     const [noteFormData] = useState(new FormData());
     const [channelList, setChannelList] = useState([]);
+    const [searchResults, setSearchResults] = useState([])//검색된 비디오 연관비디오 제외
+    const [relateVideos, setRelateVideos] = useState([])//이미 연관된 비디오
+    const [relatePkList, setRelatePkList] = useState([])
     useEffect(() => {
         let authObj = JSON.parse(localStorage.getItem('auth'));
         setAuth(authObj);
@@ -43,23 +74,22 @@ const MVideoEdit = () => {
                 setChannelList(channelResponse.data);
             }
             if (params.pk > 0) {
-                const { data: response } = await axios.get(`/api/item?table=video&pk=${params.pk}`);
-                $(`.title`).val(response.data.title);
-                $(`.link`).val(response.data.link);
-                $(`.channel`).val(response.data.user_pk);
-                $('.font-color').val(response.data.font_color)
-                $('.background-color').val(response.data.background_color)
-                let relate_list = JSON.parse(response.data.relate_video) ??[];
-                let relate_str = "";
-                console.log(relate_list)
-                for(var i =0;i<relate_list.length;i++){
-                    if(i!=0){
-                        relate_str +="/"
-                    }
-                    relate_str += relate_list[i];
+                const { data: response } = await axios.get(`/api/video/${params.pk}`);
+                console.log(response);
+                $(`.title`).val(response.data.video.title);
+                $(`.link`).val(response.data.video.link);
+                $(`.channel`).val(response.data.video.user_pk);
+                $('.font-color').val(response.data.video.font_color)
+                $('.background-color').val(response.data.video.background_color)
+                let relate_list = response.data.relate ?? [];
+                let relate_pk_list = [];
+                setRelateVideos(relate_list);
+                for (var i = 0; i < relate_list.length; i++) {
+                    relate_pk_list.push(relate_list[i].pk);
+                    $(`.check-${relate_list[i].pk}`).prop('checked', true);
                 }
-                $('.relate').val(relate_str);
-                editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001', backUrl));
+                setRelatePkList(relate_pk_list)
+                editorRef.current.getInstance().setHTML(response.data.video.note.replaceAll('http://localhost:8001', backUrl));
             } else {
                 $('.font-color').val(cardDefaultColor.font)
                 $('.background-color').val(cardDefaultColor.background)
@@ -72,15 +102,12 @@ const MVideoEdit = () => {
         if (!$(`.title`).val() || !$(`.link`).val()) {
             alert('필요값이 비어있습니다.');
         } else {
-            let str = $('.relate').val().split("/");
-            str = JSON.stringify(str);
             let obj = {
                 user_pk: auth.level < 40 ? auth.pk : $('.channel').val(),
                 title: $('.title').val(),
                 link: $('.link').val(),
-                font_color:$('.font-color').val(),
-                background_color:$('.background-color').val(),
-                relate_video:str,
+                font_color: $('.font-color').val(),
+                background_color: $('.background-color').val(),
                 note: editorRef.current.getInstance().getHTML()
             }
             console.log(obj)
@@ -98,6 +125,17 @@ const MVideoEdit = () => {
 
             }
         }
+    }
+    const searchVideo = async () => {
+        if ($('.relate').val().length >= 2) {
+            const { data: response } = await axios.get(`/api/items?table=video&keyword=${$('.relate').val()}`)
+            setSearchResults(response.data)
+        } else {
+            setSearchResults([]);
+        }
+    }
+    const initializationSearch = () => {
+
     }
     const onChangeEditor = (e) => {
         const data = editorRef.current.getInstance().getHTML();
@@ -125,7 +163,7 @@ const MVideoEdit = () => {
                                         <Select className='channel'>
                                             {channelList.map((item, idx) => (
                                                 <>
-                                                    <option value={item.pk} key={idx}>{item.nickname}{item.user_level>=30?' '+item.name+'(전문가)':''}</option>
+                                                    <option value={item.pk} key={idx}>{item.nickname}{item.user_level >= 30 ? ' ' + item.name + '(전문가)' : ''}</option>
                                                 </>
                                             ))}
                                         </Select>
@@ -144,13 +182,65 @@ const MVideoEdit = () => {
                         </Row>
                         <Row>
                             <Col>
-                                <Title style={{maxWidth:'300px'}}>관련영상(동영상 번호를 '/'을 기준으로 분류)</Title>
-                                <Input className='relate' placeholder='1/2/33/55' />
+                                <Title>관련영상 검색</Title>
+                                <div style={{ display: 'flex' }}>
+                                    <SearchInput className='relate' placeholder='제목을 입력해주세요.' />
+                                    <Button onClick={searchVideo}>검색</Button>
+                                </div>
+                            </Col>
+
+                        </Row>
+                        <Row>
+                            <Col>
+                                {relateVideos.map((item, idx) => (
+                                    <>
+                                        <SearchContent>
+                                            <div>
+                                                <input type={'checkbox'} className={`check-${item.pk}`} />
+                                            </div>
+                                            <div>{item.title}</div>
+                                            <div>{item.date}</div>
+                                        </SearchContent>
+                                    </>
+                                ))}
                             </Col>
                         </Row>
                         <Row>
                             <Col>
-                                <Title><img src={relateExplain} style={{ width: '100%', maxWidth: '500px' }} /></Title>
+                                {searchResults.map((item, idx) => (
+                                    <>
+                                        {relatePkList.includes(item.pk) ?
+                                            <>
+                                            </>
+                                            :
+                                            <>
+                                                <SearchContent>
+                                                    <div>
+                                                        <input type={'checkbox'} className={`check-${item.pk}`} />
+                                                    </div>
+                                                    <div>{item.title}</div>
+                                                    <div>{item.date}</div>
+                                                </SearchContent>
+                                            </>
+                                        }
+
+                                    </>
+                                ))}
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                {searchResults.map((item, idx) => (
+                                    <>
+                                        <SearchContent>
+                                            <div>
+                                                <input type={'checkbox'} className={`check-${item.pk}`} />
+                                            </div>
+                                            <div>{item.title}</div>
+                                            <div>{item.date}</div>
+                                        </SearchContent>
+                                    </>
+                                ))}
                             </Col>
                         </Row>
                         <Row>

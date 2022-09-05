@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export const Wrappers = styled.div`
@@ -24,9 +25,10 @@ font-weight:bold;
 margin-right:16px;
 `
 export const Title = (props) =>{
+    const navigate = useNavigate();
     return (
         <>
-        <div style={{display:'flex',alignItems:'center',marginTop:'16px'}}>
+        <div style={{display:'flex',alignItems:'center',marginTop:'16px',marginBottom:'8px'}} onClick={()=>{navigate(props.link)}}>
         <TitleStyle>
             {props?.children??""}
         </TitleStyle>

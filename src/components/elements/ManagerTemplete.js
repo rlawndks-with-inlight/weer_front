@@ -9,7 +9,6 @@ export const Row = styled.div`
 display:flex;
 @media screen and (max-width:700px) {
     flex-direction:column;
-
 }
 `
 

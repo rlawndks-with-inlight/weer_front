@@ -1,6 +1,7 @@
 import Home from '../pages/User/Home';
 
 import SelectIssueCategory from '../pages/User/SelectIssueCategory';
+import SelectFeatureCategory from '../pages/User/SelectFeatureCategory';
 import MasterList from '../pages/User/MasterList';
 import ThemeList from '../pages/User/ThemeList';
 import VideoList from '../pages/User/VideoList';
@@ -13,6 +14,7 @@ import SignUp from '../pages/User/Auth/SignUp';
 import OneEventList from '../pages/User/OneEvent/OneEventList';
 import OneWordList from '../pages/User/OneWord/OneWordList';
 import IssueList from '../pages/User/Issues/IssueList';
+import FeatureList from '../pages/User/Feature/FeatureList';
 import Master from '../pages/User/Master/Master';
 
 import Post from '../pages/User/Posts/Post';
@@ -23,6 +25,7 @@ import MUserEdit from '../pages/Manager/MUserEdit';
 import MMasterEdit from '../pages/Manager/MMasterEdit';
 import MSetting from '../pages/Manager/MSetting';
 import MIssueCategoryEdit from '../pages/Manager/MIssueCategoryEdit';
+import MFeatureCategoryEdit from '../pages/Manager/MFeatureCategoryEdit';
 import MVideoEdit from '../pages/Manager/MVideoEdit';
 import MSettingEdit from '../pages/Manager/MSettingEdit';
 
@@ -34,11 +37,13 @@ const zRoute = [
     { link: '/', element: <Home /> },
 
     { link: '/selectissuecategory', element: <SelectIssueCategory /> },
+    { link: '/selectfeaturecategory', element: <SelectFeatureCategory/> },
     { link: '/masterlist', element: <MasterList /> },
     { link: '/themelist', element: <ThemeList /> },
     { link: '/videolist', element: <VideoList /> },
     { link: '/inquiry', element: <Inquiry /> },
     { link: '/issuelist/:pk', element: <IssueList /> },
+    { link: '/featurelist/:pk', element: <FeatureList /> },
     { link: '/onewordlist', element: <OneWordList /> },
     { link: '/oneeventlist', element: <OneEventList /> },
     { link: '/master/:pk', element: <Master /> },
@@ -58,6 +63,7 @@ const zRoute = [
     { link: '/manager/setting', element: <MSetting /> },
     { link: '/manager/edit/video/:pk', element: <MVideoEdit /> },
     { link: '/manager/edit/issue_category/:pk', element: <MIssueCategoryEdit /> },
+    { link: '/manager/edit/feature_category/:pk', element: <MFeatureCategoryEdit /> },
     { link: '/manager/edit/setting', element: <MSettingEdit /> },
     { link: '/manager/edit/:table/:pk', element: <MItemEdit /> },
     { link: '/manager/list/:table/:pk', element: <MItemList /> },

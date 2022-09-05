@@ -80,7 +80,7 @@ const Master = () => {
                     <img style={{ position: 'absolute', bottom: '0', right: '5%', height: '80%' }} src={backUrl + state.img} />
                 </Card2>
                 <SelectType>
-                    <Type style={{ borderBottom: `4px solid ${typeNum == 1 ? theme.color.background1 : '#fff'}`, color: `${typeNum == 1 ? theme.color.background1 : '#ccc'}` }} onClick={() => { changeType(1) }}>투자전략</Type>
+                    <Type style={{ borderBottom: `4px solid ${typeNum == 1 ? theme.color.background1 : '#fff'}`, color: `${typeNum == 1 ? theme.color.background1 : '#ccc'}` }} onClick={() => { changeType(1) }}>전문가칼럼</Type>
                     <Type style={{ borderBottom: `4px solid ${typeNum == 2 ? theme.color.background1 : '#fff'}`, color: `${typeNum == 2 ? theme.color.background1 : '#ccc'}` }} onClick={() => { changeType(2) }}>핵심비디오</Type>
                 </SelectType>
                 <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>

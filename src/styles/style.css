@@ -9,9 +9,9 @@ body::-webkit-scrollbar {
     width: 100%;
 }
 .slick-dots{
-    bottom: 26px !important;
-    left: -4vw !important;
+    bottom: -15px !important;
 }
+
 .slick-dots li.slick-active button:before{
     color: #4CDAD8 !important;
 }

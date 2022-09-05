@@ -78,16 +78,19 @@ const MLoginCard = () => {
                 }
             },
                 { withCredentials: true });
-            if (response.level >= 30) {
+            if (response.level >= 40) {
                 localStorage.setItem('auth', JSON.stringify(response))
-                window.location.href = '/manager/list/strategy';
+                navigate('/manager/list/user');
+            } else if (response.level >= 30) {
+                localStorage.setItem('auth', JSON.stringify(response))
+                navigate('/manager/list/strategy');
             } else {
                 localStorage.removeItem('auth')
             }
         }
         isAdmin();
 
-       
+
     }, [])
     const onLogin = async () => {
         const { data: response } = await axios.post('/api/loginbyid', {
@@ -96,15 +99,21 @@ const MLoginCard = () => {
         })
         alert(response.message);
         if (response.result > 0) {
-            await localStorage.setItem('auth',JSON.stringify(response.data));
-            navigate('/manager/list/strategy');
+            console.log(response)
+            await localStorage.setItem('auth', JSON.stringify(response.data));
+            if (response.data?.user_level >= 40) {
+                navigate('/manager/list/user');
+
+            } else if (response.data?.user_level >= 30) {
+                navigate('/manager/list/strategy');
+            }
         }
     }
     return (
         <>
             <WrapperForm onSubmit={onLogin} id='login_form'>
                 <Title>
-                    <img src={logo} style={{height:'50px',width:'auto'}}/>
+                    <img src={logo} style={{ height: '50px', width: 'auto' }} />
                 </Title>
                 <CategoryName>ID</CategoryName>
                 <Input placeholder='input id' type={'text'} className='id' />

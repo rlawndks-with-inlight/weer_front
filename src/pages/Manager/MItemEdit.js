@@ -40,12 +40,21 @@ const MItemEdit = () => {
     const [item, setItem] = useState({})
     const [loading, setLoading] = useState(false)
     const [zCategory, setZCategory] = useState([])
+    const [auth, setAuth] = useState({});
     const [fontColor, setFontColor] = useState(cardDefaultColor.font);
     const [backgroundColor, setBackgroundColor] = useState(cardDefaultColor.background)
+    const [channelList, setChannelList] = useState([]);
     useEffect(() => {
         async function fetchPost() {
-            if (params.table == 'issue') {
-                const { data: response } = await axios.get('/api/items?table=issue_category');
+            let authObj = JSON.parse(localStorage.getItem('auth'));
+            setAuth(authObj);
+            if (authObj?.level >= 40 && params.table=='strategy') {
+                const { data: channelResponse } = await axios.get(`/api/getchannel`)
+                setChannelList(channelResponse.data);
+            }
+
+            if (params.table == 'issue' || params.table == 'feature') {
+                const { data: response } = await axios.get(`/api/items?table=${params.table}_category`);
                 setZCategory(response.data)
             }
 
@@ -53,40 +62,21 @@ const MItemEdit = () => {
                 const { data: response } = await axios.get(`/api/item?table=${params.table}&pk=${params.pk}`);
                 $(`.title`).val(response.data.title);
                 $(`.hash`).val(response.data.hash);
+                $(`.channel`).val(response.data.user_pk);
                 $(`.suggest-title`).val(response.data.suggest_title);
                 $('.font-color').val(response.data.font_color)
                 $('.background-color').val(response.data.background_color)
-                if (params.table == 'issue') {
+                if (params.table == 'issue' || params.table == 'feature') {
                     $(`.category`).val(response.data.category_pk);
                 }
                 editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001', backUrl));
                 setUrl(backUrl + response.data.main_img);
                 setItem(response.data)
             } else {
+
                 $('.font-color').val(cardDefaultColor.font)
                 $('.background-color').val(cardDefaultColor.background)
-                if (params.table == 'oneword' || params.table == 'oneevent') {
-                    const { data: response } = await axios.get(`/api/${params.table}`)
-                    if (response.data) {
-                        $(`.title`).val(response.data.title);
-                        $('.hash').val(response.data.hash);
-                        $(`.suggest-title`).val(response.data.suggest_title);
-                        editorRef.current?.getInstance().setHTML(response.data.note);
-                        setUrl(backUrl + response.data.main_img);
-                        setItem(response.data)
-                    } else {
-                        $(`.title`).val("");
-                        $('.hash').val("");
-                        $(`.suggest-title`).val("");
-                        editorRef.current?.getInstance().setHTML("");
-                        setUrl("");
-                        setItem({ main_img: '' })
-                    }
 
-                } else {
-                    $('.font-color').val(cardDefaultColor.font)
-                    $('.background-color').val(cardDefaultColor.background)
-                }
             }
 
         }
@@ -103,39 +93,32 @@ const MItemEdit = () => {
             formData.append('title', $(`.title`).val())
             formData.append('hash', $(`.hash`).val())
             formData.append('suggest_title', $(`.suggest-title`).val())
-            if (params.table == 'issue') {
+            if (params.table == 'issue' || params.table == 'feature') {
                 formData.append('category', $(`.category`).val());
             }
-            formData.append('user_pk', auth.pk ?? 0)
+            formData.append('user_pk', auth.level >= 40 && params.table=='strategy' ? $('.channel').val(): auth.pk )
             formData.append('note', editorRef.current.getInstance().getHTML());
-
-            if (params.table == 'issue') formData.append('category_pk', $('.category').val())
+            console.log(auth.level >= 40 && params.table=='strategy')
+            if (params.table == 'issue' || params.table == 'feature') formData.append('category_pk', $('.category').val())
             if (params.pk > 0) formData.append('pk', params.pk);
-
+            console.log(formData)
             if (window.confirm(`저장하시겠습니까?`)) {
-                if (params.table == 'oneword' || params.table == 'oneevent') {
-                    const { data: response } = await axios.post(`/api/add${params.table}`, formData)
+
+                formData.append('font_color', $('.font-color').val());
+                formData.append('background_color', $('.background-color').val())
+                if (params.pk > 0) {
+                    const { data: response } = await axios.post(`/api/updateitem`, formData)
                     if (response.result > 0) {
-                        alert('성공적으로 저장되었습니다.');
+                        alert('성공적으로 저장되었습니다.')
                         navigate(-1);
                     }
                 } else {
-                    formData.append('font_color',$('.font-color').val());
-                    formData.append('background_color',$('.background-color').val())
-                    if (params.pk > 0) {
-                        const { data: response } = await axios.post(`/api/updateitem`, formData)
-                        if (response.result > 0) {
-                            alert('성공적으로 저장되었습니다.')
-                            navigate(-1);
-                        }
-                    } else {
-                        const { data: response } = await axios.post(`/api/additem`, formData)
-                        if (response.result > 0) {
-                            alert('성공적으로 추가 되었습니다.');
-                            navigate(-1);
-                        }
-
+                    const { data: response } = await axios.post(`/api/additem`, formData)
+                    if (response.result > 0) {
+                        alert('성공적으로 추가 되었습니다.');
+                        navigate(-1);
                     }
+
                 }
 
 
@@ -187,7 +170,7 @@ const MItemEdit = () => {
                                 <Title>추천 게시물 제목</Title>
                                 <Input className='suggest-title' placeholder='[주식용어] 유상증자' />
                             </Col>
-                            {params.table == 'issue' ?
+                            {params.table == 'issue' || params.table == 'feature' ?
                                 <>
                                     <Col>
                                         <Title>카테고리</Title>
@@ -214,6 +197,24 @@ const MItemEdit = () => {
                                 <Title>해시태그</Title>
                                 <Input className='hash' placeholder='#사과 #수박' />
                             </Col>
+                            {auth.level >= 40 && params.table=='strategy' ?
+                                <>
+                                    <Col>
+                                        <Title>채널명</Title>
+                                        <Select className='channel'>
+                                            {channelList.map((item, idx) => (
+                                                <>
+                                                    <option value={item.pk} key={idx}>{item.nickname}{item?.user_level>=30?' '+item.name+'(전문가)':''}</option>
+                                                </>
+                                            ))}
+                                        </Select>
+                                    </Col>
+                                </>
+                                :
+                                <>
+                                </>
+                            }
+
                         </Row>
                         {params.table != 'oneword' && params.table != 'oneevent' ?
                             <>
@@ -230,7 +231,8 @@ const MItemEdit = () => {
                             </>
                             :
                             <>
-                            </>}
+                            </>
+                        }
 
                         <Row>
                             <Col>

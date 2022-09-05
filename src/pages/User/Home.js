@@ -46,7 +46,7 @@ const Home = () => {
     useEffect(() => {
         setPosts(zTalk[0].image_list);
         async function fetchPost() {
-           setLoading(true)
+           //setLoading(true)
 
             const { data: response } = await axios.get('/api/gethomecontent')
             setSetting(response.data.setting);
@@ -61,7 +61,7 @@ const Home = () => {
                 video_list[i].link = getIframeLinkByLink(video_list[i].link);
             }
             setVideos(video_list);
-           setTimeout(() => setLoading(false), 1500);
+           //setTimeout(() => setLoading(false), 1500);
         }
         fetchPost();
     }, [])
@@ -86,19 +86,19 @@ const Home = () => {
                         <Content>
                             <img src={backUrl + setting?.main_img} style={{ width: '100%', maxWidth: '500px', margin: '0 auto' }} />
                         </Content>
-                        <Title className='pointer' onClick={() => { navigate('/onewordlist') }}>하루 1단어</Title>
+                        <Title className='pointer' link={'/onewordlist'}>하루 1단어</Title>
                         <Content onClick={() => { navigate(`/post/oneword/${oneWord?.pk}`) }} className='pointer'>
                             <div >{oneWord?.title ?? ""}</div>
                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneWord?.hash ?? ""}</div>
                         </Content>
-                        <Title className='pointer' onClick={() => navigate('/selectissuecategory')}>핵심 이슈{'&'}공시</Title>
+                        <Title className='pointer' link={'/selectissuecategory'} >핵심 이슈{'&'}공시</Title>
                         <Content className='pointer'>
                             <WrapDiv>
                                 {issues.map((item, idx) => (
                                     <>
                                         <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} >
                                             <Img style={{backgroundImage: `url(${backUrl + item?.main_img})`}} />
-                                            <div style={{ padding: '16px 16px 0 16px' }}>{item?.date.substring(0,10) ?? ""} {issues[0]?.title}</div>
+                                            <div style={{ padding: '16px 16px 0 16px',fontWeight:'bold' }}>{item?.date.substring(0,10) ?? ""} {item?.title}</div>
                                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
                                         </Card>
                                     </>
@@ -109,9 +109,9 @@ const Home = () => {
                                 <Slider {...slideSetting} className='board-container'>
                                     {issues.map((item, idx) => (
                                         <>
-                                            <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} style={{color:`${item?.font_color}`,background:`${item?.background_color}`}} >
+                                            <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} style={{color:`${item?.font_color}`,background:`${item?.background_color}`,width:`${window.innerWidth<=600?'95%':''}`}} >
                                                 <Img style={{backgroundImage: `url(${backUrl + item?.main_img})`}} />
-                                                <div style={{ padding: '16px',height:'70px' }}>{item?.date} {item?.title}</div>
+                                                <div style={{ padding: '16px',height:'70px',fontWeight:'bold' }}> {item?.title}</div>
                                                 <div style={{ fontSize: `${theme.size.font4}`, padding: '8px 16px',height:'50px' }}>{item?.hash}</div>
                                             </Card>
                                         </>
@@ -119,12 +119,12 @@ const Home = () => {
                                 </Slider>
                             </SliderDiv>
                         </Content>
-                        <Title onClick={() => { navigate('/oneeventlist') }} className='pointer'>하루 1종목</Title>
+                        <Title link={'/oneeventlist'}  className='pointer'>하루 1종목</Title>
                         <Content onClick={() => { navigate(`/post/oneevent/${oneEvent?.pk}`) }} className='pointer'>
                             <div>{oneEvent?.title}</div>
                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneEvent?.hash}</div>
                         </Content>
-                        <Title onClick={() => { navigate('/masterlist') }} className='pointer'>퍼스트 전문가</Title>
+                        <Title link={'/masterlist'} className='pointer'>퍼스트 전문가</Title>
 
                         <SelectSubType className='subtype-container' style={{ marginBottom: '16px' }}>
                             <SubType style={{ borderBottom: `2px solid ${0 == subTypeNum ? theme.color.background1 : '#fff'}`, fontWeight: `${0 == subTypeNum ? 'bold' : 'normal'}` }} onClick={() => { onChangeStrategyNum(0, 0) }}>
@@ -145,7 +145,7 @@ const Home = () => {
                                 </>
                             ))}
                         </div>
-                        <Title onClick={() => { navigate('/themelist') }}>핵심 테마</Title>
+                        <Title link={'/themelist'}>핵심 테마</Title>
                         <Content>
                             <WrapDiv>
 
@@ -181,7 +181,7 @@ const Home = () => {
                                 </Slider>
                             </SliderDiv>
                         </Content>
-                        <Title onClick={() => { navigate('/videolist') }}>핵심 비디오</Title>
+                        <Title link={'/videolist'}>핵심 비디오</Title>
                         <Content>
                             <WrapDiv>
                                 {videos.map((item, idx) => (

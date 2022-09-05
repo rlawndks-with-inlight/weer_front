@@ -19,6 +19,19 @@ background-blend-mode: multiply;
     height: 58vw;
 }
 `
+const TextContainer = styled.div`
+padding: 0 16px;
+min-height: 50px;
+justify-content: space-between;
+display: flex;
+flex-direction: column;
+@media screen and (max-width:600px) {
+    height: 100px;
+}
+@media screen and (max-width:400px) {
+    height: 130px;
+}
+`
 const VideoCard = (props) => {
     const { paddingBottom, item, isSlide, isImgPadding, isImgDiv, isChangeColor, background } = props;
     const navigate = useNavigate();
@@ -39,7 +52,7 @@ const VideoCard = (props) => {
                         <Image src={`https://img.youtube.com/vi/${props.item.link}/0.jpg`} style={{ width: `${isImgPadding ? '90%' : '100%'}`, margin: `${isImgPadding ? '5%' : '0'}` }} />
                     </>}
                 {/* <iframe style={{ width: '100%', height: 'auto', height: '80vw', maxHeight: '450px' }} src={`https://www.youtube.com/embed/${videos.link}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
-                <div style={{ padding: '16px', minHeight: '50px', justifyContent: 'space-between', display: 'flex', flexDirection: 'column', height: `${props.isSlide ? '120px' : ''}` }}>
+                <TextContainer style={{padding:`${isImgPadding?'0 16px':'16px'}`}}>
                     <div style={{ fontSize: `${theme.size.font3}` }}>{props?.item?.title}</div>
                     {props.isVideoList ?
                         <>
@@ -60,7 +73,7 @@ const VideoCard = (props) => {
                         <>
                         </>
                     }
-                </div>
+                </TextContainer>
             </Card>
         </>
     )
