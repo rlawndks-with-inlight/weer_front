@@ -128,7 +128,7 @@ const LoginCard = () => {
                 <SnsLogo src={naver} />
                 </FlexBox>
                 <CategoryName style={{ marginTop:'0',fontSize:'11px' }}>
-                아직 14F 회원이 아니라면?<strong style={{textDecoration: 'underline',cursor:'pointer',marginLeft:'12px'}} onClick={()=>{navigate('/signup')}}>회원가입</strong>
+                아직 weare 회원이 아니라면?<strong style={{textDecoration: 'underline',cursor:'pointer',marginLeft:'12px'}} onClick={()=>{navigate('/signup')}}>회원가입</strong>
                 </CategoryName>
             </WrapperForm>
         </>
