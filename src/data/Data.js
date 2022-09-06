@@ -155,7 +155,7 @@ export const objManagerListContent = {
         ],
     },
     feature: {
-        breadcrumb: '핵심이슈&공시',
+        breadcrumb: '특징주',
         schema: 'feature',
         zColumn: [
             { name: '메인이미지', width: 16, type: 'img', column: 'main_img' },

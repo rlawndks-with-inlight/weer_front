@@ -101,7 +101,7 @@ const MItemList = () => {
                             </PageButton>
                             {pageList.map((item, index) => (
                                 <>
-                                    <PageButton onClick={() => changePage(item)} style={{ color: `${page == item ? '#fff' : ''}`, background: `${page == item ? theme.color.background1 : ''}` }}>
+                                    <PageButton onClick={() => changePage(item)} style={{ color: `${page == item ? '#fff' : ''}`, background: `${page == item ? theme.color.background1 : ''}`,display:`${Math.abs(index+1-page)>4?'none':''}` }}>
                                         {item}
                                     </PageButton>
                                 </>
