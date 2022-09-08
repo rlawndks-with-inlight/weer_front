@@ -116,7 +116,6 @@ const SideBar = () => {
     const [display, setDisplay] = useState('none');
     useEffect(() => {
         if (localStorage.getItem('auth')) {
-            console.log(1)
             let obj = JSON.parse(localStorage.getItem('auth'))
             setAuth(obj);
         }
@@ -281,18 +280,18 @@ const SideBar = () => {
 
                     {auth.level >= 40 ?
                         <>
-                            {'/manager/list/inquiry' == location.pathname ?
+                            {'/manager/list/notice' == location.pathname ?
                                 <>
-                                    <SelectMenuContent onClick={() => { onClickMenu('/manager/list/inquiry') }}>
+                                    <SelectMenuContent onClick={() => { onClickMenu('/manager/list/notice') }}>
                                         <AiOutlineQuestionCircle />
-                                        <MenuText>문의관리</MenuText>
+                                        <MenuText>공지사항</MenuText>
                                     </SelectMenuContent>
                                 </>
                                 :
                                 <>
-                                    <MenuContent onClick={() => { onClickMenu('/manager/list/inquiry') }}>
+                                    <MenuContent onClick={() => { onClickMenu('/manager/list/notice') }}>
                                         <AiOutlineQuestionCircle />
-                                        <MenuText>문의관리</MenuText>
+                                        <MenuText>공지사항</MenuText>
                                     </MenuContent>
                                 </>}
                         </>

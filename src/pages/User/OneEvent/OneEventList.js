@@ -21,9 +21,9 @@ const OneEventList = () => {
             <Wrappers>
                 <Title>하루 1종목</Title>
                 {posts.map((item, idx) => (
-                    <Content onClick={() => { navigate(`/post/oneevent/${item?.pk}`) }}>
+                    <Content onClick={() => { navigate(`/post/oneevent/${item?.pk}`) }} style={{borderBottom:'1px solid #cccccc',paddingBottom:'16px'}}>
                         <div >{item?.title ?? ""}</div>
-                        <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{item?.hash ?? ""}</div>
+                        {/* <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{item?.hash ?? ""}</div> */}
                     </Content>
                 ))}
             </Wrappers>

@@ -5,13 +5,13 @@ import { Title, Wrappers,Content } from "../../../components/elements/UserConten
 import theme from "../../../styles/theme";
 
 
-const OneWordList = () => {
+const NoticeList = () => {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
         async function fetchPosts() {
-            const { data: response } = await axios.get('/api/items?table=oneword&status=1');
+            const { data: response } = await axios.get('/api/items?table=notice&status=1');
             setPosts(response.data);
         }
         fetchPosts();
@@ -19,15 +19,15 @@ const OneWordList = () => {
     return (
         <>
             <Wrappers>
-                <Title>하루 1단어</Title>
+                <Title>공지사항</Title>
                 {posts.map((item, idx) => (
-                    <Content onClick={() => { navigate(`/post/oneword/${item?.pk}`) }} style={{borderBottom:'1px solid #cccccc',paddingBottom:'16px'}}>
+                    <Content onClick={() => { navigate(`/post/notice/${item?.pk}`) }} style={{borderBottom:'1px solid #cccccc',paddingBottom:'16px'}}>
                         <div >{item?.title ?? ""}</div>
-                        {/* <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{item?.hash ?? ""}</div> */}
+                        <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{item?.date ?? ""}</div>
                     </Content>
                 ))}
             </Wrappers>
         </>
     )
 }
-export default OneWordList;
+export default NoticeList;

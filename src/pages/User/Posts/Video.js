@@ -5,7 +5,7 @@ import { Title, Wrappers } from "../../../components/elements/UserContentTemplet
 import { backUrl, slideSetting } from "../../../data/Data";
 import theme from "../../../styles/theme";
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-import { getIframeLinkByLink } from "../../../functions/utils";
+import { commarNumber, getIframeLinkByLink } from "../../../functions/utils";
 import $ from 'jquery';
 import { Content, SliderDiv, WrapDiv } from "../../../components/elements/UserContentTemplete";
 import Slider from 'react-slick'
@@ -92,12 +92,12 @@ const Video = () => {
     },[])
     useEffect(() => {
         async function fetchPost() {
-            const { data: response } = await axios.get(`/api/getvideocontent?pk=${params.pk}`);
-            console.log(response)
+            const { data: response } = await axios.get(`/api/getvideocontent?pk=${params.pk}&views=1`);
             let obj = response.data.item;
             obj.link = getIframeLinkByLink(obj.link);
             obj.note = stringToHTML(obj.note)
             $('.note').append(obj.note)
+            console.log(obj)
             setPost(obj);
             let relate_list = response.data?.relates ?? [];
             for (var i = 0; i < relate_list.length; i++) {
@@ -123,7 +123,7 @@ const Video = () => {
     return (
         <>
             <Wrappers>
-                <div style={{ width: '100%', textAlign: 'end' }}>{post.nickname} / {post?.date?.substring(5, 10)} / 7,777</div>
+                <div style={{ width: '100%', textAlign: 'end' }}>{post.nickname} / {post?.date?.substring(5, 10)} / {commarNumber(post?.views??0)}</div>
                 <Title>{post.title}</Title>
                 <Iframe src={`https://www.youtube.com/embed/${post.link}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
 

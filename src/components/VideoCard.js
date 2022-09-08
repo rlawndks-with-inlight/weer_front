@@ -33,7 +33,7 @@ flex-direction: column;
 }
 `
 const VideoCard = (props) => {
-    const { paddingBottom, item, isSlide, isImgPadding, isImgDiv, isChangeColor, background } = props;
+    const { paddingBottom, item, isSlide, isImgPadding, isImgDiv, isChangeColor, background, isTerm } = props;
     const navigate = useNavigate();
     return (
         <>
@@ -41,7 +41,8 @@ const VideoCard = (props) => {
                 style={{
                     background: `${background?background: props?.item?.background_color ? props?.item?.background_color : ''}`,
                     color: `${background?'#000':props?.item?.font_color ? props?.item?.font_color : ''}`,
-                    paddingTop: `${isImgPadding ? '0.5%' : '0'}`
+                    paddingTop: `${isImgPadding ? '0.5%' : '0'}`,
+                    width:`${isTerm && window.innerWidth<=600?'95%':''}`
                 }}>
                 {isImgDiv ?
                     <>

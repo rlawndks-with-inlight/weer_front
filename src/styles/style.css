@@ -69,6 +69,9 @@ div.note>p>img {
     height: 2px;
     background: #4CDAD8;
 }
+.smaller-margin-right-content{
+    margin: 0 1rem 0 auto;
+}
 @media screen and (max-width:1200px) {}
 
 @media screen and (max-width:1000px) {
@@ -126,5 +129,10 @@ div.note>p>img {
     .progress-bar::-webkit-progress-value {
         border-radius: 0;
         background: #4CDAD8;
+    }
+}
+@media screen and (max-width:600px) {
+    .smaller-margin-right-content{
+        margin: 0 0.5rem 0 auto;
     }
 }

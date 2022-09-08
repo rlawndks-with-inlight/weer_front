@@ -9,7 +9,6 @@ import $ from 'jquery'
 import styled from "styled-components";
 import { BsFillShareFill } from 'react-icons/bs';
 import logo from '../../../assets/images/test/logo.svg'
-import { commarNumber } from "../../../functions/utils";
 const Logo = styled.img`
 position: fixed;
 bottom: 0;
@@ -36,13 +35,13 @@ border-bottom: 16px solid #4CDAD8;
 border-right: 10px solid transparent;
 }
 `
-const Post = () => {
+const Notice = () => {
     const params = useParams();
     const [post, setPost] = useState({})
     const [percent, setPercent] = useState(0);
     useEffect(() => {
         async function fetchPost() {
-            const { data: response } = await axios.get(`/api/item?table=${params.table}&pk=${params.pk}&views=1`)
+            const { data: response } = await axios.get(`/api/item?table=notice&pk=${params.pk}`)
             let obj = response.data;
 
             obj.note = stringToHTML(obj.note)
@@ -71,16 +70,9 @@ const Post = () => {
         <>
             <Wrappers className="wrapper">
                 <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'end', fontSize: `${theme.size.font4}` }}>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <div style={{ margin: '0 4px' }}>{post.nickname}</div> /
-                        <div style={{ margin: '0 4px' }}>{post?.date?.substring(5, 10)}</div> /
-                        <div style={{ margin: '0 8px 0 4px' }}>{commarNumber(post?.views??0)}</div>
-                        <BsFillShareFill style={{ cursor: 'pointer' }} />
-                    </div>
+                        <div style={{ margin: '0 4px' }}>{post?.date?.substring(0, 10)}</div>
                 </div>
-                <img src={backUrl + post.main_img} style={{ width: '100%', margin: '16px 0' }} />
                 <Title>{post.title}</Title>
-                <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post.hash}</div>
                 <div className="note">
                 </div>
                 <Progress value={`${percent}`} max="100"></Progress>
@@ -89,4 +81,4 @@ const Post = () => {
         </>
     )
 }
-export default Post;
+export default Notice;

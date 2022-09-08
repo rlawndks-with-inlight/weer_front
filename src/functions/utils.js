@@ -52,6 +52,7 @@ export const commarNumber = (num) => {
         result = str[i] + result;
         count++;
     }
+    console.log(result)
     return result;
 }
 export const returnMoment = (num,type) => {//num 0: 오늘, num -1: 어제 ,  type=date 날짜만, type=moment 시간까지 다 나오게

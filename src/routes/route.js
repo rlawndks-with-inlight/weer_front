@@ -5,7 +5,6 @@ import SelectFeatureCategory from '../pages/User/SelectFeatureCategory';
 import MasterList from '../pages/User/MasterList';
 import ThemeList from '../pages/User/ThemeList';
 import VideoList from '../pages/User/VideoList';
-import Inquiry from '../pages/User/Inquiry';
 
 import Login from '../pages/User/Auth/Login';
 import MyPage from '../pages/User/Auth/MyPage';
@@ -13,6 +12,7 @@ import SignUp from '../pages/User/Auth/SignUp';
 
 import OneEventList from '../pages/User/OneEvent/OneEventList';
 import OneWordList from '../pages/User/OneWord/OneWordList';
+import NoticeList from '../pages/User/Notice/NoticeList';
 import IssueList from '../pages/User/Issues/IssueList';
 import FeatureList from '../pages/User/Feature/FeatureList';
 import Master from '../pages/User/Master/Master';
@@ -27,11 +27,13 @@ import MSetting from '../pages/Manager/MSetting';
 import MIssueCategoryEdit from '../pages/Manager/MIssueCategoryEdit';
 import MFeatureCategoryEdit from '../pages/Manager/MFeatureCategoryEdit';
 import MVideoEdit from '../pages/Manager/MVideoEdit';
+import MNoticeEdit from '../pages/Manager/MNoticeEdit';
 import MSettingEdit from '../pages/Manager/MSettingEdit';
 
 import MItemEdit from '../pages/Manager/MItemEdit';
 import MItemList from '../pages/Manager/MItemList';
 import MChannelEdit from '../pages/Manager/MChannelEdit';
+import Notice from '../pages/User/Notice/Notice';
 
 const zRoute = [
     { link: '/', element: <Home /> },
@@ -41,17 +43,18 @@ const zRoute = [
     { link: '/masterlist', element: <MasterList /> },
     { link: '/themelist', element: <ThemeList /> },
     { link: '/videolist', element: <VideoList /> },
-    { link: '/inquiry', element: <Inquiry /> },
     { link: '/issuelist/:pk', element: <IssueList /> },
     { link: '/featurelist/:pk', element: <FeatureList /> },
     { link: '/onewordlist', element: <OneWordList /> },
     { link: '/oneeventlist', element: <OneEventList /> },
+    { link: '/noticelist', element: <NoticeList /> },
     { link: '/master/:pk', element: <Master /> },
 
     { link: '/login', element: <Login /> },
     { link: '/mypage', element: <MyPage /> },
     { link: '/signup', element: <SignUp /> },
 
+    { link: '/post/notice/:pk', element: <Notice /> },
     { link: '/post/:table/:pk', element: <Post /> },
     { link: '/video/:pk', element: <Video /> },
 
@@ -62,6 +65,7 @@ const zRoute = [
     { link: '/manager/edit/channel/:pk', element: <MChannelEdit /> },
     { link: '/manager/setting', element: <MSetting /> },
     { link: '/manager/edit/video/:pk', element: <MVideoEdit /> },
+    { link: '/manager/edit/notice/:pk', element: <MNoticeEdit /> },
     { link: '/manager/edit/issue_category/:pk', element: <MIssueCategoryEdit /> },
     { link: '/manager/edit/feature_category/:pk', element: <MFeatureCategoryEdit /> },
     { link: '/manager/edit/setting', element: <MSettingEdit /> },

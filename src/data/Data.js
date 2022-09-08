@@ -13,7 +13,9 @@ import talkImg from '../assets/images/icon/talk.svg';
 import talkActiveImg from '../assets/images/icon/talk-active.svg';
 import thumbImg from '../assets/images/icon/thumb.svg';
 import thumbActiveImg from '../assets/images/icon/thumb-active.svg';
+import logo from '../assets/images/test/logo.svg'
 export const backUrl = "http://weare-first.com:8001";
+export const logoSrc = logo;
 //http://weare-first.com:8001
 export const zBottomMenu = [
     { name: '핵심이슈', link: '/selectissuecategory', icon: <img src={bulbImg} className='menu-icon' />, activeIcon: <img src={bulbActiveImg} className='menu-icon' />, allowList: ['/selectissuecategory'] },
@@ -23,7 +25,7 @@ export const zBottomMenu = [
     { name: '전문가칼럼', link: '/masterlist', icon: <img src={thumbImg} className='menu-icon' />, activeIcon: <img src={thumbActiveImg} className='menu-icon' />, allowList: ['/masterlist'] },
 
 
-    { name: '상담문의', link: '/inquiry', icon: <img src={talkImg} className='menu-icon' />, activeIcon: <img src={talkActiveImg} className='menu-icon' />, allowList: ['/inquiry'] }
+    { name: '공지사항', link: '/noticelist', icon: <img src={talkImg} className='menu-icon' />, activeIcon: <img src={talkActiveImg} className='menu-icon' />, allowList: ['/noticelist'] }
 ];
 export const cardDefaultColor = {
     font: "#000",
@@ -180,14 +182,12 @@ export const objManagerListContent = {
             { name: '삭제', width: 8, type: 'delete', column: 'delete' }
         ],
     },
-    inquiry: {
-        breadcrumb: '문의',
-        schema: 'inquiry',
+    notice: {
+        breadcrumb: '공지',
+        schema: 'notice',
         zColumn: [
-            { name: '프로필이미지', width: 16, type: 'img', column: 'profile_img' },
-            { name: '아이디', width: 16, type: 'text', column: 'id' },
-            { name: '이름', width: 16, type: 'text', column: 'name' },
-            { name: '생성시간', width: 28, type: 'text', column: 'date' },
+            { name: '제목', width: 38, type: 'text', column: 'title' },
+            { name: '생성시간', width: 38, type: 'text', column: 'date' },
             { name: '수정', width: 12, type: 'edit', column: 'edit' },
             { name: '삭제', width: 12, type: 'delete', column: 'delete' }
         ],

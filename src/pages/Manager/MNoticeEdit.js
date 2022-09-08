@@ -23,7 +23,7 @@ import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import { backUrl, cardDefaultColor } from '../../data/Data';
 import { objManagerListContent } from '../../data/Data';
-const MVideoEdit = () => {
+const MNoticeEdit = () => {
     const { pathname } = useLocation();
     const params = useParams();
     const navigate = useNavigate();
@@ -38,55 +38,21 @@ const MVideoEdit = () => {
         let authObj = JSON.parse(localStorage.getItem('auth'));
         setAuth(authObj);
         async function fetchPost() {
-            if (authObj?.level >= 40) {
-                const { data: channelResponse } = await axios.get(`/api/getchannel`)
-                setChannelList(channelResponse.data);
-            }
             if (params.pk > 0) {
-                const { data: response } = await axios.get(`/api/item?table=video&pk=${params.pk}`);
+                const { data: response } = await axios.get(`/api/item?table=notice&pk=${params.pk}`);
                 $(`.title`).val(response.data.title);
-                $(`.link`).val(response.data.link);
-                $(`.channel`).val(response.data.user_pk);
-                $('.font-color').val(response.data.font_color)
-                $('.background-color').val(response.data.background_color)
-                let relate_list = JSON.parse(response.data.relate_video) ??[];
-                let relate_str = "";
-                console.log(relate_list)
-                for(var i =0;i<relate_list.length;i++){
-                    if(i!=0){
-                        relate_str +="/"
-                    }
-                    relate_str += relate_list[i];
-                }
-                $('.relate').val(relate_str);
                 editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001', backUrl));
-            } else {
-                $('.font-color').val(cardDefaultColor.font)
-                $('.background-color').val(cardDefaultColor.background)
-            }
-
+            } 
         }
         fetchPost();
     }, [pathname])
     const editItem = async () => {
-        if (!$(`.title`).val() || !$(`.link`).val()) {
+        if (!$(`.title`).val()) {
             alert('필요값이 비어있습니다.');
         } else {
-            let str = $('.relate').val().split("/");
-            let relate_results = [];
-            for(var i =0;i<str.length;i++){
-                if(!isNaN(parseInt(str[i]))){
-                    relate_results.push(parseInt(str[i]));
-                }
-            }
-            relate_results = JSON.stringify(relate_results);
             let obj = {
-                user_pk: auth.level < 40 ? auth.pk : $('.channel').val(),
+                user_pk: auth.pk,
                 title: $('.title').val(),
-                link: $('.link').val(),
-                font_color:$('.font-color').val(),
-                background_color:$('.background-color').val(),
-                relate_video:relate_results,
                 note: editorRef.current.getInstance().getHTML()
             }
             if (params.pk > 0) obj.pk = params.pk;
@@ -94,9 +60,9 @@ const MVideoEdit = () => {
             if (window.confirm(`저장하시겠습니까?`)) {
 
                 if (params.pk > 0) {
-                    updateItem('video', obj);
+                    updateItem('notice', obj);
                 } else {
-                    addItem('video', obj);
+                    addItem('notice', obj);
                 }
 
 
@@ -117,57 +83,10 @@ const MVideoEdit = () => {
                         <Row>
                             <Col>
                                 <Title>제목</Title>
-                                <Input className='title' placeholder='[주식용어] 유상증자' />
-                            </Col>
-                            <Col>
-                                <Title>유튜브 링크</Title>
-                                <Input className='link' placeholder='https://www.youtube.com/watch?v=9kaCAbIXuyg&list=RDVWbYRiF44Dc&index=2' />
-                            </Col>
-                            {auth.level >= 40 ?
-                                <>
-                                    <Col>
-                                        <Title>채널명</Title>
-                                        <Select className='channel'>
-                                            {channelList.map((item, idx) => (
-                                                <>
-                                                    <option value={item.pk} key={idx}>{item.nickname}{item.user_level>=30?' '+item.name+'(전문가)':''}</option>
-                                                </>
-                                            ))}
-                                        </Select>
-                                    </Col>
-                                </>
-                                :
-                                <>
-                                </>
-                            }
-
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Title><img src={youtubeShare} style={{ width: '100%', maxWidth: '500px' }} /></Title>
+                                <Input className='title' placeholder='제목을 입력해 주세요.' />
                             </Col>
                         </Row>
-                        <Row>
-                            <Col>
-                                <Title style={{maxWidth:'300px'}}>관련영상(동영상 번호를 '/'을 기준으로 분류)</Title>
-                                <Input className='relate' placeholder='1/2/33/55' />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Title><img src={relateExplain} style={{ width: '100%', maxWidth: '500px' }} /></Title>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Title>카드 글자색</Title>
-                                <Input type={'color'} className='font-color' style={{ background: '#fff', height: '36px', width: '220px' }} />
-                            </Col>
-                            <Col>
-                                <Title>카드 배경색</Title>
-                                <Input type={'color'} className='background-color' style={{ background: '#fff', height: '36px', width: '220px' }} />
-                            </Col>
-                        </Row>
+                      
                         <Row>
                             <Col>
                                 <Title>내용</Title>
@@ -211,4 +130,4 @@ const MVideoEdit = () => {
         </>
     )
 }
-export default MVideoEdit;
+export default MNoticeEdit;

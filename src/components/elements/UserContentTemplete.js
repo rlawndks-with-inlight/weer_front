@@ -28,7 +28,7 @@ export const Title = (props) =>{
     const navigate = useNavigate();
     return (
         <>
-        <div style={{display:'flex',alignItems:'center',marginTop:'16px',marginBottom:'8px'}} onClick={()=>{navigate(props.link)}}>
+        <div style={{display:'flex',alignItems:'center',marginTop:'24px',marginBottom:'8px'}} onClick={()=>{navigate(props.link)}}>
         <TitleStyle>
             {props?.children??""}
         </TitleStyle>
@@ -39,7 +39,7 @@ export const Title = (props) =>{
     )
 }
 export const Content = styled.div`
-margin:1rem auto 1rem 0;
+margin:0 auto 1rem 0;
 width:100%;
 font-size:${props => props.theme.size.font3};
 display:flex;
