@@ -46,7 +46,7 @@ const Home = () => {
     useEffect(() => {
         setPosts(zTalk[0].image_list);
         async function fetchPost() {
-           //setLoading(true)
+            setLoading(true)
 
             const { data: response } = await axios.get('/api/gethomecontent')
             setSetting(response.data.setting);
@@ -61,7 +61,7 @@ const Home = () => {
                 video_list[i].link = getIframeLinkByLink(video_list[i].link);
             }
             setVideos(video_list);
-           //setTimeout(() => setLoading(false), 1500);
+            setTimeout(() => setLoading(false), 1500);
         }
         fetchPost();
     }, [])
@@ -97,8 +97,8 @@ const Home = () => {
                                 {issues.map((item, idx) => (
                                     <>
                                         <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} >
-                                            <Img style={{backgroundImage: `url(${backUrl + item?.main_img})`}} />
-                                            <div style={{ padding: '16px 16px 0 16px',fontWeight:'bold' }}>{item?.date.substring(0,10) ?? ""} {item?.title}</div>
+                                            <Img style={{ backgroundImage: `url(${backUrl + item?.main_img})` }} />
+                                            <div style={{ padding: '16px 16px 0 16px', fontWeight: 'bold' }}>{item?.date.substring(0, 10) ?? ""} {item?.title}</div>
                                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
                                         </Card>
                                     </>
@@ -109,17 +109,17 @@ const Home = () => {
                                 <Slider {...slideSetting} className='board-container'>
                                     {issues.map((item, idx) => (
                                         <>
-                                            <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} style={{color:`${item?.font_color}`,background:`${item?.background_color}`,width:`${window.innerWidth<=600?'95%':''}`}} >
-                                                <Img style={{backgroundImage: `url(${backUrl + item?.main_img})`}} />
-                                                <div style={{ padding: '16px',height:'70px',fontWeight:'bold' }}> {item?.title}</div>
-                                                <div style={{ fontSize: `${theme.size.font4}`, padding: '8px 16px',height:'50px' }}>{item?.hash}</div>
+                                            <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
+                                                <Img style={{ backgroundImage: `url(${backUrl + item?.main_img})` }} />
+                                                <div style={{ padding: '16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
+                                                <div style={{ fontSize: `${theme.size.font4}`, padding: '8px 16px', height: '50px' }}>{item?.hash}</div>
                                             </Card>
                                         </>
                                     ))}
                                 </Slider>
                             </SliderDiv>
                         </Content>
-                        <Title link={'/oneeventlist'}  className='pointer'>하루 1종목</Title>
+                        <Title link={'/oneeventlist'} className='pointer'>하루 1종목</Title>
                         <Content onClick={() => { navigate(`/post/oneevent/${oneEvent?.pk}`) }} className='pointer'>
                             <div>{oneEvent?.title}</div>
                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneEvent?.hash}</div>
@@ -151,11 +151,11 @@ const Home = () => {
 
                                 {themes.map((item, idx) => (
                                     <>
-                                        <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{color:`${item?.font_color}`,background:`${item?.background_color}`}}>
-                                            <Img style={{backgroundImage: `url(${backUrl + item?.main_img})`}} />
+                                        <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}` }}>
+                                            <Img style={{ backgroundImage: `url(${backUrl + item?.main_img})` }} />
                                             <div style={{ padding: '16px', minHeight: '50px', justifyContent: 'space-between', display: 'flex', flexDirection: 'column' }}>
                                                 <div style={{ fontSize: `${theme.size.font4}`, fontWeight: 'bold' }}>{item?.title}</div>
-                                                <div style={{ fontSize: `${theme.size.font5}` }}>{item?.date.substring(0,10) ?? ""}</div>
+                                                <div style={{ fontSize: `${theme.size.font5}` }}>{item?.date.substring(0, 10) ?? ""}</div>
                                             </div>
 
                                         </Card>
@@ -167,11 +167,11 @@ const Home = () => {
                                 <Slider {...slideSetting} className='board-container'>
                                     {themes.map((item, idx) => (
                                         <>
-                                            <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{color:`${item?.font_color}`,background:`${item?.background_color}`,width:`${window.innerWidth<=600?'95%':''}`}}>
-                                                <Img style={{backgroundImage: `url(${backUrl + item?.main_img})`}} />
+                                            <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }}>
+                                                <Img style={{ backgroundImage: `url(${backUrl + item?.main_img})` }} />
                                                 <div style={{ padding: '16px', minHeight: '50px', justifyContent: 'space-between', display: 'flex', flexDirection: 'column' }}>
                                                     <div style={{ fontSize: `${theme.size.font4}`, fontWeight: 'bold' }}>{item?.title}</div>
-                                                    <div style={{ fontSize: `${theme.size.font5}`,padding:'16px 0 32px 0' }}>{item?.date.substring(0,10) ?? ""}</div>
+                                                    <div style={{ fontSize: `${theme.size.font5}`, padding: '16px 0 32px 0' }}>{item?.date.substring(0, 10) ?? ""}</div>
                                                 </div>
 
                                             </Card>
@@ -186,7 +186,7 @@ const Home = () => {
                             <WrapDiv>
                                 {videos.map((item, idx) => (
                                     <>
-                                        <VideoCard item={item} isImgPadding={true}  />
+                                        <VideoCard item={item} isImgPadding={true} />
                                     </>
                                 ))}
                             </WrapDiv>

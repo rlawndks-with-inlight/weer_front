@@ -20,6 +20,7 @@ import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
+import Picker from 'emoji-picker-react';
 import { backUrl } from '../../data/Data';
 import { objManagerListContent, cardDefaultColor } from '../../data/Data';
 import Loading from '../../components/Loading';
@@ -48,7 +49,7 @@ const MItemEdit = () => {
         async function fetchPost() {
             let authObj = JSON.parse(localStorage.getItem('auth'));
             setAuth(authObj);
-            if (authObj?.level >= 40 && params.table=='strategy') {
+            if (authObj?.level >= 40 && params.table == 'strategy') {
                 const { data: channelResponse } = await axios.get(`/api/getchannel`)
                 setChannelList(channelResponse.data);
             }
@@ -96,9 +97,9 @@ const MItemEdit = () => {
             if (params.table == 'issue' || params.table == 'feature') {
                 formData.append('category', $(`.category`).val());
             }
-            formData.append('user_pk', auth.level >= 40 && params.table=='strategy' ? $('.channel').val(): auth.pk )
+            formData.append('user_pk', auth.level >= 40 && params.table == 'strategy' ? $('.channel').val() : auth.pk)
             formData.append('note', editorRef.current.getInstance().getHTML());
-            console.log(auth.level >= 40 && params.table=='strategy')
+            console.log(auth.level >= 40 && params.table == 'strategy')
             if (params.table == 'issue' || params.table == 'feature') formData.append('category_pk', $('.category').val())
             if (params.pk > 0) formData.append('pk', params.pk);
             console.log(formData)
@@ -134,6 +135,11 @@ const MItemEdit = () => {
     const onChangeEditor = (e) => {
         const data = editorRef.current.getInstance().getHTML();
     }
+    const [chosenEmoji, setChosenEmoji] = useState(null);
+
+    const onEmojiClick = (event, emojiObject) => {
+        setChosenEmoji(emojiObject);
+    };
     return (
         <>
             <ManagerWrappers>
@@ -197,14 +203,14 @@ const MItemEdit = () => {
                                 <Title>해시태그</Title>
                                 <Input className='hash' placeholder='#사과 #수박' />
                             </Col>
-                            {auth.level >= 40 && params.table=='strategy' ?
+                            {auth.level >= 40 && params.table == 'strategy' ?
                                 <>
                                     <Col>
                                         <Title>채널명</Title>
                                         <Select className='channel'>
                                             {channelList.map((item, idx) => (
                                                 <>
-                                                    <option value={item.pk} key={idx}>{item.nickname}{item?.user_level>=30?' '+item.name+'(전문가)':''}</option>
+                                                    <option value={item.pk} key={idx}>{item.nickname}{item?.user_level >= 30 ? ' ' + item.name + '(전문가)' : ''}</option>
                                                 </>
                                             ))}
                                         </Select>
@@ -238,12 +244,14 @@ const MItemEdit = () => {
                             <Col>
                                 <Title>내용</Title>
                                 <div id="editor">
+                                    <Picker onEmojiClick={onEmojiClick} />
                                     <Editor
                                         placeholder="내용을 입력해주세요."
                                         previewStyle="vertical"
                                         height="600px"
                                         initialEditType="wysiwyg"
                                         useCommandShortcut={false}
+                                        useTuiEditorEmoji={true}
                                         hideModeSwitch={true}
                                         plugins={[colorSyntax]}
                                         language="ko-KR"

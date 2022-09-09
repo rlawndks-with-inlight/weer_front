@@ -1,5 +1,6 @@
 import Home from '../pages/User/Home';
 
+import Search from '../pages/User/Search';
 import SelectIssueCategory from '../pages/User/SelectIssueCategory';
 import SelectFeatureCategory from '../pages/User/SelectFeatureCategory';
 import MasterList from '../pages/User/MasterList';
@@ -37,6 +38,7 @@ import Notice from '../pages/User/Notice/Notice';
 
 const zRoute = [
     { link: '/', element: <Home /> },
+    { link: '/search', element: <Search /> },
 
     { link: '/selectissuecategory', element: <SelectIssueCategory /> },
     { link: '/selectfeaturecategory', element: <SelectFeatureCategory/> },

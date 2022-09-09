@@ -72,8 +72,13 @@ div.note>p>img {
 .smaller-margin-right-content{
     margin: 0 1rem 0 auto;
 }
-@media screen and (max-width:1200px) {}
 
+@media screen and (max-width:1200px) {
+    
+}
+@media screen and (max-width:1150px) {
+    
+}
 @media screen and (max-width:1000px) {
     #editor {
         width: 90%;

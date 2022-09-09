@@ -25,6 +25,7 @@ box-shadow: 5px 10px 10px rgb(0 0 0 / 3%);
 `
 const HeaderContainer = styled.div`
 width:90%;
+position:relative;
 max-width:1000px;
 margin:0 auto;
 display:none;
@@ -36,6 +37,7 @@ justify-content: space-between;
 `
 const HeaderMenuContainer = styled.div`
 width:90%;
+position:relative;
 margin:0 auto;
 display:flex;
 align-items:center;
@@ -118,6 +120,7 @@ const Headers = () => {
   const [isModal, setIsModal] = useState(false);
   const [display, setDisplay] = useState('flex');
   const [isPost, setIsPost] = useState(false);
+  const [searchDisplay, setSearchDisplay] = useState('none')
   useEffect(() => {
     if (location.pathname.substring(0, 6) == '/post/' || location.pathname.substring(0, 7) == '/video/') {
       setIsPost(true);
@@ -144,12 +147,14 @@ const Headers = () => {
   };
   const myAuth = async () => {
     const { data: response } = await axios('/api/auth')
-    console.log(response)
     if (response.pk > 0) {
       navigate('/mypage');
     } else {
       navigate('/login');
     }
+  }
+  const changeSearchModal = () => {
+
   }
   return (
     <>
@@ -171,17 +176,17 @@ const Headers = () => {
           </>
           :
           <>
-            <HeaderContainer>
+            <HeaderContainer>{/*모바일 */}
               <div>
                 <img src={logo} style={{ height: '2.5rem', marginTop: '0.25rem' }} onClick={() => { navigate('/') }} />
               </div>
               <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between' }}>
-                <AiOutlineBell onClick={handleModal} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
-                <AiOutlineSearch onClick={() => { }} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
+                <AiOutlineBell onClick={() => navigate('/noticelist')} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
+                <AiOutlineSearch onClick={() => navigate('/search')} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
                 <AiOutlineSetting onClick={myAuth} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
               </div>
             </HeaderContainer>
-            <HeaderMenuContainer>
+            <HeaderMenuContainer>{/* pc */}
               <div style={{ display: 'flex', margin: '2rem 0', height: '2rem' }}>
                 {zBottomMenu.map((item, idx) => (
                   <>
@@ -193,10 +198,11 @@ const Headers = () => {
                 <img src={logo} style={{ height: '5rem' }} onClick={() => { navigate('/') }} />
               </div>
               <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between' }}>
-                <AiOutlineBell onClick={handleModal} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
-                <AiOutlineSearch onClick={() => { }} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
+                <AiOutlineBell onClick={() => navigate('/noticelist')} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
+                <AiOutlineSearch onClick={() => navigate('/search')} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }}/>
                 <AiOutlineSetting onClick={myAuth} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
               </div>
+              
             </HeaderMenuContainer>
           </>
         }
