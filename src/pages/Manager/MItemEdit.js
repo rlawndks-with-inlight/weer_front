@@ -244,7 +244,6 @@ const MItemEdit = () => {
                             <Col>
                                 <Title>내용</Title>
                                 <div id="editor">
-                                    <Picker onEmojiClick={onEmojiClick} />
                                     <Editor
                                         placeholder="내용을 입력해주세요."
                                         previewStyle="vertical"

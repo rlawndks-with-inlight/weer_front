@@ -14,9 +14,17 @@ import talkActiveImg from '../assets/images/icon/talk-active.svg';
 import thumbImg from '../assets/images/icon/thumb.svg';
 import thumbActiveImg from '../assets/images/icon/thumb-active.svg';
 import logo from '../assets/images/test/logo.svg'
+import { EditorState } from "draft-js"
 export const backUrl = "http://weare-first.com:8001";
 export const logoSrc = logo;
 //http://weare-first.com:8001
+export const editorState = {
+    editorState:EditorState.createEmpty()
+}
+
+export const localization = {
+    locale: 'ko',
+}
 export const zBottomMenu = [
     { name: '핵심이슈', link: '/selectissuecategory', icon: <img src={bulbImg} className='menu-icon' />, activeIcon: <img src={bulbActiveImg} className='menu-icon' />, allowList: ['/selectissuecategory'] },
     // { name: '핵심비디오', link: '/videolist', icon: <img src={playImg} className='menu-icon' />, activeIcon: <img src={playActiveImg} className='menu-icon' />, allowList: ['/videolist'] },

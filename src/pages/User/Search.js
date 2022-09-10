@@ -44,8 +44,6 @@ const Search = () => {
     const [themes, setThemes] = useState([]);
     const [videos, setVideos] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [isSearch, setIsSearch] = useState(false)
-
 
     const settings = {
         infinite: true,
@@ -60,7 +58,7 @@ const Search = () => {
         if (str.length < 2) {
             alert('두글자 이상 입력해 주세요.');
         } else {
-
+            setLoading(true)
             const { data: response } = await axios.get(`/api/onsearchallitem?keyword=${str}`);
             setOneWords(response.data.oneWord);
             setOneEvents(response.data.oneEvent);
@@ -72,24 +70,25 @@ const Search = () => {
                 video_list[i].link = getIframeLinkByLink(video_list[i].link);
             }
             setVideos(video_list);
-            setIsSearch(true);
+            setLoading(false)
         }
     }
     return (
         <>
             <Wrappers className='wrappers'>
+                <Content style={{ position: 'relative' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #cccccc', margin: '0 auto' }}>
+                        <Input className='search' placeholder='두 글자 이상 입력해주세요.' />
+                        <AiOutlineSearch className='search-button' style={{ padding: '14px', cursor: 'pointer' }} onClick={onSearchAllItem} />
+                    </div>
+                </Content>
                 {loading ?
                     <>
                         <Loading />
                     </>
                     :
                     <>
-                        <Content style={{ position: 'relative' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #cccccc', margin: '0 auto' }}>
-                                <Input className='search' placeholder='두 글자 이상 입력해주세요.' />
-                                <AiOutlineSearch className='search-button' style={{ padding: '14px', cursor: 'pointer' }} onClick={onSearchAllItem} />
-                            </div>
-                        </Content>
+
                         {oneWords && oneWords.length > 0 ?
                             <>
                                 <Title className='pointer' link={'/onewordlist'}>하루 1단어</Title>

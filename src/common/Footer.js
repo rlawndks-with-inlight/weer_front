@@ -1,7 +1,7 @@
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import logo from '../assets/images/test/logo.svg';
-
 const Wrappers = styled.footer`
     display:flex;
     flex-direction:column;
@@ -15,6 +15,7 @@ const Wrappers = styled.footer`
 `
 const Footer = () =>{
     const {pathname} = useLocation();
+    
     return (
         <>
         {pathname.includes('/manager')?

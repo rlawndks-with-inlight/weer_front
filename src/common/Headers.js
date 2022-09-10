@@ -167,7 +167,7 @@ const Headers = () => {
               <div style={{ width: '90%' }}>
                 <MdNavigateBefore style={{ fontSize: '30px', marginLeft: '-7px' }} onClick={() => { navigate(-1) }} />
               </div>
-              <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '9.4rem', justifyContent: 'space-between' }}>
                 <AiOutlineBell onClick={handleModal} style={{ width: '2rem', height: '1.5rem' }} />
                 <AiOutlineSearch onClick={() => { }} style={{ width: '2rem', height: '1.5rem' }} />
                 <AiOutlineSetting onClick={() => { }} style={{ width: '2rem', height: '1.5rem' }} />

@@ -30,7 +30,7 @@ body::-webkit-scrollbar {
 }
 
 #editor {
-    margin: 24px auto 0 24px;
+    margin: 24px;
 }
 
 #board-content {
@@ -81,7 +81,9 @@ div.note>p>img {
 }
 @media screen and (max-width:1000px) {
     #editor {
+        margin: 16px auto;
         width: 90%;
+        padding:8px;
     }
 }
 

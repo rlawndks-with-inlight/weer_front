@@ -1,7 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import $ from 'jquery'
+import { useState } from "react";
 
-export const Wrappers = styled.div`
+export const WrappersStyle = styled.div`
 position:relative;
 display:flex;
 flex-direction:column;
@@ -18,6 +21,24 @@ min-height:58vh;
 }
 
 `
+
+export const Wrappers = (props) =>{
+    const [minHeight, setMinHeight] = useState(500);
+    const {pathname} = useLocation();
+    useEffect(()=>{
+        setMinHeight($(window).height()-224-173);
+    },[pathname])
+    useEffect(()=>{
+
+    },[])
+    return (
+        <>
+        <WrappersStyle style={{minHeight:`${minHeight}px`}}>
+            {props.children??""}
+        </WrappersStyle>
+        </>
+    )
+}
 
 export const TitleStyle = styled.div`
 font-size:${props => props.theme.size.font2};
