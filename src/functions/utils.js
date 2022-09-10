@@ -55,6 +55,21 @@ export const commarNumber = (num) => {
     console.log(result)
     return result;
 }
+export const formatPhoneNumber = (input) => {
+    const cleanInput = input.replaceAll(/[^0-9]/g, "");
+    let result = "";
+    const length = cleanInput.length;
+    if(length === 8) {
+        result = cleanInput.replace(/(\d{4})(\d{4})/, '$1-$2');
+    } else if(cleanInput.startsWith("02") && (length === 9 || length === 10)) {
+        result = cleanInput.replace(/(\d{2})(\d{3,4})(\d{4})/, '$1-$2-$3');
+    } else if(!cleanInput.startsWith("02") && (length === 10 || length === 11)) {
+        result = cleanInput.replace(/(\d{3})(\d{3,4})(\d{4})/, '$1-$2-$3');
+    } else {
+        result = undefined;
+    }
+    return result;
+}
 export const returnMoment = (num,type) => {//num 0: 오늘, num -1: 어제 ,  type=date 날짜만, type=moment 시간까지 다 나오게
     var today = new Date();
     var year = today.getFullYear();

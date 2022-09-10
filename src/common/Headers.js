@@ -164,13 +164,13 @@ const Headers = () => {
           <>
 
             <HeaderContainer>
-              <div style={{ width: '90%' }}>
+              <div>
                 <MdNavigateBefore style={{ fontSize: '30px', marginLeft: '-7px' }} onClick={() => { navigate(-1) }} />
               </div>
-              <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '9.4rem', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '100px', justifyContent: 'space-between' }}>
                 <AiOutlineBell onClick={handleModal} style={{ width: '2rem', height: '1.5rem' }} />
-                <AiOutlineSearch onClick={() => { }} style={{ width: '2rem', height: '1.5rem' }} />
-                <AiOutlineSetting onClick={() => { }} style={{ width: '2rem', height: '1.5rem' }} />
+                <AiOutlineSearch onClick={() => { navigate('/noticelist') }} style={{ width: '2rem', height: '1.5rem' }} />
+                <AiOutlineSetting onClick={() => { navigate('/search') }} style={{ width: '2rem', height: '1.5rem' }} />
               </div>
             </HeaderContainer>
           </>
@@ -180,7 +180,7 @@ const Headers = () => {
               <div>
                 <img src={logo} style={{ height: '2.5rem', marginTop: '0.25rem' }} onClick={() => { navigate('/') }} />
               </div>
-              <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '100px', justifyContent: 'space-between' }}>
                 <AiOutlineBell onClick={() => navigate('/noticelist')} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
                 <AiOutlineSearch onClick={() => navigate('/search')} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
                 <AiOutlineSetting onClick={myAuth} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
@@ -199,10 +199,10 @@ const Headers = () => {
               </div>
               <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between' }}>
                 <AiOutlineBell onClick={() => navigate('/noticelist')} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
-                <AiOutlineSearch onClick={() => navigate('/search')} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }}/>
+                <AiOutlineSearch onClick={() => navigate('/search')} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
                 <AiOutlineSetting onClick={myAuth} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
               </div>
-              
+
             </HeaderMenuContainer>
           </>
         }

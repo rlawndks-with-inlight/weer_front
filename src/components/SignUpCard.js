@@ -8,6 +8,7 @@ import logo from '../assets/images/test/logo.svg'
 import kakao from '../assets/images/icon/kakao.png'
 import naver from '../assets/images/icon/naver.png'
 import { Title } from './elements/UserContentTemplete';
+import { formatPhoneNumber } from '../functions/utils';
 
 const WrapperForm = styled.div`
 width:90%;
@@ -64,6 +65,9 @@ margin:3rem auto 0 auto;
 @media (max-width: 450px) {
     width:83%;
 }
+@media (max-width: 350px) {
+    width:87%;
+}
 `
 const FlexBox = styled.div`
 width:364px;
@@ -83,19 +87,121 @@ const SignUpCard = () => {
     const navigate = useNavigate();
     const [phoneCheckIng, setPhoneCheckIng] = useState(false);
     const [isCheckId, setIsCheckId] = useState(false);
-    const onCheckId = () =>{
+    const [isCheckNickname, setIsCheckNickname] = useState(false);
+    const [isCheckPhoneNumber, setIsCheckPhoneNumber] = useState(false)
+    const [randNum, setRandNum] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [num, setNum] = useState("");
+    const [isCoinside, setIsCoinside] = useState(false);
+    const [isSendSms, setIsSendSms] = useState(false)
+    const [fixPhoneNumber, setFixPhoneNumber] = useState("")
+    const onCheckId = async () => {
+        if (!$('.id').val()) {
+            alert('아이디를 입력해주세요.');
+        } else {
+            const { data: response } = await axios.post('/api/checkexistid', { id: $('.id').val() });
+            alert(response.message);
+            if (response.result > 0) {
+                setIsCheckId(true);
+
+            } else {
+                setIsCheckId(false);
+            }
+        }
+    }
+    const onCheckNickname = async () => {
+        if (!$('.nickname').val()) {
+            alert('아이디를 입력해주세요.');
+        } else {
+            const { data: response } = await axios.post('/api/checkexistnickname', { nickname: $('.nickname').val() });
+            alert(response.message);
+            if (response.result > 0) {
+                setIsCheckNickname(true);
+
+            } else {
+                setIsCheckNickname(false);
+            }
+        }
+    }
+    const sendSms = async () => {
+        if (!$('.phone').val()) {
+            alert("핸드폰 번호를 입력해주세요.")
+            return;
+        }
+        setIsCheckPhoneNumber(false);
+        let fix_phone = $('.phone').val().replace('-', '');
+        setFixPhoneNumber(fix_phone);
+        let content = "";
+        for (var i = 0; i < 6; i++) {
+            content += Math.floor(Math.random() * 10).toString();
+        }
+
+        let string = `\n인증번호를 입력해주세요 ${content}.\n\n-We are-`;
+        try {
+            const { data: response } = await axios.post(`/api/sendsms`, {
+                receiver: [fix_phone, formatPhoneNumber(fix_phone)],
+                content: string
+            })
+            if (response?.result > 0) {
+                setIsSendSms(true)
+                setRandNum(content);
+            } else {
+                setIsSendSms(false)
+            }
+        } catch (e) {
+            console.log(e)
+        }
+
+        //console.log(response)
 
     }
+    const confirmCoincide = (e) => {
+        if (randNum === $('.phone-check').val()) {
+            setIsCheckPhoneNumber(true);
+            alert("인증번호가 일치합니다.");
+        } else {
+            setIsCheckPhoneNumber(false);
+            alert("인증번호가 일차하지 않습니다.");
+        }
+    }
     const onSignUp = async () => {
+        if (!$('.id').val()) {
+            alert('필수값을 입력해주세요.');
+        } else if (!isCheckId) {
+            alert('아이디 중복확인을 해주세요.');
+        } else if ($('.pw').val() != $('.pw-check').val()) {
+            alert('비밀번호가 일치하지 않습니다.');
+        } else if (!isCheckPhoneNumber) {
+            alert('전화번호 인증을 완료해 주세요.');
+        } else if (!isCheckNickname) {
+            alert('닉네임 중복확인을 해주세요.');
+        } else {
+            if (window.confirm('회원가입 하시겠습니까?')) {
+                const { data: response } = await axios.post('/api/adduser', {
+                    id: $('.id').val(),
+                    pw: $('.pw').val(),
+                    name: $('.name').val(),
+                    nickname: $('.nickname').val(),
+                    phone: $('.phone').val(),
+                    user_level: 0,
+                })
+                if (response.result > 0) {
+                    alert('회원가입이 완료되었습니다.');
+                    navigate('/login');
+                } else {
+                    alert(response.message);
+                }
+            }
 
+        }
     }
     return (
         <>
             <WrapperForm onSubmit={onSignUp} id='login_form'>
                 <Title>회원가입</Title>
                 <CategoryName style={{ marginTop: '36px' }}>아이디</CategoryName>
-                <Input placeholder='아이디를 입력해주세요.' type={'text'} className='id' />
-                <Button style={{marginTop:'0'}}>중복확인</Button>
+                <Input placeholder='아이디를 입력해주세요.' type={'text'} className='id' disabled={isCheckId} />
+                <Button style={{ marginTop: '0' }} onClick={onCheckId} disabled={isCheckId}>{isCheckId ? '사용가능' : '중복확인'}</Button>
                 <CategoryName>비밀번호</CategoryName>
                 <Input placeholder='비밀번호를 입력해주세요.' type={'password'} className='pw' />
                 <CategoryName>비밀번호 확인</CategoryName>
@@ -104,26 +210,19 @@ const SignUpCard = () => {
                 <Input placeholder='이름을 입력해주세요.' type={'text'} className='name' />
                 <CategoryName style={{ marginTop: '36px' }}>닉네임</CategoryName>
                 <Input placeholder='닉네임을 입력해주세요.' type={'text'} className='nickname' />
+                <Button style={{ marginTop: '0' }} onClick={onCheckNickname} disabled={isCheckNickname}>{isCheckNickname ? '사용가능' : '중복확인'}</Button>
                 <CategoryName style={{ marginTop: '36px' }}>전화번호</CategoryName>
-                <Input placeholder='전화번호를 입력해주세요.' type={'text'} className='phone' />
-                {phoneCheckIng ?
-                    <>
-                        <CategoryName style={{ marginTop: '36px' }}>인증번호</CategoryName>
-                        <Input placeholder='인증번호를 입력해주세요.' type={'text'} className='phone-check' />
-                    </>
-                    :
-                    <>
-                    </>
-                }
-
-
+                <Input placeholder='전화번호를 입력해주세요.' type={'text'} className='phone' disabled={isCheckPhoneNumber} />
+                <Button style={{ marginTop: '0' }} onClick={sendSms} disabled={isCheckPhoneNumber}>인증번호 발송</Button>
+                <Input placeholder='인증번호를 입력해주세요.' type={'text'} className='phone-check' disabled={isCheckPhoneNumber} />
+                <Button style={{ marginTop: '0' }} onClick={confirmCoincide} disabled={isCheckPhoneNumber}>{isCheckPhoneNumber ? '확인완료' : '인증번호 확인'}</Button>
                 <Button onClick={onSignUp}>회원가입</Button>
                 <CategoryName style={{ marginTop: '36px' }}>SNS 간편 회원가입</CategoryName>
                 <FlexBox>
                     <SnsLogo src={kakao} />
                     <SnsLogo src={naver} />
                 </FlexBox>
-               
+
             </WrapperForm>
         </>
     );
