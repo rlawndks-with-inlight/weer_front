@@ -143,6 +143,8 @@ const SignUpCard = () => {
                 content: string
             })
             if (response?.result > 0) {
+                alert('인증번호가 발송되었습니다.');
+
                 setIsSendSms(true)
                 setRandNum(content);
             } else {

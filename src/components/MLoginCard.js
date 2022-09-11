@@ -97,15 +97,19 @@ const MLoginCard = () => {
             id: $('.id').val(),
             pw: $('.pw').val()
         })
-        alert(response.message);
+        
         if (response.result > 0) {
-            console.log(response)
             await localStorage.setItem('auth', JSON.stringify(response.data));
             if (response.data?.user_level >= 40) {
+                alert(response.message);
                 navigate('/manager/list/user');
 
             } else if (response.data?.user_level >= 30) {
+                alert(response.message);
                 navigate('/manager/list/strategy');
+            }else{
+                alert("등록되지 않은 회원입니다.");
+                navigate("/")
             }
         }
     }

@@ -4,7 +4,7 @@ body {
 }
 body::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
-}
+} 
 .board-container {
     width: 100%;
 }
@@ -15,7 +15,18 @@ body::-webkit-scrollbar {
 .slick-dots li.slick-active button:before{
     color: #4CDAD8 !important;
 }
+.scroll-css{
 
+}
+.scroll-css::-webkit-scrollbar {
+    width: 10px;
+  }
+  .scroll-css::-webkit-scrollbar-thumb {
+    background-color: #eef1fd;
+  }
+  .scroll-css::-webkit-scrollbar-track {
+    background-color: #ffffff;
+  }
 .slick-prev.slick-disabled:before,
 .slick-next.slick-disabled:before {}
 

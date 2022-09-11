@@ -19,7 +19,7 @@ export const backUrl = "http://weare-first.com:8001";
 export const logoSrc = logo;
 //http://weare-first.com:8001
 export const editorState = {
-    editorState:EditorState.createEmpty()
+    editorState: EditorState.createEmpty()
 }
 
 export const localization = {
@@ -50,6 +50,7 @@ export const objManagerListContent = {
             { name: '폰번호', width: 22, type: 'text', column: 'phone' },
             { name: '레벨', width: 11, type: 'level', column: 'user_level' },
             { name: '로그인시간', width: 22, type: 'text', column: 'last_login' },
+            // { name: '상태', width: 8, type: 'status', column: 'status' },
             { name: '수정', width: 6, type: 'edit', column: 'edit' },
             { name: '삭제', width: 6, type: 'delete', column: 'delete' }
         ]
@@ -64,8 +65,9 @@ export const objManagerListContent = {
             { name: '이름', width: 12, type: 'text', column: 'name' },
             { name: '채널명', width: 12, type: 'text', column: 'nickname' },
             { name: '생성시간', width: 16, type: 'text', column: 'date' },
-            { name: '수정', width: 12, type: 'edit', column: 'edit' },
-            { name: '삭제', width: 12, type: 'delete', column: 'delete' }
+            { name: '맨위로', width: 8, type: 'top', column: '' },
+            { name: '수정', width: 8, type: 'edit', column: 'edit' },
+            { name: '삭제', width: 8, type: 'delete', column: 'delete' }
         ],
     },
     channel: {
@@ -86,7 +88,8 @@ export const objManagerListContent = {
             { name: '메인이미지', width: 16, type: 'img', column: 'main_img' },
             { name: '제목', width: 16, type: 'text', column: 'title' },
             { name: '추천제목', width: 16, type: 'text', column: 'suggest_title' },
-            { name: '생성시간', width: 28, type: 'text', column: 'date' },
+            { name: '생성시간', width: 20, type: 'text', column: 'date' },
+            { name: '맨위로', width: 8, type: 'top', column: '' },
             { name: '노출여부', width: 8, type: 'status', column: 'status' },
             { name: '수정', width: 8, type: 'edit', column: 'edit' },
             { name: '삭제', width: 8, type: 'delete', column: 'delete' }
@@ -99,7 +102,8 @@ export const objManagerListContent = {
             { name: '메인이미지', width: 16, type: 'img', column: 'main_img' },
             { name: '제목', width: 16, type: 'text', column: 'title' },
             { name: '추천제목', width: 16, type: 'text', column: 'suggest_title' },
-            { name: '생성시간', width: 28, type: 'text', column: 'date' },
+            { name: '생성시간', width: 20, type: 'text', column: 'date' },
+            { name: '맨위로', width: 8, type: 'top', column: '' },
             { name: '노출여부', width: 8, type: 'status', column: 'status' },
             { name: '수정', width: 8, type: 'edit', column: 'edit' },
             { name: '삭제', width: 8, type: 'delete', column: 'delete' }
@@ -112,7 +116,8 @@ export const objManagerListContent = {
             { name: '메인이미지', width: 16, type: 'img', column: 'main_img' },
             { name: '제목', width: 16, type: 'text', column: 'title' },
             { name: '추천제목', width: 16, type: 'text', column: 'suggest_title' },
-            { name: '생성시간', width: 28, type: 'text', column: 'date' },
+            { name: '생성시간', width: 20, type: 'text', column: 'date' },
+            { name: '맨위로', width: 8, type: 'top', column: '' },
             { name: '노출여부', width: 8, type: 'status', column: 'status' },
             { name: '수정', width: 8, type: 'edit', column: 'edit' },
             { name: '삭제', width: 8, type: 'delete', column: 'delete' }
@@ -125,7 +130,8 @@ export const objManagerListContent = {
             { name: '메인이미지', width: 16, type: 'img', column: 'main_img' },
             { name: '제목', width: 16, type: 'text', column: 'title' },
             { name: '추천제목', width: 16, type: 'text', column: 'suggest_title' },
-            { name: '생성시간', width: 28, type: 'text', column: 'date' },
+            { name: '생성시간', width: 20, type: 'text', column: 'date' },
+            { name: '맨위로', width: 8, type: 'top', column: '' },
             { name: '노출여부', width: 8, type: 'status', column: 'status' },
             { name: '수정', width: 8, type: 'edit', column: 'edit' },
             { name: '삭제', width: 8, type: 'delete', column: 'delete' }
@@ -138,7 +144,8 @@ export const objManagerListContent = {
             { name: '메인이미지', width: 16, type: 'img', column: 'main_img' },
             { name: '제목', width: 16, type: 'text', column: 'title' },
             { name: '추천제목', width: 16, type: 'text', column: 'suggest_title' },
-            { name: '생성시간', width: 28, type: 'text', column: 'date' },
+            { name: '생성시간', width: 20, type: 'text', column: 'date' },
+            { name: '맨위로', width: 8, type: 'top', column: '' },
             { name: '노출여부', width: 8, type: 'status', column: 'status' },
             { name: '수정', width: 8, type: 'edit', column: 'edit' },
             { name: '삭제', width: 8, type: 'delete', column: 'delete' }
@@ -150,8 +157,9 @@ export const objManagerListContent = {
         zColumn: [
             { name: '제목', width: 48, type: 'text', column: 'title' },
             { name: '생성시간', width: 28, type: 'text', column: 'date' },
-            { name: '수정', width: 12, type: 'edit', column: 'edit' },
-            { name: '삭제', width: 12, type: 'delete', column: 'delete' }
+            { name: '맨위로', width: 8, type: 'top', column: '' },
+            { name: '수정', width: 8, type: 'edit', column: 'edit' },
+            { name: '삭제', width: 8, type: 'delete', column: 'delete' }
         ],
     },
     feature_category: {
@@ -160,8 +168,9 @@ export const objManagerListContent = {
         zColumn: [
             { name: '제목', width: 48, type: 'text', column: 'title' },
             { name: '생성시간', width: 28, type: 'text', column: 'date' },
-            { name: '수정', width: 12, type: 'edit', column: 'edit' },
-            { name: '삭제', width: 12, type: 'delete', column: 'delete' }
+            { name: '맨위로', width: 8, type: 'top', column: '' },
+            { name: '수정', width: 8, type: 'edit', column: 'edit' },
+            { name: '삭제', width: 8, type: 'delete', column: 'delete' }
         ],
     },
     feature: {
@@ -171,7 +180,8 @@ export const objManagerListContent = {
             { name: '메인이미지', width: 16, type: 'img', column: 'main_img' },
             { name: '제목', width: 16, type: 'text', column: 'title' },
             { name: '추천제목', width: 16, type: 'text', column: 'suggest_title' },
-            { name: '생성시간', width: 28, type: 'text', column: 'date' },
+            { name: '생성시간', width: 20, type: 'text', column: 'date' },
+            { name: '맨위로', width: 8, type: 'top', column: '' },
             { name: '노출여부', width: 8, type: 'status', column: 'status' },
             { name: '수정', width: 8, type: 'edit', column: 'edit' },
             { name: '삭제', width: 8, type: 'delete', column: 'delete' }
@@ -182,9 +192,10 @@ export const objManagerListContent = {
         schema: 'video',
         zColumn: [
             { name: '번호', width: 8, type: 'text', column: 'pk' },
-            { name: '제목', width: 20, type: 'text', column: 'title' },
+            { name: '제목', width: 16, type: 'text', column: 'title' },
             { name: '링크', width: 20, type: 'link', column: 'link' },
-            { name: '생성시간', width: 20, type: 'text', column: 'date' },
+            { name: '생성시간', width: 16, type: 'text', column: 'date' },
+            { name: '맨위로', width: 8, type: 'top', column: '' },
             { name: '노출여부', width: 8, type: 'status', column: 'status' },
             { name: '수정', width: 8, type: 'edit', column: 'edit' },
             { name: '삭제', width: 8, type: 'delete', column: 'delete' }

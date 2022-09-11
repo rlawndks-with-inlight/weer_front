@@ -43,23 +43,24 @@ const MVideoEdit = () => {
                 setChannelList(channelResponse.data);
             }
             if (params.pk > 0) {
-                const { data: response } = await axios.get(`/api/item?table=video&pk=${params.pk}`);
-                $(`.title`).val(response.data.title);
-                $(`.link`).val(response.data.link);
-                $(`.channel`).val(response.data.user_pk);
-                $('.font-color').val(response.data.font_color)
-                $('.background-color').val(response.data.background_color)
-                let relate_list = JSON.parse(response.data.relate_video) ??[];
-                let relate_str = "";
+                const { data: response } = await axios.get(`/api/getvideocontent?pk=${params.pk}`);
+                console.log(response);
+                $(`.title`).val(response.data.video.title);
+                $(`.link`).val(response.data.video.link);
+                $(`.channel`).val(response.data.video.user_pk);
+                $('.font-color').val(response.data.video.font_color);
+                $('.background-color').val(response.data.video.background_color);
+                let relate_list = response.data.relates ??[];
                 console.log(relate_list)
+                let relate_str = "";
                 for(var i =0;i<relate_list.length;i++){
                     if(i!=0){
                         relate_str +="/"
                     }
-                    relate_str += relate_list[i];
+                    relate_str += relate_list[i].pk;
                 }
                 $('.relate').val(relate_str);
-                editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001', backUrl));
+                editorRef.current.getInstance().setHTML(response.data.video.note.replaceAll('http://localhost:8001', backUrl));
             } else {
                 $('.font-color').val(cardDefaultColor.font)
                 $('.background-color').val(cardDefaultColor.background)

@@ -93,7 +93,7 @@ const Video = () => {
     useEffect(() => {
         async function fetchPost() {
             const { data: response } = await axios.get(`/api/getvideocontent?pk=${params.pk}&views=1`);
-            let obj = response.data.item;
+            let obj = response.data.video;
             obj.link = getIframeLinkByLink(obj.link);
             obj.note = stringToHTML(obj.note)
             $('.note').append(obj.note)

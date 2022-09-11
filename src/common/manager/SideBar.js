@@ -149,7 +149,7 @@ const SideBar = () => {
             <HambergurContainer onClick={() => { setDisplay('flex') }}>
                 <GiHamburgerMenu />
             </HambergurContainer>
-            <Wrappers display={display}>
+            <Wrappers display={display} className='scroll-css'>
                 <HambergurContainer onClick={() => { setDisplay('none') }}>
                     <GiHamburgerMenu />
                 </HambergurContainer>
