@@ -29,7 +29,6 @@ const ScrollToTopButton = () => {
     const [display, setDisplay] = useState(true);
     useEffect(()=>{
         window.addEventListener('scroll',function(){
-            console.log(window.scrollY)
             if(window.scrollY<=50){
                 setDisplay("none");
             }else{

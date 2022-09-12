@@ -174,7 +174,7 @@ const Headers = () => {
     if (window.innerWidth <= 1050) {//모바일
       setIsSearch(true)
     } else {//pc
-
+      setIsSearch(!isSearch)
     }
   }
   return (
@@ -232,6 +232,25 @@ const Headers = () => {
             <AiOutlineBell onClick={() => navigate('/noticelist')} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
             <AiOutlineSearch onClick={changeSearchModal} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
             <AiOutlineSetting onClick={myAuth} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
+            {isSearch ?
+              <>
+              <div style={{ position: 'absolute',top:'72px',right:'48px',background:'#fff',padding:'16px',boxShadow:'0px 2px 8px #00000029',borderRadius:'8px',display:'flex',alignItems:'center' }}>
+              <SearchInput type={'text'} placeholder='두 글자 이상 입력해주세요.' className='search-pc' style={{width:'300px'}} />
+              <AiOutlineSearch style={{ fontSize: '24px',cursor:'pointer' }} onClick={() => {
+                if ($('.search-pc').val().length < 2) {
+                  alert('두 글자 이상 입력해주세요.');
+                } else {
+                  setIsSearch(false);
+                  navigate('/search', { state: $('.search-pc').val() });
+                }
+              }} />
+              </div>
+              </>
+              :
+              <>
+              </>
+            }
+            
           </div>
 
         </HeaderMenuContainer>
