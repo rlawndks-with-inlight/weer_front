@@ -10,6 +10,8 @@ import axios from 'axios'
 import { zBottomMenu } from '../data/Data';
 import { MdNavigateBefore } from 'react-icons/md';
 import theme from '../styles/theme';
+import { IoMdArrowBack } from 'react-icons/io';
+import $ from 'jquery';
 const Header = styled.header`
 position:fixed;
 height:6rem;
@@ -58,6 +60,20 @@ cursor:pointer;
 }
 @media screen and (max-width:1200px) { 
   font-size:${props => props.theme.size.font4};
+}
+`
+const SearchInput = styled.input`
+outline:none;
+border:none;
+border-bottom:1px solid #cccccc;
+border-radius:0;
+width:80%;
+padding:8px 0;
+margin:0 6px;
+font-size:12px;
+::placeholder {
+  color:#dddddd;
+  font-size:12px;
 }
 `
 const ModalContainer = styled.div`
@@ -121,6 +137,7 @@ const Headers = () => {
   const [display, setDisplay] = useState('flex');
   const [isPost, setIsPost] = useState(false);
   const [searchDisplay, setSearchDisplay] = useState('none')
+  const [isSearch, setIsSearch] = useState(false);
   useEffect(() => {
     if (location.pathname.substring(0, 6) == '/post/' || location.pathname.substring(0, 7) == '/video/') {
       setIsPost(true);
@@ -154,58 +171,70 @@ const Headers = () => {
     }
   }
   const changeSearchModal = () => {
+    if (window.innerWidth <= 1050) {//모바일
+      setIsSearch(true)
+    } else {//pc
 
+    }
   }
   return (
     <>
 
       <Header style={{ display: `${display}` }}>
-        {isPost && window.innerWidth <= 600 ?//게시물 및 넓이 600미만
-          <>
 
-            <HeaderContainer>
+        <HeaderContainer>{/*모바일 */}
+          {isSearch ?
+            <>
+              <IoMdArrowBack style={{ fontSize: '24px' }} onClick={() => setIsSearch(false)} />
+              <SearchInput type={'text'} placeholder='두 글자 이상 입력해주세요.' className='search' />
+              <AiOutlineSearch style={{ fontSize: '24px' }} onClick={() => {
+                if ($('.search').val().length < 2) {
+                  alert('두 글자 이상 입력해주세요.');
+                } else {
+                  setIsSearch(false);
+                  navigate('/search', { state: $('.search').val() });
+                }
+              }} />
+            </>
+            :
+            <>
               <div>
-                <MdNavigateBefore style={{ fontSize: '30px', marginLeft: '-7px' }} onClick={() => { navigate(-1) }} />
-              </div>
-              <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '100px', justifyContent: 'space-between' }}>
-                <AiOutlineBell onClick={handleModal} style={{ width: '2rem', height: '1.5rem' }} />
-                <AiOutlineSearch onClick={() => { navigate('/noticelist') }} style={{ width: '2rem', height: '1.5rem' }} />
-                <AiOutlineSetting onClick={() => { navigate('/search') }} style={{ width: '2rem', height: '1.5rem' }} />
-              </div>
-            </HeaderContainer>
-          </>
-          :
-          <>
-            <HeaderContainer>{/*모바일 */}
-              <div>
-                <img src={logo} style={{ height: '2.5rem', marginTop: '0.25rem' }} onClick={() => { navigate('/') }} />
-              </div>
-              <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '100px', justifyContent: 'space-between' }}>
-                <AiOutlineBell onClick={() => navigate('/noticelist')} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
-                <AiOutlineSearch onClick={() => navigate('/search')} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
-                <AiOutlineSetting onClick={myAuth} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
-              </div>
-            </HeaderContainer>
-            <HeaderMenuContainer>{/* pc */}
-              <div style={{ display: 'flex', margin: '2rem 0', height: '2rem' }}>
-                {zBottomMenu.map((item, idx) => (
+                {isPost ?
                   <>
-                    <HeaderMenu onClick={() => { navigate(item.link) }} style={{ color: `${item.allowList.includes(location.pathname) ? theme.color.background1 : ''}` }}>{item.name}</HeaderMenu>
+                    <MdNavigateBefore style={{ fontSize: '30px', marginLeft: '-7px' }} onClick={() => { navigate(-1) }} />
                   </>
-                ))}
+                  :
+                  <>
+                    <img src={logo} style={{ height: '2.5rem', marginTop: '0.25rem' }} onClick={() => { navigate('/') }} />
+                  </>}
               </div>
-              <div style={{ position: 'absolute', right: '48%', top: '0.5rem' }}>
-                <img src={logo} style={{ height: '5rem' }} onClick={() => { navigate('/') }} />
-              </div>
-              <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '100px', justifyContent: 'space-between' }}>
                 <AiOutlineBell onClick={() => navigate('/noticelist')} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
-                <AiOutlineSearch onClick={() => navigate('/search')} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
+                <AiOutlineSearch onClick={changeSearchModal} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
                 <AiOutlineSetting onClick={myAuth} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
               </div>
+            </>
+          }
 
-            </HeaderMenuContainer>
-          </>
-        }
+        </HeaderContainer>
+        <HeaderMenuContainer>{/* pc */}
+          <div style={{ display: 'flex', margin: '2rem 0', height: '2rem' }}>
+            {zBottomMenu.map((item, idx) => (
+              <>
+                <HeaderMenu onClick={() => { navigate(item.link) }} style={{ color: `${item.allowList.includes(location.pathname) ? theme.color.background1 : ''}` }}>{item.name}</HeaderMenu>
+              </>
+            ))}
+          </div>
+          <div style={{ position: 'absolute', right: '48%', top: '0.5rem' }}>
+            <img src={logo} style={{ height: '5rem' }} onClick={() => { navigate('/') }} />
+          </div>
+          <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between' }}>
+            <AiOutlineBell onClick={() => navigate('/noticelist')} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
+            <AiOutlineSearch onClick={changeSearchModal} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
+            <AiOutlineSetting onClick={myAuth} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
+          </div>
+
+        </HeaderMenuContainer>
 
       </Header>
 

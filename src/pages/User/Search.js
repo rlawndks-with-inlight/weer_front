@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react';
-import { useNavigate, Link, useParams } from 'react-router-dom';
+import { useNavigate, Link, useParams, useLocation } from 'react-router-dom';
 import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -36,6 +36,7 @@ font-size:12px;
 `
 const Search = () => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [oneWords, setOneWords] = useState([]);
     const [oneEvents, setOneEvents] = useState([]);
@@ -53,6 +54,15 @@ const Search = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
     };
+    useEffect(()=>{
+        if(location.state){
+            $('.search').val(location.state);
+            let str = location.state;
+            if(str.length>=2){
+                onSearchAllItem();
+            }
+        }
+    },[])
     const onSearchAllItem = async () => {
         let str = $('.search').val()
         if (str.length < 2) {
