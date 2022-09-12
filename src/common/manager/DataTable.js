@@ -32,7 +32,7 @@ margin-bottom:6px;
 `
 const DataTable = (props) => {
     //console.log(props)
-    const { column, data, schema, opTheTopItem, deleteItem } = props;
+    const { column, data, schema, opTheTopItem, changeItemSequence, deleteItem } = props;
     const navigate = useNavigate();
     const [zStatus, setZStatus] = useState([]);
     const [posts, setPosts] = useState([]);
@@ -47,14 +47,14 @@ const DataTable = (props) => {
         setFirstPosts(data)
         setZStatus(list);
     }, [])
-  
-    useEffect(()=>{
-        if(!isChange){
+
+    useEffect(() => {
+        if (!isChange) {
             setIsChange(true)
-        }else{
+        } else {
             //console.log(posts)
         }
-    },[posts])
+    }, [posts])
 
     const moveCard = useCallback((dragIndex, hoverIndex, itemPk) => {
         setPosts((prevCards) =>
@@ -79,10 +79,11 @@ const DataTable = (props) => {
                 list={list}
                 opTheTopItem={opTheTopItem}
                 deleteItem={deleteItem}
+                changeItemSequence={changeItemSequence}
             />
         )
     }, [])
-    
+
     return (
         <>
             <div style={{ marginBottom: '16px', overflowX: 'auto' }}>
@@ -95,9 +96,9 @@ const DataTable = (props) => {
                         ))}
                     </Tr>
                     <DndProvider backend={HTML5Backend}>
-                    {posts.map((data, idx) =>
-                        renderCard(data, idx, column, posts)
-                    )}
+                        {posts.map((data, idx) =>
+                            renderCard(data, idx, column, posts)
+                        )}
                     </DndProvider>
                 </Table>
             </div>

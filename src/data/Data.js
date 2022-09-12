@@ -7,8 +7,8 @@ import albumImg from '../assets/images/icon/albums.svg';
 import albumActiveImg from '../assets/images/icon/albums-active.svg';
 import bulbImg from '../assets/images/icon/bulb.svg';
 import bulbActiveImg from '../assets/images/icon/bulb-active.svg';
-import playImg from '../assets/images/icon/play.svg';
-import playActiveImg from '../assets/images/icon/play-active.svg';
+import featureImg from '../assets/images/icon/features.svg';
+import featureActiveImg from '../assets/images/icon/features-active.svg';
 import talkImg from '../assets/images/icon/talk.svg';
 import talkActiveImg from '../assets/images/icon/talk-active.svg';
 import thumbImg from '../assets/images/icon/thumb.svg';
@@ -28,7 +28,8 @@ export const localization = {
 export const zBottomMenu = [
     { name: '핵심이슈', link: '/selectissuecategory', icon: <img src={bulbImg} className='menu-icon' />, activeIcon: <img src={bulbActiveImg} className='menu-icon' />, allowList: ['/selectissuecategory'] },
     // { name: '핵심비디오', link: '/videolist', icon: <img src={playImg} className='menu-icon' />, activeIcon: <img src={playActiveImg} className='menu-icon' />, allowList: ['/videolist'] },
-    { name: '특징주', link: '/selectfeaturecategory', icon: <MdOutlineFeaturedPlayList className='menu-icon' />, activeIcon: <MdOutlineFeaturedPlayList className='menu-icon' />, allowList: ['/selectfeaturecategory'] },
+    { name: '특징주', link: '/selectfeaturecategory', icon: <img src={featureImg} className='menu-icon' />, activeIcon: <img src={featureActiveImg} className='menu-icon' />, allowList: ['/selectfeaturecategory'] },
+
     { name: '핵심테마', link: '/themelist', icon: <img src={albumImg} className='menu-icon' />, activeIcon: <img src={albumActiveImg} className='menu-icon' />, allowList: ['/themelist'] },
     { name: '전문가칼럼', link: '/masterlist', icon: <img src={thumbImg} className='menu-icon' />, activeIcon: <img src={thumbActiveImg} className='menu-icon' />, allowList: ['/masterlist'] },
 
@@ -156,8 +157,9 @@ export const objManagerListContent = {
         schema: 'issue_category',
         zColumn: [
             { name: '제목', width: 48, type: 'text', column: 'title' },
-            { name: '생성시간', width: 28, type: 'text', column: 'date' },
+            { name: '생성시간', width: 20, type: 'text', column: 'date' },
             { name: '맨위로', width: 8, type: 'top', column: '' },
+            { name: '노출여부', width: 8, type: 'status', column: 'status' },
             { name: '수정', width: 8, type: 'edit', column: 'edit' },
             { name: '삭제', width: 8, type: 'delete', column: 'delete' }
         ],
@@ -167,8 +169,9 @@ export const objManagerListContent = {
         schema: 'feature_category',
         zColumn: [
             { name: '제목', width: 48, type: 'text', column: 'title' },
-            { name: '생성시간', width: 28, type: 'text', column: 'date' },
+            { name: '생성시간', width: 20, type: 'text', column: 'date' },
             { name: '맨위로', width: 8, type: 'top', column: '' },
+            { name: '노출여부', width: 8, type: 'status', column: 'status' },
             { name: '수정', width: 8, type: 'edit', column: 'edit' },
             { name: '삭제', width: 8, type: 'delete', column: 'delete' }
         ],

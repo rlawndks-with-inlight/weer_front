@@ -49,7 +49,7 @@ const SelectIssueCategory = () => {
 
     useEffect(() => {
         async function fetchPosts() {
-            const { data: response } = await axios.get('/api/items?table=issue_category');
+            const { data: response } = await axios.get('/api/items?table=issue_category&status=1');
             setPosts(response.data);
         }
         fetchPosts();

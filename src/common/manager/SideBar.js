@@ -144,6 +144,8 @@ const SideBar = () => {
     const changeFeatureCategoryDisplay = () => {
         setFeatureCategoryDisplay(!featureCategoryDisplay);
     }
+
+ 
     return (
         <>
             <HambergurContainer onClick={() => { setDisplay('flex') }}>
@@ -154,7 +156,7 @@ const SideBar = () => {
                     <GiHamburgerMenu />
                 </HambergurContainer>
                 <LogoWrappers>
-                    <img src={logo} style={{ height: '40px', width: 'auto' }} />
+                    <img src={logo} style={{ height: '40px', width: 'auto' }}/>
                 </LogoWrappers>
                 <div style={{ maxHeight: '80vh' }}>
                     {zSidebar.map((item, index) => (

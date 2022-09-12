@@ -52,7 +52,6 @@ export const commarNumber = (num) => {
         result = str[i] + result;
         count++;
     }
-    console.log(result)
     return result;
 }
 export const formatPhoneNumber = (input) => {

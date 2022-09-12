@@ -7,14 +7,14 @@ const Card = styled.div`
 width: 48%; 
 display: flex;
 margin-bottom: 16px;
-height: 240px;
+height: 180px;
 background: ${theme.color.background3};
 @media screen and (max-width:1000px) {
-    height: 24vw;
+    height: 18vw;
 }
 @media screen and (max-width:700px) {
     width: 100%; 
-    height: 45vw;
+    height: 36vw;
 }
 `
 const Img = styled.div`
@@ -38,6 +38,27 @@ width:250px;
     width:47.5vw;
 }
 `
+const TextContainer = styled.div`
+padding: 16px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+@media screen and (max-width:500px) {
+    padding: 8px;
+}
+`
+const Hash = styled.div`
+font-size: ${theme.size.font5};
+display: flex;
+flex-wrap: wrap;
+`
+const Date = styled.div`
+font-size: ${theme.size.font5};
+margin-top: 16px;
+@media screen and (max-width:500px) {
+    margin-top: 6px;
+}
+`
 const ThemeCard = (props) => {
     const navigate = useNavigate();
     return (
@@ -47,13 +68,15 @@ const ThemeCard = (props) => {
                     backgroundImage: `url(${backUrl + props.item?.main_img ?? ""})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center', backgroundBlendMode: 'multiply'
                 }} />
 
-                <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <TextContainer>
                     <Title> {props.item?.title ?? ""}</Title>
-                    <div style={{ fontSize: `${theme.size.font5}`, display: 'flex', flexWrap: 'wrap' }}>
-                        {props.item?.hash}
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <Hash>
+                            {props.item?.hash}
+                        </Hash>
+                        <Date>{props.item?.date.substring(0, 10) ?? ""}</Date>
                     </div>
-                    <div style={{ fontSize: `${theme.size.font5}` }}>{props.item?.date.substring(0,10) ?? ""}</div>
-                </div>
+                </TextContainer>
             </Card>
         </>
     )

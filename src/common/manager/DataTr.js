@@ -25,14 +25,14 @@ margin-bottom:6px;
 `
 const ItemTypes = { CARD: 'card' }
 
-const DataTr = ({ id, data, index, moveCard, column, schema, list, opTheTopItem, deleteItem }) => {
+const DataTr = ({ id, data, index, moveCard, column, schema, list, opTheTopItem, changeItemSequence, deleteItem }) => {
     const navigate = useNavigate();
     const ref = useRef(null)
     const [status, setStatus] = useState(data?.status);
     const [{ handlerId }, drop] = useDrop({
         accept: ItemTypes.CARD,
         drop(item) {
-            console.log(item)
+            changeItemSequence(item.id,schema,item.index);
         },
         collect(monitor) {
             return {
@@ -83,7 +83,7 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, opTheTopItem,
     const [{ isDragging }, drag] = useDrag({
         type: ItemTypes.CARD,
         item: () => {
-            return { id, index, data, list }
+            return { id, index }
         },
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
@@ -100,6 +100,7 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, opTheTopItem,
             num: num
         })
     }
+
     return (
         <>
             <Tr ref={ref} data-handler-id={handlerId}>
@@ -143,10 +144,10 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, opTheTopItem,
                             :
                             <>
                             </>}
-                            {col.type == 'top' ?
+                        {col.type == 'top' ?
                             <>
                                 <Td style={{ width: `${col.width}%`, fontSize: '22px' }}>
-                                   <GrLinkTop style={{ color: '#aaaaaa', cursor: 'pointer' }} onClick={()=>opTheTopItem(data.pk,schema)}/>
+                                    <GrLinkTop style={{ color: '#aaaaaa', cursor: 'pointer' }} onClick={() => opTheTopItem(data.pk, schema)} />
                                 </Td>
                             </>
                             :
@@ -163,7 +164,7 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, opTheTopItem,
                             :
                             <>
                             </>}
-                           
+
                         {col.type == 'edit' ?
                             <>
                                 <Td style={{ width: `${col.width}%`, fontSize: '20px' }}>

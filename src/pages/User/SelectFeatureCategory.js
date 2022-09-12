@@ -49,7 +49,7 @@ const SelectFeatureCategory = () => {
 
     useEffect(() => {
         async function fetchPosts() {
-            const { data: response } = await axios.get('/api/items?table=feature_category');
+            const { data: response } = await axios.get('/api/items?table=feature_category&status=1');
             setPosts(response.data);
         }
         fetchPosts();

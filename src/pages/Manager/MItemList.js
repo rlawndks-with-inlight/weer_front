@@ -41,6 +41,7 @@ const MItemList = () => {
     const [page, setPage] = useState(1)
     const [pageList, setPageList] = useState([])
     const [loading, setLoading] = useState(false)
+    const [isUseLoading, setIsUseLoading] = useState(true)
     useEffect(() => {
         setZColumn(objManagerListContent[`${params.table}`].zColumn ?? {})
         async function fetchPost() {
@@ -71,7 +72,7 @@ const MItemList = () => {
         }
         fetchPost();
     }, [pathname])
-    const changePage = async (num, loading) => {
+    const changePage = async (num) => {
         setLoading(true)
         setPage(num)
         let str = '';
@@ -105,6 +106,27 @@ const MItemList = () => {
             }
         }
     })
+    const changeItemSequence = useCallback(async (pk, schema, idx) => {
+        console.log(pk)
+        console.log(schema)
+        console.log(idx)
+        console.log(posts[idx].pk)
+        if (posts[idx].pk == pk) {
+            return;
+        } else {
+            const { data: response } = await axios.post('/api/changeitemsequence', {
+                pk: pk,
+                table: schema,
+                change_pk: posts[idx].pk
+            });
+            if (response.result > 0) {
+                changePage(page)
+            } else {
+                alert('잘못된 값입니다.')
+                changePage(page)
+            }
+        }
+    })
     const deleteItem = useCallback(async (pk, schema) => {
         let obj = {
             pk: pk,
@@ -133,7 +155,7 @@ const MItemList = () => {
                         {/* 옵션카드 */}
                         <OptionCardWrappers>
                             <Row>
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <div style={{ display: 'flex', alignItems: 'center',marginLeft:'auto' }}>
                                     <Input style={{ margin: '12px 0 12px 24px', border: 'none' }} className='search' placeholder='두 글자 이상 입력해주세요.' />
                                     <AiOutlineSearch className='search-button' style={{ padding: '14px', cursor: 'pointer' }} />
                                 </div>
@@ -154,7 +176,7 @@ const MItemList = () => {
                         :
                         <>
 
-                            <DataTable data={posts} column={zColumn} schema={params.table} opTheTopItem={opTheTopItem} deleteItem={deleteItem} />
+                            <DataTable data={posts} column={zColumn} schema={params.table} opTheTopItem={opTheTopItem} changeItemSequence={changeItemSequence} deleteItem={deleteItem} />
                         </>}
 
                     <MBottomContent>
