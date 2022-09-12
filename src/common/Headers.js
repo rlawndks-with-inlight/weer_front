@@ -68,7 +68,7 @@ border:none;
 border-bottom:1px solid #cccccc;
 border-radius:0;
 width:80%;
-padding:8px 0;
+padding:10px 0;
 margin:0 6px;
 font-size:12px;
 ::placeholder {

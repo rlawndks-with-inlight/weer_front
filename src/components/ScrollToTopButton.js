@@ -29,7 +29,8 @@ const ScrollToTopButton = () => {
     const [display, setDisplay] = useState(true);
     useEffect(()=>{
         window.addEventListener('scroll',function(){
-            if(window.scrollY<=0){
+            console.log(window.scrollY)
+            if(window.scrollY<=50){
                 setDisplay("none");
             }else{
                 setDisplay("");
@@ -41,6 +42,11 @@ const ScrollToTopButton = () => {
             setDisplay('none');
         } else {
             setDisplay('')
+        }
+        if(window.scrollY<=50){
+            setDisplay("none");
+        }else{
+            setDisplay("");
         }
         if (pathname.substring(0, 6) == '/post/' || pathname.substring(0, 7) == '/video/' || window.innerWidth > 600) {
             setIsPost(true);
