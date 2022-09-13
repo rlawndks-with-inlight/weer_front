@@ -10,6 +10,7 @@ min-height: 100%;
 flex-direction:column;
 background:${(props)=>props.theme.color.manager.background3};
 min-height:100vh;
+overflow-y:auto;
 @media screen and (max-width:1000px) {
     left:0;
 }

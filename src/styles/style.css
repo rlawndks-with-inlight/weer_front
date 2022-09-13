@@ -1,32 +1,48 @@
 body {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
+
 body::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera*/
-} 
+    /* Chrome, Safari, Opera*/
+    display: none;
+}
+body::-webkit-scrollbar-thumb {
+    /* Chrome, Safari, Opera*/
+    background: #eef1fd;
+}
+.show-scrollbar ::-webkit-scrollbar {
+    display: block !important;
+}
+
 .board-container {
     width: 100%;
 }
-.slick-dots{
+
+.slick-dots {
     bottom: -15px !important;
 }
 
-.slick-dots li.slick-active button:before{
+.slick-dots li.slick-active button:before {
     color: #4CDAD8 !important;
 }
-.scroll-css{
 
-}
+.scroll-css {}
+
 .scroll-css::-webkit-scrollbar {
     width: 10px;
-  }
-  .scroll-css::-webkit-scrollbar-thumb {
+}
+
+.scroll-css::-webkit-scrollbar-thumb {
     background-color: #eef1fd;
-  }
-  .scroll-css::-webkit-scrollbar-track {
+}
+
+.scroll-css::-webkit-scrollbar-track {
     background-color: #ffffff;
-  }
+}
+
 .slick-prev.slick-disabled:before,
 .slick-next.slick-disabled:before {}
 
@@ -74,27 +90,27 @@ div.note>p>img {
 .pointer {
     cursor: pointer;
 }
-.bar{
+
+.bar {
     flex: auto;
     border: 1px solid #4CDAD8;
     height: 2px;
     background: #4CDAD8;
 }
-.smaller-margin-right-content{
+
+.smaller-margin-right-content {
     margin: 0 1rem 0 auto;
 }
 
-@media screen and (max-width:1200px) {
-    
-}
-@media screen and (max-width:1150px) {
-    
-}
+@media screen and (max-width:1200px) {}
+
+@media screen and (max-width:1150px) {}
+
 @media screen and (max-width:1000px) {
     #editor {
         margin: 16px auto;
         width: 90%;
-        padding:8px;
+        padding: 8px;
     }
 }
 
@@ -149,8 +165,9 @@ div.note>p>img {
         background: #4CDAD8;
     }
 }
+
 @media screen and (max-width:600px) {
-    .smaller-margin-right-content{
+    .smaller-margin-right-content {
         margin: 0 0.5rem 0 auto;
     }
 }

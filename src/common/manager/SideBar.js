@@ -161,7 +161,7 @@ const SideBar = () => {
                 <div style={{ maxHeight: '80vh' }}>
                     {zSidebar.map((item, index) => (
                         <>
-                            {auth.level >= item.level ?
+                            {JSON.parse(localStorage.getItem('auth'))?.level??0 >= item.level ?
                                 <>
                                     {item.allow_list.includes(location.pathname) ?
                                         <>
@@ -199,7 +199,7 @@ const SideBar = () => {
                         :
                         <>
                         </>}
-                    {auth.level >= 40 ?
+                    {JSON.parse(localStorage.getItem('auth'))?.level??0 >= 40 ?
                         <>
                             {'/manager/list/feature_category' == location.pathname ?
                                 <>
@@ -221,7 +221,7 @@ const SideBar = () => {
                         </>
                     }
 
-                    {auth.level >= 40 ?
+                    {JSON.parse(localStorage.getItem('auth'))?.level??0 >= 40 ?
                         <>
                             {'/manager/list/feature' == location.pathname ?
                                 <>
@@ -257,7 +257,7 @@ const SideBar = () => {
                         :
                         <>
                         </>}
-                    {auth.level >= 30 ?
+                    {JSON.parse(localStorage.getItem('auth'))?.level??0 >= 30 ?
                         <>
                             {'/manager/list/video' == location.pathname ?
                                 <>
@@ -280,7 +280,7 @@ const SideBar = () => {
                     }
 
 
-                    {auth.level >= 40 ?
+                    {JSON.parse(localStorage.getItem('auth'))?.level??0 >= 40 ?
                         <>
                             {'/manager/list/notice' == location.pathname ?
                                 <>

@@ -113,6 +113,16 @@ const MLoginCard = () => {
             }
         }
     }
+    const onKeyPressId = (e) => {
+        if (e.key == 'Enter') {
+          $('.pw').focus();
+        }
+    }
+    const onKeyPressPw = (e) => {
+        if (e.key == 'Enter') {
+            onLogin();
+        }
+    }
     return (
         <>
             <WrapperForm onSubmit={onLogin} id='login_form'>
@@ -120,9 +130,9 @@ const MLoginCard = () => {
                     <img src={logo} style={{ height: '50px', width: 'auto' }} />
                 </Title>
                 <CategoryName>ID</CategoryName>
-                <Input placeholder='input id' type={'text'} className='id' />
+                <Input placeholder='input id' type={'text'} className='id' onKeyPress={onKeyPressId} />
                 <CategoryName>PW</CategoryName>
-                <Input placeholder='input password' type={'password'} className='pw' />
+                <Input placeholder='input password' type={'password'} className='pw' onKeyPress={onKeyPressPw} />
                 <Button onClick={onLogin}>Login</Button>
             </WrapperForm>
         </>

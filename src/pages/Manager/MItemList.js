@@ -19,7 +19,9 @@ import { Row, Select, Input } from '../../components/elements/ManagerTemplete';
 import { objManagerListContent } from '../../data/Data';
 import $ from 'jquery';
 import { AiOutlineSearch } from 'react-icons/ai'
-
+import { SiMicrosoftexcel } from 'react-icons/si'
+import * as FileSaver from "file-saver";
+import * as XLSX from "xlsx";
 const OptionCardWrappers = styled.div`
 width:95%;
 margin:0.5rem auto;
@@ -29,6 +31,14 @@ box-shadow:1px 1px 1px #00000029;
 font-size:14px;
 background:#fff;
 color:${props => props.theme.color.manager.font2};
+`
+const SearchContainer = styled.div`
+display: flex; 
+align-items: center;
+margin-left: auto;
+@media screen and (max-width:700px) {
+    margin-left: 0;
+}
 `
 const MItemList = () => {
 
@@ -107,10 +117,6 @@ const MItemList = () => {
         }
     })
     const changeItemSequence = useCallback(async (pk, schema, idx) => {
-        console.log(pk)
-        console.log(schema)
-        console.log(idx)
-        console.log(posts[idx].pk)
         if (posts[idx].pk == pk) {
             return;
         } else {
@@ -144,7 +150,65 @@ const MItemList = () => {
             alert('error')
         }
     })
+    const exportExcel = async () => {
+        let str = '';
+        if (params.table == 'master') {
+            str = `/api/users?level=30`
+        } else if (params.table == 'channel') {
+            str = `/api/users?level=25`
+        } else if (params.table == 'user') {
+            str = `/api/users?level=0`
+        } else if ((params.table == 'issue' || params.table == 'feature') && params.pk) {
+            str = `/api/items?table=${params.table}&category_pk=${params.pk}`
+        } else {
+            str = `/api/items?table=${params.table}`
+        }
+        const { data: response } = await axios.get(str)
+        excelDownload(response.data);
+        
+    }
+    const excelFileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    const excelFileExtension = '.xlsx';
+    const excelFileName = params.table;
 
+    const excelDownload = (excelData) => {
+        let ignore_name_list = ['맨위로','수정','삭제'];
+        let ignore_column_list = ['','edit','delete'];
+        
+        let name_list = [];
+        let column_list = [];
+        for(var i = 0;i<objManagerListContent[`${params.table}`].zColumn.length;i++){
+            if(!ignore_name_list.includes(objManagerListContent[`${params.table}`].zColumn[i].name)){
+                name_list.push(objManagerListContent[`${params.table}`].zColumn[i].name)
+                column_list.push(objManagerListContent[`${params.table}`].zColumn[i].column)
+            }
+        }
+        const ws = XLSX.utils.aoa_to_sheet([
+            ['weare']
+            ,[]
+            ,name_list
+        ]);
+        excelData.map((data) => {
+            XLSX.utils.sheet_add_aoa(
+                ws,
+                [
+                    column_list.map(item=>{
+                        return data[`${item}`]
+                    })
+                ],
+                { origin: -1 }
+            );
+            ws['!cols'] = [
+                { wpx: 200 },
+                { wpx: 200 }
+            ]
+            return false;
+        });
+        const wb = { Sheets: { data: ws }, SheetNames: ['data'] };
+        const excelButter = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+        const excelFile = new Blob([excelButter], { type: excelFileType });
+        FileSaver.saveAs(excelFile, excelFileName + excelFileExtension);
+    }
     return (
         <>
             <ManagerWrappers>
@@ -155,16 +219,18 @@ const MItemList = () => {
                         {/* 옵션카드 */}
                         <OptionCardWrappers>
                             <Row>
-                                <div style={{ display: 'flex', alignItems: 'center',marginLeft:'auto' }}>
+                                <SearchContainer>
                                     <Input style={{ margin: '12px 0 12px 24px', border: 'none' }} className='search' placeholder='두 글자 이상 입력해주세요.' />
                                     <AiOutlineSearch className='search-button' style={{ padding: '14px', cursor: 'pointer' }} />
-                                </div>
+                                </SearchContainer>
                                 <Select className='page-cut' style={{ margin: '12px 24px 12px 24px' }} onChange={onchangeSelectPageCut}>
                                     <option value={15}>15개</option>
                                     <option value={20}>20개</option>
                                     <option value={30}>30개</option>
                                 </Select>
-
+                                
+                                        <AddButton style={{ margin: '12px 24px 12px 24px', width: '96px', alignItems: 'center', display: 'flex', justifyContent: 'space-around' }} onClick={exportExcel}><SiMicrosoftexcel /> 액셀추출</AddButton>
+                                   
                             </Row>
 
                         </OptionCardWrappers>

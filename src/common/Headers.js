@@ -146,9 +146,9 @@ const Headers = () => {
     }
     if (location.pathname.includes('/manager')) {
       setDisplay('none');
-
+      $('html').addClass('show-scrollbar');
     } else {
-      setDisplay('flex')
+      setDisplay('flex');
     }
   }, [location])
   const [modal, setModal] = useState("none");
