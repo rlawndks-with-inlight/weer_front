@@ -46,7 +46,7 @@ const Home = () => {
     useEffect(() => {
         setPosts(zTalk[0].image_list);
         async function fetchPost() {
-            setLoading(true)
+            //setLoading(true)
 
             const { data: response } = await axios.get('/api/gethomecontent')
             setSetting(response.data.setting);
@@ -61,7 +61,7 @@ const Home = () => {
                 video_list[i].link = getIframeLinkByLink(video_list[i].link);
             }
             setVideos(video_list);
-            setTimeout(() => setLoading(false), 1500);
+            //setTimeout(() => setLoading(false), 1500);
         }
         fetchPost();
     }, [])
@@ -92,13 +92,13 @@ const Home = () => {
                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneWord?.hash ?? ""}</div>
                         </Content>
                         <Title className='pointer' link={'/selectissuecategory'} >핵심 이슈{'&'}공시</Title>
-                        <Content className='pointer'>
+                        <Content>
                             <WrapDiv>
                                 {issues.map((item, idx) => (
                                     <>
-                                        <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} >
+                                        <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} className='pointer'>
                                             <Img style={{ backgroundImage: `url(${backUrl + item?.main_img})` }} />
-                                            <div style={{ padding: '16px 16px 0 16px', fontWeight: 'bold' }}>{item?.date.substring(0, 10) ?? ""} {item?.title}</div>
+                                            <div style={{ padding: '16px 16px 0 16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
                                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
                                         </Card>
                                     </>
@@ -106,7 +106,7 @@ const Home = () => {
 
                             </WrapDiv>
                             <SliderDiv>
-                                <Slider {...slideSetting} className='board-container'>
+                                <Slider {...slideSetting} className='board-container pointer'>
                                     {issues.map((item, idx) => (
                                         <>
                                             <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
@@ -148,34 +148,26 @@ const Home = () => {
                         <Title link={'/themelist'}>핵심 테마</Title>
                         <Content>
                             <WrapDiv>
-
                                 {themes.map((item, idx) => (
                                     <>
-                                        <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}` }}>
+                                        <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} >
                                             <Img style={{ backgroundImage: `url(${backUrl + item?.main_img})` }} />
-                                            <div style={{ padding: '16px', minHeight: '50px', justifyContent: 'space-between', display: 'flex', flexDirection: 'column' }}>
-                                                <div style={{ fontSize: `${theme.size.font4}`, fontWeight: 'bold' }}>{item?.title}</div>
-                                                <div style={{ fontSize: `${theme.size.font5}` }}>{item?.date.substring(0, 10) ?? ""}</div>
-                                            </div>
-
+                                            <div style={{ padding: '16px 16px 0 16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
+                                            <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
                                         </Card>
-
                                     </>
                                 ))}
+
                             </WrapDiv>
                             <SliderDiv>
                                 <Slider {...slideSetting} className='board-container'>
                                     {themes.map((item, idx) => (
                                         <>
-                                            <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }}>
+                                            <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
                                                 <Img style={{ backgroundImage: `url(${backUrl + item?.main_img})` }} />
-                                                <div style={{ padding: '16px', minHeight: '50px', justifyContent: 'space-between', display: 'flex', flexDirection: 'column' }}>
-                                                    <div style={{ fontSize: `${theme.size.font4}`, fontWeight: 'bold' }}>{item?.title}</div>
-                                                    <div style={{ fontSize: `${theme.size.font5}`, padding: '16px 0 32px 0' }}>{item?.date.substring(0, 10) ?? ""}</div>
-                                                </div>
-
+                                                <div style={{ padding: '16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
+                                                <div style={{ fontSize: `${theme.size.font4}`, padding: '8px 16px', height: '50px' }}>{item?.hash}</div>
                                             </Card>
-
                                         </>
                                     ))}
                                 </Slider>

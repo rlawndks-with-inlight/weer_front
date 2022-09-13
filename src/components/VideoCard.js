@@ -20,7 +20,7 @@ background-blend-mode: multiply;
 }
 `
 const TextContainer = styled.div`
-padding: 0 16px;
+padding: 0 20px;
 min-height: 50px;
 justify-content: space-between;
 display: flex;
@@ -53,7 +53,7 @@ const VideoCard = (props) => {
                         <Image src={`https://img.youtube.com/vi/${props.item.link}/0.jpg`} style={{ width: `${isImgPadding ? '90%' : '100%'}`, margin: `${isImgPadding ? '5%' : '0'}` }} />
                     </>}
                 {/* <iframe style={{ width: '100%', height: 'auto', height: '80vw', maxHeight: '450px' }} src={`https://www.youtube.com/embed/${videos.link}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
-                <TextContainer style={{padding:`${isImgPadding?'0 16px':'16px'}`}}>
+                <TextContainer style={{padding:`${isImgPadding?'0 20px':'20px'}`}}>
                     <div style={{ fontSize: `${theme.size.font3}` }}>{props?.item?.title}</div>
                     {props.isVideoList ?
                         <>

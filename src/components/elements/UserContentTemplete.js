@@ -44,6 +44,7 @@ export const TitleStyle = styled.div`
 font-size:${props => props.theme.size.font2};
 font-weight:bold;
 margin-right:16px;
+cursor:pointer;
 `
 export const Title = (props) =>{
     const navigate = useNavigate();
@@ -89,6 +90,7 @@ export const Card = styled.div`
 width: 48%; 
 margin-bottom:16px;
 background: ${props => props.theme.color.background3};
+cursor:pointer;
 @media screen and (max-width:600px) {
     width:100%;
 }

@@ -26,6 +26,7 @@ border-radius:0;
 border:none;
 outline:none;
 font-size:12px;
+display:none;
 ::placeholder {
     color:#dddddd;
     font-size:12px;
@@ -55,6 +56,7 @@ const Search = () => {
         slidesToScroll: 1,
     };
     useEffect(()=>{
+        console.log(location.state)
         if(location.state){
             $('.search').val(location.state);
             let str = location.state;
@@ -62,7 +64,7 @@ const Search = () => {
                 onSearchAllItem();
             }
         }
-    },[])
+    },[location.state])
     const onSearchAllItem = async () => {
         let str = $('.search').val()
         if (str.length < 2) {
@@ -70,6 +72,15 @@ const Search = () => {
         } else {
             setLoading(true)
             const { data: response } = await axios.get(`/api/onsearchallitem?keyword=${str}`);
+            console.log(response.data)
+            if(response.data.oneWord.length==0&&
+                response.data.oneEvent.length==0&&
+                response.data.issues.length==0&&
+                response.data.features.length==0&&
+                response.data.themes.length==0&&
+                response.data.videos.length==0){
+                alert('해당 검색 결과가 없습니다.');
+            }
             setOneWords(response.data.oneWord);
             setOneEvents(response.data.oneEvent);
             setIssues(response.data.issues);
@@ -86,12 +97,12 @@ const Search = () => {
     return (
         <>
             <Wrappers className='wrappers'>
-                <Content style={{ position: 'relative' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #cccccc', margin: '0 auto' }}>
-                        <Input className='search' placeholder='두 글자 이상 입력해주세요.' />
-                        <AiOutlineSearch className='search-button' style={{ padding: '14px', cursor: 'pointer' }} onClick={onSearchAllItem} />
+                {/* <Content style={{ position: 'relative' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #cccccc', margin: '0 auto' }}> */}
+                        <Input className='search' placeholder='두 글자 이상 입력해주세요.'  />
+                        {/* <AiOutlineSearch className='search-button' style={{ padding: '14px', cursor: 'pointer' }} onClick={onSearchAllItem} />
                     </div>
-                </Content>
+                </Content> */}
                 {loading ?
                     <>
                         <Loading />

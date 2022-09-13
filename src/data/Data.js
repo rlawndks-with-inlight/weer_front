@@ -228,4 +228,6 @@ export const slideSetting = {
     slidesToShow: 1.15,
     slidesToScroll: 1,
     breakpoint: 480,
+    beforeChange: (current, next) => {console.log(current)},
+    afterChange: current => {console.log(current)},
 }

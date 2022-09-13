@@ -105,13 +105,23 @@ const LoginCard = () => {
             navigate('/mypage');
         }
     }
+    const onKeyPressId = (e) => {
+        if (e.key == 'Enter') {
+          $('.pw').focus();
+        }
+    }
+    const onKeyPressPw = (e) => {
+        if (e.key == 'Enter') {
+            onLogin();
+        }
+    }
     return (
         <>
             <WrapperForm onSubmit={onLogin} id='login_form'>
 
                 <CategoryName>가입 정보로 로그인</CategoryName>
-                <Input placeholder='아이디를 입력해주세요.' type={'text'} className='id' />
-                <Input placeholder='비밀번호를 입력해주세요.' type={'password'} className='pw' />
+                <Input placeholder='아이디를 입력해주세요.' type={'text'} className='id' onKeyPress={onKeyPressId} />
+                <Input placeholder='비밀번호를 입력해주세요.' type={'password'} className='pw' onKeyPress={onKeyPressPw} />
                 <FlexBox style={{ justifyContent: 'space-between', fontSize: '11px' }}>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <input type={'checkbox'} className='login-lock' style={{ border: '1px solid #000', outline: 'none', borderRadius: '0' }} />
