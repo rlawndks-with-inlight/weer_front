@@ -103,7 +103,7 @@ const SignUpCard = () => {
             alert(response.message);
             if (response.result > 0) {
                 setIsCheckId(true);
-
+                $('.pw').focus();
             } else {
                 setIsCheckId(false);
             }
@@ -117,7 +117,7 @@ const SignUpCard = () => {
             alert(response.message);
             if (response.result > 0) {
                 setIsCheckNickname(true);
-
+                $('.phone').focus();
             } else {
                 setIsCheckNickname(false);
             }
@@ -147,6 +147,7 @@ const SignUpCard = () => {
 
                 setIsSendSms(true)
                 setRandNum(content);
+                $('phone-check').focus();
             } else {
                 setIsSendSms(false)
             }
@@ -197,26 +198,62 @@ const SignUpCard = () => {
 
         }
     }
+    const onKeyPressId = (e) => {
+        if (e.key == 'Enter') {
+            onCheckId();
+        }
+    }
+    const onKeyPressPw = (e) => {
+        if (e.key == 'Enter') {
+            $('.pw-check').focus();
+        }
+    }
+    const onKeyPressPwCheck = (e) => {
+        if (e.key == 'Enter') {
+            $('.name').focus();
+        }
+    }
+    const onKeyPressName = (e) => {
+        if (e.key == 'Enter') {
+            $('.nickname').focus();
+        }
+    }
+    const onKeyPressNickname = (e) => {
+        if (e.key == 'Enter') {
+            onCheckNickname();
+        }
+    }
+    const onKeyPressPhone = (e) => {
+        if (e.key == 'Enter') {
+            sendSms();
+        }
+    }
+    const onKeyPressPhoneCheck = (e) => {
+        if (e.key == 'Enter') {
+            confirmCoincide();
+        }
+    }
+
     return (
         <>
             <WrapperForm onSubmit={onSignUp} id='login_form'>
                 <Title>회원가입</Title>
                 <CategoryName style={{ marginTop: '36px' }}>아이디</CategoryName>
-                <Input placeholder='아이디를 입력해주세요.' type={'text'} className='id' disabled={isCheckId} />
+                <Input placeholder='아이디를 입력해주세요.' type={'text'} className='id' disabled={isCheckId} onKeyPress={onKeyPressId} />
                 <Button style={{ marginTop: '0' }} onClick={onCheckId} disabled={isCheckId}>{isCheckId ? '사용가능' : '중복확인'}</Button>
                 <CategoryName>비밀번호</CategoryName>
-                <Input placeholder='비밀번호를 입력해주세요.' type={'password'} className='pw' />
+                <Input placeholder='비밀번호를 입력해주세요.' type={'password'} className='pw' onKeyPress={onKeyPressPw} />
                 <CategoryName>비밀번호 확인</CategoryName>
-                <Input placeholder='비밀번호를 한번더 입력해주세요.' type={'password'} className='pw-check' />
+                <Input placeholder='비밀번호를 한번더 입력해주세요.' type={'password'} className='pw-check' onKeyPress={onKeyPressPwCheck} />
                 <CategoryName style={{ marginTop: '36px' }}>이름</CategoryName>
-                <Input placeholder='이름을 입력해주세요.' type={'text'} className='name' />
+                <Input placeholder='이름을 입력해주세요.' type={'text'} className='name' onKeyPress={onKeyPressName} />
                 <CategoryName style={{ marginTop: '36px' }}>닉네임</CategoryName>
-                <Input placeholder='닉네임을 입력해주세요.' type={'text'} className='nickname' />
+                <Input placeholder='닉네임을 입력해주세요.' type={'text'} className='nickname' onKeyPress={onKeyPressNickname} />
                 <Button style={{ marginTop: '0' }} onClick={onCheckNickname} disabled={isCheckNickname}>{isCheckNickname ? '사용가능' : '중복확인'}</Button>
                 <CategoryName style={{ marginTop: '36px' }}>전화번호</CategoryName>
-                <Input placeholder='전화번호를 입력해주세요.' type={'text'} className='phone' disabled={isCheckPhoneNumber} />
+                <Input placeholder='전화번호를 입력해주세요.' type={'text'} className='phone' disabled={isCheckPhoneNumber} onKeyPress={onKeyPressPhone} />
                 <Button style={{ marginTop: '0' }} onClick={sendSms} disabled={isCheckPhoneNumber}>인증번호 발송</Button>
-                <Input placeholder='인증번호를 입력해주세요.' type={'text'} className='phone-check' disabled={isCheckPhoneNumber} />
+                <Input placeholder='인증번호를 입력해주세요.' type={'text'} className='phone-check' disabled={isCheckPhoneNumber} onKeyPress={onKeyPressPhoneCheck} />
                 <Button style={{ marginTop: '0' }} onClick={confirmCoincide} disabled={isCheckPhoneNumber}>{isCheckPhoneNumber ? '확인완료' : '인증번호 확인'}</Button>
                 <Button onClick={onSignUp}>회원가입</Button>
                 <CategoryName style={{ marginTop: '36px' }}>SNS 간편 회원가입</CategoryName>
