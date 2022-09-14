@@ -53,12 +53,14 @@ const LoginCard = () => {
         }
     }
     const kakao_login = () => {
-        window.addEventListener("web_to_native_kakao_login", function(event) {
+        if(window&&window.flutter_inappwebview){
             let params_text = "*** Message From Server JS ***"; //앱으로 전송할 내용 
             window.flutter_inappwebview.callHandler('native_kakao_login', params_text).then(function(result) {
                alert(result);
             });
-        });
+        }else{
+            alert('웹뷰가 아닙니다.');
+        }
     }
     return (
         <>
