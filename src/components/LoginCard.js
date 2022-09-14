@@ -52,6 +52,14 @@ const LoginCard = () => {
             onLogin();
         }
     }
+    const kakao_login = () => {
+        window.addEventListener("web_to_native_kakao_login", function(event) {
+            let params_text = "*** Message From Server JS ***"; //앱으로 전송할 내용 
+            window.flutter_inappwebview.callHandler('native_kakao_login', params_text).then(function(result) {
+               alert(result);
+            });
+        });
+    }
     return (
         <>
             <WrapperForm onSubmit={onLogin} id='login_form'>
@@ -71,7 +79,7 @@ const LoginCard = () => {
                 <Button onClick={onLogin}>로그인</Button>
                 <CategoryName style={{ marginTop: '36px' }}>SNS 간편 로그인</CategoryName>
                 <FlexBox>
-                <SnsLogo src={kakao} />
+                <SnsLogo src={kakao} onClick={kakao_login} />
                 <SnsLogo src={naver} />
                 </FlexBox>
                 <CategoryName style={{ marginTop:'0',fontSize:'11px' }}>
