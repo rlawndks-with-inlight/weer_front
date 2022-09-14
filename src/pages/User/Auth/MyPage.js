@@ -6,12 +6,13 @@ import { backUrl } from "../../../data/Data";
 import defaultImg from '../../../assets/images/icon/default-profile.png'
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {MdEdit} from 'react-icons/md';
+import theme from "../../../styles/theme";
 const MyCard = styled.div`
 display:flex;
 width:100%;
 height:250px;
 background:${props => props.theme.color.background3};
-margin-top:32px;
 border:1px solid ${props => props.theme.color.background3};
 @media screen and (max-width:700px) {
     flex-direction:column;
@@ -51,6 +52,8 @@ const Result = styled.div`
 padding:16px 0;
 height:18px;
 padding-left:16px;
+display:flex;
+align-items:center;
 `
 const LogoutButton = styled.button`
 width:160px;
@@ -83,6 +86,8 @@ const MyPage = () => {
         <>
             <Wrappers className="wrapper" style={{ maxWidth: '800px' }}>
                 <Title>마이페이지</Title>
+                <MdEdit style={{margin:'2rem 0 1rem auto',color:`${theme.color.font2}`,fontSize:'24px',cursor:'pointer'}} onClick={()=>navigate('/editmyinfo')} />
+
                 <MyCard>
                     <ProfileContainer>
                         <img src={auth.profile_img ? backUrl + auth.profile_img : defaultImg} style={{ height: '125px', width: '125px', borderRadius: '50%', background: '#fff', margin: 'auto' }} />
@@ -90,11 +95,15 @@ const MyPage = () => {
                     <Container>
                         <Content>
                             <Category>닉네임</Category>
-                            <Result>{auth.nickname ?? "---"}</Result>
+                            <Result>
+                                {auth.nickname ?? "---"}
+                                </Result>
                         </Content>
                         <Content>
                             <Category>아이디</Category>
-                            <Result>{auth.id ?? "---"}</Result>
+                            <Result>
+                                {auth.id ?? "---"}
+                                </Result>
                         </Content>
                         <Content>
                             <Category>비밀번호</Category>
