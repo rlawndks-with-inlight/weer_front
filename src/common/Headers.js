@@ -241,7 +241,7 @@ const Headers = () => {
           <div style={{ display: 'flex', margin: '2rem 0', height: '2rem' }}>
             {zBottomMenu.map((item, idx) => (
               <>
-                <HeaderMenu onClick={() => { navigate(item.link) }} style={{ color: `${item.allowList.includes(location.pathname) ? theme.color.background1 : ''}` }}>{item.name}</HeaderMenu>
+                <HeaderMenu key={idx} onClick={() => { navigate(item.link) }} style={{ color: `${item.allowList.includes(location.pathname) ? theme.color.background1 : ''}` }}>{item.name}</HeaderMenu>
               </>
             ))}
           </div>

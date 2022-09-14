@@ -104,9 +104,9 @@ const BottomMenu = () => {
                                 <MenuContainer>
                                     {zBottomMenu.map((item, index) => (
                                         <>
-                                            <OneMenuContainer onClick={() => { navigate(item.link) }} style={{ color: `${colorList[index]}` }}>
+                                            <OneMenuContainer onClick={() => { navigate(item.link) }} style={{ color: `${colorList[index]}` }} key={index}>
                                                 {colorList[index] == theme.color.background1 ? item.activeIcon : item.icon}
-                                                <OneMenuName style={{ color: `${colorList[index]}` }}>
+                                                <OneMenuName style={{ color: `${colorList[index]}` }} >
                                                     {item.name}
                                                 </OneMenuName>
                                             </OneMenuContainer>

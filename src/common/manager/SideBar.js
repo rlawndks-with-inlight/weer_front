@@ -165,14 +165,14 @@ const SideBar = () => {
                                 <>
                                     {item.allow_list.includes(location.pathname) ?
                                         <>
-                                            <SelectMenuContent onClick={() => { onClickMenu(`${item.link}`) }}>
+                                            <SelectMenuContent key={index} onClick={() => { onClickMenu(`${item.link}`) }}>
                                                 {item.icon}
                                                 <MenuText>{item.name}</MenuText>
                                             </SelectMenuContent>
                                         </>
                                         :
                                         <>
-                                            <MenuContent onClick={() => { onClickMenu(`${item.link}`) }}>
+                                            <MenuContent key={index} onClick={() => { onClickMenu(`${item.link}`) }}>
                                                 {item.icon}
                                                 <MenuText>{item.name}</MenuText>
                                             </MenuContent>
@@ -190,7 +190,7 @@ const SideBar = () => {
                         <>
                             {zIssueCategory.map((item, idx) => (
                                 <>
-                                    <MenuContent onClick={() => { navigate(`/manager/list/issue/${item.pk}`) }} style={{ color: `${location.pathname == `/manager/list/issue/${item.pk}` ? '#000' : ''}` }}>
+                                    <MenuContent key={idx} onClick={() => { navigate(`/manager/list/issue/${item.pk}`) }} style={{ color: `${location.pathname == `/manager/list/issue/${item.pk}` ? '#000' : ''}` }}>
                                         <MenuText style={{ marginLeft: '15px' }}>{item.title}</MenuText>
                                     </MenuContent>
                                 </>
@@ -248,7 +248,7 @@ const SideBar = () => {
                         <>
                             {zFeatureCategory.map((item, idx) => (
                                 <>
-                                    <MenuContent onClick={() => { navigate(`/manager/list/feature/${item.pk}`) }} style={{ color: `${location.pathname == `/manager/list/feature/${item.pk}` ? '#000' : ''}` }}>
+                                    <MenuContent key={idx} onClick={() => { navigate(`/manager/list/feature/${item.pk}`) }} style={{ color: `${location.pathname == `/manager/list/feature/${item.pk}` ? '#000' : ''}` }}>
                                         <MenuText style={{ marginLeft: '15px' }}>{item.title}</MenuText>
                                     </MenuContent>
                                 </>
