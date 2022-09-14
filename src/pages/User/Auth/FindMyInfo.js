@@ -1,15 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Title, Wrappers } from "../../../components/elements/UserContentTemplete";
+import styled from "styled-components";
+import theme from "../../../styles/theme";
+import FindMyInfoCard from "../../../components/FindMyInfoCard";
 
 const FindMyInfo = () =>{
-    useEffect(()=>{
-        
-    },[])
+    
     return (
         <>
-        <Wrappers style={{ maxWidth: '800px' }}>
-            <Title>이메일/비밀번호 찾기</Title>
-
+        <Wrappers>
+            <FindMyInfoCard/>
         </Wrappers>
         </>
     )

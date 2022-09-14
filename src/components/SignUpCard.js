@@ -9,80 +9,8 @@ import kakao from '../assets/images/icon/kakao.png'
 import naver from '../assets/images/icon/naver.png'
 import { Title } from './elements/UserContentTemplete';
 import { formatPhoneNumber } from '../functions/utils';
+import { WrapperForm, CategoryName, Input, Button, FlexBox, SnsLogo } from './elements/AuthContentTemplete';
 
-const WrapperForm = styled.div`
-width:90%;
-background:#fff;
-max-width:800px;
-margin: 0 auto;
-display:flex;
-flex-direction:column;
-`
-
-const CategoryName = styled.div`
-width:364px;
-margin:1rem auto 0 auto;
-font-size:15px;
-color:${(props) => props.theme.color.manager.font1};
-font-weight:500;
-@media (max-width: 600px) {
-    width:85%;
-}
-`
-const Input = styled.input`
-width:336px;
-padding:16px 12px;
-border:1px solid #cccccc;
-margin:1rem auto 0 auto;
-outline:none;
-font-size:12px;
-::placeholder {
-    color:#dddddd;
-    font-size:12px;
-}
-@media (max-width: 600px) {
-    width:75%;
-}
-`
-const Button = styled.button`
-width:364px;
-margin:0 auto;
-height:48px;
-border:none;
-background:${(props) => props.theme.color.background1};
-color:#fff;
-font-size:16px;
-font-weight:600;
-cursor:pointer;
-border: 1px solid transparent;
-margin:3rem auto 0 auto;
-@media (max-width: 800px) {
-    ;
-}
-@media (max-width: 550px) {
-    width:81%;
-}
-@media (max-width: 450px) {
-    width:83%;
-}
-@media (max-width: 350px) {
-    width:87%;
-}
-`
-const FlexBox = styled.div`
-width:364px;
-margin:1rem auto;
-display:flex;
-align-items:center;
-font-weight:600;
-@media (max-width: 600px) {
-    width:85%;
-}
-`
-const SnsLogo = styled.img`
-width:42px;
-margin-right:16px;
-`
 const SignUpCard = () => {
     const navigate = useNavigate();
     const [phoneCheckIng, setPhoneCheckIng] = useState(false);
@@ -238,25 +166,25 @@ const SignUpCard = () => {
         <>
             <WrapperForm onSubmit={onSignUp} id='login_form'>
                 <Title>회원가입</Title>
-                <CategoryName style={{ marginTop: '36px' }}>아이디</CategoryName>
+                <CategoryName>아이디</CategoryName>
                 <Input placeholder='아이디를 입력해주세요.' type={'text'} className='id' disabled={isCheckId} onKeyPress={onKeyPressId} />
-                <Button style={{ marginTop: '0' }} onClick={onCheckId} disabled={isCheckId}>{isCheckId ? '사용가능' : '중복확인'}</Button>
+                <Button onClick={onCheckId} disabled={isCheckId}>{isCheckId ? '사용가능' : '중복확인'}</Button>
                 <CategoryName>비밀번호</CategoryName>
                 <Input placeholder='비밀번호를 입력해주세요.' type={'password'} className='pw' onKeyPress={onKeyPressPw} />
                 <CategoryName>비밀번호 확인</CategoryName>
                 <Input placeholder='비밀번호를 한번더 입력해주세요.' type={'password'} className='pw-check' onKeyPress={onKeyPressPwCheck} />
-                <CategoryName style={{ marginTop: '36px' }}>이름</CategoryName>
+                <CategoryName>이름</CategoryName>
                 <Input placeholder='이름을 입력해주세요.' type={'text'} className='name' onKeyPress={onKeyPressName} />
-                <CategoryName style={{ marginTop: '36px' }}>닉네임</CategoryName>
+                <CategoryName>닉네임</CategoryName>
                 <Input placeholder='닉네임을 입력해주세요.' type={'text'} className='nickname' onKeyPress={onKeyPressNickname} />
-                <Button style={{ marginTop: '0' }} onClick={onCheckNickname} disabled={isCheckNickname}>{isCheckNickname ? '사용가능' : '중복확인'}</Button>
-                <CategoryName style={{ marginTop: '36px' }}>전화번호</CategoryName>
+                <Button onClick={onCheckNickname} disabled={isCheckNickname}>{isCheckNickname ? '사용가능' : '중복확인'}</Button>
+                <CategoryName>전화번호</CategoryName>
                 <Input placeholder='전화번호를 입력해주세요.' type={'text'} className='phone' disabled={isCheckPhoneNumber} onKeyPress={onKeyPressPhone} />
-                <Button style={{ marginTop: '0' }} onClick={sendSms} disabled={isCheckPhoneNumber}>인증번호 발송</Button>
-                <Input placeholder='인증번호를 입력해주세요.' type={'text'} className='phone-check' disabled={isCheckPhoneNumber} onKeyPress={onKeyPressPhoneCheck} />
-                <Button style={{ marginTop: '0' }} onClick={confirmCoincide} disabled={isCheckPhoneNumber}>{isCheckPhoneNumber ? '확인완료' : '인증번호 확인'}</Button>
-                <Button onClick={onSignUp}>회원가입</Button>
-                <CategoryName style={{ marginTop: '36px' }}>SNS 간편 회원가입</CategoryName>
+                <Button onClick={sendSms} disabled={isCheckPhoneNumber}>인증번호 발송</Button>
+                <Input style={{marginTop:'36px'}} placeholder='인증번호를 입력해주세요.' type={'text'} className='phone-check' disabled={isCheckPhoneNumber} onKeyPress={onKeyPressPhoneCheck} />
+                <Button onClick={confirmCoincide} disabled={isCheckPhoneNumber}>{isCheckPhoneNumber ? '확인완료' : '인증번호 확인'}</Button>
+                <Button style={{marginTop:'36px'}} onClick={onSignUp}>회원가입</Button>
+                <CategoryName>SNS 간편 회원가입</CategoryName>
                 <FlexBox>
                     <SnsLogo src={kakao} />
                     <SnsLogo src={naver} />
@@ -266,4 +194,4 @@ const SignUpCard = () => {
         </>
     );
 };
-export default SignUpCard
+export default SignUpCard;

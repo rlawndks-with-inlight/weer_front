@@ -7,71 +7,8 @@ import axios from 'axios';
 import logo from '../assets/images/test/logo.svg'
 import kakao from '../assets/images/icon/kakao.png'
 import naver from '../assets/images/icon/naver.png'
+import { WrapperForm, CategoryName, Input, Button, FlexBox, SnsLogo } from './elements/AuthContentTemplete';
 
-const WrapperForm = styled.div`
-width:90%;
-background:#fff;
-max-width:450px;
-height:430px;
-margin: 0 auto;
-display:flex;
-flex-direction:column;
-`
-
-const CategoryName = styled.div`
-width:364px;
-margin:1rem auto 0 auto;
-font-size:15px;
-color:${(props) => props.theme.color.manager.font1};
-font-weight:500;
-@media (max-width: 600px) {
-    width:85%;
-}
-`
-const Input = styled.input`
-width:336px;
-padding:16px 12px;
-border:1px solid #cccccc;
-margin:1rem auto 0 auto;
-outline:none;
-font-size:12px;
-::placeholder {
-    color:#dddddd;
-    font-size:12px;
-}
-@media (max-width: 600px) {
-    width:75%;
-}
-`
-const Button = styled.button`
-width:364px;
-margin:0 auto;
-height:48px;
-border:none;
-background:${(props) => props.theme.color.background1};
-color:#fff;
-font-size:16px;
-font-weight:600;
-cursor:pointer;
-border: 1px solid transparent;
-@media (max-width: 600px) {
-width:85%;
-}
-`
-const FlexBox = styled.div`
-width:364px;
-margin:1rem auto;
-display:flex;
-align-items:center;
-font-weight:600;
-@media (max-width: 600px) {
-    width:85%;
-}
-`
-const SnsLogo = styled.img`
-width:42px;
-margin-right:16px;
-`
 const LoginCard = () => {
     const navigate = useNavigate();
 
@@ -128,7 +65,7 @@ const LoginCard = () => {
                         <div>로그인 상태 유지</div>
                     </div>
                     <div style={{ textDecoration: 'underline',cursor:'pointer' }} onClick={()=>navigate('/findmyinfo')}>
-                        이메일/비밀번호 찾기
+                        아이디/비밀번호 찾기
                     </div>
                 </FlexBox>
                 <Button onClick={onLogin}>로그인</Button>
