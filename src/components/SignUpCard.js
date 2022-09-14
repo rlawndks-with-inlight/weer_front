@@ -13,7 +13,7 @@ import { formatPhoneNumber } from '../functions/utils';
 const WrapperForm = styled.div`
 width:90%;
 background:#fff;
-max-width:450px;
+max-width:800px;
 margin: 0 auto;
 display:flex;
 flex-direction:column;

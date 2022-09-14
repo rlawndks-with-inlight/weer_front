@@ -10,6 +10,7 @@ import VideoList from '../pages/User/VideoList';
 import Login from '../pages/User/Auth/Login';
 import MyPage from '../pages/User/Auth/MyPage';
 import EditMyInfo from '../pages/User/Auth/EditMyInfo';
+import FindMyInfo from '../pages/User/Auth/FindMyInfo';
 import SignUp from '../pages/User/Auth/SignUp';
 
 import OneEventList from '../pages/User/OneEvent/OneEventList';
@@ -56,6 +57,7 @@ const zRoute = [
     { link: '/login', element: <Login /> },
     { link: '/mypage', element: <MyPage /> },
     { link: '/editmyinfo', element: <EditMyInfo /> },
+    { link: '/findmyinfo', element: <FindMyInfo /> },
     { link: '/signup', element: <SignUp /> },
 
     { link: '/post/notice/:pk', element: <Notice /> },
