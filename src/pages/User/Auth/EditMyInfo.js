@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import EditMyInfoCard from "../../../components/EditMyInfoCard";
 import { Title, Wrappers } from "../../../components/elements/UserContentTemplete";
 
 const EditMyInfo = () =>{
@@ -7,9 +8,8 @@ const EditMyInfo = () =>{
     },[])
     return (
         <>
-        <Wrappers style={{ maxWidth: '800px' }}>
-            <Title>정보수정</Title>
-
+        <Wrappers>
+            <EditMyInfoCard/>
         </Wrappers>
         </>
     )

@@ -47,7 +47,31 @@ font-weight:600;
 cursor:pointer;
 border: 1px solid transparent;
 @media (max-width: 600px) {
-width:85%;
+width:79.8%;
+}
+@media (max-width: 550px) {
+    width:80.5%;
+}
+@media (max-width: 500px) {
+    width:81%;
+}
+@media (max-width: 450px) {
+    width:81.5%;
+}
+@media (max-width: 400px) {
+    width:82.5%;
+}
+@media (max-width: 375px) {
+    width:83%;
+}
+@media (max-width: 350px) {
+    width:83.5%;
+}
+@media (max-width: 325px) {
+    width:84.5%;
+}
+@media (max-width: 300px) {
+    width:85.5%;
 }
 `
 export const FlexBox = styled.div`
