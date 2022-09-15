@@ -53,7 +53,7 @@ const LoginCard = () => {
         }
     }
     const onLoginBySns = async(obj) =>{
-        console.log(obj)
+        console.log(JSON.stringify(obj))
         let objs = {
             id:obj.id,
             name:obj.legal_name,
@@ -63,7 +63,7 @@ const LoginCard = () => {
             typeNum:obj.login_type,
             profile_img:obj.profile_image_url
         }
-        console.log(objs)
+        console.log(JSON.stringify(objs))
         const {data:response} = await axios.post('/api/loginbysns',objs);
         console.log(response);
         if(response.result>0){
