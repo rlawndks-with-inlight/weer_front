@@ -7,6 +7,7 @@ import $ from 'jquery';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { formatPhoneNumber } from "../functions/utils";
+import defaultImg from '../assets/images/icon/default-profile.png';
 
 const SelectType = styled.div`
 display:flex;
@@ -25,10 +26,13 @@ font-size:1rem;
 @media screen and (max-width:700px) {
     font-size:0.8rem;
 }
+@media screen and (max-width:350px) {
+    font-size:0.65rem;
+}
 `
 const EditMyInfoCard = () => {
     const navigate = useNavigate();
-    const [typeNum, setTypeNum] = useState(1);
+    const [typeNum, setTypeNum] = useState(0);
 
     const [myPk, setMyPk] = useState(0);
     const [myId, setMyId] = useState("");
@@ -37,6 +41,9 @@ const EditMyInfoCard = () => {
     const [isCheckNickname, setIsCheckNickname] = useState(false);
     const [isCheckPhoneNumber, setIsCheckPhoneNumber] = useState(false)
     const [isCheckIdAndPhone, setIsCheckIdAndPhone] = useState(false)
+    const [url, setUrl] = useState('')
+    const [content, setContent] = useState(undefined)
+    const [formData] = useState(new FormData())
     const [randNum, setRandNum] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [num, setNum] = useState("");
@@ -44,6 +51,7 @@ const EditMyInfoCard = () => {
     const [isSendSms, setIsSendSms] = useState(false)
     const [fixPhoneNumber, setFixPhoneNumber] = useState("")
 
+    const zType = [{ title: "프로필 변경" }, { title: "닉네임 변경" }, { title: "비밀번호 변경" }, { title: "전화번호 변경" }];
     useEffect(() => {
         let auth = JSON.parse(localStorage.getItem('auth'))
         setMyId(auth.id);
@@ -98,13 +106,27 @@ const EditMyInfoCard = () => {
             setTypeNum(num);
         }
     }
+    const addFile = (e) => {
+        if (e.target.files[0]) {
+            setContent(e.target.files[0]);
+            setUrl(URL.createObjectURL(e.target.files[0]))
+        }
+    };
     const onSave = async (num) => {
+        if (num == 0) {
+            formData.append('id', myId);
+            formData.append('profile', content);
+            const { data: response } = await axios.post('/api/uploadprofile', formData);
+            console.log(response)
+            return;
+        }
         let str = '/api/editmyinfo';
         if (!$('.pw').val()) {
             alert("비밀번호를 입력해주세요.");
             return;
         }
         let obj = { id: myId, pw: $('.pw').val() };
+
         if (num == 1) {
             if (!$('.nickname').val()) {
                 alert("닉네임을 입력해주세요.");
@@ -143,10 +165,42 @@ const EditMyInfoCard = () => {
             <WrapperForm>
                 <Title>마이페이지 수정</Title>
                 <SelectType>
-                    <Type style={{ borderBottom: `4px solid ${typeNum == 1 ? theme.color.background1 : '#fff'}`, color: `${typeNum == 1 ? theme.color.background1 : '#ccc'}` }} onClick={() => { onChangeTypeNum(1) }}>닉네임 변경</Type>
-                    <Type style={{ borderBottom: `4px solid ${typeNum == 2 ? theme.color.background1 : '#fff'}`, color: `${typeNum == 2 ? theme.color.background1 : '#ccc'}` }} onClick={() => { onChangeTypeNum(2) }}>비밀번호 변경</Type>
-                    <Type style={{ borderBottom: `4px solid ${typeNum == 3 ? theme.color.background1 : '#fff'}`, color: `${typeNum == 3 ? theme.color.background1 : '#ccc'}` }} onClick={() => { onChangeTypeNum(3) }}>전화번호 변경</Type>
+                    {zType.map((item, idx) => (
+                        <>
+                            <Type style={{ borderBottom: `4px solid ${typeNum == idx ? theme.color.background1 : '#fff'}`, color: `${typeNum == idx ? theme.color.background1 : '#ccc'}` }} onClick={() => { onChangeTypeNum(idx) }}>{item.title}</Type>
+                        </>
+                    ))}
+
                 </SelectType>
+                {typeNum == 0 ?
+                    <>
+                        <CategoryName>이미지 업로드</CategoryName>
+                        <label for="file1" style={{ margin: '0 auto' }}>
+                            {url ?
+                                <>
+                                    <img src={url} alt="#"
+                                        style={{
+                                            width: '8rem', height: '8rem',
+                                            margin: '2rem auto', borderRadius: '50%'
+                                        }} />
+                                </>
+                                :
+                                <>
+                                    <img src={defaultImg} alt="#"
+                                        style={{
+                                            width: '8rem', height: '8rem',
+                                            margin: '2rem auto', borderRadius: '50%'
+                                        }} />
+                                </>}
+                        </label>
+                        <div>
+                            <input type="file" id="file1" onChange={addFile} style={{ display: 'none' }} />
+                        </div>
+                    </>
+                    :
+                    <>
+                    </>
+                }
                 {typeNum == 1 ?
                     <>
                         <CategoryName>비밀번호</CategoryName>
