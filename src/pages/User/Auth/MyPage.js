@@ -73,7 +73,8 @@ const MyPage = () => {
             const { data: response } = await axios('/api/auth')
             console.log(response)
             if(response.pk>0){
-                let obj = JSON.parse(localStorage.getItem('auth'));
+                await localStorage.setItem('auth',JSON.stringify(response))
+                let obj = response;
                 setAuth(obj);
             }else{
                 localStorage.removeItem('auth');
@@ -107,13 +108,13 @@ const MyPage = () => {
                         <Content>
                             <Category>닉네임</Category>
                             <Result>
-                                {auth.nickname ?? "---"}
+                                {auth?.nickname ?? "---"}
                                 </Result>
                         </Content>
                         <Content>
                             <Category>아이디</Category>
                             <Result>
-                                {auth.id ?? "---"}
+                                {auth?.id ?? "---"}
                                 </Result>
                         </Content>
                         <Content>
@@ -122,7 +123,7 @@ const MyPage = () => {
                         </Content>
                         <Content>
                             <Category>전화번호</Category>
-                            <Result>{auth.phone ?? "---"}</Result>
+                            <Result>{auth?.phone ?? "---"}</Result>
                         </Content>
                         <Content>
                             <Category>개인정보동의</Category>
