@@ -76,6 +76,8 @@ const MyPage = () => {
                 setAuth(obj);
             }else{
                 localStorage.removeItem('auth');
+                navigate('/login')
+
             }
         }
         isAdmin();
