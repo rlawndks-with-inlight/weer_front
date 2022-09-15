@@ -20,7 +20,7 @@ const LoginCard = () => {
                 }
             },
                 { withCredentials: true });
-            if (response.pk>0) {
+            if (response.pk > 0) {
                 localStorage.setItem('auth', JSON.stringify(response))
                 navigate('/mypage');
             } else {
@@ -44,7 +44,7 @@ const LoginCard = () => {
     }
     const onKeyPressId = (e) => {
         if (e.key == 'Enter') {
-          $('.pw').focus();
+            $('.pw').focus();
         }
     }
     const onKeyPressPw = (e) => {
@@ -52,13 +52,15 @@ const LoginCard = () => {
             onLogin();
         }
     }
+
     const kakao_login = () => {
-        if(window&&window.flutter_inappwebview){
-            let params_text = "*** Message From Server JS ***"; //앱으로 전송할 내용 
-            window.flutter_inappwebview.callHandler('native_kakao_login', params_text).then(function(result) {
-               alert(result);
+        if (window && window.flutter_inappwebview) {
+            var params = { 'login_type': 1 };
+            window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(function (result) {
+                //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
+                // JSON.parse(result)
             });
-        }else{
+        } else {
             alert('웹뷰가 아닙니다.');
         }
     }
@@ -74,18 +76,18 @@ const LoginCard = () => {
                         <input type={'checkbox'} className='login-lock' style={{ border: '1px solid #000', outline: 'none', borderRadius: '0' }} />
                         <div>로그인 상태 유지</div>
                     </div>
-                    <div style={{ textDecoration: 'underline',cursor:'pointer' }} onClick={()=>navigate('/findmyinfo')}>
+                    <div style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={() => navigate('/findmyinfo')}>
                         아이디/비밀번호 찾기
                     </div>
                 </FlexBox>
                 <Button onClick={onLogin}>로그인</Button>
                 <CategoryName style={{ marginTop: '36px' }}>SNS 간편 로그인</CategoryName>
                 <FlexBox>
-                <SnsLogo src={kakao} onClick={kakao_login} />
-                <SnsLogo src={naver} />
+                    <SnsLogo src={kakao} onClick={kakao_login} />
+                    <SnsLogo src={naver} />
                 </FlexBox>
-                <CategoryName style={{ marginTop:'0',fontSize:'11px' }}>
-                아직 weare 회원이 아니라면?<strong style={{textDecoration: 'underline',cursor:'pointer',marginLeft:'12px'}} onClick={()=>{navigate('/signup')}}>회원가입</strong>
+                <CategoryName style={{ marginTop: '0', fontSize: '11px' }}>
+                    아직 weare 회원이 아니라면?<strong style={{ textDecoration: 'underline', cursor: 'pointer', marginLeft: '12px' }} onClick={() => { navigate('/signup') }}>회원가입</strong>
                 </CategoryName>
             </WrapperForm>
         </>

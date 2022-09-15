@@ -139,6 +139,7 @@ const Headers = () => {
   const [searchDisplay, setSearchDisplay] = useState('none')
   const [isSearch, setIsSearch] = useState(false);
   useEffect(() => {
+    
     if (location.pathname.substring(0, 6) == '/post/' || location.pathname.substring(0, 7) == '/video/') {
       setIsPost(true);
     } else {

@@ -8,6 +8,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { formatPhoneNumber } from "../functions/utils";
 import defaultImg from '../assets/images/icon/default-profile.png';
+import { backUrl } from "../data/Data";
 
 const SelectType = styled.div`
 display:flex;
@@ -54,6 +55,10 @@ const EditMyInfoCard = () => {
     const zType = [{ title: "프로필 변경" }, { title: "닉네임 변경" }, { title: "비밀번호 변경" }, { title: "전화번호 변경" }];
     useEffect(() => {
         let auth = JSON.parse(localStorage.getItem('auth'))
+        console.log(auth)
+        if(auth.profile_img){
+            setUrl(backUrl+auth.profile_img)
+        }
         setMyId(auth.id);
     }, [])
     const sendSms = async () => {
