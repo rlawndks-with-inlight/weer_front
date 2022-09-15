@@ -62,6 +62,8 @@ const LoginCard = () => {
             }else{
                 navigate('/mypage');
             }
+        }else{
+            alert(response.message);
         }
     }
     const kakaoLogin =  () => {
