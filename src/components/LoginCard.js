@@ -65,6 +65,7 @@ const LoginCard = () => {
         const {data:response} = await axios.post('/api/loginbysns',objs);
         console.log(response);
         if(response.result>0){
+            localStorage.setItem('auth',JSON.stringify(response.data))
             navigate('/mypage');
         }else{
             alert(response.message);
