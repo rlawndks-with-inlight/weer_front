@@ -63,6 +63,7 @@ const LoginCard = () => {
             typeNum:obj.login_type,
             profile_img:obj.profile_image_url
         }
+        console.log(objs)
         const {data:response} = await axios.post('/api/loginbysns',objs);
         console.log(response);
         if(response.result>0){
