@@ -56,7 +56,7 @@ const LoginCard = () => {
         console.log(obj)
         let objs = {
             id:obj.id,
-            name:obj.legalName,
+            name:obj.legal_name,
             nickname:"카카오유저"+new Date().getTime(),
             phone:obj.phone_number,
             user_level:0,
