@@ -69,8 +69,15 @@ const MyPage = () => {
     const navigate = useNavigate();
     const [auth, setAuth] = useState({})
     useEffect(() => {
-        let obj = JSON.parse(localStorage.getItem('auth'));
-        setAuth(obj);
+        async function isAdmin(){
+            const { data: response } = await axios('/api/auth')
+            if(response.pk>0){
+                let obj = JSON.parse(localStorage.getItem('auth'));
+                setAuth(obj);
+            }else{
+                localStorage.removeItem('auth');
+            }
+        }
     }, [])
     const onLogout = async () => {
         if (window.confirm('정말 로그아웃 하시겠습니까?')) {
