@@ -24,10 +24,11 @@ const SignUpCard = () => {
     const [isCoinside, setIsCoinside] = useState(false);
     const [isSendSms, setIsSendSms] = useState(false)
     const [fixPhoneNumber, setFixPhoneNumber] = useState("")
-
+    const [typeNum, setTypeNum] = useState(0);
     useEffect(()=>{
         if(location.state){
             $('.id').val(location.state.id);
+            setTypeNum(location.state.type_num)
             setIsCheckId(true);
         }
     },[])
@@ -123,6 +124,7 @@ const SignUpCard = () => {
                     nickname: $('.nickname').val(),
                     phone: $('.phone').val(),
                     user_level: 0,
+                    type_num:typeNum
                 })
                 if (response.result > 0) {
                     alert('회원가입이 완료되었습니다.');

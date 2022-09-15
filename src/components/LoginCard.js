@@ -58,7 +58,7 @@ const LoginCard = () => {
         console.log(response);
         if(response.result>0){
             if(response.result==50){
-                navigate('/signup',{state:{id:id}});
+                navigate('/signup',{state:{id:id,type_num:type_num}});
             }else{
                 navigate('/mypage');
             }
