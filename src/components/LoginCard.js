@@ -52,16 +52,20 @@ const LoginCard = () => {
             onLogin();
         }
     }
-    const onLoginBySns = async(id, type_num) =>{
-        console.log(1)
-        const {data:response} = await axios.post('/api/loginbysns',{id:id,typeNum:type_num});
+    const onLoginBySns = async(obj) =>{
+        console.log(obj)
+        let objs = {
+            id:obj.id,
+            name:obj.legalName,
+            nickname:"카카오유저"+new Date().getTime(),
+            phone:obj.phoneNumber,
+            user_level:0,
+            typeNum:obj.login_type,
+        }
+        const {data:response} = await axios.post('/api/loginbysns',objs);
         console.log(response);
         if(response.result>0){
-            if(response.result==50){
-                navigate('/signup',{state:{id:id,type_num:type_num}});
-            }else{
-                navigate('/mypage');
-            }
+            navigate('/mypage');
         }else{
             alert(response.message);
         }
@@ -73,7 +77,7 @@ const LoginCard = () => {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
                 // JSON.parse(result)
                 let obj = JSON.parse(result);
-                await onLoginBySns(obj.data.id, obj.data.login_type);
+                await onLoginBySns(obj.data);
             });
         } else {
             alert('웹뷰가 아닙니다.');
