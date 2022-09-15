@@ -28,6 +28,8 @@ const SignUpCard = () => {
     useEffect(()=>{
         if(location.state){
             $('.id').val(location.state.id);
+            $('.pw').val("111");
+            $('.pw-check').val("111");
             setTypeNum(location.state.type_num)
             setIsCheckId(true);
         }
@@ -184,13 +186,14 @@ const SignUpCard = () => {
                 <CategoryName>아이디</CategoryName>
                 <Input placeholder='아이디를 입력해주세요.' type={'text'} className='id' disabled={isCheckId} onKeyPress={onKeyPressId} />
                 <Button onClick={onCheckId} disabled={isCheckId}>{isCheckId ? '사용가능' : '중복확인'}</Button>
-                </>
-                }
-                
                 <CategoryName>비밀번호</CategoryName>
                 <Input placeholder='비밀번호를 입력해주세요.' type={'password'} className='pw' onKeyPress={onKeyPressPw} />
                 <CategoryName>비밀번호 확인</CategoryName>
                 <Input placeholder='비밀번호를 한번더 입력해주세요.' type={'password'} className='pw-check' onKeyPress={onKeyPressPwCheck} />
+                </>
+                }
+                
+               
                 <CategoryName>이름</CategoryName>
                 <Input placeholder='이름을 입력해주세요.' type={'text'} className='name' onKeyPress={onKeyPressName} />
                 <CategoryName>닉네임</CategoryName>
