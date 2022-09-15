@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import $ from 'jquery';
 import axios from 'axios';
 import logo from '../assets/images/test/logo.svg'
@@ -12,6 +12,7 @@ import { formatPhoneNumber } from '../functions/utils';
 import { WrapperForm, CategoryName, Input, Button, FlexBox, SnsLogo } from './elements/AuthContentTemplete';
 
 const SignUpCard = () => {
+    const location = useLocation();
     const navigate = useNavigate();
     const [phoneCheckIng, setPhoneCheckIng] = useState(false);
     const [isCheckId, setIsCheckId] = useState(false);
@@ -23,6 +24,13 @@ const SignUpCard = () => {
     const [isCoinside, setIsCoinside] = useState(false);
     const [isSendSms, setIsSendSms] = useState(false)
     const [fixPhoneNumber, setFixPhoneNumber] = useState("")
+
+    useEffect(()=>{
+        if(location.state){
+            $('.id').val(location.state.id);
+            setIsCheckId(true);
+        }
+    },[])
     const onCheckId = async () => {
         if (!$('.id').val()) {
             alert('아이디를 입력해주세요.');
@@ -166,9 +174,17 @@ const SignUpCard = () => {
         <>
             <WrapperForm onSubmit={onSignUp} id='login_form'>
                 <Title>회원가입</Title>
+                {location.state?
+                <>
+                </>
+                :
+                <>
                 <CategoryName>아이디</CategoryName>
                 <Input placeholder='아이디를 입력해주세요.' type={'text'} className='id' disabled={isCheckId} onKeyPress={onKeyPressId} />
                 <Button onClick={onCheckId} disabled={isCheckId}>{isCheckId ? '사용가능' : '중복확인'}</Button>
+                </>
+                }
+                
                 <CategoryName>비밀번호</CategoryName>
                 <Input placeholder='비밀번호를 입력해주세요.' type={'password'} className='pw' onKeyPress={onKeyPressPw} />
                 <CategoryName>비밀번호 확인</CategoryName>

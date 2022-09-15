@@ -52,13 +52,25 @@ const LoginCard = () => {
             onLogin();
         }
     }
-
+    const onLoginBySns = async(id, type_num) =>{
+        const {data:response} = await axios.post('/api/loginbysns',{id:id,typeNum:type_num});
+        console.log(response);
+        if(response.result>0){
+            if(response.result==50){
+                navigate('/signup',{state:{id:id}});
+            }else{
+                navigate('/mypage');
+            }
+        }
+    }
     const kakaoLogin = () => {
         if (window && window.flutter_inappwebview) {
             var params = { 'login_type': 1 };
             window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(function (result) {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
                 // JSON.parse(result)
+                let obj = JSON.parse(result);
+                onLoginBySns(obj.data.id, obj.data.login_type);
                 alert(result)
             });
         } else {
