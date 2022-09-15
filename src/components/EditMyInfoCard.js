@@ -57,7 +57,7 @@ const EditMyInfoCard = () => {
         let auth = JSON.parse(localStorage.getItem('auth'))
         console.log(auth)
         if(auth.profile_img){
-            setUrl(backUrl+auth.profile_img)
+            setUrl(auth.profile_img.substring(0,4)=="http"?auth.profile_img:backUrl+auth.profile_img)
         }
         setMyId(auth.id);
     }, [])
