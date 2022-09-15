@@ -117,7 +117,13 @@ const EditMyInfoCard = () => {
             formData.append('id', myId);
             formData.append('profile', content);
             const { data: response } = await axios.post('/api/uploadprofile', formData);
-            console.log(response)
+            if (response.result > 0) {
+                alert("성공적으로 저장되었습니다.\n다시 로그인 해주세요.");
+                const { data: response } = await axios.post('/api/logout');
+                navigate('/login');
+            } else {
+                alert(response.message);
+            }
             return;
         }
         let str = '/api/editmyinfo';
