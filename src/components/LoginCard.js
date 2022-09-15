@@ -58,7 +58,7 @@ const LoginCard = () => {
             id:obj.id,
             name:obj.legalName,
             nickname:"카카오유저"+new Date().getTime(),
-            phone:obj.phoneNumber,
+            phone:obj.phone_number,
             user_level:0,
             typeNum:obj.login_type,
         }
