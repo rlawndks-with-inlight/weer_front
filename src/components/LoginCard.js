@@ -59,7 +59,7 @@ const LoginCard = () => {
             window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(function (result) {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
                 // JSON.parse(result)
-                console.log(result)
+                alert(result)
             });
         } else {
             alert('웹뷰가 아닙니다.');
