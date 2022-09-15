@@ -53,9 +53,21 @@ const LoginCard = () => {
         }
     }
 
-    const kakao_login = () => {
+    const kakaoLogin = () => {
         if (window && window.flutter_inappwebview) {
             var params = { 'login_type': 1 };
+            window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(function (result) {
+                //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
+                // JSON.parse(result)
+                console.log(result)
+            });
+        } else {
+            alert('웹뷰가 아닙니다.');
+        }
+    }
+    const naverLogin = () => {
+        if (window && window.flutter_inappwebview) {
+            var params = { 'login_type': 2 };
             window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(function (result) {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
                 // JSON.parse(result)
@@ -83,8 +95,8 @@ const LoginCard = () => {
                 <Button onClick={onLogin}>로그인</Button>
                 <CategoryName style={{ marginTop: '36px' }}>SNS 간편 로그인</CategoryName>
                 <FlexBox>
-                    <SnsLogo src={kakao} onClick={kakao_login} />
-                    <SnsLogo src={naver} />
+                    <SnsLogo src={kakao} onClick={kakaoLogin} />
+                    <SnsLogo src={naver} onClick={naverLogin} />
                 </FlexBox>
                 <CategoryName style={{ marginTop: '0', fontSize: '11px' }}>
                     아직 weare 회원이 아니라면?<strong style={{ textDecoration: 'underline', cursor: 'pointer', marginLeft: '12px' }} onClick={() => { navigate('/signup') }}>회원가입</strong>
