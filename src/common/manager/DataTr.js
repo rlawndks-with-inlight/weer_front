@@ -25,14 +25,14 @@ margin-bottom:6px;
 `
 const ItemTypes = { CARD: 'card' }
 
-const DataTr = ({ id, data, index, moveCard, column, schema, list, opTheTopItem, changeItemSequence, deleteItem }) => {
+const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTopItem, changeItemSequence, deleteItem }) => {
     const navigate = useNavigate();
     const ref = useRef(null)
     const [status, setStatus] = useState(data?.status);
     const [{ handlerId }, drop] = useDrop({
         accept: ItemTypes.CARD,
         drop(item) {
-            changeItemSequence(item.id,schema,item.index);
+            changeItemSequence(item.id, item.sort, schema, item.index);
         },
         collect(monitor) {
             return {
@@ -83,7 +83,7 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, opTheTopItem,
     const [{ isDragging }, drag] = useDrag({
         type: ItemTypes.CARD,
         item: () => {
-            return { id, index }
+            return { id, index, sort }
         },
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
@@ -147,7 +147,7 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, opTheTopItem,
                         {col.type == 'top' ?
                             <>
                                 <Td style={{ width: `${col.width}%`, fontSize: '22px' }}>
-                                    <GrLinkTop style={{ color: '#aaaaaa', cursor: 'pointer' }} onClick={() => opTheTopItem(data.pk, schema)} />
+                                    <GrLinkTop style={{ color: '#aaaaaa', cursor: 'pointer' }} onClick={() => opTheTopItem(data.pk, data.sort, schema)} />
                                 </Td>
                             </>
                             :

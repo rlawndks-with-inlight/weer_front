@@ -106,9 +106,9 @@ const MItemList = () => {
     const onchangeSelectPageCut = (e) => {
         changePage(page)
     }
-    const opTheTopItem = useCallback(async (pk, schema) => {
+    const opTheTopItem = useCallback(async (pk,sort, schema) => {
         if (window.confirm('가장 위로 올리겠습니까?')) {
-            const { data: response } = await axios.post('/api/onthetopitem', { table: schema, pk: pk });
+            const { data: response } = await axios.post('/api/onthetopitem', { table: schema, pk: pk,sort:sort });
             if (response.result > 0) {
                 changePage(page)
             } else {
@@ -116,14 +116,16 @@ const MItemList = () => {
             }
         }
     })
-    const changeItemSequence = useCallback(async (pk, schema, idx) => {
+    const changeItemSequence = useCallback(async (pk, sort, schema, idx) => {
         if (posts[idx].pk == pk) {
             return;
         } else {
             const { data: response } = await axios.post('/api/changeitemsequence', {
                 pk: pk,
+                sort:sort,
                 table: schema,
-                change_pk: posts[idx].pk
+                change_pk: posts[idx].pk,
+                change_sort:posts[idx].sort
             });
             if (response.result > 0) {
                 changePage(page)

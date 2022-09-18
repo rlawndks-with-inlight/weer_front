@@ -24,6 +24,7 @@ z-index:5;
 position:fixed;
 background:#fff;
 overflow-y:auto;
+padding-bottom:16px;
 @media screen and (max-width:1000px) {
     position:fixed;
     display:${(props => props.display)};
@@ -158,7 +159,7 @@ const SideBar = () => {
                 <LogoWrappers>
                     <img src={logo} style={{ height: '40px', width: 'auto' }}/>
                 </LogoWrappers>
-                <div style={{ maxHeight: '80vh' }}>
+                <div style={{ maxHeight: '80vh',paddingBottom:'32px' }}>
                     {zSidebar.map((item, index) => (
                         <>
                             {JSON.parse(localStorage.getItem('auth'))?.level??0 >= item.level ?
@@ -301,7 +302,7 @@ const SideBar = () => {
                         <>
                         </>
                     }
-
+                    <div style={{paddingBottom:'36px'}} />
                 </div>
             </Wrappers>
         </>

@@ -72,6 +72,7 @@ const DataTable = (props) => {
                 key={card.pk}
                 index={index}
                 id={card.pk}
+                sort={card.sort}
                 data={card}
                 moveCard={moveCard}
                 column={column}
