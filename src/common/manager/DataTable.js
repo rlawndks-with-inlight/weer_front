@@ -39,13 +39,9 @@ const DataTable = (props) => {
     const [firstPosts, setFirstPosts] = useState([])
     const [isChange, setIsChange] = useState(false)
     useEffect(() => {
-        let list = [];
-        for (var i = 0; i < data.length; i++) {
-            list[i] = data[i].status;
-        }
+        console.log(data)
         setPosts(data)
         setFirstPosts(data)
-        setZStatus(list);
     }, [])
 
     useEffect(() => {
@@ -97,7 +93,7 @@ const DataTable = (props) => {
                         ))}
                     </Tr>
                     <DndProvider backend={HTML5Backend}>
-                        {posts.map((data, idx) =>
+                        {posts && posts.map((data, idx) =>
                             renderCard(data, idx, column, posts)
                         )}
                     </DndProvider>

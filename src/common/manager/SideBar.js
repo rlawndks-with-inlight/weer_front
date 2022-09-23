@@ -10,7 +10,7 @@ import { MdOutlineAccessTime, MdNotificationImportant, MdOutlineFeaturedPlayList
 import { IoStatsChartSharp, IoLogoReact } from 'react-icons/io5'
 import { FaChalkboardTeacher } from 'react-icons/fa'
 import { FiSettings } from 'react-icons/fi'
-import { AiOutlineQuestionCircle, AiOutlineRotateLeft } from 'react-icons/ai'
+import { AiOutlineQuestionCircle, AiOutlineRotateLeft, AiOutlineComment } from 'react-icons/ai'
 import { WiDayHaze } from 'react-icons/wi'
 import { SiMicrostrategy } from 'react-icons/si'
 import axios from 'axios';
@@ -105,6 +105,7 @@ const SideBar = () => {
         { name: '메인이미지관리', link: '/manager/edit/setting', icon: <AiOutlineRotateLeft />, level: 40, allow_list: ['/manager/edit/setting'] },
         { name: '전문가관리', link: '/manager/list/master', icon: <FaChalkboardTeacher />, level: 40, allow_list: ['/manager/list/master'] },
         { name: '채널관리', link: '/manager/list/channel', icon: <FaChalkboardTeacher />, level: 40, allow_list: ['/manager/list/channel'] },
+        //{ name: '댓글관리', link: '/manager/list/comment', icon: <AiOutlineComment />, level: 40, allow_list: ['/manager/list/comment'] },
         { name: '하루1단어', link: '/manager/list/oneword', icon: <WiDayHaze />, level: 40, allow_list: ['/manager/list/oneword'] },
         { name: '하루1종목', link: '/manager/list/oneevent', icon: <WiDayHaze />, level: 40, allow_list: ['/manager/list/oneevent'] },
         { name: '핵심테마', link: '/manager/list/theme', icon: <IoLogoReact />, level: 40, allow_list: ['/manager/list/theme'] },

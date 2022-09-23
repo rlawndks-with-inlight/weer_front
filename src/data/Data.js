@@ -29,11 +29,8 @@ export const zBottomMenu = [
     { name: '핵심이슈', link: '/selectissuecategory', icon: <img src={bulbImg} className='menu-icon' />, activeIcon: <img src={bulbActiveImg} className='menu-icon' />, allowList: ['/selectissuecategory'] },
     // { name: '핵심비디오', link: '/videolist', icon: <img src={playImg} className='menu-icon' />, activeIcon: <img src={playActiveImg} className='menu-icon' />, allowList: ['/videolist'] },
     { name: '특징주', link: '/selectfeaturecategory', icon: <img src={featureImg} className='menu-icon' />, activeIcon: <img src={featureActiveImg} className='menu-icon' />, allowList: ['/selectfeaturecategory'] },
-
     { name: '핵심테마', link: '/themelist', icon: <img src={albumImg} className='menu-icon' />, activeIcon: <img src={albumActiveImg} className='menu-icon' />, allowList: ['/themelist'] },
     { name: '전문가칼럼', link: '/masterlist', icon: <img src={thumbImg} className='menu-icon' />, activeIcon: <img src={thumbActiveImg} className='menu-icon' />, allowList: ['/masterlist'] },
-
-
     { name: '공지사항', link: '/noticelist', icon: <img src={talkImg} className='menu-icon' />, activeIcon: <img src={talkActiveImg} className='menu-icon' />, allowList: ['/noticelist'] }
 ];
 export const cardDefaultColor = {
@@ -82,6 +79,17 @@ export const objManagerListContent = {
             { name: '삭제', width: 12, type: 'delete', column: 'delete' }
         ],
     },
+    // comment: {
+    //     breadcrumb: '댓글',
+    //     schema: 'comment',
+    //     zColumn: [
+    //         { name: '채널이미지', width: 24, type: 'text', column: '' },
+    //         { name: '채널명', width: 24, type: 'text', column: '' },
+    //         { name: '생성시간', width: 28, type: 'text', column: 'date' },
+    //         { name: '수정', width: 12, type: 'edit', column: 'edit' },
+    //         { name: '삭제', width: 12, type: 'delete', column: 'delete' }
+    //     ],
+    // },
     oneword: {
         breadcrumb: '하루1단어',
         schema: 'oneword',

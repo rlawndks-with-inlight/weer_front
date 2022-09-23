@@ -67,6 +67,8 @@ const MItemList = () => {
                 str = `/api/users?page=1&level=0`
             } else if ((params.table == 'issue' || params.table == 'feature') && params.pk) {
                 str = `/api/items?table=${params.table}&page=1&category_pk=${params.pk}`
+            }else if(params.table == 'comment'){
+                str = `/api/getcommnets?page=1`
             } else {
                 let auth = JSON.parse(localStorage.getItem('auth'))
                 str = `/api/items?table=${params.table}&page=1`
@@ -94,7 +96,9 @@ const MItemList = () => {
             str = `/api/users?page=${num}&level=0`
         } else if ((params.table == 'issue' || params.table == 'feature') && params.pk) {
             str = `/api/items?table=${params.table}&page=${num}&category_pk=${params.pk}`
-        } else {
+        } else if(params.table == 'comment'){
+            str = `/api/getcommnets?page=${num}`
+        }else {
             str = `/api/items?table=${params.table}&page=${num}`
         }
         str += `&page_cut=${parseInt($('.page-cut').val())}`;
