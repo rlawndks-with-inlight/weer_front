@@ -55,6 +55,7 @@ const Breadcrumb = (props) => {
                     localStorage.setItem('auth',JSON.stringify(response));
                 }else{
                     localStorage.removeItem('auth')
+                    navigate('/manager/login')
                 }
             }
         }
