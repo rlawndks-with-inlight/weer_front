@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Title, Wrappers } from "../../../components/elements/UserContentTemplete";
 import { backUrl, slideSetting } from "../../../data/Data";
 import theme from "../../../styles/theme";
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-import { commarNumber, getIframeLinkByLink } from "../../../functions/utils";
+import { categoryToNumber, commarNumber, getIframeLinkByLink } from "../../../functions/utils";
 import $ from 'jquery';
 import { Content, SliderDiv, WrapDiv } from "../../../components/elements/UserContentTemplete";
 import Slider from 'react-slick'
@@ -14,13 +14,10 @@ import "slick-carousel/slick/slick-theme.css";
 import VideoCard from "../../../components/VideoCard";
 import styled from "styled-components";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
-import logo from '../../../assets/images/test/logo.svg'
 
-const Logo = styled.img`
-position: fixed;
-bottom: 0;
-height:18px;
-`
+import CommentComponent from "../../../components/CommentComponent";
+
+
 const Iframe = styled.iframe`
 width: 100%;
 height: auto;
@@ -68,11 +65,14 @@ const PrevArrow = ({ onClick }) => {
 
 const Video = () => {
     const params = useParams();
+    const navigate = useNavigate();
     const { pathname } = useLocation();
     const [post, setPost] = useState({});
+    const [comments, setComments] = useState([]);
     const [latests, setLatests] = useState([]);
     const [relates, setRelates] = useState([]);
     const [percent, setPercent] = useState(0);
+    const [auth, setAuth] = useState({})
 
     const settings = {
         infinite: false,
@@ -84,12 +84,12 @@ const Video = () => {
         nextArrow: <NextArrow onClick />,
         prevArrow: <PrevArrow onClick />,
     };
-    useEffect(()=>{
+    useEffect(() => {
         window.addEventListener('scroll', function (el) {
-            let per = Math.floor(($(window).scrollTop() / ($(document).height() - $(window).height())) * 100);
+            let per = Math.floor(($(window).scrollTop() / ($(document).height() - $(window).height())) * 100);
             setPercent(per);
         })
-    },[])
+    }, [])
     useEffect(() => {
         async function fetchPost() {
             const { data: response } = await axios.get(`/api/getvideocontent?pk=${params.pk}&views=1`);
@@ -97,7 +97,6 @@ const Video = () => {
             obj.link = getIframeLinkByLink(obj.link);
             obj.note = stringToHTML(obj.note)
             $('.note').append(obj.note)
-            console.log(obj)
             setPost(obj);
             let relate_list = response.data?.relates ?? [];
             for (var i = 0; i < relate_list.length; i++) {
@@ -110,8 +109,19 @@ const Video = () => {
             }
             setLatests(video_list);
         }
-        fetchPost();
+        if (localStorage.getItem('auth')) {
+            setAuth(JSON.parse(localStorage.getItem('auth')));
+            fetchPost();
+            fetchComments();
+        } else {
+            alert('로그인 후 이용 가능합니다.');
+            navigate(-1);
+        }
     }, [pathname])
+    const fetchComments = async () => {
+        const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk}&category=${categoryToNumber('video')}`);
+        setComments(response.data);
+    }
     const stringToHTML = (str) => {
         let parser = new DOMParser();
         str = str.replaceAll('http://localhost:8001', backUrl);
@@ -120,10 +130,26 @@ const Video = () => {
         let doc = parser.parseFromString(str, 'text/html');
         return doc.body;
     };
+    const addComment = async () => {
+        const { data: response } = await axios.post('/api/addcomment', {
+            userPk: auth.pk,
+            userNick: auth.nickname,
+            pk: params.pk,
+            note: $('.comment').val(),
+            category: categoryToNumber('video')
+        })
+
+        if(response.result>0){
+            $('.comment').val("")
+            fetchComments();
+        }else{
+            alert(response.message)
+        }
+    }
     return (
         <>
             <Wrappers>
-                <div style={{ width: '100%', textAlign: 'end' }}>{post.nickname} / {post?.date?.substring(5, 10)} / {commarNumber(post?.views??0)}</div>
+                <div style={{ width: '100%', textAlign: 'end' }}>{post.nickname} / {post?.date?.substring(5, 10)} / {commarNumber(post?.views ?? 0)}</div>
                 <Title>{post.title}</Title>
                 <Iframe src={`https://www.youtube.com/embed/${post.link}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
 
@@ -144,7 +170,7 @@ const Video = () => {
                         <Slider {...slideSetting} className='board-container'>
                             {relates.map((item, idx) => (
                                 <>
-                                    <VideoCard item={item} isSlide={true} isImgPadding={true}  />
+                                    <VideoCard item={item} isSlide={true} isImgPadding={true} />
                                 </>
                             ))}
                         </Slider>
@@ -163,12 +189,20 @@ const Video = () => {
                         <Slider {...slideSetting} className='board-container'>
                             {latests.map((item, idx) => (
                                 <>
-                                    <VideoCard item={item} isSlide={true} isImgPadding={true}  />
+                                    <VideoCard item={item} isSlide={true} isImgPadding={true} />
                                 </>
                             ))}
                         </Slider>
                     </SliderDiv>
                 </Content>
+                {JSON.parse(localStorage.getItem('auth')).pk>0?
+                <>
+                <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />
+                </>
+                :
+                <>
+                </>
+                }
                 <Progress value={`${percent}`} max="100"></Progress>
                 {/* <Logo src={logo} style={{left:`${percent*0.94}%`}}/> */}
             </Wrappers>

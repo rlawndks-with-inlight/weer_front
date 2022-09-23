@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate, Link, useParams, useLocation } from 'react-router-dom';
 import ManagerWrappers from '../../components/elements/ManagerWrappers';
@@ -11,25 +10,25 @@ import ButtonContainer from '../../components/elements/button/ButtonContainer';
 import AddButton from '../../components/elements/button/AddButton';
 import $ from 'jquery';
 import { addItem, updateItem } from '../../functions/utils';
-import { Card, Title, Input, Row, Col, ImageContainer, Select } from '../../components/elements/ManagerTemplete';
-import theme from '../../styles/theme';
-import youtubeShare from '../../assets/images/test/youtube_share.PNG'
-import relateExplain from '../../assets/images/test/relate_explain.png'
+import { Card, Title, Input, Row, Col} from '../../components/elements/ManagerTemplete';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
-import { backUrl, cardDefaultColor } from '../../data/Data';
+import { backUrl } from '../../data/Data';
 import { objManagerListContent } from '../../data/Data';
+import { categoryToNumber } from '../../functions/utils';
+import CommentComponent from '../../components/CommentComponent';
+
 const MNoticeEdit = () => {
     const { pathname } = useLocation();
     const params = useParams();
     const navigate = useNavigate();
 
     const editorRef = useRef();
-
+    const [comments, setComments] = useState([]);
     const [myNick, setMyNick] = useState("")
     const [auth, setAuth] = useState({});
     const [noteFormData] = useState(new FormData());
@@ -45,7 +44,13 @@ const MNoticeEdit = () => {
             } 
         }
         fetchPost();
+        fetchComments();
     }, [pathname])
+    const fetchComments = async () => {
+        const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk}&category=${categoryToNumber('notice')}`);
+        console.log(response)
+        setComments(response.data);
+    }
     const editItem = async () => {
         if (!$(`.title`).val()) {
             alert('필요값이 비어있습니다.');
@@ -72,6 +77,25 @@ const MNoticeEdit = () => {
     }
     const onChangeEditor = (e) => {
         const data = editorRef.current.getInstance().getHTML();
+    }
+    const addComment = async () => {
+        if(!$('.comment').val()){
+            alert('필수 값을 입력해 주세요.');
+        }
+        const { data: response } = await axios.post('/api/addcomment', {
+            userPk: auth.pk,
+            userNick: auth.nickname,
+            pk: params.pk,
+            note: $('.comment').val(),
+            category: categoryToNumber('notice')
+        })
+
+        if(response.result>0){
+            $('.comment').val("")
+            fetchComments();
+        }else{
+            alert(response.message)
+        }
     }
     return (
         <>
@@ -125,6 +149,21 @@ const MNoticeEdit = () => {
                     <ButtonContainer>
                         <AddButton onClick={editItem}>{'저장'}</AddButton>
                     </ButtonContainer>
+                    {params.pk > 0 ?
+                        <>
+                            <Card style={{minHeight:'240px'}}>
+                                <Row>
+                                    <Col>
+                                    <Title>댓글 관리</Title>
+                                    </Col>
+                                </Row>
+                                <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />
+                            </Card>
+                        </>
+                        :
+                        <></>
+                    }
+
                 </ManagerContentWrappers>
             </ManagerWrappers>
         </>

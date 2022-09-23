@@ -24,6 +24,8 @@ import Picker from 'emoji-picker-react';
 import { backUrl } from '../../data/Data';
 import { objManagerListContent, cardDefaultColor } from '../../data/Data';
 import Loading from '../../components/Loading';
+import { categoryToNumber } from '../../functions/utils';
+import CommentComponent from '../../components/CommentComponent';
 
 const MItemEdit = () => {
     const { pathname } = useLocation();
@@ -31,7 +33,8 @@ const MItemEdit = () => {
     const navigate = useNavigate();
 
     const editorRef = useRef();
-
+    const [comments, setComments] = useState([]);
+    const [percent, setPercent] = useState(0);
     const [myNick, setMyNick] = useState("")
     const [url, setUrl] = useState('')
     const [content, setContent] = useState(undefined)
@@ -45,6 +48,16 @@ const MItemEdit = () => {
     const [fontColor, setFontColor] = useState(cardDefaultColor.font);
     const [backgroundColor, setBackgroundColor] = useState(cardDefaultColor.background)
     const [channelList, setChannelList] = useState([]);
+
+    const imgSetting = {
+        oneword: ' 권장(800*600)',
+        oneevent: ' 권장(800*600)',
+        theme: ' 권장(960*640)',
+        strategy: ' 권장(800*600)',
+        issue: ' 권장(300*360)',
+        feature: ' 권장(300*360)',
+    }
+
     useEffect(() => {
         async function fetchPost() {
             let authObj = JSON.parse(localStorage.getItem('auth'));
@@ -82,7 +95,13 @@ const MItemEdit = () => {
 
         }
         fetchPost();
+        fetchComments();
     }, [pathname])
+    const fetchComments = async () => {
+        const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk}&category=${categoryToNumber(params.table)}`);
+        console.log(response)
+        setComments(response.data);
+    }
     const editItem = async () => {
         if ((!content && !url) || !$(`.hash`).val() || !$(`.title`).val() || !$(`.suggest-title`).val()) {
             alert('필요값이 비어있습니다.');
@@ -141,6 +160,25 @@ const MItemEdit = () => {
         setChosenEmoji(emojiObject);
         console.log(emojiObject)
     };
+    const addComment = async () => {
+        if(!$('.comment').val()){
+            alert('필수 값을 입력해 주세요.');
+        }
+        const { data: response } = await axios.post('/api/addcomment', {
+            userPk: auth.pk,
+            userNick: auth.nickname,
+            pk: params.pk,
+            note: $('.comment').val(),
+            category: categoryToNumber(params.table)
+        })
+
+        if(response.result>0){
+            $('.comment').val("")
+            fetchComments();
+        }else{
+            alert(response.message)
+        }
+    }
     return (
         <>
             <ManagerWrappers>
@@ -151,7 +189,7 @@ const MItemEdit = () => {
 
                         <Row>
                             <Col>
-                                <Title>프로필 이미지</Title>
+                                <Title>프로필 이미지 <br />{imgSetting[params.table]}</Title>
                                 <ImageContainer for="file1">
 
                                     {url ?
@@ -276,11 +314,26 @@ const MItemEdit = () => {
                                 </div>
                             </Col>
                         </Row>
-
                     </Card>
+
                     <ButtonContainer>
                         <AddButton onClick={editItem}>{'저장'}</AddButton>
                     </ButtonContainer>
+                    {params.pk > 0 ?
+                        <>
+                            <Card style={{minHeight:'240px'}}>
+                                <Row>
+                                    <Col>
+                                    <Title>댓글 관리</Title>
+                                    </Col>
+                                </Row>
+                                <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />
+                            </Card>
+                        </>
+                        :
+                        <></>
+                    }
+
                 </ManagerContentWrappers>
             </ManagerWrappers>
         </>

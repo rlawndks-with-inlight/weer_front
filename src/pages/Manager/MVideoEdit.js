@@ -23,13 +23,15 @@ import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import { backUrl, cardDefaultColor } from '../../data/Data';
 import { objManagerListContent } from '../../data/Data';
+import { categoryToNumber } from '../../functions/utils';
+import CommentComponent from '../../components/CommentComponent';
 const MVideoEdit = () => {
     const { pathname } = useLocation();
     const params = useParams();
     const navigate = useNavigate();
 
     const editorRef = useRef();
-
+    const [comments, setComments] = useState([]);
     const [myNick, setMyNick] = useState("")
     const [auth, setAuth] = useState({});
     const [noteFormData] = useState(new FormData());
@@ -68,7 +70,13 @@ const MVideoEdit = () => {
 
         }
         fetchPost();
+        fetchComments();
     }, [pathname])
+    const fetchComments = async () => {
+        const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk}&category=${categoryToNumber('video')}`);
+        console.log(response)
+        setComments(response.data);
+    }
     const editItem = async () => {
         if (!$(`.title`).val() || !$(`.link`).val()) {
             alert('필요값이 비어있습니다.');
@@ -107,6 +115,25 @@ const MVideoEdit = () => {
     }
     const onChangeEditor = (e) => {
         const data = editorRef.current.getInstance().getHTML();
+    }
+    const addComment = async () => {
+        if(!$('.comment').val()){
+            alert('필수 값을 입력해 주세요.');
+        }
+        const { data: response } = await axios.post('/api/addcomment', {
+            userPk: auth.pk,
+            userNick: auth.nickname,
+            pk: params.pk,
+            note: $('.comment').val(),
+            category: categoryToNumber('video')
+        })
+
+        if(response.result>0){
+            $('.comment').val("")
+            fetchComments();
+        }else{
+            alert(response.message)
+        }
     }
     return (
         <>
@@ -207,6 +234,20 @@ const MVideoEdit = () => {
                     <ButtonContainer>
                         <AddButton onClick={editItem}>{'저장'}</AddButton>
                     </ButtonContainer>
+                    {params.pk > 0 ?
+                        <>
+                            <Card style={{minHeight:'240px'}}>
+                                <Row>
+                                    <Col>
+                                    <Title>댓글 관리</Title>
+                                    </Col>
+                                </Row>
+                                <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />
+                            </Card>
+                        </>
+                        :
+                        <></>
+                    }
                 </ManagerContentWrappers>
             </ManagerWrappers>
         </>

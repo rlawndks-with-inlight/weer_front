@@ -2,21 +2,24 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { backUrl } from "../data/Data";
 import theme from "../styles/theme";
-import { Card, Img } from "./elements/UserContentTemplete";
+import { Card} from "./elements/UserContentTemplete";
 import { AiFillHeart } from 'react-icons/ai'
-export const Image = styled.img`
+export const Img = styled.div`
 width: 90%;
-height:280px;
+height:320px;
 background:#fff;
 background-size: cover;
 background-repeat: no-repeat;
 background-position: center center;
 background-blend-mode: multiply;
+margin: 18px auto;
+
 @media screen and (max-width:1200px) {
     height: 28.266666666vw;
 }
 @media screen and (max-width:600px) {
-    height: 58vw;
+    height: 50vw;
+    margin: 5vw auto;
 }
 `
 const TextContainer = styled.div`
@@ -44,14 +47,9 @@ const VideoCard = (props) => {
                     paddingTop: `${isImgPadding ? '0.5%' : '0'}`,
                     width:`${isTerm && window.innerWidth<=600?'95%':''}`
                 }}>
-                {isImgDiv ?
-                    <>
-                        <Img style={{ backgroundImage: `url(${`https://img.youtube.com/vi/${props.item.link}/0.jpg`})` }} />
-                    </>
-                    :
-                    <>
-                        <Image src={`https://img.youtube.com/vi/${props.item.link}/0.jpg`} style={{ width: `${isImgPadding ? '90%' : '100%'}`, margin: `${isImgPadding ? '5%' : '0'}` }} />
-                    </>}
+                
+                <Img style={{ backgroundImage: `url(${`https://img.youtube.com/vi/${props.item.link}/0.jpg`})` }} />
+                    
                 {/* <iframe style={{ width: '100%', height: 'auto', height: '80vw', maxHeight: '450px' }} src={`https://www.youtube.com/embed/${videos.link}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
                 <TextContainer style={{padding:`${isImgPadding?'0 20px':'20px'}`}}>
                     <div style={{ fontSize: `${theme.size.font3}` }}>{props?.item?.title}</div>

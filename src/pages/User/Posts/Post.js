@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Title, Wrappers } from "../../../components/elements/UserContentTemplete";
 import { backUrl } from "../../../data/Data";
 import theme from "../../../styles/theme";
@@ -8,13 +8,9 @@ import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import $ from 'jquery'
 import styled from "styled-components";
 import { BsFillShareFill } from 'react-icons/bs';
-import logo from '../../../assets/images/test/logo.svg'
-import { commarNumber } from "../../../functions/utils";
-const Logo = styled.img`
-position: fixed;
-bottom: 0;
-height:18px;
-`
+import { commarNumber, categoryToNumber } from "../../../functions/utils";
+import CommentComponent from "../../../components/CommentComponent";
+
 const Progress = styled.progress`
 
 appearance: none;
@@ -38,8 +34,11 @@ border-right: 10px solid transparent;
 `
 const Post = () => {
     const params = useParams();
+    const navigate = useNavigate();
     const [post, setPost] = useState({})
+    const [comments, setComments] = useState([]);
     const [percent, setPercent] = useState(0);
+    const [auth, setAuth] = useState({})
     useEffect(() => {
         async function fetchPost() {
             const { data: response } = await axios.get(`/api/item?table=${params.table}&pk=${params.pk}&views=1`)
@@ -51,13 +50,28 @@ const Post = () => {
             setPost(obj);
 
         }
-        fetchPost();
-        
+        if(params.table!='notice'){
+            if (localStorage.getItem('auth')) {
+                setAuth(JSON.parse(localStorage.getItem('auth')));
+                fetchPost();
+                fetchComments();
+            } else {
+                alert('로그인 후 이용 가능합니다.');
+                navigate(-1);
+            }
+        }else{
+            fetchPost();
+            fetchComments();
+        }
         window.addEventListener('scroll', function (el) {
-            let per = Math.floor(($(window).scrollTop() / ($(document).height() - $(window).height())) * 100);
+            let per = Math.floor(($(window).scrollTop() / ($(document).height() - $(window).height())) * 100);
             setPercent(per);
         })
     }, [])
+    const fetchComments = async () => {
+        const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk}&category=${categoryToNumber(params.table)}`);
+        setComments(response.data);
+    }
     const stringToHTML = (str) => {
         let parser = new DOMParser();
         str = str.replaceAll('http://localhost:8001', backUrl);
@@ -66,7 +80,25 @@ const Post = () => {
         let doc = parser.parseFromString(str, 'text/html');
         return doc.body;
     };
-    
+    const addComment = async () => {
+        if(!$('.comment').val()){
+            alert('필수 값을 입력해 주세요.');
+        }
+        const { data: response } = await axios.post('/api/addcomment', {
+            userPk: auth.pk,
+            userNick: auth.nickname,
+            pk: params.pk,
+            note: $('.comment').val(),
+            category: categoryToNumber(params.table)
+        })
+
+        if(response.result>0){
+            $('.comment').val("")
+            fetchComments();
+        }else{
+            alert(response.message)
+        }
+    }
     return (
         <>
             <Wrappers className="wrapper">
@@ -74,7 +106,7 @@ const Post = () => {
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <div style={{ margin: '0 4px' }}>{post.nickname}</div> /
                         <div style={{ margin: '0 4px' }}>{post?.date?.substring(5, 10)}</div> /
-                        <div style={{ margin: '0 8px 0 4px' }}>{commarNumber(post?.views??0)}</div>
+                        <div style={{ margin: '0 8px 0 4px' }}>{commarNumber(post?.views ?? 0)}</div>
                         <BsFillShareFill style={{ cursor: 'pointer' }} />
                     </div>
                 </div>
@@ -83,6 +115,14 @@ const Post = () => {
                 <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post.hash}</div>
                 <div className="note">
                 </div>
+                {JSON.parse(localStorage.getItem('auth')).pk>0?
+                <>
+                <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />
+                </>
+                :
+                <>
+                </>
+                }
                 <Progress value={`${percent}`} max="100"></Progress>
                 {/* <Logo src={logo} style={{left:`${percent-1}.7%`}}/> */}
             </Wrappers>
