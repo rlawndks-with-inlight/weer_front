@@ -195,14 +195,9 @@ const Video = () => {
                         </Slider>
                     </SliderDiv>
                 </Content>
-                {JSON.parse(localStorage.getItem('auth')).pk>0?
-                <>
+                
                 <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />
-                </>
-                :
-                <>
-                </>
-                }
+               
                 <Progress value={`${percent}`} max="100"></Progress>
                 {/* <Logo src={logo} style={{left:`${percent*0.94}%`}}/> */}
             </Wrappers>

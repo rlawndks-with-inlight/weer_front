@@ -115,14 +115,9 @@ const Post = () => {
                 <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post.hash}</div>
                 <div className="note">
                 </div>
-                {JSON.parse(localStorage.getItem('auth')).pk>0?
-                <>
+                
                 <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />
-                </>
-                :
-                <>
-                </>
-                }
+                
                 <Progress value={`${percent}`} max="100"></Progress>
                 {/* <Logo src={logo} style={{left:`${percent-1}.7%`}}/> */}
             </Wrappers>

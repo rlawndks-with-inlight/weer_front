@@ -23,15 +23,25 @@ const CommentComponent = (props) => {
     }
     return (
         <>
+
             <Content style={{ marginTop: '32px' }}>
-                <div style={{ border: `1px solid ${theme.color.font3}`, display: 'flex', flexDirection: 'column', padding: '16px' }}>
-                    <textarea style={{ outline: 'none', resize: 'none', border: 'none', height: '54px', fontSize: theme.size.font4 }} className='comment' />
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '16px' }}>
-                        <IoImageOutline style={{ color: theme.color.font3 }} />
-                        <AddButton style={{ background: theme.color.font2, boxShadow: 'none' }} onClick={addComment}>작성</AddButton>
-                    </div>
-                </div>
+                {JSON.parse(localStorage.getItem('auth')) ?
+                    <>
+                        <div style={{ border: `1px solid ${theme.color.font3}`, display: 'flex', flexDirection: 'column', padding: '16px' }}>
+                            <textarea style={{ outline: 'none', resize: 'none', border: 'none', height: '54px', fontSize: theme.size.font4 }} className='comment' />
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '16px' }}>
+                                <IoImageOutline style={{ color: theme.color.font3 }} />
+                                <AddButton style={{ background: theme.color.font2, boxShadow: 'none' }} onClick={addComment}>작성</AddButton>
+                            </div>
+                        </div>
+                    </>
+                    :
+                    <>
+                    </>
+                }
             </Content>
+
+
             <Content>
                 {data.length > 0 ?
                     <>
@@ -43,7 +53,7 @@ const CommentComponent = (props) => {
                                         <div style={{ marginBottom: '6px', display: 'flex' }}><div style={{ marginRight: '6px' }}>{item.nickname}</div> <div style={{ color: theme.color.font3 }}>{item.date.substring(0, 16)}</div></div>
                                         <div style={{ wordBreak: 'break-all', marginBottom: '6px', fontSize: theme.size.font3 }}>{item.note}</div>
                                         <div style={{ display: 'flex' }}>
-                                            {JSON.parse(localStorage.getItem('auth')).pk == item.pk || JSON.parse(localStorage.getItem('auth')).level >= 40 ?
+                                            {JSON.parse(localStorage.getItem('auth'))?.pk == item.pk || JSON.parse(localStorage.getItem('auth'))?.level >= 40 ?
                                                 <>
                                                     <div style={{ marginRight: '6px', cursor: 'pointer' }}>수정</div>
                                                     <div style={{ cursor: 'pointer' }} onClick={() => deleteComment(item.pk)}>지우기</div>

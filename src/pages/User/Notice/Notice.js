@@ -57,12 +57,9 @@ const Notice = () => {
         }
         if (localStorage.getItem('auth')) {
             setAuth(JSON.parse(localStorage.getItem('auth')));
-            fetchPost();
-            fetchComments();
-        } else {
-            fetchPost();
-        }
-        
+        } 
+        fetchPost();
+        fetchComments();
         window.addEventListener('scroll', function (el) {
             let per = Math.floor(($(window).scrollTop() / ($(document).height() - $(window).height())) * 100);
             setPercent(per);
@@ -109,14 +106,7 @@ const Notice = () => {
                 <Title>{post.title}</Title>
                 <div className="note">
                 </div>
-                {JSON.parse(localStorage.getItem('auth')).pk>0?
-                <>
                 <CommentComponent addComment={addComment} data={comments}fetchComments={fetchComments} />
-                </>
-                :
-                <>
-                </>
-                }
                 <Progress value={`${percent}`} max="100"></Progress>
                 {/* <Logo src={logo} style={{left:`${percent-1}.7%`}}/> */}
             </Wrappers>
