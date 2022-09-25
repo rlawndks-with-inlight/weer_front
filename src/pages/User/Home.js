@@ -64,7 +64,14 @@ const Home = () => {
             setTimeout(() => setLoading(false), 1500);
         }
         fetchPost();
-        snsLogin();
+        if (window && window.flutter_inappwebview&&!localStorage.getItem('auth')) {
+            window.flutter_inappwebview.callHandler('native_app_logined').then(async function (result) {
+                //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
+                // JSON.parse(result)
+                let obj = JSON.parse(result);
+                await onLoginBySns(obj.data);
+            });
+        }
     }, [])
     const onChangeStrategyNum = async (num, pk) => {
         setSubTypeNum(num)
