@@ -64,9 +64,8 @@ const Home = () => {
             setTimeout(() => setLoading(false), 1500);
         }
         fetchPost();
-        if (window && window.flutter_inappwebview && !localStorage.getItem('auth')) {
-            console.log(1)
-            window.flutter_inappwebview.callHandler('native_app_logined').then(async function (result) {
+        async function isLogined(){
+            await window.flutter_inappwebview.callHandler('native_app_logined').then(async function (result) {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
                 // JSON.parse(result)
                 console.log(2)
@@ -74,6 +73,10 @@ const Home = () => {
                 let obj = JSON.parse(result);
                 await onLoginBySns(obj.data);
             });
+        }
+        if (window && window.flutter_inappwebview && !localStorage.getItem('auth')) {
+            console.log(1)
+            isLogined();
         }
     }, [])
     const onChangeStrategyNum = async (num, pk) => {
