@@ -87,7 +87,9 @@ const LoginCard = () => {
         }
     }
     const naverLogin = () => {
+        console.log(1)
         if (window && window.flutter_inappwebview) {
+            console.log(2)
             var params = { 'login_type': 2 };
             window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(async function (result) {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
