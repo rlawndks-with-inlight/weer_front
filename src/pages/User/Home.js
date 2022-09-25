@@ -46,7 +46,7 @@ const Home = () => {
     useEffect(() => {
         setPosts(zTalk[0].image_list);
         async function fetchPost() {
-           setLoading(true)
+            setLoading(true)
 
             const { data: response } = await axios.get('/api/gethomecontent')
             setSetting(response.data.setting);
@@ -64,10 +64,13 @@ const Home = () => {
             setTimeout(() => setLoading(false), 1500);
         }
         fetchPost();
-        if (window && window.flutter_inappwebview&&!localStorage.getItem('auth')) {
+        if (window && window.flutter_inappwebview && !localStorage.getItem('auth')) {
+            console.log(1)
             window.flutter_inappwebview.callHandler('native_app_logined').then(async function (result) {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
                 // JSON.parse(result)
+                console.log(2)
+
                 let obj = JSON.parse(result);
                 await onLoginBySns(obj.data);
             });
@@ -82,34 +85,34 @@ const Home = () => {
         const { data: response } = await axios.get(str);
         setStrategies(response?.data)
     }
-    const onLoginBySns = async(obj) =>{
+    const onLoginBySns = async (obj) => {
         console.log(JSON.stringify(obj))
         let nick = "";
-        if(obj.login_type==1){
-            nick = "카카오" +new Date().getTime()
-        }else if(obj.login_type==2){
-            nick = "네이버" +new Date().getTime()
+        if (obj.login_type == 1) {
+            nick = "카카오" + new Date().getTime()
+        } else if (obj.login_type == 2) {
+            nick = "네이버" + new Date().getTime()
         }
         let objs = {
-            id:obj.id,
-            name:obj.legal_name,
-            nickname:nick,
-            phone:obj.phone_number,
-            user_level:0,
-            typeNum:obj.login_type,
-            profile_img:obj.profile_image_url
+            id: obj.id,
+            name: obj.legal_name,
+            nickname: nick,
+            phone: obj.phone_number,
+            user_level: 0,
+            typeNum: obj.login_type,
+            profile_img: obj.profile_image_url
         }
         console.log(JSON.stringify(objs))
-        const {data:response} = await axios.post('/api/loginbysns',objs);
+        const { data: response } = await axios.post('/api/loginbysns', objs);
         console.log(response);
-        if(response.result>0){
+        if (response.result > 0) {
             await localStorage.setItem('auth', JSON.stringify(response.data));
-        }else{
+        } else {
             //alert(response.message);
         }
     }
-    
-    const snsLogin = () =>{
+
+    const snsLogin = () => {
         if (window && window.flutter_inappwebview) {
             window.flutter_inappwebview.callHandler('native_app_logined').then(async function (result) {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
