@@ -74,7 +74,7 @@ const Home = () => {
                 await onLoginBySns(obj.data);
             });
         }
-        if (window && window.flutter_inappwebview && !localStorage.getItem('auth')) {
+        if (window && window.flutter_inappwebview) {
             console.log(1)
             isLogined();
         }
