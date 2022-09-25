@@ -89,9 +89,9 @@ const Home = () => {
         console.log(JSON.stringify(obj))
         let nick = "";
         if (obj.login_type == 1) {
-            nick = "카카오" + new Date().getTime()
+            nick = "카카오" + new Date().getTime();
         } else if (obj.login_type == 2) {
-            nick = "네이버" + new Date().getTime()
+            nick = "네이버" + new Date().getTime();
         }
         let objs = {
             id: obj.id,

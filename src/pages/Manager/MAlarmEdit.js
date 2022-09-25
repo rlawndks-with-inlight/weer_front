@@ -24,7 +24,7 @@ import { categoryToNumber } from '../../functions/utils';
 import CommentComponent from '../../components/CommentComponent';
 import theme from '../../styles/theme';
 import { AiFillFileImage } from 'react-icons/ai'
-
+import { IoRadioButtonOff, IoRadioButtonOn } from 'react-icons/io5'
 const MAlarmEdit = () => {
     const { pathname } = useLocation();
     const params = useParams();
@@ -93,14 +93,14 @@ const MAlarmEdit = () => {
             }
         }
     }
-   
+
     const addFile = (e) => {
         if (e.target.files[0]) {
             setContent(e.target.files[0]);
             setUrl(URL.createObjectURL(e.target.files[0]))
         }
     };
-    const handleClickRadio = (e) =>{
+    const handleClickRadio = (e) => {
         console.log(e.target.value)
         setRadioNum(e.target.value)
     }
@@ -150,12 +150,20 @@ const MAlarmEdit = () => {
                             <Col>
                                 <Title>알람타입</Title>
                                 <Row>
-                                    <input type={'radio'} name='alarm-type' id='alarm-1' checked={radioNum==1} value={'1'} onChange={handleClickRadio} />
-                                    <label for='alarm-1'>바로실행</label>
-                                    <input type={'radio'} name='alarm-type' id='alarm-2' value={'2'} onChange={handleClickRadio} />
-                                    <label for='alarm-2'>반복실행</label>
-                                    <input type={'radio'} name='alarm-type' id='alarm-3' value={'3'} onChange={handleClickRadio} />
-                                    <label for='alarm-3'>정해진 시간에 실행</label>
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <IoRadioButtonOff/>
+                                    <IoRadioButtonOn/>
+                                        <input type={'radio'} name='alarm-type' id='alarm-1' checked={radioNum == 1} value={'1'} onChange={handleClickRadio} />
+                                        <label for='alarm-1'>바로실행</label>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <input type={'radio'} name='alarm-type' id='alarm-2' value={'2'} onChange={handleClickRadio} />
+                                        <label for='alarm-2'>반복실행</label>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <input type={'radio'} name='alarm-type' id='alarm-3' value={'3'} onChange={handleClickRadio} />
+                                        <label for='alarm-3'>정해진 시간에 실행</label>
+                                    </div>
                                 </Row>
                             </Col>
                         </Row>
