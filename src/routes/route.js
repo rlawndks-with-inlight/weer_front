@@ -37,6 +37,7 @@ import MItemEdit from '../pages/Manager/MItemEdit';
 import MItemList from '../pages/Manager/MItemList';
 import MChannelEdit from '../pages/Manager/MChannelEdit';
 import Notice from '../pages/User/Notice/Notice';
+import MAlarmEdit from '../pages/Manager/MAlarmEdit';
 
 const zRoute = [
     { link: '/', element: <Home /> },
@@ -72,6 +73,7 @@ const zRoute = [
     { link: '/manager/setting', element: <MSetting /> },
     { link: '/manager/edit/video/:pk', element: <MVideoEdit /> },
     { link: '/manager/edit/notice/:pk', element: <MNoticeEdit /> },
+    { link: '/manager/edit/alarm/:pk', element: <MAlarmEdit /> },
     { link: '/manager/edit/issue_category/:pk', element: <MIssueCategoryEdit /> },
     { link: '/manager/edit/feature_category/:pk', element: <MFeatureCategoryEdit /> },
     { link: '/manager/edit/setting', element: <MSettingEdit /> },

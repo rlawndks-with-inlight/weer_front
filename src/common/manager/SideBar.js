@@ -4,12 +4,10 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi'
 import logo from '../../assets/images/test/logo.svg'
-import { BiRadioCircle } from 'react-icons/bi'
-import { BsPerson, BsCameraVideo } from 'react-icons/bs'
+import { BsPerson, BsCameraVideo, BsAlarm } from 'react-icons/bs'
 import { MdOutlineAccessTime, MdNotificationImportant, MdOutlineFeaturedPlayList } from 'react-icons/md'
 import { IoStatsChartSharp, IoLogoReact } from 'react-icons/io5'
 import { FaChalkboardTeacher } from 'react-icons/fa'
-import { FiSettings } from 'react-icons/fi'
 import { AiOutlineQuestionCircle, AiOutlineRotateLeft, AiOutlineComment } from 'react-icons/ai'
 import { WiDayHaze } from 'react-icons/wi'
 import { SiMicrostrategy } from 'react-icons/si'
@@ -296,6 +294,27 @@ const SideBar = () => {
                                     <MenuContent onClick={() => { onClickMenu('/manager/list/notice') }}>
                                         <AiOutlineQuestionCircle />
                                         <MenuText>공지사항</MenuText>
+                                    </MenuContent>
+                                </>}
+                        </>
+                        :
+                        <>
+                        </>
+                    }
+                    {JSON.parse(localStorage.getItem('auth'))?.user_level??0 >= 40 ?
+                        <>
+                            {'/manager/list/alarm' == location.pathname ?
+                                <>
+                                    <SelectMenuContent onClick={() => { onClickMenu('/manager/list/alarm') }}>
+                                        <BsAlarm />
+                                        <MenuText>푸시알람</MenuText>
+                                    </SelectMenuContent>
+                                </>
+                                :
+                                <>
+                                    <MenuContent onClick={() => { onClickMenu('/manager/list/alarm') }}>
+                                        <BsAlarm />
+                                        <MenuText>푸시알람</MenuText>
                                     </MenuContent>
                                 </>}
                         </>

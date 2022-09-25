@@ -39,7 +39,6 @@ const DataTable = (props) => {
     const [firstPosts, setFirstPosts] = useState([])
     const [isChange, setIsChange] = useState(false)
     useEffect(() => {
-        console.log(data)
         setPosts(data)
         setFirstPosts(data)
     }, [])

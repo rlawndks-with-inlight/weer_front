@@ -13,7 +13,6 @@ import $ from 'jquery';
 import { Card, Title, Input, Row, Col, ImageContainer, Select } from '../../components/elements/ManagerTemplete';
 import { AiFillFileImage } from 'react-icons/ai'
 import theme from '../../styles/theme';
-
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
@@ -23,10 +22,8 @@ import '@toast-ui/editor/dist/i18n/ko-kr';
 import Picker from 'emoji-picker-react';
 import { backUrl } from '../../data/Data';
 import { objManagerListContent, cardDefaultColor } from '../../data/Data';
-import Loading from '../../components/Loading';
 import { categoryToNumber } from '../../functions/utils';
 import CommentComponent from '../../components/CommentComponent';
-import smileIcon from '../../assets/images/icon/smile.svg'
 const MItemEdit = () => {
     const { pathname } = useLocation();
     const params = useParams();
@@ -196,7 +193,7 @@ const MItemEdit = () => {
             <ManagerWrappers>
                 <SideBar />
                 <ManagerContentWrappers>
-                    <Breadcrumb title={objManagerListContent[`${params.table}`].breadcrumb} nickname={myNick} />
+                    <Breadcrumb title={objManagerListContent[`${params.table}`].breadcrumb+`${params.pk>0?'수정':'추가'}`} nickname={myNick} />
                     <Card>
 
                         <Row>

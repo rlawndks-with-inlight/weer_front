@@ -76,7 +76,7 @@ const LoginCard = () => {
             await localStorage.setItem('auth', JSON.stringify(response.data));
             navigate('/mypage');
         }else{
-            alert(response.message);
+            //alert(response.message);
         }
     }
     
