@@ -34,6 +34,8 @@ export const Input = styled.input`
 margin:12px auto 6px 24px;
 width:200px;
 padding:8px;
+border:1px solid #dadde6;
+border-radius:4px;
 outline:none;
 ::placeholder {
     color: #cccccc;
@@ -45,6 +47,8 @@ margin:12px auto 6px 24px;
 width:218px;
 padding:8px;
 outline:none;
+border:1px solid #dadde6;
+border-radius:4px;
 `
 export const ImageContainer = styled.label`
 border: 2px dashed ${props=>props.theme.color.manager.font3};

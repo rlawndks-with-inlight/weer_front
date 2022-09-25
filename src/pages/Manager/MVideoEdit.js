@@ -21,6 +21,7 @@ import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
+import Picker from 'emoji-picker-react';
 import { backUrl, cardDefaultColor } from '../../data/Data';
 import { objManagerListContent } from '../../data/Data';
 import { categoryToNumber } from '../../functions/utils';
@@ -69,9 +70,24 @@ const MVideoEdit = () => {
             }
 
         }
+        $('div.toastui-editor-defaultUI-toolbar > div:nth-child(4)').append(`<button type="button" class='emoji' aria-label='이모티콘' style='font-size:18px;'>🙂</button>`);
         fetchPost();
         fetchComments();
     }, [pathname])
+    useEffect(()=>{
+        $('button.emoji').on('click',function(){
+            $('.emoji-picker-react').attr('style','display: flex !important')
+        })
+        $('.toastui-editor-toolbar-icons').on('click',function(){
+            $('.emoji-picker-react').attr('style','display: none !important')
+        })
+    },[])
+    const [chosenEmoji, setChosenEmoji] = useState(null);
+
+    const onEmojiClick = (event, emojiObject) => {
+        setChosenEmoji(emojiObject);
+        editorRef.current.getInstance().insertText(emojiObject.emoji)
+    };
     const fetchComments = async () => {
         const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk}&category=${categoryToNumber('video')}`);
         console.log(response)
@@ -200,6 +216,7 @@ const MVideoEdit = () => {
                             <Col>
                                 <Title>내용</Title>
                                 <div id="editor">
+                                <Picker onEmojiClick={onEmojiClick} />
                                     <Editor
                                         placeholder="내용을 입력해주세요."
                                         previewStyle="vertical"

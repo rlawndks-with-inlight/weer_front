@@ -10,13 +10,14 @@ import ButtonContainer from '../../components/elements/button/ButtonContainer';
 import AddButton from '../../components/elements/button/AddButton';
 import $ from 'jquery';
 import { addItem, updateItem } from '../../functions/utils';
-import { Card, Title, Input, Row, Col} from '../../components/elements/ManagerTemplete';
+import { Card, Title, Input, Row, Col } from '../../components/elements/ManagerTemplete';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
+import Picker from 'emoji-picker-react';
 import { backUrl } from '../../data/Data';
 import { objManagerListContent } from '../../data/Data';
 import { categoryToNumber } from '../../functions/utils';
@@ -41,11 +42,26 @@ const MNoticeEdit = () => {
                 const { data: response } = await axios.get(`/api/item?table=notice&pk=${params.pk}`);
                 $(`.title`).val(response.data.title);
                 editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001', backUrl));
-            } 
+            }
         }
+        $('div.toastui-editor-defaultUI-toolbar > div:nth-child(4)').append(`<button type="button" class='emoji' aria-label='이모티콘' style='font-size:18px;'>🙂</button>`);
         fetchPost();
         fetchComments();
     }, [pathname])
+    useEffect(()=>{
+        $('button.emoji').on('click',function(){
+            $('.emoji-picker-react').attr('style','display: flex !important')
+        })
+        $('.toastui-editor-toolbar-icons').on('click',function(){
+            $('.emoji-picker-react').attr('style','display: none !important')
+        })
+    },[])
+    const [chosenEmoji, setChosenEmoji] = useState(null);
+
+    const onEmojiClick = (event, emojiObject) => {
+        setChosenEmoji(emojiObject);
+        editorRef.current.getInstance().insertText(emojiObject.emoji)
+    };
     const fetchComments = async () => {
         const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk}&category=${categoryToNumber('notice')}`);
         console.log(response)
@@ -79,7 +95,7 @@ const MNoticeEdit = () => {
         const data = editorRef.current.getInstance().getHTML();
     }
     const addComment = async () => {
-        if(!$('.comment').val()){
+        if (!$('.comment').val()) {
             alert('필수 값을 입력해 주세요.');
         }
         const { data: response } = await axios.post('/api/addcomment', {
@@ -90,10 +106,10 @@ const MNoticeEdit = () => {
             category: categoryToNumber('notice')
         })
 
-        if(response.result>0){
+        if (response.result > 0) {
             $('.comment').val("")
             fetchComments();
-        }else{
+        } else {
             alert(response.message)
         }
     }
@@ -110,11 +126,13 @@ const MNoticeEdit = () => {
                                 <Input className='title' placeholder='제목을 입력해 주세요.' />
                             </Col>
                         </Row>
-                      
+
                         <Row>
                             <Col>
                                 <Title>내용</Title>
                                 <div id="editor">
+                                    <Picker onEmojiClick={onEmojiClick} />
+
                                     <Editor
                                         placeholder="내용을 입력해주세요."
                                         previewStyle="vertical"
@@ -151,10 +169,10 @@ const MNoticeEdit = () => {
                     </ButtonContainer>
                     {params.pk > 0 ?
                         <>
-                            <Card style={{minHeight:'240px'}}>
+                            <Card style={{ minHeight: '240px' }}>
                                 <Row>
                                     <Col>
-                                    <Title>댓글 관리</Title>
+                                        <Title>댓글 관리</Title>
                                     </Col>
                                 </Row>
                                 <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />

@@ -96,8 +96,23 @@ const MVideoEdit = () => {
             }
 
         }
+        $('div.toastui-editor-defaultUI-toolbar > div:nth-child(4)').append(`<button type="button" class='emoji' aria-label='이모티콘' style='font-size:18px;'>🙂</button>`);
         fetchPost();
     }, [pathname])
+    useEffect(()=>{
+        $('button.emoji').on('click',function(){
+            $('.emoji-picker-react').attr('style','display: flex !important')
+        })
+        $('.toastui-editor-toolbar-icons').on('click',function(){
+            $('.emoji-picker-react').attr('style','display: none !important')
+        })
+    },[])
+    const [chosenEmoji, setChosenEmoji] = useState(null);
+
+    const onEmojiClick = (event, emojiObject) => {
+        setChosenEmoji(emojiObject);
+        editorRef.current.getInstance().insertText(emojiObject.emoji)
+    };
     const editItem = async () => {
         if (!$(`.title`).val() || !$(`.link`).val()) {
             alert('필요값이 비어있습니다.');

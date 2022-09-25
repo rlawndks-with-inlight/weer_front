@@ -20,7 +20,9 @@ body::-webkit-scrollbar-thumb {
 .board-container {
     width: 100%;
 }
-
+.emoji{
+    background: transparent;
+}
 .slick-dots {
     bottom: -15px !important;
 }
@@ -28,7 +30,16 @@ body::-webkit-scrollbar-thumb {
 .slick-dots li.slick-active button:before {
     color: #4CDAD8 !important;
 }
-
+#editor{
+    position: relative !important;
+}
+.emoji-picker-react{
+    position: absolute !important;
+    z-index: 100;
+    top: 56px;
+    right: 36px;
+    display: none !important;
+}
 .scroll-css {}
 
 .scroll-css::-webkit-scrollbar {

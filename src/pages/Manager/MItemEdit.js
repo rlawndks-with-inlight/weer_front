@@ -26,7 +26,7 @@ import { objManagerListContent, cardDefaultColor } from '../../data/Data';
 import Loading from '../../components/Loading';
 import { categoryToNumber } from '../../functions/utils';
 import CommentComponent from '../../components/CommentComponent';
-
+import smileIcon from '../../assets/images/icon/smile.svg'
 const MItemEdit = () => {
     const { pathname } = useLocation();
     const params = useParams();
@@ -94,9 +94,25 @@ const MItemEdit = () => {
             }
 
         }
+
+        $('div.toastui-editor-defaultUI-toolbar > div:nth-child(4)').append(`<button type="button" class='emoji' aria-label='이모티콘' style='font-size:18px;'>🙂</button>`);
         fetchPost();
         fetchComments();
     }, [pathname])
+    useEffect(() => {
+        $('button.emoji').on('click', function () {
+            $('.emoji-picker-react').attr('style', 'display: flex !important')
+        })
+        $('.toastui-editor-toolbar-icons').on('click', function () {
+            $('.emoji-picker-react').attr('style', 'display: none !important')
+        })
+    }, [])
+    const [chosenEmoji, setChosenEmoji] = useState(null);
+
+    const onEmojiClick = (event, emojiObject) => {
+        setChosenEmoji(emojiObject);
+        editorRef.current.getInstance().insertText(emojiObject.emoji)
+    };
     const fetchComments = async () => {
         const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk}&category=${categoryToNumber(params.table)}`);
         console.log(response)
@@ -152,16 +168,12 @@ const MItemEdit = () => {
         }
     };
     const onChangeEditor = (e) => {
+
         const data = editorRef.current.getInstance().getHTML();
     }
-    const [chosenEmoji, setChosenEmoji] = useState(null);
 
-    const onEmojiClick = (event, emojiObject) => {
-        setChosenEmoji(emojiObject);
-        console.log(emojiObject)
-    };
     const addComment = async () => {
-        if(!$('.comment').val()){
+        if (!$('.comment').val()) {
             alert('필수 값을 입력해 주세요.');
         }
         const { data: response } = await axios.post('/api/addcomment', {
@@ -172,10 +184,10 @@ const MItemEdit = () => {
             category: categoryToNumber(params.table)
         })
 
-        if(response.result>0){
+        if (response.result > 0) {
             $('.comment').val("")
             fetchComments();
-        }else{
+        } else {
             alert(response.message)
         }
     }
@@ -283,7 +295,7 @@ const MItemEdit = () => {
                             <Col>
                                 <Title>내용</Title>
                                 <div id="editor">
-                                    {/* <Picker onEmojiClick={onEmojiClick} /> */}
+                                    <Picker onEmojiClick={onEmojiClick} />
                                     <Editor
                                         placeholder="내용을 입력해주세요."
                                         previewStyle="vertical"
@@ -321,10 +333,10 @@ const MItemEdit = () => {
                     </ButtonContainer>
                     {params.pk > 0 ?
                         <>
-                            <Card style={{minHeight:'240px'}}>
+                            <Card style={{ minHeight: '240px' }}>
                                 <Row>
                                     <Col>
-                                    <Title>댓글 관리</Title>
+                                        <Title>댓글 관리</Title>
                                     </Col>
                                 </Row>
                                 <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />

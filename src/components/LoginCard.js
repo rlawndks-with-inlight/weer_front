@@ -89,9 +89,11 @@ const LoginCard = () => {
     const naverLogin = () => {
         if (window && window.flutter_inappwebview) {
             var params = { 'login_type': 2 };
-            window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(function (result) {
+            window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(async function (result) {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
                 // JSON.parse(result)
+                let obj = JSON.parse(result);
+                await onLoginBySns(obj.data);
             });
         } else {
             alert('웹뷰가 아닙니다.');
