@@ -33,10 +33,12 @@ export const zBottomMenu = [
     { name: '전문가칼럼', link: '/masterlist', icon: <img src={thumbImg} className='menu-icon' />, activeIcon: <img src={thumbActiveImg} className='menu-icon' />, allowList: ['/masterlist'] },
     { name: '공지사항', link: '/noticelist', icon: <img src={talkImg} className='menu-icon' />, activeIcon: <img src={talkActiveImg} className='menu-icon' />, allowList: ['/noticelist'] }
 ];
+
 export const cardDefaultColor = {
     font: "#000",
     background: "#f4f4f4"
 }
+
 export const objManagerListContent = {
     user: {
         breadcrumb: '회원',

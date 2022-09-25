@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { WrapperForm, CategoryName, Input, Button, FlexBox, SnsLogo } from './elements/AuthContentTemplete';
+import { WrapperForm, CategoryName, Input, Button, FlexBox, SnsLogo, RegularNotice } from './elements/AuthContentTemplete';
 import { Title } from "./elements/UserContentTemplete";
 import theme from "../styles/theme";
 import $ from 'jquery';
@@ -181,7 +181,7 @@ const FindMyInfoCard = () => {
             }
         }
     }
-    
+
     return (
         <>
             <WrapperForm>
@@ -201,8 +201,11 @@ const FindMyInfoCard = () => {
                             <>
                                 <CategoryName>전화번호</CategoryName>
                                 <Input placeholder='전화번호를 입력해주세요.' type={'text'} className='phone' disabled={isCheckPhoneNumber} onKeyPress={onKeyPressPhone} />
+                                <RegularNotice></RegularNotice>
                                 <Button onClick={sendSms} disabled={isCheckPhoneNumber}>인증번호 발송</Button>
                                 <Input style={{ marginTop: '36px' }} placeholder='인증번호를 입력해주세요.' type={'text'} className='phone-check' disabled={isCheckPhoneNumber} onKeyPress={onKeyPressPhoneCheck} />
+                                <RegularNotice></RegularNotice>
+
                                 <Button onClick={confirmCoincide} disabled={isCheckPhoneNumber}>{isCheckPhoneNumber ? '확인완료' : '인증번호 확인'}</Button>
                             </>
                         }
@@ -224,8 +227,10 @@ const FindMyInfoCard = () => {
                                 <Input placeholder='아이디를 입력해주세요.' type={'text'} className='id' disabled={isCheckId} onKeyPress={onKeyPressId} />
                                 <CategoryName>전화번호</CategoryName>
                                 <Input placeholder='전화번호를 입력해주세요.' type={'text'} className='phone' disabled={isCheckIdAndPhone} onKeyPress={onKeyPressPhone} />
+                                <RegularNotice></RegularNotice>
                                 <Button onClick={sendSms} disabled={isCheckIdAndPhone}>인증번호 발송</Button>
                                 <Input style={{ marginTop: '36px' }} placeholder='인증번호를 입력해주세요.' type={'text'} className='phone-check' disabled={isCheckIdAndPhone} onKeyPress={onKeyPressPhoneCheck} />
+                                <RegularNotice></RegularNotice>
                                 <Button onClick={confirmCoincideIdAndPhone} disabled={isCheckIdAndPhone}>{'인증번호 확인'}</Button>
                             </>
                         }

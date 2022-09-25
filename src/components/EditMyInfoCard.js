@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { WrapperForm, CategoryName, Input, Button, FlexBox, SnsLogo } from './elements/AuthContentTemplete';
+import { WrapperForm, CategoryName, Input, Button, FlexBox, SnsLogo, RegularNotice } from './elements/AuthContentTemplete';
 import { Title } from "./elements/UserContentTemplete";
 import theme from "../styles/theme";
 import $ from 'jquery';
@@ -242,6 +242,7 @@ const EditMyInfoCard = () => {
                         <Input className="pw" type={'password'} placeholder="비밀번호를 입력해 주세요." onKeyPress={(e) => e.key == 'Enter' ? $('.phone').focus() : null} />
                         <CategoryName>전화번호</CategoryName>
                         <Input className="phone" placeholder="전화번호를 입력해 주세요." onKeyPress={(e) => e.key == 'Enter' ? sendSms() : null} />
+                        <RegularNotice></RegularNotice>
                         <Button onClick={sendSms}>인증번호 발송</Button>
                         <CategoryName>인증번호</CategoryName>
                         <Input className="phone-check" placeholder="인증번호를 입력해 주세요." onKeyPress={(e) => e.key == 'Enter' ? onSave(typeNum) : null} />
