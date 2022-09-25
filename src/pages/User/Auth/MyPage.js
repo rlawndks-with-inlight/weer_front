@@ -6,7 +6,7 @@ import { backUrl } from "../../../data/Data";
 import defaultImg from '../../../assets/images/icon/default-profile.png'
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {MdEdit} from 'react-icons/md';
+import { MdEdit } from 'react-icons/md';
 import theme from "../../../styles/theme";
 const MyCard = styled.div`
 display:flex;
@@ -69,18 +69,17 @@ const MyPage = () => {
     const navigate = useNavigate();
     const [auth, setAuth] = useState({})
     useEffect(() => {
-        async function isAdmin(){
+        async function isAdmin() {
             const { data: response } = await axios('/api/auth')
             console.log(response)
-            if(response.pk>0){
-                await localStorage.setItem('auth',JSON.stringify(response))
+            if (response.pk > 0) {
+                await localStorage.setItem('auth', JSON.stringify(response))
                 let obj = response;
                 console.log(obj)
                 setAuth(obj);
-            }else{
+            } else {
                 localStorage.removeItem('auth');
                 navigate('/login')
-
             }
         }
         isAdmin();
@@ -99,24 +98,24 @@ const MyPage = () => {
         <>
             <Wrappers className="wrapper" style={{ maxWidth: '800px' }}>
                 <Title>마이페이지</Title>
-                <MdEdit style={{margin:'2rem 0 1rem auto',color:`${theme.color.font2}`,fontSize:'24px',cursor:'pointer'}} onClick={()=>navigate('/editmyinfo')} />
+                <MdEdit style={{ margin: '2rem 0 1rem auto', color: `${theme.color.font2}`, fontSize: '24px', cursor: 'pointer' }} onClick={() => navigate('/editmyinfo')} />
 
                 <MyCard>
                     <ProfileContainer>
-                        <img src={auth?.profile_img ? auth?.profile_img.substring(0,4)=="http"?auth?.profile_img : backUrl + auth?.profile_img : defaultImg} style={{ height: '125px', width: '125px', borderRadius: '50%', background: '#fff', margin: 'auto' }} />
+                        <img src={auth?.profile_img ? auth?.profile_img.substring(0, 4) == "http" ? auth?.profile_img : backUrl + auth?.profile_img : defaultImg} style={{ height: '125px', width: '125px', borderRadius: '50%', background: '#fff', margin: 'auto' }} />
                     </ProfileContainer>
                     <Container>
                         <Content>
                             <Category>닉네임</Category>
                             <Result>
                                 {auth?.nickname ?? "---"}
-                                </Result>
+                            </Result>
                         </Content>
                         <Content>
                             <Category>아이디</Category>
                             <Result>
-                                {auth?.id ?? "---"}
-                                </Result>
+                                {auth?.type != 0 ? "---" : auth.id}
+                            </Result>
                         </Content>
                         <Content>
                             <Category>비밀번호</Category>
