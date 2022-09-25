@@ -163,7 +163,7 @@ const SideBar = () => {
                 <div style={{ maxHeight: '80vh',paddingBottom:'32px' }}>
                     {zSidebar.map((item, index) => (
                         <>
-                            {JSON.parse(localStorage.getItem('auth'))?.level??0 >= item.level ?
+                            {JSON.parse(localStorage.getItem('auth'))?.user_level??0 >= item.level ?
                                 <>
                                     {item.allow_list.includes(location.pathname) ?
                                         <>
@@ -201,7 +201,7 @@ const SideBar = () => {
                         :
                         <>
                         </>}
-                    {JSON.parse(localStorage.getItem('auth'))?.level??0 >= 40 ?
+                    {JSON.parse(localStorage.getItem('auth'))?.user_level??0 >= 40 ?
                         <>
                             {'/manager/list/feature_category' == location.pathname ?
                                 <>
@@ -223,7 +223,7 @@ const SideBar = () => {
                         </>
                     }
 
-                    {JSON.parse(localStorage.getItem('auth'))?.level??0 >= 40 ?
+                    {JSON.parse(localStorage.getItem('auth'))?.user_level??0 >= 40 ?
                         <>
                             {'/manager/list/feature' == location.pathname ?
                                 <>
@@ -259,7 +259,7 @@ const SideBar = () => {
                         :
                         <>
                         </>}
-                    {JSON.parse(localStorage.getItem('auth'))?.level??0 >= 30 ?
+                    {JSON.parse(localStorage.getItem('auth'))?.user_level??0 >= 30 ?
                         <>
                             {'/manager/list/video' == location.pathname ?
                                 <>
@@ -282,7 +282,7 @@ const SideBar = () => {
                     }
 
 
-                    {JSON.parse(localStorage.getItem('auth'))?.level??0 >= 40 ?
+                    {JSON.parse(localStorage.getItem('auth'))?.user_level??0 >= 40 ?
                         <>
                             {'/manager/list/notice' == location.pathname ?
                                 <>

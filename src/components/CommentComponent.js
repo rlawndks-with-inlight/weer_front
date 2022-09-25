@@ -53,7 +53,7 @@ const CommentComponent = (props) => {
                                         <div style={{ marginBottom: '6px', display: 'flex' }}><div style={{ marginRight: '6px' }}>{item.nickname}</div> <div style={{ color: theme.color.font3 }}>{item.date.substring(0, 16)}</div></div>
                                         <div style={{ wordBreak: 'break-all', marginBottom: '6px', fontSize: theme.size.font3 }}>{item.note}</div>
                                         <div style={{ display: 'flex' }}>
-                                            {JSON.parse(localStorage.getItem('auth'))?.pk == item.user_pk || JSON.parse(localStorage.getItem('auth'))?.level >= 40 ?
+                                            {JSON.parse(localStorage.getItem('auth'))?.pk == item.user_pk || JSON.parse(localStorage.getItem('auth'))?.user_level >= 40 ?
                                                 <>
                                                     <div style={{ marginRight: '6px', cursor: 'pointer' }}>수정</div>
                                                     <div style={{ cursor: 'pointer' }} onClick={() => deleteComment(item.pk)}>지우기</div>

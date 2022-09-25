@@ -54,10 +54,16 @@ const LoginCard = () => {
     }
     const onLoginBySns = async(obj) =>{
         console.log(JSON.stringify(obj))
+        let nick = "";
+        if(obj.login_type==1){
+            nick = "카카오" +new Date().getTime()
+        }else if(obj.login_type==2){
+            nick = "네이버" +new Date().getTime()
+        }
         let objs = {
             id:obj.id,
             name:obj.legal_name,
-            nickname:"카카오유저"+new Date().getTime(),
+            nickname:nick,
             phone:obj.phone_number,
             user_level:0,
             typeNum:obj.login_type,
@@ -73,9 +79,10 @@ const LoginCard = () => {
             alert(response.message);
         }
     }
-    const kakaoLogin =  () => {
+    
+    const snsLogin = (num) =>{
         if (window && window.flutter_inappwebview) {
-            let params = { 'login_type': 1 };
+            var params = { 'login_type': num };
             window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(async function (result) {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
                 // JSON.parse(result)
@@ -86,21 +93,7 @@ const LoginCard = () => {
             alert('웹뷰가 아닙니다.');
         }
     }
-    const naverLogin = () => {
-        console.log(1)
-        if (window && window.flutter_inappwebview) {
-            console.log(2)
-            var params = { 'login_type': 2 };
-            window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(async function (result) {
-                //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
-                // JSON.parse(result)
-                let obj = JSON.parse(result);
-                await onLoginBySns(obj.data);
-            });
-        } else {
-            alert('웹뷰가 아닙니다.');
-        }
-    }
+   
     return (
         <>
             <WrapperForm onSubmit={onLogin} id='login_form'>
@@ -120,8 +113,8 @@ const LoginCard = () => {
                 <Button onClick={onLogin}>로그인</Button>
                 <CategoryName style={{ marginTop: '36px' }}>SNS 간편 로그인</CategoryName>
                 <FlexBox>
-                    <SnsLogo src={kakao} onClick={kakaoLogin} />
-                    <SnsLogo src={naver} onClick={naverLogin} />
+                    <SnsLogo src={kakao} onClick={()=>snsLogin(1)} />
+                    <SnsLogo src={naver} onClick={()=>snsLogin(2)} />
                 </FlexBox>
                 <CategoryName style={{ marginTop: '0', fontSize: '11px' }}>
                     아직 weare 회원이 아니라면?<strong style={{ textDecoration: 'underline', cursor: 'pointer', marginLeft: '12px' }} onClick={() => { navigate('/signup') }}>회원가입</strong>

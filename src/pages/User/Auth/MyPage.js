@@ -75,6 +75,7 @@ const MyPage = () => {
             if(response.pk>0){
                 await localStorage.setItem('auth',JSON.stringify(response))
                 let obj = response;
+                console.log(obj)
                 setAuth(obj);
             }else{
                 localStorage.removeItem('auth');

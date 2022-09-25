@@ -72,7 +72,7 @@ const MItemList = () => {
             } else {
                 let auth = JSON.parse(localStorage.getItem('auth'))
                 str = `/api/items?table=${params.table}&page=1`
-                if (auth?.level < 40) {
+                if (auth?.user_level < 40) {
                     str += `&user_pk=${auth.pk}`
                 }
 
