@@ -105,9 +105,7 @@ const Home = () => {
             typeNum: obj.login_type,
             profile_img: obj.profile_image_url
         }
-        console.log(JSON.stringify(objs))
         const { data: response } = await axios.post('/api/loginbysns', objs);
-        console.log(response);
         if (response.result > 0) {
             await localStorage.setItem('auth', JSON.stringify(response.data));
         } else {
@@ -171,12 +169,12 @@ const Home = () => {
                                 </Slider>
                             </SliderDiv>
                         </Content>
-                        <Title link={'/oneeventlist'} className='pointer'>하루 1종목</Title>
+                        {/* <Title link={'/oneeventlist'} className='pointer'>하루 1종목</Title>
                         <Content onClick={() => { navigate(`/post/oneevent/${oneEvent?.pk}`) }} className='pointer'>
                             <div>{oneEvent?.title}</div>
                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneEvent?.hash}</div>
-                        </Content>
-                        <Title link={'/masterlist'} className='pointer'>퍼스트 전문가</Title>
+                        </Content> */}
+                        <Title link={'/masterlist'} className='pointer'>전문가 칼럼</Title>
 
                         <SelectSubType className='subtype-container' style={{ marginBottom: '16px' }}>
                             <SubType style={{ borderBottom: `2px solid ${0 == subTypeNum ? theme.color.background1 : '#fff'}`, fontWeight: `${0 == subTypeNum ? 'bold' : 'normal'}` }} onClick={() => { onChangeStrategyNum(0, 0) }}>

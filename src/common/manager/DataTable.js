@@ -31,7 +31,6 @@ padding:14px 0;
 margin-bottom:6px;
 `
 const DataTable = (props) => {
-    //console.log(props)
     const { column, data, schema, opTheTopItem, changeItemSequence, deleteItem } = props;
     const navigate = useNavigate();
     const [zStatus, setZStatus] = useState([]);
@@ -47,7 +46,6 @@ const DataTable = (props) => {
         if (!isChange) {
             setIsChange(true)
         } else {
-            //console.log(posts)
         }
     }, [posts])
 

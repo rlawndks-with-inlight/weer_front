@@ -24,7 +24,7 @@ const MasterList = () => {
 
     useEffect(() => {
         async function fetchPosts() {
-            const { data: response } = await axios.get('/api/users?level=30');
+            const { data: response } = await axios.get('/api/users?level=30&status=1');
             setPosts(response.data);
         }
         fetchPosts();

@@ -215,7 +215,7 @@ const Search = () => {
                         }
 
 
-                        {/* <Title link={'/masterlist'} className='pointer'>퍼스트 전문가</Title>
+                        {/* <Title link={'/masterlist'} className='pointer'>전문가 칼럼</Title>
 
                         <SelectSubType className='subtype-container' style={{ marginBottom: '16px' }}>
                             <SubType style={{ borderBottom: `2px solid ${0 == subTypeNum ? theme.color.background1 : '#fff'}`, fontWeight: `${0 == subTypeNum ? 'bold' : 'normal'}` }} onClick={() => { onChangeStrategyNum(0, 0) }}>

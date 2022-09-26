@@ -62,10 +62,11 @@ export const objManagerListContent = {
             { name: '프로필이미지', width: 12, type: 'img', column: 'profile_img' },
             { name: '채널이미지', width: 12, type: 'img', column: 'channel_img' },
             { name: '아이디', width: 12, type: 'text', column: 'id' },
-            { name: '이름', width: 12, type: 'text', column: 'name' },
+            { name: '이름', width: 8, type: 'text', column: 'name' },
             { name: '채널명', width: 12, type: 'text', column: 'nickname' },
-            { name: '생성시간', width: 16, type: 'text', column: 'date' },
+            { name: '생성시간', width: 12, type: 'text', column: 'date' },
             { name: '맨위로', width: 8, type: 'top', column: '' },
+            { name: '노출여부', width: 8, type: 'status', column: 'status' },
             { name: '수정', width: 8, type: 'edit', column: 'edit' },
             { name: '삭제', width: 8, type: 'delete', column: 'delete' }
         ],

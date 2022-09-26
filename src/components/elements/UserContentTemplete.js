@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import $ from 'jquery'
 import { useState } from "react";
+import { MdNavigateNext } from 'react-icons/md'
 
 export const WrappersStyle = styled.div`
 position:relative;
@@ -50,11 +51,14 @@ export const Title = (props) =>{
     const navigate = useNavigate();
     return (
         <>
-        <div style={{display:'flex',alignItems:'center',marginTop:'24px',marginBottom:'8px'}} onClick={()=>{navigate(props.link)}}>
+        <div style={{display:'flex',alignItems:'center',marginTop:'24px',marginBottom:'8px',justifyContent:'space-between'}} onClick={()=>{navigate(props.link)}}>
         <TitleStyle>
             {props?.children??""}
         </TitleStyle>
-        <hr className="bar"/>
+        <MdNavigateNext style={{fontSize:`25px`}} />
+
+        {/* <hr className="bar"/> */}
+
         </div>
         
         </>
