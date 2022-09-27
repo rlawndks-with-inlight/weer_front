@@ -51,8 +51,17 @@ const MAlarmEdit = () => {
         fetchComments();
     }, [pathname])
     useEffect(() => {
+        $('html').on('click',function(e) { 
+            if($(e.target).parents('.emoji-picker-react').length < 1 && $('.emoji-picker-react').css('display')=='flex'&& $(e.target).attr('class') != 'emoji'){
+                $('.emoji-picker-react').attr('style', 'display: none !important')
+            }
+        });
         $('button.emoji').on('click', function () {
-            $('.emoji-picker-react').attr('style', 'display: flex !important')
+            if($('.emoji-picker-react').css('display')=='none'){
+                $('.emoji-picker-react').attr('style', 'display: flex !important')
+            }else{
+                $('.emoji-picker-react').attr('style', 'display: none !important')
+            }
         })
         $('.toastui-editor-toolbar-icons').on('click', function () {
             $('.emoji-picker-react').attr('style', 'display: none !important')

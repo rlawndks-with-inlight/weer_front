@@ -150,7 +150,7 @@ const Video = () => {
         <>
             <Wrappers>
                 <div style={{ width: '100%', textAlign: 'end' }}>{post.nickname} / {post?.date?.substring(5, 10)} / {commarNumber(post?.views ?? 0)}</div>
-                <Title>{post.title}</Title>
+                <Title not_arrow={true}>{post.title}</Title>
                 <Iframe src={`https://www.youtube.com/embed/${post.link}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
 
                 </Iframe>

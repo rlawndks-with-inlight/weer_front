@@ -55,7 +55,14 @@ export const Title = (props) =>{
         <TitleStyle>
             {props?.children??""}
         </TitleStyle>
+        {props.not_arrow?
+        <>
+        </>
+        :
+        <>
         <MdNavigateNext style={{fontSize:`25px`}} />
+        </>
+        }
 
         {/* <hr className="bar"/> */}
 

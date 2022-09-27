@@ -91,18 +91,27 @@ const MItemEdit = () => {
             }
 
         }
-
         $('div.toastui-editor-defaultUI-toolbar > div:nth-child(4)').append(`<button type="button" class='emoji' aria-label='이모티콘' style='font-size:18px;'>🙂</button>`);
         fetchPost();
         fetchComments();
     }, [pathname])
     useEffect(() => {
+        $('html').on('click',function(e) { 
+            if($(e.target).parents('.emoji-picker-react').length < 1 && $('.emoji-picker-react').css('display')=='flex'&& $(e.target).attr('class') != 'emoji'){
+                $('.emoji-picker-react').attr('style', 'display: none !important')
+            }
+        });
         $('button.emoji').on('click', function () {
-            $('.emoji-picker-react').attr('style', 'display: flex !important')
+            if($('.emoji-picker-react').css('display')=='none'){
+                $('.emoji-picker-react').attr('style', 'display: flex !important')
+            }else{
+                $('.emoji-picker-react').attr('style', 'display: none !important')
+            }
         })
         $('.toastui-editor-toolbar-icons').on('click', function () {
             $('.emoji-picker-react').attr('style', 'display: none !important')
         })
+        
     }, [])
     const [chosenEmoji, setChosenEmoji] = useState(null);
 
@@ -292,7 +301,7 @@ const MItemEdit = () => {
                             <Col>
                                 <Title>내용</Title>
                                 <div id="editor">
-                                    <Picker onEmojiClick={onEmojiClick} />
+                                    <Picker onEmojiClick={onEmojiClick} style={{color:'red'}} />
                                     <Editor
                                         placeholder="내용을 입력해주세요."
                                         previewStyle="vertical"
