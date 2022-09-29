@@ -196,34 +196,6 @@ const Home = () => {
                                 </>
                             ))}
                         </div>
-                        <Title link={'/themelist'}>핵심 테마</Title>
-                        <Content>
-                            <WrapDiv>
-                                {themes.map((item, idx) => (
-                                    <>
-                                        <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} >
-                                            <Img src={backUrl + item?.main_img} />
-                                            <div style={{ padding: '16px 16px 0 16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
-                                            <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
-                                        </Card>
-                                    </>
-                                ))}
-
-                            </WrapDiv>
-                            <SliderDiv>
-                                <Slider {...slideSetting} className='board-container'>
-                                    {themes.map((item, idx) => (
-                                        <>
-                                            <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
-                                                <Img src={backUrl + item?.main_img} />
-                                                <div style={{ padding: '16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
-                                                <div style={{ fontSize: `${theme.size.font4}`, padding: '8px 16px', height: '50px' }}>{item?.hash}</div>
-                                            </Card>
-                                        </>
-                                    ))}
-                                </Slider>
-                            </SliderDiv>
-                        </Content>
                         <Title link={'/selectfeaturecategory'}>특징주</Title>
                         <Content>
                             <WrapDiv>
@@ -252,6 +224,35 @@ const Home = () => {
                                 </Slider>
                             </SliderDiv>
                         </Content>
+                        <Title link={'/themelist'}>핵심 테마</Title>
+                        <Content>
+                            <WrapDiv>
+                                {themes.map((item, idx) => (
+                                    <>
+                                        <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} >
+                                            <Img src={backUrl + item?.main_img} />
+                                            <div style={{ padding: '16px 16px 0 16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
+                                            <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
+                                        </Card>
+                                    </>
+                                ))}
+
+                            </WrapDiv>
+                            <SliderDiv>
+                                <Slider {...slideSetting} className='board-container'>
+                                    {themes.map((item, idx) => (
+                                        <>
+                                            <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
+                                                <Img src={backUrl + item?.main_img} />
+                                                <div style={{ padding: '16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
+                                                <div style={{ fontSize: `${theme.size.font4}`, padding: '8px 16px', height: '50px' }}>{item?.hash}</div>
+                                            </Card>
+                                        </>
+                                    ))}
+                                </Slider>
+                            </SliderDiv>
+                        </Content>
+                        
                         <Title link={'/videolist'}>핵심 비디오</Title>
                         <Content>
                             <WrapDiv>
