@@ -82,7 +82,7 @@ font-weight:normal;
     
 }
 `
-export const Img = styled.div`
+export const Img = styled.img`
 width: 100%;
 height:320px;
 background:#fff;
@@ -90,11 +90,11 @@ background-size: cover;
 background-repeat: no-repeat;
 background-position: center center;
 background-blend-mode: multiply;
-@media screen and (max-width:1200px) {
-    height: 28.266666666vw;
+@media screen and (max-width:1100px) {
+    height: 28.8vw;
 }
 @media screen and (max-width:600px) {
-    height: 60vw;
+    height: 52.2222222222vw;
 }
 `
 export const Card = styled.div`

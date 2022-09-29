@@ -31,7 +31,7 @@ const Home = () => {
     const [videos, setVideos] = useState([]);
     const [strategies, setStrategies] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const [features, setFeatures] = useState([])
 
 
     const settings = {
@@ -53,9 +53,10 @@ const Home = () => {
             setMasters(response.data.masters)
             setOneWord(response.data.oneWord);
             setIssues(response.data.issues);
-            setOneEvent(response.data.oneEvent);
+            //setOneEvent(response.data.oneEvent);
+            setStrategies(response.data.strategies);
+            setFeatures(response.data.features);
             setThemes(response.data.themes);
-            setStrategies(response.data.strategies)
             let video_list = response.data?.videos
             for (var i = 0; i < video_list.length; i++) {
                 video_list[i].link = getIframeLinkByLink(video_list[i].link);
@@ -147,7 +148,7 @@ const Home = () => {
                                 {issues.map((item, idx) => (
                                     <>
                                         <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} className='pointer'>
-                                            <Img style={{ backgroundImage: `url(${backUrl + item?.main_img})` }} />
+                                            <Img src={backUrl + item?.main_img} />
                                             <div style={{ padding: '16px 16px 0 16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
                                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
                                         </Card>
@@ -160,7 +161,7 @@ const Home = () => {
                                     {issues.map((item, idx) => (
                                         <>
                                             <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
-                                                <Img style={{ backgroundImage: `url(${backUrl + item?.main_img})` }} />
+                                                <Img src={backUrl + item?.main_img} />
                                                 <div style={{ padding: '16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
                                                 <div style={{ fontSize: `${theme.size.font4}`, padding: '8px 16px', height: '50px' }}>{item?.hash}</div>
                                             </Card>
@@ -201,7 +202,7 @@ const Home = () => {
                                 {themes.map((item, idx) => (
                                     <>
                                         <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} >
-                                            <Img style={{ backgroundImage: `url(${backUrl + item?.main_img})` }} />
+                                            <Img src={backUrl + item?.main_img} />
                                             <div style={{ padding: '16px 16px 0 16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
                                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
                                         </Card>
@@ -214,7 +215,35 @@ const Home = () => {
                                     {themes.map((item, idx) => (
                                         <>
                                             <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
-                                                <Img style={{ backgroundImage: `url(${backUrl + item?.main_img})` }} />
+                                                <Img src={backUrl + item?.main_img} />
+                                                <div style={{ padding: '16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
+                                                <div style={{ fontSize: `${theme.size.font4}`, padding: '8px 16px', height: '50px' }}>{item?.hash}</div>
+                                            </Card>
+                                        </>
+                                    ))}
+                                </Slider>
+                            </SliderDiv>
+                        </Content>
+                        <Title link={'/selectfeaturecategory'}>특징주</Title>
+                        <Content>
+                            <WrapDiv>
+                                {features.map((item, idx) => (
+                                    <>
+                                        <Card onClick={() => navigate(`/post/feature/${item?.pk}`)} >
+                                            <Img src={backUrl + item?.main_img} />
+                                            <div style={{ padding: '16px 16px 0 16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
+                                            <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
+                                        </Card>
+                                    </>
+                                ))}
+
+                            </WrapDiv>
+                            <SliderDiv>
+                                <Slider {...slideSetting} className='board-container'>
+                                    {features.map((item, idx) => (
+                                        <>
+                                            <Card onClick={() => navigate(`/post/feature/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
+                                                <Img src={backUrl + item?.main_img} />
                                                 <div style={{ padding: '16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
                                                 <div style={{ fontSize: `${theme.size.font4}`, padding: '8px 16px', height: '50px' }}>{item?.hash}</div>
                                             </Card>

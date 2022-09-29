@@ -38,7 +38,7 @@ export const cardDefaultColor = {
     font: "#000",
     background: "#f4f4f4"
 }
-
+export const needTwoImage = ['issue', 'theme', 'feature'];
 export const objManagerListContent = {
     user: {
         breadcrumb: '회원',

@@ -20,7 +20,7 @@ import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import Picker from 'emoji-picker-react';
-import { backUrl } from '../../data/Data';
+import { backUrl, needTwoImage } from '../../data/Data';
 import { objManagerListContent, cardDefaultColor } from '../../data/Data';
 import { categoryToNumber } from '../../functions/utils';
 import CommentComponent from '../../components/CommentComponent';
@@ -34,7 +34,9 @@ const MItemEdit = () => {
     const [percent, setPercent] = useState(0);
     const [myNick, setMyNick] = useState("")
     const [url, setUrl] = useState('')
+    const [url2, setUrl2] = useState('')
     const [content, setContent] = useState(undefined)
+    const [content2, setContent2] = useState(undefined)
     const [formData] = useState(new FormData())
 
     const [noteFormData] = useState(new FormData());
@@ -54,7 +56,6 @@ const MItemEdit = () => {
         issue: ' 권장(300*360)',
         feature: ' 권장(300*360)',
     }
-
     useEffect(() => {
         async function fetchPost() {
             let authObj = JSON.parse(localStorage.getItem('auth'));
@@ -82,6 +83,7 @@ const MItemEdit = () => {
                 }
                 editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001', backUrl));
                 setUrl(backUrl + response.data.main_img);
+                if(needTwoImage.includes(params.table))setUrl2(backUrl + response.data.second_img);
                 setItem(response.data)
             } else {
 
@@ -96,22 +98,22 @@ const MItemEdit = () => {
         fetchComments();
     }, [pathname])
     useEffect(() => {
-        $('html').on('click',function(e) { 
-            if($(e.target).parents('.emoji-picker-react').length < 1 && $('.emoji-picker-react').css('display')=='flex'&& $(e.target).attr('class') != 'emoji'){
+        $('html').on('click', function (e) {
+            if ($(e.target).parents('.emoji-picker-react').length < 1 && $('.emoji-picker-react').css('display') == 'flex' && $(e.target).attr('class') != 'emoji') {
                 $('.emoji-picker-react').attr('style', 'display: none !important')
             }
         });
         $('button.emoji').on('click', function () {
-            if($('.emoji-picker-react').css('display')=='none'){
+            if ($('.emoji-picker-react').css('display') == 'none') {
                 $('.emoji-picker-react').attr('style', 'display: flex !important')
-            }else{
+            } else {
                 $('.emoji-picker-react').attr('style', 'display: none !important')
             }
         })
         $('.toastui-editor-toolbar-icons').on('click', function () {
             $('.emoji-picker-react').attr('style', 'display: none !important')
         })
-        
+
     }, [])
     const [chosenEmoji, setChosenEmoji] = useState(null);
 
@@ -131,7 +133,9 @@ const MItemEdit = () => {
             let auth = JSON.parse(localStorage.getItem('auth'))
             formData.append('table', params.table);
             formData.append('content', content);
+            if(needTwoImage.includes(params.table))formData.append('content2', content2);
             formData.append('url', item.main_img)
+            if(needTwoImage.includes(params.table))formData.append('url2', item.second_img)
             formData.append('title', $(`.title`).val())
             formData.append('hash', $(`.hash`).val())
             formData.append('suggest_title', $(`.suggest-title`).val())
@@ -143,7 +147,6 @@ const MItemEdit = () => {
             console.log(auth.user_level >= 40 && params.table == 'strategy')
             if (params.table == 'issue' || params.table == 'feature') formData.append('category_pk', $('.category').val())
             if (params.pk > 0) formData.append('pk', params.pk);
-            console.log(formData)
             if (window.confirm(`저장하시겠습니까?`)) {
 
                 formData.append('font_color', $('.font-color').val());
@@ -171,6 +174,12 @@ const MItemEdit = () => {
         if (e.target.files[0]) {
             setContent(e.target.files[0]);
             setUrl(URL.createObjectURL(e.target.files[0]))
+        }
+    };
+    const addFile2 = (e) => {
+        if (e.target.files[0]) {
+            setContent2(e.target.files[0]);
+            setUrl2(URL.createObjectURL(e.target.files[0]))
         }
     };
     const onChangeEditor = (e) => {
@@ -202,19 +211,19 @@ const MItemEdit = () => {
             <ManagerWrappers>
                 <SideBar />
                 <ManagerContentWrappers>
-                    <Breadcrumb title={objManagerListContent[`${params.table}`].breadcrumb+`${params.pk>0?'수정':'추가'}`} nickname={myNick} />
+                    <Breadcrumb title={objManagerListContent[`${params.table}`].breadcrumb + `${params.pk > 0 ? '수정' : '추가'}`} nickname={myNick} />
                     <Card>
 
                         <Row>
                             <Col>
-                                <Title>프로필 이미지 <br />{imgSetting[params.table]}</Title>
+                                <Title>프로필이미지 <br /> {needTwoImage.includes(params.table) ? '(권장 900*600)' : ''}</Title>
                                 <ImageContainer for="file1">
 
                                     {url ?
                                         <>
                                             <img src={url} alt="#"
                                                 style={{
-                                                    width: '8rem', height: '8rem',
+                                                    width: 'auto', height: '8rem',
                                                     margin: '2rem'
                                                 }} />
                                         </>
@@ -228,6 +237,36 @@ const MItemEdit = () => {
                                 </div>
                             </Col>
                         </Row>
+                        {needTwoImage.includes(params.table) ?
+                            <>
+                                <Row>
+                                    <Col>
+                                        <Title>프로필 이미지 <br /> (권장 300*360)</Title>
+                                        <ImageContainer for="file2">
+
+                                            {url2 ?
+                                                <>
+                                                    <img src={url2} alt="#"
+                                                        style={{
+                                                            width: 'auto', height: '8rem',
+                                                            margin: '2rem'
+                                                        }} />
+                                                </>
+                                                :
+                                                <>
+                                                    <AiFillFileImage style={{ margin: '4rem', fontSize: '4rem', color: `${theme.color.manager.font3}` }} />
+                                                </>}
+                                        </ImageContainer>
+                                        <div>
+                                            <input type="file" id="file2" onChange={addFile2} style={{ display: 'none' }} />
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </>
+                            :
+                            <>
+                            </>}
+
                         <Row>
                             <Col>
                                 <Title>추천 게시물 제목</Title>
@@ -301,7 +340,7 @@ const MItemEdit = () => {
                             <Col>
                                 <Title>내용</Title>
                                 <div id="editor">
-                                    <Picker onEmojiClick={onEmojiClick} style={{color:'red'}} />
+                                    <Picker onEmojiClick={onEmojiClick} style={{ color: 'red' }} />
                                     <Editor
                                         placeholder="내용을 입력해주세요."
                                         previewStyle="vertical"

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { backUrl } from "../data/Data";
+import { backUrl, needTwoImage } from "../data/Data";
 import theme from "../styles/theme";
 
 const Card = styled.div`
@@ -18,14 +18,14 @@ cursor:pointer;
     height: 36vw;
 }
 `
-const Img = styled.div`
+const Img = styled.img`
 width: 150px;
 background:#fff;
 @media screen and (max-width:1000px) {
     width:15vw;
 }
 @media screen and (max-width:700px) {
-    width:28.125vw;
+    width:30vw;
 }
 `
 const Title = styled.div`
@@ -65,10 +65,7 @@ const ThemeCard = (props) => {
     return (
         <>
             <Card onClick={() => navigate(`/post/${props.category}/${props.item?.pk}`)}>
-                <Img style={{
-                    backgroundImage: `url(${backUrl + props.item?.main_img ?? ""})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center', backgroundBlendMode: 'multiply'
-                }} />
-
+                <Img src={backUrl + `${needTwoImage.includes(props.category) ? props.item?.second_img : props.item?.main_img}`} />
                 <TextContainer>
                     <Title> {props.item?.title ?? ""}</Title>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
