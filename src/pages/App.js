@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Redirect, Routes } from "react-router-dom";
 import ScrollToTop from '../components/ScrollToTop';
 import Headers from '../common/Headers';
 import BottomMenu from '../common/BottomMenu';
 import Footer from '../common/Footer';
-import { Helmet } from 'react-helmet-async';
 import { zRoute } from '../routes/route';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import MetaTag from '../components/MetaTag';
 const App = () => {
-
+    
     return (
         <>
             <Router>

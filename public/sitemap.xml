@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url> <loc>https://masterpick.co.kr/</loc> </url>
+<url> <loc>https://masterpick.co.kr/home</loc> </url>
+<url> <loc>https://masterpick.co.kr/search</loc> </url>
+<url> <loc>https://masterpick.co.kr/selectissuecategory</loc> </url>
+<url> <loc>https://masterpick.co.kr/selectfeaturecategory</loc> </url>
+<url> <loc>https://masterpick.co.kr/masterlist</loc> </url>
+<url> <loc>https://masterpick.co.kr/themelist</loc> </url>
+<url> <loc>https://masterpick.co.kr/videolist</loc> </url>
+<url> <loc>https://masterpick.co.kr/issuelist/:pk</loc> </url>
+<url> <loc>https://masterpick.co.kr/featurelist/:pk</loc> </url>
+<url> <loc>https://masterpick.co.kr/onewordlist</loc> </url>
+<url> <loc>https://masterpick.co.kr/oneeventlist</loc> </url>
+<url> <loc>https://masterpick.co.kr/noticelist</loc> </url>
+<url> <loc>https://masterpick.co.kr/master/:pk</loc> </url>
+<url> <loc>https://masterpick.co.kr/login</loc> </url>
+<url> <loc>https://masterpick.co.kr/mypage</loc> </url>
+<url> <loc>https://masterpick.co.kr/editmyinfo</loc> </url>
+<url> <loc>https://masterpick.co.kr/findmyinfo</loc> </url>
+<url> <loc>https://masterpick.co.kr/signup</loc> </url>
+<url> <loc>https://masterpick.co.kr/post/notice/:pk</loc> </url>
+<url> <loc>https://masterpick.co.kr/post/:table/:pk</loc> </url>
+<url> <loc>https://masterpick.co.kr/video/:pk</loc> </url>
+<url> <loc>https://masterpick.co.kr/manager</loc> </url>
+<url> <loc>https://masterpick.co.kr/manager/login</loc> </url>
+<url> <loc>https://masterpick.co.kr/manager/edit/user/:pk</loc> </url>
+<url> <loc>https://masterpick.co.kr/manager/edit/master/:pk</loc> </url>
+<url> <loc>https://masterpick.co.kr/manager/edit/channel/:pk</loc> </url>
+<url> <loc>https://masterpick.co.kr/manager/setting</loc> </url>
+<url> <loc>https://masterpick.co.kr/manager/edit/video/:pk</loc> </url>
+<url> <loc>https://masterpick.co.kr/manager/edit/notice/:pk</loc> </url>
+<url> <loc>https://masterpick.co.kr/manager/edit/alarm/:pk</loc> </url>
+<url> <loc>https://masterpick.co.kr/manager/edit/issue_category/:pk</loc> </url>
+<url> <loc>https://masterpick.co.kr/manager/edit/feature_category/:pk</loc> </url>
+<url> <loc>https://masterpick.co.kr/manager/edit/setting</loc> </url>
+<url> <loc>https://masterpick.co.kr/manager/edit/:table/:pk</loc> </url>
+<url> <loc>https://masterpick.co.kr/manager/list/:table/:pk</loc> </url>
+<url> <loc>https://masterpick.co.kr/manager/list/:table</loc> </url>
+
+</urlset>
