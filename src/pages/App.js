@@ -8,13 +8,7 @@ import { zRoute } from '../routes/route';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import MetaTag from '../components/MetaTag';
 const App = () => {
-    useEffect(()=>{
-        let str = "";
-        for(var i=0;i<zRoute.length;i++){
-            str += `<url> <loc>https://weare-first.com${zRoute[i].link}</loc> </url>\n`
-        }
-        console.log(str)
-    },[])
+    
     return (
         <>
             <Router>
