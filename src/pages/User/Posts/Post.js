@@ -44,21 +44,21 @@ const Post = () => {
     const [loading, setLoading] = useState(false)
     const returnTitle = (ttl) =>{
         if(params.table=='notice'){
-            return "weare-first - 공지사항 / "+ttl;
+            return "weare-first : 퍼스트 파트너스 | 주식 | 특징주 | 핵심이슈 | 핵심비디오 - 공지사항 / "+ttl;
         }else if(params.table=='issue'){
-            return "weare-first - 핵심이슈 / "+ttl;
+            return "weare-first : 퍼스트 파트너스 | 주식 | 특징주 | 핵심이슈 | 핵심비디오 - 핵심이슈 / "+ttl;
         }else if(params.table=='theme'){
-            return "weare-first - 핵심테마 / "+ttl;
+            return "weare-first : 퍼스트 파트너스 | 주식 | 특징주 | 핵심이슈 | 핵심비디오 - 핵심테마 / "+ttl;
         }else if(params.table=='feature'){
-            return "weare-first - 특징주 / "+ttl;
+            return "weare-first : 퍼스트 파트너스 | 주식 | 특징주 | 핵심이슈 | 핵심비디오 - 특징주 / "+ttl;
         }else if(params.table=='oneevent'){
-            return "weare-first - 하루1종목 / "+ttl;
+            return "weare-first : 퍼스트 파트너스 | 주식 | 특징주 | 핵심이슈 | 핵심비디오 - 하루1종목 / "+ttl;
         }else if(params.table=='oneword'){
-            return "weare-first - 하루1단어 / "+ttl;
+            return "weare-first : 퍼스트 파트너스 | 주식 | 특징주 | 핵심이슈 | 핵심비디오 - 하루1단어 / "+ttl;
         }else if(params.table=='strategy'){
-            return "weare-first - 전문가칼럼 / "+ttl;
+            return "weare-first : 퍼스트 파트너스 | 주식 | 특징주 | 핵심이슈 | 핵심비디오 - 전문가칼럼 / "+ttl;
         }else{
-            return "weare-first";
+            return "weare-first : 퍼스트 파트너스 | 주식 | 특징주 | 핵심이슈 | 핵심비디오";
         }
     }
     useEffect(() => {
