@@ -41,6 +41,7 @@ import MAlarmEdit from '../pages/Manager/MAlarmEdit';
 
 const zRoute = [
     { link: '/', element: <Home />, title: "홈" },
+    { link: '/home', element: <Home />, title: "홈" },
     { link: '/search', element: <Search />, title: "검색" },
 
     { link: '/selectissuecategory', element: <SelectIssueCategory />, title: "핵심이슈" },
