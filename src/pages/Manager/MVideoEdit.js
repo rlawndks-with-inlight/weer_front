@@ -197,7 +197,7 @@ const MVideoEdit = () => {
                         </Row>
                         <Row>
                             <Col>
-                                <Title><img src={youtubeShare} style={{ width: '100%', maxWidth: '500px' }} /></Title>
+                                <Title><img src={youtubeShare} style={{ width: '100%', maxWidth: '500px' }} alt="#" /></Title>
                             </Col>
                         </Row>
                         <Row>
@@ -208,7 +208,7 @@ const MVideoEdit = () => {
                         </Row>
                         <Row>
                             <Col>
-                                <Title><img src={relateExplain} style={{ width: '100%', maxWidth: '500px' }} /></Title>
+                                <Title><img src={relateExplain} style={{ width: '100%', maxWidth: '500px' }} alt="#" /></Title>
                             </Col>
                         </Row>
                         <Row>

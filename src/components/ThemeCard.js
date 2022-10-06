@@ -65,7 +65,7 @@ const ThemeCard = (props) => {
     return (
         <>
             <Card onClick={() => navigate(`/post/${props.category}/${props.item?.pk}`)}>
-                <Img src={backUrl + `${needTwoImage.includes(props.category) ? props.item?.second_img : props.item?.main_img}`} />
+                <Img src={backUrl + `${needTwoImage.includes(props.category) ? props.item?.second_img : props.item?.main_img}`} alt="#" />
                 <TextContainer>
                     <Title> {props.item?.title ?? ""}</Title>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>

@@ -133,7 +133,7 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
                                 <Td style={{ width: `${col.width}%` }}>
                                     {data[`${col.column}`] ?
                                         <>
-                                            <img src={backUrl + data[`${col.column}`]} style={{ height: '5rem' }} />
+                                            <img alt={`${col.column}`} src={backUrl + data[`${col.column}`]} style={{ height: '5rem' }} />
                                         </>
                                         :
                                         <>

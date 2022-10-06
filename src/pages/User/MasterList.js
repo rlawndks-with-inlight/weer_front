@@ -39,7 +39,7 @@ const MasterList = () => {
                                 <div>{item.nickname}</div>
                                 <div style={{ fontSize: `${theme.size.font5}`, marginTop: '8px', color: `${theme.color.font2}` }}>{item.name} 전문가</div>
                             </div>
-                            <img style={{ position: 'absolute', bottom: '0', right: '5%', height: '80%' }} src={backUrl + item.profile_img} />
+                            <img style={{ position: 'absolute', bottom: '0', right: '5%', height: '80%' }} alt="#" src={backUrl + item.profile_img} />
                         </Card>
                     </>
                 ))}

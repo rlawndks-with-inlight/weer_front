@@ -145,7 +145,7 @@ const Search = () => {
                                         {issues.map((item, idx) => (
                                             <>
                                                 <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} >
-                                                    <Img style={{ backgroundImage: `url(${backUrl + item?.main_img})` }} />
+                                                    <Img style={{ backgroundImage: `url(${backUrl + item?.main_img})` }}  />
                                                     <div style={{ padding: '16px 16px 0 16px', fontWeight: 'bold' }}>{item?.date.substring(0, 10) ?? ""} {item?.title}</div>
                                                     <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
                                                 </Card>

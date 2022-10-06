@@ -77,7 +77,7 @@ const Master = () => {
                         <div>{state.nickname}</div>
                         <div style={{ fontSize: `${theme.size.font5}`, marginTop: '8px', color: `${theme.color.font2}` }}>{state.name} 전문가</div>
                     </div>
-                    <img style={{ position: 'absolute', bottom: '0', right: '5%', height: '80%' }} src={backUrl + state.img} />
+                    <img style={{ position: 'absolute', bottom: '0', right: '5%', height: '80%' }} alt="#" src={backUrl + state.img} />
                 </Card2>
                 <SelectType>
                     <Type style={{ borderBottom: `4px solid ${typeNum == 1 ? theme.color.background1 : '#fff'}`, color: `${typeNum == 1 ? theme.color.background1 : '#ccc'}` }} onClick={() => { changeType(1) }}>전문가칼럼</Type>

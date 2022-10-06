@@ -156,7 +156,7 @@ const SideBar = () => {
                     <GiHamburgerMenu />
                 </HambergurContainer>
                 <LogoWrappers>
-                    <img src={logo} style={{ height: '40px', width: 'auto' }}/>
+                    <img src={logo} alt="weare" style={{ height: '40px', width: 'auto' }}/>
                 </LogoWrappers>
                 <div style={{ maxHeight: '80vh',paddingBottom:'32px' }}>
                     {zSidebar.map((item, index) => (
