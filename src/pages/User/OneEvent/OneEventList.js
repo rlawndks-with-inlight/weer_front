@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Title, Wrappers,Content } from "../../../components/elements/UserContentTemplete";
-import theme from "../../../styles/theme";
+import { Title, Wrappers, Content } from "../../../components/elements/UserContentTemplete";
 
 
 const OneEventList = () => {
@@ -21,7 +20,7 @@ const OneEventList = () => {
             <Wrappers>
                 <Title>하루 1종목</Title>
                 {posts.map((item, idx) => (
-                    <Content onClick={() => { navigate(`/post/oneevent/${item?.pk}`) }} style={{borderBottom:'1px solid #cccccc',paddingBottom:'16px'}}>
+                    <Content onClick={() => { navigate(`/post/oneevent/${item?.pk}`) }} style={{ borderBottom: '1px solid #cccccc', paddingBottom: '16px' }}>
                         <div >{item?.title ?? ""}</div>
                         {/* <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{item?.hash ?? ""}</div> */}
                     </Content>

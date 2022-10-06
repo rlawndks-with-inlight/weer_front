@@ -6,18 +6,12 @@ import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import theme from '../../styles/theme';
-import SelectSubType from '../../components/elements/SelectSubType';
-import { zTalk, zTheme } from '../../data/TestData';
-import SubType from '../../components/elements/SubType';
-import testImg from '../../assets/images/test/test5.jpg';
 import axios from 'axios';
 import { backUrl, slideSetting } from '../../data/Data';
 import { getIframeLinkByLink } from '../../functions/utils';
 import { Wrappers, Title, Content, Card, Img, WrapDiv, SliderDiv } from '../../components/elements/UserContentTemplete';
-import ThemeCard from '../../components/ThemeCard'
 import VideoCard from '../../components/VideoCard';
 import Loading from '../../components/Loading';
-import { AiOutlineSearch } from 'react-icons/ai'
 import $ from 'jquery'
 const Input = styled.input`
 width:336px;

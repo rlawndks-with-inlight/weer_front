@@ -2,8 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Title, Wrappers,Content } from "../../../components/elements/UserContentTemplete";
-import theme from "../../../styles/theme";
-
 
 const OneWordList = () => {
     const navigate = useNavigate();

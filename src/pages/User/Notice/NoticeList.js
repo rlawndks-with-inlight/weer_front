@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Title, Wrappers,Content } from "../../../components/elements/UserContentTemplete";
+import { Title, Wrappers, Content } from "../../../components/elements/UserContentTemplete";
 import theme from "../../../styles/theme";
 
 
@@ -21,7 +21,7 @@ const NoticeList = () => {
             <Wrappers>
                 <Title>공지사항</Title>
                 {posts.map((item, idx) => (
-                    <Content onClick={() => { navigate(`/post/notice/${item?.pk}`) }} style={{borderBottom:'1px solid #cccccc',paddingBottom:'16px',cursor:'pointer'}}>
+                    <Content onClick={() => { navigate(`/post/notice/${item?.pk}`) }} style={{ borderBottom: '1px solid #cccccc', paddingBottom: '16px', cursor: 'pointer' }}>
                         <div >{item?.title ?? ""}</div>
                         <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{item?.date ?? ""}</div>
                     </Content>

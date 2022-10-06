@@ -5,18 +5,6 @@ import styled from "styled-components";
 import { Title, Wrappers } from "../../components/elements/UserContentTemplete";
 import ThemeCard from "../../components/ThemeCard";
 
-const Card = styled.div`
-width:100%;
-background:${props => props.theme.color.background3};
-text-align:left;
-height:112px;
-margin:6px 0;
-color:${props => props.theme.color.font1};
-font-weight:bold;
-font-size:${props => props.theme.size.font3};
-cursor:pointer;
-position:relative;
-`
 const ThemeList = () => {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);

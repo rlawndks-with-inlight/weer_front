@@ -17,6 +17,7 @@ import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { Viewer } from '@toast-ui/react-editor';
 import Loading from '../../../components/Loading'
 import CommentComponent from "../../../components/CommentComponent";
+import MetaTag from "../../../components/MetaTag";
 
 
 const Iframe = styled.iframe`
@@ -153,6 +154,8 @@ const Video = () => {
     return (
         <>
             <Wrappers>
+                <MetaTag title={'weare-first - 핵심비디오 / ' + post?.title??""} />
+
                 {loading ?
                     <>
                         <Loading />

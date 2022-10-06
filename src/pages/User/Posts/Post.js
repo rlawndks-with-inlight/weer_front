@@ -12,6 +12,7 @@ import { commarNumber, categoryToNumber } from "../../../functions/utils";
 import CommentComponent from "../../../components/CommentComponent";
 import { Viewer } from '@toast-ui/react-editor';
 import Loading from '../../../components/Loading'
+import MetaTag from "../../../components/MetaTag";
 const Progress = styled.progress`
 
 appearance: none;
@@ -41,10 +42,30 @@ const Post = () => {
     const [percent, setPercent] = useState(0);
     const [auth, setAuth] = useState({})
     const [loading, setLoading] = useState(false)
+    const returnTitle = (ttl) =>{
+        if(params.table=='notice'){
+            return "weare-first - 공지사항 / "+ttl;
+        }else if(params.table=='issue'){
+            return "weare-first - 핵심이슈 / "+ttl;
+        }else if(params.table=='theme'){
+            return "weare-first - 핵심테마 / "+ttl;
+        }else if(params.table=='feature'){
+            return "weare-first - 특징주 / "+ttl;
+        }else if(params.table=='oneevent'){
+            return "weare-first - 하루1종목 / "+ttl;
+        }else if(params.table=='oneword'){
+            return "weare-first - 하루1단어 / "+ttl;
+        }else if(params.table=='strategy'){
+            return "weare-first - 전문가칼럼 / "+ttl;
+        }else{
+            return "weare-first";
+        }
+    }
     useEffect(() => {
         async function fetchPost() {
             setLoading(true)
-            const { data: response } = await axios.get(`/api/item?table=${params.table}&pk=${params.pk}&views=1`)
+            const { data: response } = await axios.get(`/api/item?table=${params.table}&pk=${params.pk}&views=1`);
+            
             let obj = response.data;
             obj.note = obj.note.replaceAll('http://localhost:8001', backUrl);
             setPost(obj);
@@ -103,6 +124,7 @@ const Post = () => {
     return (
         <>
             <Wrappers className="wrapper">
+                <MetaTag title={returnTitle(post?.title??"")} />
                 {loading ?
                     <>
                         <Loading />
