@@ -1,16 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Title, Wrappers } from "../../../components/elements/UserContentTemplete";
+import { Title, Wrappers, ViewerContainer } from "../../../components/elements/UserContentTemplete";
 import { backUrl } from "../../../data/Data";
 import theme from "../../../styles/theme";
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import $ from 'jquery'
 import styled from "styled-components";
-import { BsFillShareFill } from 'react-icons/bs';
-import logo from '../../../assets/images/test/logo.svg'
 import { categoryToNumber } from "../../../functions/utils";
 import CommentComponent from "../../../components/CommentComponent";
+import { Viewer } from '@toast-ui/react-editor';
+import Loading from '../../../components/Loading'
 const Logo = styled.img`
 position: fixed;
 bottom: 0;
@@ -43,25 +43,24 @@ const Notice = () => {
     const [comments, setComments] = useState([]);
     const [percent, setPercent] = useState(0);
     const [auth, setAuth] = useState({})
-
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
         async function fetchPost() {
+            setLoading(true)
             const { data: response } = await axios.get(`/api/item?table=notice&pk=${params.pk}`)
             let obj = response.data;
-
-            obj.note = stringToHTML(obj.note)
-            $('.note').append(obj.note)
-            $('.note > img').css("width", "100%")
+            obj.note = obj.note.replaceAll('http://localhost:8001', backUrl);
             setPost(obj);
-
+            await new Promise((r) => setTimeout(r, 100));
+            setTimeout(() => setLoading(false), 1000);
         }
         if (localStorage.getItem('auth')) {
             setAuth(JSON.parse(localStorage.getItem('auth')));
-        } 
+        }
         fetchPost();
         fetchComments();
         window.addEventListener('scroll', function (el) {
-            let per = Math.floor(($(window).scrollTop() / ($(document).height() - $(window).height())) * 100);
+            let per = Math.floor(($(window).scrollTop() / ($(document).height() - $(window).height())) * 100);
             setPercent(per);
         })
     }, [])
@@ -78,7 +77,7 @@ const Notice = () => {
         return doc.body;
     };
     const addComment = async () => {
-        if(!$('.comment').val()){
+        if (!$('.comment').val()) {
             alert('필수 값을 입력해 주세요.');
         }
         const { data: response } = await axios.post('/api/addcomment', {
@@ -89,25 +88,35 @@ const Notice = () => {
             category: categoryToNumber('notice')
         })
 
-        if(response.result>0){
+        if (response.result > 0) {
             $('.comment').val("")
             fetchComments();
-        }else{
+        } else {
             alert(response.message)
         }
     }
-    
+
     return (
         <>
             <Wrappers className="wrapper">
+                {loading?
+                <>
+                <Loading/>
+                </>
+                :
+                <>
                 <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'end', fontSize: `${theme.size.font4}` }}>
-                        <div style={{ margin: '0 4px' }}>{post?.date?.substring(0, 10)}</div>
+                    <div style={{ margin: '0 4px' }}>{post?.date?.substring(0, 10)}</div>
                 </div>
                 <Title>{post.title}</Title>
-                <div className="note">
-                </div>
-                <CommentComponent addComment={addComment} data={comments}fetchComments={fetchComments} />
+                <ViewerContainer>
+                    <Viewer initialValue={post?.note ?? `<body></body>`} />
+                </ViewerContainer>
+                <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />
                 <Progress value={`${percent}`} max="100"></Progress>
+                </>
+                }
+                
                 {/* <Logo src={logo} style={{left:`${percent-1}.7%`}}/> */}
             </Wrappers>
         </>
