@@ -164,7 +164,17 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
                             :
                             <>
                             </>}
-
+                            {col.type == 'alarm_type' ?
+                            <>
+                                <Td style={{ width: `${col.width}%` }}>
+                                    {data[`${col.column}`] == 1 ?
+                                        '스케줄링' :
+                                        '즉시실행'}
+                                </Td>
+                            </>
+                            :
+                            <>
+                            </>}
                         {col.type == 'edit' ?
                             <>
                                 <Td style={{ width: `${col.width}%`, fontSize: '20px' }}>

@@ -99,7 +99,6 @@ const Video = () => {
             const { data: response } = await axios.get(`/api/getvideocontent?pk=${params.pk}&views=1`);
             let obj = response.data.video;
             obj.link = getIframeLinkByLink(obj.link);
-            obj.note = obj.note.replaceAll('http://localhost:8001', backUrl);
             setPost(obj);
             let relate_list = response.data?.relates ?? [];
             for (var i = 0; i < relate_list.length; i++) {

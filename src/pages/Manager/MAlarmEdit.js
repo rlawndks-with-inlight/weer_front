@@ -25,6 +25,7 @@ import CommentComponent from '../../components/CommentComponent';
 import theme from '../../styles/theme';
 import { AiFillFileImage } from 'react-icons/ai'
 import { IoRadioButtonOff, IoRadioButtonOn } from 'react-icons/io5'
+import { Content } from '../../components/elements/UserContentTemplete';
 const MAlarmEdit = () => {
     const { pathname } = useLocation();
     const params = useParams();
@@ -35,31 +36,47 @@ const MAlarmEdit = () => {
     const [myNick, setMyNick] = useState("")
     const [auth, setAuth] = useState({});
     const [noteFormData] = useState(new FormData());
-    const [radioNum, setRadioNum] = useState(1);
+    const [typeNum, setTypeNum] = useState(0);
+    const [selectDaysList, setSelectDaysList] = useState([]);
+    const zDays = [
+        { name: '일', val: 0 },
+        { name: '월', val: 1 },
+        { name: '화', val: 2 },
+        { name: '수', val: 3 },
+        { name: '목', val: 4 },
+        { name: '금', val: 5 },
+        { name: '토', val: 6 }
+    ]
     useEffect(() => {
         let authObj = JSON.parse(localStorage.getItem('auth'));
         setAuth(authObj);
         async function fetchPost() {
             if (params.pk > 0) {
-                const { data: response } = await axios.get(`/api/item?table=notice&pk=${params.pk}`);
+                const { data: response } = await axios.get(`/api/item?table=alarm&pk=${params.pk}`);
+                console.log(response)
                 $(`.title`).val(response.data.title);
-                editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001', backUrl));
+                $(`.note`).val(response.data.note);
+                setTypeNum(response.data.type)
+                setSelectDaysList(JSON.parse(response.data.days));
+                await new Promise((r) => setTimeout(r, 100));
+                $(`.start-date`).val(response.data.start_date);
+                $(`.time`).val(response.data.time);
+
             }
         }
         $('div.toastui-editor-defaultUI-toolbar > div:nth-child(4)').append(`<button type="button" class='emoji' aria-label='이모티콘' style='font-size:18px;'>🙂</button>`);
         fetchPost();
-        fetchComments();
     }, [pathname])
     useEffect(() => {
-        $('html').on('click',function(e) { 
-            if($(e.target).parents('.emoji-picker-react').length < 1 && $('.emoji-picker-react').css('display')=='flex'&& $(e.target).attr('class') != 'emoji'){
+        $('html').on('click', function (e) {
+            if ($(e.target).parents('.emoji-picker-react').length < 1 && $('.emoji-picker-react').css('display') == 'flex' && $(e.target).attr('class') != 'emoji') {
                 $('.emoji-picker-react').attr('style', 'display: none !important')
             }
         });
         $('button.emoji').on('click', function () {
-            if($('.emoji-picker-react').css('display')=='none'){
+            if ($('.emoji-picker-react').css('display') == 'none') {
                 $('.emoji-picker-react').attr('style', 'display: flex !important')
-            }else{
+            } else {
                 $('.emoji-picker-react').attr('style', 'display: none !important')
             }
         })
@@ -73,32 +90,27 @@ const MAlarmEdit = () => {
         setChosenEmoji(emojiObject);
         editorRef.current.getInstance().insertText(emojiObject.emoji)
     };
-    const fetchComments = async () => {
-        const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk}&category=${categoryToNumber('notice')}`);
-        console.log(response)
-        setComments(response.data);
-    }
+
     const editItem = async () => {
-        if (!$(`.title`).val()) {
+        if (!$(`.title`).val() || !$(`.note`).val() || (typeNum == 1 && (!$(`.start-date`).val() || selectDaysList.length == 0 || !$(`.time`).val()))) {
             alert('필요값이 비어있습니다.');
         } else {
             let obj = {
-                user_pk: auth.pk,
-                title: $('.title').val(),
-                note: $(`.note`).val()
+                title: $('.title').val(),//제목
+                note: $(`.note`).val(),//내용
+                type: typeNum,//0-즉시, 1-
+                start_date: $(`.start-date`).val(),
+                days: JSON.stringify(selectDaysList),
+                time: $('.time').val()
             }
             if (params.pk > 0) obj.pk = params.pk;
 
             if (window.confirm(`저장하시겠습니까?`)) {
-
                 if (params.pk > 0) {
                     updateItem('alarm', obj);
                 } else {
                     addItem('alarm', obj);
                 }
-
-
-
             }
         }
     }
@@ -109,9 +121,9 @@ const MAlarmEdit = () => {
             setUrl(URL.createObjectURL(e.target.files[0]))
         }
     };
-    const handleClickRadio = (e) => {
+    const handleClickType = (e) => {
         console.log(e.target.value)
-        setRadioNum(e.target.value)
+        setTypeNum(e.target.value)
     }
     return (
         <>
@@ -120,29 +132,6 @@ const MAlarmEdit = () => {
                 <ManagerContentWrappers>
                     <Breadcrumb title={objManagerListContent[`alarm`].breadcrumb} nickname={myNick} />
                     <Card>
-                        <Row>
-                            <Col>
-                                <Title>프로필 이미지 <br /></Title>
-                                <ImageContainer for="file1">
-
-                                    {url ?
-                                        <>
-                                            <img src={url} alt="#"
-                                                style={{
-                                                    width: '8rem', height: '8rem',
-                                                    margin: '2rem'
-                                                }} />
-                                        </>
-                                        :
-                                        <>
-                                            <AiFillFileImage style={{ margin: '4rem', fontSize: '4rem', color: `${theme.color.manager.font3}` }} />
-                                        </>}
-                                </ImageContainer>
-                                <div>
-                                    <input type="file" id="file1" onChange={addFile} style={{ display: 'none' }} />
-                                </div>
-                            </Col>
-                        </Row>
                         <Row>
                             <Col>
                                 <Title>제목</Title>
@@ -158,28 +147,60 @@ const MAlarmEdit = () => {
                         <Row>
                             <Col>
                                 <Title>알람타입</Title>
-                                <Row>
-                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <IoRadioButtonOff/>
-                                    <IoRadioButtonOn/>
-                                        <input type={'radio'} name='alarm-type' id='alarm-1' checked={radioNum == 1} value={'1'} onChange={handleClickRadio} />
-                                        <label for='alarm-1'>바로실행</label>
+                                <Row style={{ margin: '12px auto 6px 24px' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', margin: '0 8px 8px 0' }}>
+                                        <input type={'radio'} name='alarm-type' id='alarm-0' value={0} checked={typeNum == 0} onChange={handleClickType} />
+                                        <label for='alarm-0'>바로실행</label>
                                     </div>
-                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        <input type={'radio'} name='alarm-type' id='alarm-2' value={'2'} onChange={handleClickRadio} />
-                                        <label for='alarm-2'>반복실행</label>
-                                    </div>
-                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        <input type={'radio'} name='alarm-type' id='alarm-3' value={'3'} onChange={handleClickRadio} />
-                                        <label for='alarm-3'>정해진 시간에 실행</label>
+                                    <div style={{ display: 'flex', alignItems: 'center', margin: '0 8px 8px 0' }}>
+                                        <input type={'radio'} name='alarm-type' id='alarm-1' value={1} checked={typeNum == 1} onChange={handleClickType} />
+                                        <label for='alarm-1'>스케줄링</label>
                                     </div>
                                 </Row>
                             </Col>
                         </Row>
-                        <Row>
-
-                        </Row>
-
+                        {typeNum == 1 ?
+                            <>
+                                <Row>
+                                    <Col>
+                                        <Title>스케줄링 타입</Title>
+                                        <Title>시작할 날짜</Title>
+                                        <Input type={'date'} className='start-date' />
+                                        <Title>실행할 요일</Title>
+                                        <div style={{ margin: '12px auto 6px 24px', display: 'flex' }}>
+                                            {zDays.map((item, idx) => (
+                                                <>
+                                                    <div style={{
+                                                        background: `${selectDaysList.includes(idx) ? theme.color.background1 : theme.color.font3}`,
+                                                        color: `${selectDaysList.includes(idx) ? '#fff' : theme.color.font1}`, fontSize: theme.size.font4, padding: '8px',
+                                                        borderRadius: '4px', marginRight: '4px', cursor: 'pointer'
+                                                    }}
+                                                        onClick={() => {
+                                                            let list = [...selectDaysList];
+                                                            for (var i = 0; i < list.length; i++) {
+                                                                if (list[i] == idx) {
+                                                                    break;
+                                                                }
+                                                            }
+                                                            if (i == list.length) {
+                                                                list.push(idx);
+                                                            } else {
+                                                                list.splice(i, 1);
+                                                            }
+                                                            setSelectDaysList(list);
+                                                        }}>{item.name}</div>
+                                                </>
+                                            ))}
+                                        </div>
+                                        <Title>실행할 시간 (5분 단위 추천)</Title>
+                                        <Input type={'time'} className='time' />
+                                    </Col>
+                                </Row>
+                            </>
+                            :
+                            <>
+                            </>
+                        }
                     </Card>
                     <ButtonContainer>
                         <AddButton onClick={editItem}>{'저장'}</AddButton>

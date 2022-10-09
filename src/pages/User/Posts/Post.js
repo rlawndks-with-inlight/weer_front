@@ -67,7 +67,6 @@ const Post = () => {
             const { data: response } = await axios.get(`/api/item?table=${params.table}&pk=${params.pk}&views=1`);
             
             let obj = response.data;
-            obj.note = obj.note.replaceAll('http://localhost:8001', backUrl);
             setPost(obj);
             await new Promise((r) => setTimeout(r, 100));
             setTimeout(() => setLoading(false), 1000);
