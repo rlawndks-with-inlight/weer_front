@@ -138,9 +138,10 @@ const Headers = () => {
   const [isPost, setIsPost] = useState(false);
   const [searchDisplay, setSearchDisplay] = useState('none')
   const [isSearch, setIsSearch] = useState(false);
+  const [isAlarm, setIsAlarm] = useState(false);
   useEffect(() => {
-    
-    if (location.pathname.substring(0, 6) == '/post/' || location.pathname.substring(0, 7) == '/video/') {
+
+    if (location.pathname.substring(0, 6) == '/post/' || location.pathname.substring(0, 7) == '/video/' || location.pathname == '/appsetting') {
       setIsPost(true);
     } else {
       setIsPost(false)
@@ -152,6 +153,23 @@ const Headers = () => {
       setDisplay('flex');
     }
   }, [location])
+  setInterval(() => {
+    if (window && window.flutter_inappwebview) {
+      console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+      window.flutter_inappwebview.callHandler('native_get_alarm_count', {}).then(async function (result) {
+        //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
+        let ans = JSON.parse(result)
+        console.log(typeof ans)
+        if (ans['data']['alarm_cnt'] == 0 && ans['data']['notice_cnt'] == 0) {
+          localStorage.setItem('is_alarm', 'false');
+          setIsAlarm(false);
+        } else {
+          localStorage.setItem('is_alarm', 'true');
+          setIsAlarm(true);
+        }
+      });
+    }
+  }, 1000);
   const [modal, setModal] = useState("none");
 
   const handleModal = async () => {
@@ -229,10 +247,17 @@ const Headers = () => {
                     <img src={logo} alt="홈으로" style={{ height: '2.5rem', marginTop: '0.25rem' }} onClick={() => { navigate('/') }} />
                   </>}
               </div>
-              <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '100px', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '100px', justifyContent: 'space-between', position: 'relative' }}>
                 <AiOutlineBell onClick={() => navigate('/noticelist')} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
                 <AiOutlineSearch onClick={changeSearchModal} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
                 <AiOutlineSetting onClick={myAuth} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
+                {isAlarm && JSON.parse(localStorage.getItem('is_alarm') == 'true') ?
+                  <>
+                    <div style={{ width: '10px', height: '10px', background: 'red', position: 'absolute', top: '2px', left: '17px', borderRadius: '50%' }} />
+                  </>
+                  :
+                  <>
+                  </>}
               </div>
             </>
           }
@@ -249,10 +274,17 @@ const Headers = () => {
           <div style={{ position: 'absolute', right: '48%', top: '0.5rem' }}>
             <img src={logo} alt="홈으로" style={{ height: '5rem' }} onClick={() => { navigate('/') }} />
           </div>
-          <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between', position: 'relative' }}>
             <AiOutlineBell onClick={() => navigate('/noticelist')} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
             <AiOutlineSearch onClick={changeSearchModal} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
             <AiOutlineSetting onClick={myAuth} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
+            {isAlarm && JSON.parse(localStorage.getItem('is_alarm') == 'true') ?
+              <>
+                <div style={{ width: '10px', height: '10px', background: 'red', position: 'absolute', top: '2px', left: '17px', borderRadius: '50%' }} />
+              </>
+              :
+              <>
+              </>}
             {isSearch ?
               <>
                 <div style={{ position: 'absolute', top: '72px', right: '48px', background: '#fff', padding: '16px', boxShadow: '0px 2px 8px #00000029', borderRadius: '8px', display: 'flex', alignItems: 'center' }}>

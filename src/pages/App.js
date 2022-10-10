@@ -7,8 +7,8 @@ import Footer from '../common/Footer';
 import { zRoute } from '../routes/route';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import MetaTag from '../components/MetaTag';
+import { useState } from 'react';
 const App = () => {
-    
     return (
         <>
             <Router>

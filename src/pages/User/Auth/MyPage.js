@@ -141,6 +141,9 @@ const MyPage = () => {
                 <LogoutButton onClick={onLogout}>
                     로그아웃
                 </LogoutButton>
+                <LogoutButton onClick={()=>navigate('/appsetting')}>
+                    앱 설정
+                </LogoutButton>
             </Wrappers>
         </>
     )

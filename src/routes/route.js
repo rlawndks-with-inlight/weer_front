@@ -7,6 +7,8 @@ import MasterList from '../pages/User/MasterList';
 import ThemeList from '../pages/User/ThemeList';
 import VideoList from '../pages/User/VideoList';
 
+import AppSetting from '../pages/User/AppSetting';
+
 import Login from '../pages/User/Auth/Login';
 import MyPage from '../pages/User/Auth/MyPage';
 import EditMyInfo from '../pages/User/Auth/EditMyInfo';
@@ -43,6 +45,8 @@ const zRoute = [
     { link: '/', element: <Home />, title: "홈" },
     { link: '/home', element: <Home />, title: "홈" },
     { link: '/search', element: <Search />, title: "검색" },
+    
+    { link: '/appsetting', element: <AppSetting />, title: "앱 세팅" },
 
     { link: '/selectissuecategory', element: <SelectIssueCategory />, title: "핵심이슈" },
     { link: '/selectfeaturecategory', element: <SelectFeatureCategory />, title: "특징주" },

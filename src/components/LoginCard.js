@@ -11,7 +11,7 @@ import { WrapperForm, CategoryName, Input, Button, FlexBox, SnsLogo } from './el
 
 const LoginCard = () => {
     const navigate = useNavigate();
-
+    const [isWebView, setIsWebView] = useState(false);
     useEffect(() => {
         async function isAdmin() {
             const { data: response } = await axios.get('/api/auth', {
@@ -28,7 +28,9 @@ const LoginCard = () => {
             }
         }
         isAdmin();
-
+        if (window && window.flutter_inappwebview) {
+            setIsWebView(true)
+        }
 
     }, [])
     const onLogin = async () => {
@@ -52,35 +54,35 @@ const LoginCard = () => {
             onLogin();
         }
     }
-    const onLoginBySns = async(obj) =>{
+    const onLoginBySns = async (obj) => {
         console.log(JSON.stringify(obj))
         let nick = "";
-        if(obj.login_type==1){
-            nick = "카카오" +new Date().getTime()
-        }else if(obj.login_type==2){
-            nick = "네이버" +new Date().getTime()
+        if (obj.login_type == 1) {
+            nick = "카카오" + new Date().getTime()
+        } else if (obj.login_type == 2) {
+            nick = "네이버" + new Date().getTime()
         }
         let objs = {
-            id:obj.id,
-            name:obj.legal_name,
-            nickname:nick,
-            phone:obj.phone_number,
-            user_level:0,
-            typeNum:obj.login_type,
-            profile_img:obj.profile_image_url
+            id: obj.id,
+            name: obj.legal_name,
+            nickname: nick,
+            phone: obj.phone_number,
+            user_level: 0,
+            typeNum: obj.login_type,
+            profile_img: obj.profile_image_url
         }
         console.log(JSON.stringify(objs))
-        const {data:response} = await axios.post('/api/loginbysns',objs);
+        const { data: response } = await axios.post('/api/loginbysns', objs);
         console.log(response);
-        if(response.result>0){
+        if (response.result > 0) {
             await localStorage.setItem('auth', JSON.stringify(response.data));
             navigate('/mypage');
-        }else{
+        } else {
             //alert(response.message);
         }
     }
-    
-    const snsLogin = (num) =>{
+
+    const snsLogin = (num) => {
         if (window && window.flutter_inappwebview) {
             var params = { 'login_type': num };
             window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(async function (result) {
@@ -93,7 +95,7 @@ const LoginCard = () => {
             alert('웹뷰가 아닙니다.');
         }
     }
-   
+
     return (
         <>
             <WrapperForm onSubmit={onLogin} id='login_form'>
@@ -113,12 +115,19 @@ const LoginCard = () => {
                 <Button onClick={onLogin}>로그인</Button>
                 <CategoryName style={{ marginTop: '36px' }}>SNS 간편 로그인</CategoryName>
                 <FlexBox>
-                    <SnsLogo src={kakao} onClick={()=>snsLogin(1)} />
-                    <SnsLogo src={naver} onClick={()=>snsLogin(2)} />
+                    <SnsLogo src={kakao} onClick={() => snsLogin(1)} />
+                    <SnsLogo src={naver} onClick={() => snsLogin(2)} />
                 </FlexBox>
                 <CategoryName style={{ marginTop: '0', fontSize: '11px' }}>
                     아직 weare 회원이 아니라면?<strong style={{ textDecoration: 'underline', cursor: 'pointer', marginLeft: '12px' }} onClick={() => { navigate('/signup') }}>회원가입</strong>
                 </CategoryName>
+                {isWebView ?
+                    <>
+                        <Button style={{ marginTop: '36px' }} onClick={()=>navigate('/appsetting')}>앱 설정</Button>
+                    </>
+                    :
+                    <>
+                    </>}
             </WrapperForm>
         </>
     );

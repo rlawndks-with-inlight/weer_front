@@ -66,7 +66,7 @@ const Home = () => {
         }
         fetchPost();
         async function isLogined(){
-            await window.flutter_inappwebview.callHandler('native_app_logined').then(async function (result) {
+            await window.flutter_inappwebview.callHandler('native_app_logined',{}).then(async function (result) {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
                 // JSON.parse(result)
                 console.log(2)
@@ -113,7 +113,7 @@ const Home = () => {
             //alert(response.message);
         }
     }
-
+    /*
     const snsLogin = () => {
         if (window && window.flutter_inappwebview) {
             window.flutter_inappwebview.callHandler('native_app_logined').then(async function (result) {
@@ -125,6 +125,7 @@ const Home = () => {
         } else {
         }
     }
+    */
     return (
         <>
             <Wrappers className='wrappers'>
