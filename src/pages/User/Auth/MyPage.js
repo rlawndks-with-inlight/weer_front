@@ -71,11 +71,9 @@ const MyPage = () => {
     useEffect(() => {
         async function isAdmin() {
             const { data: response } = await axios('/api/auth')
-            console.log(response)
             if (response.pk > 0) {
                 await localStorage.setItem('auth', JSON.stringify(response))
                 let obj = response;
-                console.log(obj)
                 setAuth(obj);
             } else {
                 localStorage.removeItem('auth');

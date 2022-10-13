@@ -69,7 +69,6 @@ const Home = () => {
             await window.flutter_inappwebview.callHandler('native_app_logined',{}).then(async function (result) {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
                 // JSON.parse(result)
-                console.log(2)
 
                 let obj = JSON.parse(result);
                 await onLoginBySns(obj.data);
@@ -90,7 +89,7 @@ const Home = () => {
         setStrategies(response?.data)
     }
     const onLoginBySns = async (obj) => {
-        console.log(JSON.stringify(obj))
+        console.log(obj)
         let nick = "";
         if (obj.login_type == 1) {
             nick = "카카오" + new Date().getTime();

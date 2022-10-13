@@ -30,7 +30,6 @@ const NoticeList = (props) => {
         async function fetchPosts() {
             if (window && window.flutter_inappwebview) {
                 setIsWebView(true);
-                console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
                 let params = { 'table': "notice" };
                 await window.flutter_inappwebview.callHandler('native_alarm_count_zero', JSON.stringify(params)).then(async function (result) {
                     //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"

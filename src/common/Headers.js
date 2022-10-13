@@ -155,7 +155,6 @@ const Headers = () => {
   }, [location])
   setInterval(() => {
     if (window && window.flutter_inappwebview) {
-      console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
       window.flutter_inappwebview.callHandler('native_get_alarm_count', {}).then(async function (result) {
         //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
         let ans = JSON.parse(result)
