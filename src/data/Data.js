@@ -55,6 +55,17 @@ export const objManagerListContent = {
             { name: '삭제', width: 6, type: 'delete', column: 'delete' }
         ]
     },
+    comment: {
+        breadcrumb: '댓글',
+        schema: 'comment',
+        zColumn: [
+            { name: '카테고리', width: 11, type: 'category_type', column: 'category_pk' },
+            { name: '제목', width: 22, type: 'text', column: 'item_title' },
+            { name: '닉네임', width: 11, type: 'text', column: 'user_nickname' },
+            { name: '댓글', width: 44, type: 'text', column: 'note' },
+            { name: '삭제', width: 12, type: 'delete', column: 'delete' }
+        ]
+    },
     master: {
         breadcrumb: '전문가',
         schema: 'user',
@@ -82,17 +93,6 @@ export const objManagerListContent = {
             { name: '삭제', width: 12, type: 'delete', column: 'delete' }
         ],
     },
-    // comment: {
-    //     breadcrumb: '댓글',
-    //     schema: 'comment',
-    //     zColumn: [
-    //         { name: '채널이미지', width: 24, type: 'text', column: '' },
-    //         { name: '채널명', width: 24, type: 'text', column: '' },
-    //         { name: '생성시간', width: 28, type: 'text', column: 'date' },
-    //         { name: '수정', width: 12, type: 'edit', column: 'edit' },
-    //         { name: '삭제', width: 12, type: 'delete', column: 'delete' }
-    //     ],
-    // },
     oneword: {
         breadcrumb: '하루1단어',
         schema: 'oneword',

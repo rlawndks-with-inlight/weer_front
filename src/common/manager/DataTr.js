@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useState } from 'react'
 import { GrLinkTop } from 'react-icons/gr'
+import { numberToCategory } from '../../functions/utils'
 
 const Tr = styled.tr`
 box-shadow:1px 1px 1px #00000029;
@@ -175,6 +176,15 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
                             :
                             <>
                             </>}
+                            {col.type == 'category_type' ?
+                            <>
+                                <Td style={{ width: `${col.width}%` }}>
+                                    {numberToCategory(data[`${col.column}`]).name}
+                                </Td>
+                            </>
+                            :
+                            <>
+                            </>}
                         {col.type == 'edit' ?
                             <>
                                 <Td style={{ width: `${col.width}%`, fontSize: '20px' }}>
@@ -188,7 +198,7 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
                             <>
                                 <Td style={{ width: `${col.width}%`, fontSize: '20px' }}>
                                     <RiDeleteBinLine style={{ cursor: 'pointer', color: '#e15f41' }} onClick={() => {
-                                        if (window.confirm("Do you want to delete?")) {
+                                        if (window.confirm("정말로 삭제하시겠습니까?")) {
                                             deleteItem(data.pk, schema)
                                         }
                                     }} />
@@ -197,6 +207,7 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
                             :
                             <>
                             </>}
+
                     </>
                 ))}
 

@@ -132,6 +132,7 @@ const Video = () => {
             userPk: auth.pk,
             userNick: auth.nickname,
             pk: params.pk,
+            title: post.title,
             note: $('.comment').val(),
             category: categoryToNumber('video')
         })

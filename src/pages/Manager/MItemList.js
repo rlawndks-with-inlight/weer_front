@@ -52,6 +52,9 @@ const MItemList = () => {
     const [pageList, setPageList] = useState([])
     const [loading, setLoading] = useState(false)
     const [isUseLoading, setIsUseLoading] = useState(true)
+    const notAddList = [
+        'comment'
+    ]
     useEffect(() => {
         setZColumn(objManagerListContent[`${params.table}`].zColumn ?? {})
         async function fetchPost() {
@@ -68,17 +71,17 @@ const MItemList = () => {
             } else if ((params.table == 'issue' || params.table == 'feature') && params.pk) {
                 str = `/api/items?table=${params.table}&page=1&category_pk=${params.pk}`
             }else if(params.table == 'comment'){
-                str = `/api/getcommnets?page=1`
+                str = `/api/items?table=${params.table}&page=1&order=pk`
             } else {
                 let auth = JSON.parse(localStorage.getItem('auth'))
                 str = `/api/items?table=${params.table}&page=1`
                 if (auth?.user_level < 40) {
                     str += `&user_pk=${auth.pk}`
                 }
-
             }
             const { data: response } = await axios.get(str)
             setPosts(response.data.data)
+
             setPageList(range(1, response.data.maxPage))
             setLoading(false)
         }
@@ -97,7 +100,7 @@ const MItemList = () => {
         } else if ((params.table == 'issue' || params.table == 'feature') && params.pk) {
             str = `/api/items?table=${params.table}&page=${num}&category_pk=${params.pk}`
         } else if(params.table == 'comment'){
-            str = `/api/getcommnets?page=${num}`
+            str = `/api/items?table=${params.table}&page=${num}&order=pk`
         }else {
             str = `/api/items?table=${params.table}&page=${num}`
         }
@@ -150,7 +153,7 @@ const MItemList = () => {
         const { data: response } = await axios.post(`/api/deleteitem`, obj)
 
         if (response.result > 0) {
-            alert('has been deleted');
+            alert('삭제 되었습니다.');
             changePage(page)
         } else {
             alert('error')
@@ -268,7 +271,15 @@ const MItemList = () => {
                                 마지막
                             </PageButton>
                         </PageContainer>
+                        {notAddList.includes(params.table)?
+                        <>
+                        <div/>
+                        </>
+                        :
+                        <>
                         <AddButton onClick={() => navigate(`/manager/edit/${params.table}/0`)}>+ 추가</AddButton>
+                        </>
+                        }
                     </MBottomContent>
                 </ManagerContentWrappers>
             </ManagerWrappers>

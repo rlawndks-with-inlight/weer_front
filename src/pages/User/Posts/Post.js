@@ -13,6 +13,7 @@ import CommentComponent from "../../../components/CommentComponent";
 import { Viewer } from '@toast-ui/react-editor';
 import Loading from '../../../components/Loading'
 import MetaTag from "../../../components/MetaTag";
+
 const Progress = styled.progress`
 
 appearance: none;
@@ -102,6 +103,7 @@ const Post = () => {
             userPk: auth.pk,
             userNick: auth.nickname,
             pk: params.pk,
+            title: post.title,
             note: $('.comment').val(),
             category: categoryToNumber(params.table)
         })
