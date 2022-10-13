@@ -10,11 +10,11 @@ const MetaTag = props => {
     useEffect(() => {
         for (var i = 0; i < zRoute.length; i++) {
             if (pathname.includes(zRoute[i].link.replace(":pk", "")) && zRoute[i].link != "/") {
-                setTitle("weare-first : 퍼스트 파트너스 | 주식 | 특징주 | 핵심이슈 | 핵심비디오 - " + zRoute[i].title)
+                setTitle("weare-first - 위아 : 퍼스트 파트너스 | 주식 | 특징주 | 핵심이슈 | 핵심비디오 - " + zRoute[i].title)
             }
         }
         if(pathname=="/"){
-            setTitle("weare-first : 퍼스트 파트너스 | 주식 | 특징주 | 핵심이슈 | 핵심비디오 - 홈")
+            setTitle("weare-first - 위아 : 퍼스트 파트너스 | 주식 | 특징주 | 핵심이슈 | 핵심비디오 - 홈")
         }
     }, [pathname])
     return (

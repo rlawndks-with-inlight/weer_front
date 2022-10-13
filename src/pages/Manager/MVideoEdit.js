@@ -22,6 +22,8 @@ import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import Picker from 'emoji-picker-react';
+import fontSize from "tui-editor-plugin-font-size";
+import "tui-editor-plugin-font-size/dist/tui-editor-plugin-font-size.css";
 import { backUrl, cardDefaultColor } from '../../data/Data';
 import { objManagerListContent } from '../../data/Data';
 import { categoryToNumber } from '../../functions/utils';
@@ -233,7 +235,7 @@ const MVideoEdit = () => {
                                         initialEditType="wysiwyg"
                                         useCommandShortcut={false}
                                         hideModeSwitch={true}
-                                        plugins={[colorSyntax]}
+                                        plugins={[colorSyntax,fontSize]}
                                         language="ko-KR"
                                         ref={editorRef}
                                         onChange={onChangeEditor}

@@ -1810,7 +1810,7 @@
   dependencies:
     "tui-color-picker" "^2.2.6"
 
-"@toast-ui/editor@^3.2.0":
+"@toast-ui/editor@^3.1.5", "@toast-ui/editor@^3.2.0":
   "integrity" "sha512-lEvbBSbvz5MvmTGHoDAYkco5B1os9C8B0IJmSj/iLmjSFQCtku1g4hFG4jKzTju9e+5wTosbDa3aYHAJAZK/QA=="
   "resolved" "https://registry.npmjs.org/@toast-ui/editor/-/editor-3.2.0.tgz"
   "version" "3.2.0"
@@ -11239,6 +11239,11 @@
   "integrity" "sha512-q5sE9NQ5NR9lYpilYjcI7Sdv0KCogo+W8fZY+AYTj/HYg+9fscYy3UuJ6UQiV1bF+ARCLwFRWC8UcOt9kuUctQ=="
   "resolved" "https://registry.npmjs.org/tui-color-picker/-/tui-color-picker-2.2.8.tgz"
   "version" "2.2.8"
+
+"tui-editor-plugin-font-size@^1.0.4":
+  "integrity" "sha512-z35hMUV/1RTGULUn2QddxlrIOz3F1MndwEervrU5LHqDr7S9hDckmobfhN7hhXlnYNnhgofEdw4X4e1Ts2APXQ=="
+  "resolved" "https://registry.npmjs.org/tui-editor-plugin-font-size/-/tui-editor-plugin-font-size-1.0.4.tgz"
+  "version" "1.0.4"
 
 "type-check@^0.4.0", "type-check@~0.4.0":
   "integrity" "sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew=="
