@@ -54,12 +54,12 @@ const NoticeList = (props) => {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
                 let ans = JSON.parse(result)
                 console.log(result)
-                if (ans['data']['alarm_cnt'] > 0) {
+                if (ans['data']['alarm_cnt'] > 0 && typeNum != 1) {
                     setIsAlarmNew(true)
                 } else {
                     setIsAlarmNew(false)
                 }
-                if (ans['data']['notice_cnt'] > 0) {
+                if (ans['data']['notice_cnt'] > 0 && typeNum != 2) {
                     setIsNoticeNew(true)
                 } else {
                     setIsNoticeNew(false)
