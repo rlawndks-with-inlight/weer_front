@@ -40,7 +40,20 @@ const LoginCard = () => {
         })
         alert(response.message);
         if (response.result > 0) {
+            let params = {
+                'login_type': 0,
+                'id':$('.id').val()
+            }
+            window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(async function (result) {
+                //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
+                // JSON.parse(result)
+                console.log(result)
+                let obj = JSON.parse(result);
+            });
             await localStorage.setItem('auth', JSON.stringify(response.data));
+            if (window && window.flutter_inappwebview) {
+                
+            }
             navigate('/mypage');
         }
     }
