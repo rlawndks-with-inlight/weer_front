@@ -70,7 +70,7 @@ const NoticeList = (props) => {
     const changeType = async (num) => {
         setTypeNum(num);
         let str = "";
-        str = `/api/items?table=` + (num == 1 ? 'notice' : 'alarm')
+        str = `/api/items?table=` + (num == 1 ? 'notice' : 'alarm_log')
         const { data: response } = await axios.get(str);
         setPosts(response.data);
         if (num == 1) {
