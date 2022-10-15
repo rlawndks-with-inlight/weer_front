@@ -25,7 +25,7 @@ const NoticeList = (props) => {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
     const [typeNum, setTypeNum] = useState(1)
-    const [isWebView, setIsWebView] = useState(true)
+    const [isWebView, setIsWebView] = useState(false)
     const [isNoticeNew, setIsNoticeNew] = useState(false)
     const [isAlarmNew, setIsAlarmNew] = useState(false)
     useEffect(() => {
