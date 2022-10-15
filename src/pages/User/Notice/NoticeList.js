@@ -25,7 +25,7 @@ const NoticeList = (props) => {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
     const [typeNum, setTypeNum] = useState(1)
-    const [isWebView, setIsWebView] = useState(false)
+    const [isWebView, setIsWebView] = useState(true)
     const [isNoticeNew, setIsNoticeNew] = useState(false)
     const [isAlarmNew, setIsAlarmNew] = useState(false)
     useEffect(() => {
@@ -70,7 +70,7 @@ const NoticeList = (props) => {
     const changeType = async (num) => {
         setTypeNum(num);
         let str = "";
-        str = `/api/items?table=` + (num == 1 ? 'notice' : 'alarm_log')
+        str = `/api/items?table=` + (num == 1 ? 'notice' : 'alarm_log&order=pk')
         const { data: response } = await axios.get(str);
         setPosts(response.data);
         if (num == 1) {
