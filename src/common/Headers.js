@@ -154,11 +154,10 @@ const Headers = () => {
     }
   }, [location])
   setInterval(() => {
-    if (window && window.flutter_inappwebview) {
+    if (window.flutter_inappwebview) {
       window.flutter_inappwebview.callHandler('native_get_alarm_count', {}).then(async function (result) {
         //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
         let ans = JSON.parse(result)
-        console.log(typeof ans)
         if (ans['data']['alarm_cnt'] == 0 && ans['data']['notice_cnt'] == 0) {
           localStorage.setItem('is_alarm', 'false');
           setIsAlarm(false);
@@ -168,7 +167,7 @@ const Headers = () => {
         }
       });
     }
-  }, 1000);
+  }, 2000);
   const [modal, setModal] = useState("none");
 
   const handleModal = async () => {
