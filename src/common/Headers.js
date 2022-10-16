@@ -158,6 +158,10 @@ const Headers = () => {
       window.flutter_inappwebview.callHandler('native_get_alarm_count', {}).then(async function (result) {
         //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
         let ans = JSON.parse(result)
+        const {data:response} = await axios.post("/api/asdasd",{
+          alarm:ans['data']['alarm_cnt'],
+          notice:ans['data']['notice_cnt']
+        })
         if (ans['data']['alarm_cnt'] == 0 && ans['data']['notice_cnt'] == 0) {
           localStorage.setItem('is_alarm', 'false');
           setIsAlarm(false);
