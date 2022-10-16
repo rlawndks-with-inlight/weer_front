@@ -68,7 +68,10 @@ const LoginCard = () => {
         }
     }
     const onLoginBySns = async (obj) => {
+        console.log("##########################")
         console.log(JSON.stringify(obj))
+        console.log("##########################")
+
         let nick = "";
         if (obj.login_type == 1) {
             nick = "카카오" + new Date().getTime()
@@ -105,7 +108,7 @@ const LoginCard = () => {
             window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(async function (result) {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
                 // JSON.parse(result)
-                console.log(result)
+                //console.log(result)
                 let obj = JSON.parse(result);
                 await onLoginBySns(obj.data);
             });
