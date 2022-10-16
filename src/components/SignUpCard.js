@@ -26,13 +26,10 @@ const SignUpCard = () => {
     const [isSendSms, setIsSendSms] = useState(false)
     const [fixPhoneNumber, setFixPhoneNumber] = useState("")
     const [typeNum, setTypeNum] = useState(0);
+    const [state, setState] = useState(undefined)
     useEffect(() => {
         if (location.state) {
-            $('.id').val(location.state.id);
-            $('.pw').val("111");
-            $('.pw-check').val("111");
-            setTypeNum(location.state.type_num)
-            setIsCheckId(true);
+            setState(location.state)
         }
     }, [])
     const onCheckId = async () => {
@@ -108,13 +105,13 @@ const SignUpCard = () => {
         }
     }
     const onSignUp = async () => {
-        if (!$('.id').val()) {
+        if (!$('.id').val()&&!state) {
             alert('필수값을 입력해주세요.');
-        } else if (!isCheckId) {
+        } else if (!isCheckId&&!state) {
             alert('아이디 중복확인을 해주세요.');
-        } else if (!regExp('pw', $('.pw').val())) {
+        } else if (!regExp('pw', $('.pw').val()&&!state)) {
             alert('비밀번호 정규식을 지켜주세요.');
-        } else if ($('.pw').val() != $('.pw-check').val()) {
+        } else if ($('.pw').val() != $('.pw-check').val()&&!state) {
             alert('비밀번호가 일치하지 않습니다.');
         } else if (!isCheckPhoneNumber) {
             alert('전화번호 인증을 완료해 주세요.');
@@ -125,13 +122,14 @@ const SignUpCard = () => {
         } else {
             if (window.confirm('회원가입 하시겠습니까?')) {
                 const { data: response } = await axios.post('/api/adduser', {
-                    id: $('.id').val(),
-                    pw: $('.pw').val(),
-                    name: $('.name').val(),
+                    id: state?state.id:$('.id').val(),
+                    pw: state?"111":$('.pw').val(),
+                    name: state?state.name:$('.name').val(),
                     nickname: $('.nickname').val(),
                     phone: $('.phone').val(),
                     user_level: 0,
-                    type_num: typeNum
+                    type_num: state?state.typeNum:typeNum,
+                    profile_img:state?state.profile_img:null
                 })
                 if (response.result > 0) {
                     alert('회원가입이 완료되었습니다.');

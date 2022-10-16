@@ -88,8 +88,12 @@ const LoginCard = () => {
         const { data: response } = await axios.post('/api/loginbysns', objs);
         console.log(response);
         if (response.result > 0) {
-            await localStorage.setItem('auth', JSON.stringify(response.data));
-            navigate('/mypage');
+            if(response.result<=50){//신규유저
+                navigate('/signup',{state:{id:objs.id,typeNum:objs.typeNum,profile_img:objs.profile_img,name:objs.name}})
+            }else{
+                await localStorage.setItem('auth', JSON.stringify(response.data));
+                navigate('/mypage');
+            }
         } else {
             //alert(response.message);
         }
