@@ -105,13 +105,13 @@ const SignUpCard = () => {
         }
     }
     const onSignUp = async () => {
-        if (!$('.id').val()&&!state) {
+        if (!$('.id').val() && !state) {
             alert('필수값을 입력해주세요.');
-        } else if (!isCheckId&&!state) {
+        } else if (!isCheckId && !state) {
             alert('아이디 중복확인을 해주세요.');
-        } else if (!regExp('pw', $('.pw').val()&&!state)) {
+        } else if (!regExp('pw', $('.pw').val() && !state)) {
             alert('비밀번호 정규식을 지켜주세요.');
-        } else if ($('.pw').val() != $('.pw-check').val()&&!state) {
+        } else if ($('.pw').val() != $('.pw-check').val() && !state) {
             alert('비밀번호가 일치하지 않습니다.');
         } else if (!isCheckPhoneNumber) {
             alert('전화번호 인증을 완료해 주세요.');
@@ -122,14 +122,14 @@ const SignUpCard = () => {
         } else {
             if (window.confirm('회원가입 하시겠습니까?')) {
                 const { data: response } = await axios.post('/api/adduser', {
-                    id: state?state.id:$('.id').val(),
-                    pw: state?"111":$('.pw').val(),
-                    name: state?state.name:$('.name').val(),
+                    id: state ? state.id : $('.id').val(),
+                    pw: state ? "111" : $('.pw').val(),
+                    name: state ? state.name : $('.name').val(),
                     nickname: $('.nickname').val(),
                     phone: $('.phone').val(),
                     user_level: 0,
-                    type_num: state?state.typeNum:typeNum,
-                    profile_img:state?state.profile_img:null
+                    type_num: state ? state.typeNum : typeNum,
+                    profile_img: state ? state.profile_img : null
                 })
                 if (response.result > 0) {
                     alert('회원가입이 완료되었습니다.');
@@ -194,13 +194,14 @@ const SignUpCard = () => {
                         <RegularNotice>8~15자 내의 영문, 숫자, 특수문자 조합만 가능합니다.</RegularNotice>
                         <CategoryName>비밀번호 확인</CategoryName>
                         <Input placeholder='비밀번호를 한번더 입력해주세요.' type={'password'} className='pw-check' onKeyPress={onKeyPressPwCheck} />
+                        <CategoryName>이름</CategoryName>
+                        <Input placeholder='이름을 입력해주세요.' type={'text'} className='name' onKeyPress={onKeyPressName} />
+                        <RegularNotice>실명으로 입력해주세요.</RegularNotice>
                     </>
                 }
 
 
-                <CategoryName>이름</CategoryName>
-                <Input placeholder='이름을 입력해주세요.' type={'text'} className='name' onKeyPress={onKeyPressName} />
-                <RegularNotice>실명으로 입력해주세요.</RegularNotice>
+
                 <CategoryName>닉네임</CategoryName>
                 <Input placeholder='닉네임을 입력해주세요.' type={'text'} className='nickname' onKeyPress={onKeyPressNickname} />
                 <RegularNotice>2~8자 내의 한글, 영문, 숫자 조합만 가능합니다.</RegularNotice>
