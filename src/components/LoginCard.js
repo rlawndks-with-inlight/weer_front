@@ -80,7 +80,7 @@ const LoginCard = () => {
         }
         let objs = {
             id: obj.id,
-            name: obj.legal_name,
+            name: obj.profile_nickname,
             nickname: nick,
             phone: obj.phone_number,
             user_level: 0,
