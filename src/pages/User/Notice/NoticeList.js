@@ -48,24 +48,24 @@ const NoticeList = (props) => {
         }
         fetchPosts();
     }, [])
-    setInterval(() => {
-        if (window.flutter_inappwebview) {
-            window.flutter_inappwebview.callHandler('native_get_alarm_count', {}).then(async function (result) {
-                //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
-                let ans = JSON.parse(result)
-                if (ans['data']['alarm_cnt'] > 0) {
-                    setIsAlarmNew(true)
-                } else {
-                    setIsAlarmNew(false)
-                }
-                if (ans['data']['notice_cnt'] > 0) {
-                    setIsNoticeNew(true)
-                } else {
-                    setIsNoticeNew(false)
-                }
-            });
-        }
-    }, 1500);
+    // setInterval(() => {
+    //     if (window.flutter_inappwebview) {
+    //         window.flutter_inappwebview.callHandler('native_get_alarm_count', {}).then(async function (result) {
+    //             //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
+    //             let ans = JSON.parse(result)
+    //             if (ans['data']['alarm_cnt'] > 0) {
+    //                 setIsAlarmNew(true)
+    //             } else {
+    //                 setIsAlarmNew(false)
+    //             }
+    //             if (ans['data']['notice_cnt'] > 0) {
+    //                 setIsNoticeNew(true)
+    //             } else {
+    //                 setIsNoticeNew(false)
+    //             }
+    //         });
+    //     }
+    // }, 1500);
     const changeType = async (num) => {
         setTypeNum(num);
         let str = "";
@@ -77,19 +77,19 @@ const NoticeList = (props) => {
         } else {
             setIsAlarmNew(false)
         }
-        if (window && window.flutter_inappwebview) {
-            let params = { 'table': `${num == 1 ? 'notice' : 'alarm'}` };
-            await window.flutter_inappwebview.callHandler('native_alarm_count_zero', JSON.stringify(params)).then(async function (result) {
-                //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
-                // JSON.parse(result)
-                let ans = JSON.parse(result)
-                if (ans['data']['alarm_cnt'] == 0 && ans['data']['notice_cnt'] == 0) {
-                    localStorage.setItem('is_alarm', 'false');
-                } else {
-                    localStorage.setItem('is_alarm', 'true');
-                }
-            });
-        }
+        // if (window && window.flutter_inappwebview) {
+        //     let params = { 'table': `${num == 1 ? 'notice' : 'alarm'}` };
+        //     await window.flutter_inappwebview.callHandler('native_alarm_count_zero', JSON.stringify(params)).then(async function (result) {
+        //         //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
+        //         // JSON.parse(result)
+        //         let ans = JSON.parse(result)
+        //         if (ans['data']['alarm_cnt'] == 0 && ans['data']['notice_cnt'] == 0) {
+        //             localStorage.setItem('is_alarm', 'false');
+        //         } else {
+        //             localStorage.setItem('is_alarm', 'true');
+        //         }
+        //     });
+        // }
     }
     return (
         <>

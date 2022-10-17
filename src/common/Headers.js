@@ -153,21 +153,21 @@ const Headers = () => {
       setDisplay('flex');
     }
   }, [location])
-  setInterval(() => {
-    if (window.flutter_inappwebview) {
-      window.flutter_inappwebview.callHandler('native_get_alarm_count', {}).then(async function (result) {
-        //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
-        let ans = JSON.parse(result)
-        if (ans['data']['alarm_cnt'] == 0 && ans['data']['notice_cnt'] == 0) {
-          localStorage.setItem('is_alarm', 'false');
-          setIsAlarm(false);
-        } else {
-          localStorage.setItem('is_alarm', 'true');
-          setIsAlarm(true);
-        }
-      });
-    }
-  }, 2000);
+  // setInterval(() => {
+  //   if (window.flutter_inappwebview) {
+  //     window.flutter_inappwebview.callHandler('native_get_alarm_count', {}).then(async function (result) {
+  //       //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
+  //       let ans = JSON.parse(result)
+  //       if (ans['data']['alarm_cnt'] == 0 && ans['data']['notice_cnt'] == 0) {
+  //         localStorage.setItem('is_alarm', 'false');
+  //         setIsAlarm(false);
+  //       } else {
+  //         localStorage.setItem('is_alarm', 'true');
+  //         setIsAlarm(true);
+  //       }
+  //     });
+  //   }
+  // }, 2000);
   const [modal, setModal] = useState("none");
 
   const handleModal = async () => {
