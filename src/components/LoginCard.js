@@ -47,7 +47,6 @@ const LoginCard = () => {
             window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(async function (result) {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
                 // JSON.parse(result)
-                console.log(result)
                 let obj = JSON.parse(result);
             });
             await localStorage.setItem('auth', JSON.stringify(response.data));
@@ -68,10 +67,6 @@ const LoginCard = () => {
         }
     }
     const onLoginBySns = async (obj) => {
-        console.log("##########################")
-        console.log(JSON.stringify(obj))
-        console.log("##########################")
-
         let nick = "";
         if (obj.login_type == 1) {
             nick = "카카오" + new Date().getTime()
@@ -87,9 +82,7 @@ const LoginCard = () => {
             typeNum: obj.login_type,
             profile_img: obj.profile_image_url
         }
-        console.log(JSON.stringify(objs))
         const { data: response } = await axios.post('/api/loginbysns', objs);
-        console.log(response);
         if (response.result > 0) {
             if(response.result<=50){//신규유저
                 navigate('/signup',{state:{id:objs.id,typeNum:objs.typeNum,profile_img:objs.profile_img,name:objs.name}})

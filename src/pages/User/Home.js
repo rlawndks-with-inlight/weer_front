@@ -75,7 +75,6 @@ const Home = () => {
             });
         }
         if (window && window.flutter_inappwebview) {
-            console.log(1)
             isLogined();
         }
     }, [])
@@ -89,7 +88,6 @@ const Home = () => {
         setStrategies(response?.data)
     }
     const onLoginBySns = async (obj) => {
-        console.log(obj)
         let nick = "";
         if (obj.login_type == 1) {
             nick = "카카오" + new Date().getTime();

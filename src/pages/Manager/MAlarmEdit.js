@@ -53,7 +53,6 @@ const MAlarmEdit = () => {
         async function fetchPost() {
             if (params.pk > 0) {
                 const { data: response } = await axios.get(`/api/item?table=alarm&pk=${params.pk}`);
-                console.log(response)
                 $(`.title`).val(response.data.title);
                 $(`.note`).val(response.data.note);
                 setTypeNum(response.data.type)

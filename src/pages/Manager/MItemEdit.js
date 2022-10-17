@@ -125,7 +125,6 @@ const MItemEdit = () => {
     };
     const fetchComments = async () => {
         const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk}&category=${categoryToNumber(params.table)}`);
-        console.log(response)
         setComments(response.data);
     }
     const editItem = async () => {
@@ -146,7 +145,6 @@ const MItemEdit = () => {
             }
             formData.append('user_pk', auth.user_level >= 40 && params.table == 'strategy' ? $('.channel').val() : auth.pk)
             formData.append('note', editorRef.current.getInstance().getHTML());
-            console.log(auth.user_level >= 40 && params.table == 'strategy')
             if (params.table == 'issue' || params.table == 'feature') formData.append('category_pk', $('.category').val())
             if (params.pk > 0) formData.append('pk', params.pk);
             if (window.confirm(`저장하시겠습니까?`)) {

@@ -75,7 +75,6 @@ const MNoticeEdit = () => {
     };
     const fetchComments = async () => {
         const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk}&category=${categoryToNumber('notice')}`);
-        console.log(response)
         setComments(response.data);
     }
     const editItem = async () => {

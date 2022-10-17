@@ -36,7 +36,6 @@ const AppSetting = () => {
             var params = { 'is_allow_alarm': num };
             window.flutter_inappwebview.callHandler('set_allow_alarm', JSON.stringify(params)).then(async function (result) {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
-                console.log(result)
             });
             settings.is_allow_alarm = num;
             setSetting(settings)
