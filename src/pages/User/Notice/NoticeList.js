@@ -32,16 +32,16 @@ const NoticeList = (props) => {
         async function fetchPosts() {
             if (window && window.flutter_inappwebview) {
                 setIsWebView(true);
-                let params = { 'table': "notice" };
-                await window.flutter_inappwebview.callHandler('native_alarm_count_zero', JSON.stringify(params)).then(async function (result) {
-                    //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
-                    let ans = JSON.parse(result)
-                    if (ans['data']['alarm_cnt'] == 0 && ans['data']['notice_cnt'] == 0) {
-                        localStorage.setItem('is_alarm', 'false');
-                    } else {
-                        localStorage.setItem('is_alarm', 'true');
-                    }
-                });
+                // let params = { 'table': "notice" };
+                // await window.flutter_inappwebview.callHandler('native_alarm_count_zero', JSON.stringify(params)).then(async function (result) {
+                //     //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
+                //     let ans = JSON.parse(result)
+                //     if (ans['data']['alarm_cnt'] == 0 && ans['data']['notice_cnt'] == 0) {
+                //         localStorage.setItem('is_alarm', 'false');
+                //     } else {
+                //         localStorage.setItem('is_alarm', 'true');
+                //     }
+                // });
             }
             const { data: response } = await axios.get('/api/items?table=notice&status=1');
             setPosts(response.data);
