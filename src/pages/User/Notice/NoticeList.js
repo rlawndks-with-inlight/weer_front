@@ -48,6 +48,7 @@ const NoticeList = (props) => {
         }
         fetchPosts();
     }, [])
+   
     // setInterval(() => {
     //     if (window.flutter_inappwebview) {
     //         window.flutter_inappwebview.callHandler('native_get_alarm_count', {}).then(async function (result) {

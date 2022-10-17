@@ -68,6 +68,8 @@ font-size:12px;
 const MyPage = () => {
     const navigate = useNavigate();
     const [auth, setAuth] = useState({})
+    const [isWebView, setIsWebView] = useState(false);
+
     useEffect(() => {
         async function isAdmin() {
             const { data: response } = await axios('/api/auth')
@@ -81,6 +83,9 @@ const MyPage = () => {
             }
         }
         isAdmin();
+        if (window && window.flutter_inappwebview) {
+            setIsWebView(true)
+        }
     }, [])
     const onLogout = async () => {
         if (window.confirm('정말 로그아웃 하시겠습니까?')) {
@@ -139,9 +144,16 @@ const MyPage = () => {
                 <LogoutButton onClick={onLogout}>
                     로그아웃
                 </LogoutButton>
+                {isWebView?
+                <>
                 <LogoutButton onClick={()=>navigate('/appsetting')}>
                     앱 설정
                 </LogoutButton>
+                </>
+                :
+                <>
+                </>}
+                
             </Wrappers>
         </>
     )

@@ -29,9 +29,9 @@ const LoginCard = () => {
         }
         isAdmin();
         if (window && window.flutter_inappwebview) {
+            console.log(1)
             setIsWebView(true)
         }
-
     }, [])
     const onLogin = async () => {
         const { data: response } = await axios.post('/api/loginbyid', {
@@ -44,15 +44,16 @@ const LoginCard = () => {
                 'login_type': 0,
                 'id':$('.id').val()
             }
-            window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(async function (result) {
-                //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
-                // JSON.parse(result)
-                let obj = JSON.parse(result);
-            });
-            await localStorage.setItem('auth', JSON.stringify(response.data));
             if (window && window.flutter_inappwebview) {
-                
+                await window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(async function (result) {
+                    //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
+                    // JSON.parse(result)
+                    let obj = JSON.parse(result);
+                });    
             }
+            
+            await localStorage.setItem('auth', JSON.stringify(response.data));
+            
             navigate('/mypage');
         }
     }

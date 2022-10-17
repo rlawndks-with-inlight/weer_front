@@ -140,7 +140,6 @@ const Headers = () => {
   const [isSearch, setIsSearch] = useState(false);
   const [isAlarm, setIsAlarm] = useState(false);
   useEffect(() => {
-
     if (location.pathname.substring(0, 6) == '/post/' || location.pathname.substring(0, 7) == '/video/' || location.pathname == '/appsetting') {
       setIsPost(true);
     } else {
@@ -152,7 +151,58 @@ const Headers = () => {
     } else {
       setDisplay('flex');
     }
+    async function getAlarmCount() {
+      let auth = JSON.parse(localStorage.getItem('auth') ?? "{}");
+      let pk = undefined;
+      let mac_address = undefined;
+      let flag = true;
+      if (auth?.pk > 0) {//유저
+        pk = auth?.pk;
+        console.log(1)
+      } else if (window.flutter_inappwebview) {//맥
+        console.log(2)
+
+        window.flutter_inappwebview.callHandler('native_get_mac_address', {}).then(async function (result) {
+          //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
+          console.log(result)
+          let obj = JSON.parse(result);
+          obj = obj.data;
+          mac_address = obj.mac_address;
+        });
+      } else {
+        flag = false;
+      }
+
+      if (!flag) {
+        setIsAlarm(false);
+      } else {
+        const { data: response } = await axios.post('/api/getcountnotreadnoti', {
+          pk: pk,
+          mac_address: mac_address
+        })
+        console.log(response)
+        let obj = response.data;
+        if (window.flutter_inappwebview) {
+          if (obj.item.last_alarm_pk <= obj.alarm_ai || obj.item.last_notice_pk <= obj.notice_ai) {
+            setIsAlarm(true)
+            localStorage.setItem('is_alarm','1')
+          }
+        } else {
+          if (obj.item.last_notice_pk <= obj.notice_ai) {
+            setIsAlarm(true)
+            localStorage.setItem('is_alarm','1')
+          }
+        }
+
+      }
+    }
+    getAlarmCount();
   }, [location])
+  setInterval(() => {
+    if (localStorage.getItem('is_alarm') == '1') {
+      setIsAlarm(true);
+    }
+  }, 1500);
   // setInterval(() => {
   //   if (window.flutter_inappwebview) {
   //     window.flutter_inappwebview.callHandler('native_get_alarm_count', {}).then(async function (result) {
@@ -172,7 +222,6 @@ const Headers = () => {
     if (window.flutter_inappwebview) {
       window.flutter_inappwebview.callHandler('native_alarm_count_zero', {}).then(async function (result) {
         //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
-        
       });
     }
     navigate('/noticelist');
@@ -258,7 +307,7 @@ const Headers = () => {
                 <AiOutlineBell onClick={onClickBell} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
                 <AiOutlineSearch onClick={changeSearchModal} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
                 <AiOutlineSetting onClick={myAuth} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
-                {isAlarm && JSON.parse(localStorage.getItem('is_alarm') == 'true') ?
+                {isAlarm ?
                   <>
                     <div style={{ width: '10px', height: '10px', background: 'red', position: 'absolute', top: '2px', left: '17px', borderRadius: '50%' }} />
                   </>
@@ -285,7 +334,7 @@ const Headers = () => {
             <AiOutlineBell onClick={onClickBell} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
             <AiOutlineSearch onClick={changeSearchModal} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
             <AiOutlineSetting onClick={myAuth} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
-            {isAlarm && JSON.parse(localStorage.getItem('is_alarm') == 'true') ?
+            {isAlarm ?
               <>
                 <div style={{ width: '10px', height: '10px', background: 'red', position: 'absolute', top: '2px', left: '17px', borderRadius: '50%' }} />
               </>
