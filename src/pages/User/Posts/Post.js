@@ -120,7 +120,6 @@ const Post = () => {
         if (navigator.share) {
             navigator.share({
                 title: post.title,
-                text: '공유하기',
                 url: 'https://weare-first.com'+location.pathname,
             });
         }else{
