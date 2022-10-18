@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Title, ViewerContainer, Wrappers } from "../../../components/elements/UserContentTemplete";
 import { backUrl } from "../../../data/Data";
 import theme from "../../../styles/theme";
@@ -37,6 +37,7 @@ border-right: 10px solid transparent;
 `
 const Post = () => {
     const params = useParams();
+    const location = useLocation();
     const navigate = useNavigate();
     const [post, setPost] = useState({})
     const [comments, setComments] = useState([]);
@@ -115,6 +116,17 @@ const Post = () => {
             alert(response.message)
         }
     }
+    const handleShare = () => {
+        if (navigator.share) {
+            navigator.share({
+                title: post.title,
+                text: '공유하기',
+                url: 'https://weare-first.com'+location.pathname,
+            });
+        }else{
+            alert("공유하기가 지원되지 않는 환경 입니다.")
+        }
+      }
     return (
         <>
             <Wrappers className="wrapper">
@@ -130,7 +142,7 @@ const Post = () => {
                                 <div style={{ margin: '0 4px' }}>{post.nickname}</div> /
                                 <div style={{ margin: '0 4px' }}>{post?.date?.substring(0, 10)}</div> /
                                 <div style={{ margin: '0 8px 0 4px' }}>{commarNumber(post?.views ?? 0)}</div>
-                                <BsFillShareFill style={{ cursor: 'pointer' }} />
+                                <BsFillShareFill style={{ cursor: 'pointer' }} onClick={handleShare} />
                             </div>
                         </div>
                         <img src={backUrl + post.main_img} style={{ width: '100%', margin: '16px 0' }}  alt="#" />

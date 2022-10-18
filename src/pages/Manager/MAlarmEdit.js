@@ -11,21 +11,8 @@ import AddButton from '../../components/elements/button/AddButton';
 import $ from 'jquery';
 import { addItem, updateItem } from '../../functions/utils';
 import { Card, Title, Input, Row, Col, ImageContainer, Textarea } from '../../components/elements/ManagerTemplete';
-import { Editor } from '@toast-ui/react-editor';
-import '@toast-ui/editor/dist/toastui-editor.css';
-import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
-import 'tui-color-picker/dist/tui-color-picker.css';
-import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
-import '@toast-ui/editor/dist/i18n/ko-kr';
-import Picker from 'emoji-picker-react';
-import { backUrl } from '../../data/Data';
 import { objManagerListContent } from '../../data/Data';
-import { categoryToNumber } from '../../functions/utils';
-import CommentComponent from '../../components/CommentComponent';
 import theme from '../../styles/theme';
-import { AiFillFileImage } from 'react-icons/ai'
-import { IoRadioButtonOff, IoRadioButtonOn } from 'react-icons/io5'
-import { Content } from '../../components/elements/UserContentTemplete';
 const MAlarmEdit = () => {
     const { pathname } = useLocation();
     const params = useParams();

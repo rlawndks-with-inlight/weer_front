@@ -18,6 +18,7 @@ import { Viewer } from '@toast-ui/react-editor';
 import Loading from '../../../components/Loading'
 import CommentComponent from "../../../components/CommentComponent";
 import MetaTag from "../../../components/MetaTag";
+import { BsFillShareFill } from 'react-icons/bs';
 
 
 const Iframe = styled.iframe`
@@ -68,6 +69,7 @@ const PrevArrow = ({ onClick }) => {
 const Video = () => {
     const params = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
     const { pathname } = useLocation();
     const [post, setPost] = useState({});
     const [comments, setComments] = useState([]);
@@ -146,6 +148,17 @@ const Video = () => {
             alert(response.message)
         }
     }
+    const handleShare = () => {
+        if (navigator.share) {
+            navigator.share({
+                title: post.title,
+                text: '공유하기',
+                url: 'https://weare-first.com'+location.pathname,
+            });
+        }else{
+            alert("공유하기가 지원되지 않는 환경 입니다.")
+        }
+      }
     return (
         <>
             <Wrappers>
@@ -157,7 +170,14 @@ const Video = () => {
                     </>
                     :
                     <>
-                        <div style={{ width: '100%', textAlign: 'end' }}>{post.nickname} / {post?.date?.substring(0, 10)} / {commarNumber(post?.views ?? 0)}</div>
+                        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'end', fontSize: `${theme.size.font4}` }}>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <div style={{ margin: '0 4px' }}>{post.nickname}</div> /
+                                <div style={{ margin: '0 4px' }}>{post?.date?.substring(0, 10)}</div> /
+                                <div style={{ margin: '0 8px 0 4px' }}>{commarNumber(post?.views ?? 0)}</div>
+                                <BsFillShareFill style={{ cursor: 'pointer' }} onClick={handleShare} />
+                            </div>
+                        </div>
                         <Title not_arrow={true}>{post.title}</Title>
                         <Iframe src={`https://www.youtube.com/embed/${post.link}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
 
