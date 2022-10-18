@@ -10,6 +10,7 @@ margin-bottom: 16px;
 height: 180px;
 background: ${theme.color.background3};
 cursor:pointer;
+color:#2c2c2c;
 @media screen and (max-width:1000px) {
     height: 18vw;
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Wrappers, Card, Img } from "../../../components/elements/UserContentTemplete";
+import { Wrappers, Card, Img, SelectType } from "../../../components/elements/UserContentTemplete";
 import styled from "styled-components";
 import theme from "../../../styles/theme";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -9,13 +9,7 @@ import { getIframeLinkByLink } from "../../../functions/utils";
 import { backUrl } from "../../../data/Data";
 import VideoCard from "../../../components/VideoCard";
 
-const SelectType = styled.div`
-display:flex;
-width:100%;
-z-index:5;
-background:#fff;
-margin-bottom:16px;
-`
+
 const Type = styled.div`
 width:50%;
 text-align:center;
@@ -79,7 +73,7 @@ const Master = () => {
                     </div>
                     <img style={{ position: 'absolute', bottom: '0', right: '5%', height: '80%' }} alt="#" src={backUrl + state.img} />
                 </Card2>
-                <SelectType>
+                <SelectType className="select-type">
                     <Type style={{ borderBottom: `4px solid ${typeNum == 1 ? theme.color.background1 : '#fff'}`, color: `${typeNum == 1 ? theme.color.background1 : '#ccc'}` }} onClick={() => { changeType(1) }}>전문가칼럼</Type>
                     <Type style={{ borderBottom: `4px solid ${typeNum == 2 ? theme.color.background1 : '#fff'}`, color: `${typeNum == 2 ? theme.color.background1 : '#ccc'}` }} onClick={() => { changeType(2) }}>핵심비디오</Type>
                 </SelectType>

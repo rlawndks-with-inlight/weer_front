@@ -173,7 +173,7 @@ const Video = () => {
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <div style={{ margin: '0 4px' }}>{post.nickname}</div> /
                                 <div style={{ margin: '0 4px' }}>{post?.date?.substring(0, 10)}</div> /
-                                <div style={{ margin: '0 8px 0 4px' }}>{commarNumber(post?.views ?? 0)}</div>
+                                <div style={{ margin: '0 8px 0 4px' }}>조회수 {commarNumber(post?.views ?? 0)}</div>
                                 <BsFillShareFill style={{ cursor: 'pointer' }} onClick={handleShare} />
                             </div>
                         </div>
@@ -182,7 +182,7 @@ const Video = () => {
 
                         </Iframe>
                         <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post.hash}</div>
-                        <ViewerContainer>
+                        <ViewerContainer className="viewer">
                             <Viewer initialValue={post?.note ?? `<body></body>`} />
                         </ViewerContainer>
                         <Title>관련 영상</Title>

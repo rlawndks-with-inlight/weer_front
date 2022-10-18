@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { WrapperForm, CategoryName, Input, Button, FlexBox, SnsLogo, RegularNotice } from './elements/AuthContentTemplete';
-import { Title } from "./elements/UserContentTemplete";
+import { Title, SelectType } from "./elements/UserContentTemplete";
 import theme from "../styles/theme";
 import $ from 'jquery';
 import axios from "axios";
@@ -10,13 +10,7 @@ import { formatPhoneNumber } from "../functions/utils";
 import defaultImg from '../assets/images/icon/default-profile.png';
 import { backUrl } from "../data/Data";
 
-const SelectType = styled.div`
-display:flex;
-width:100%;
-z-index:5;
-background:#fff;
-margin: 16px 0;
-`
+
 const Type = styled.div`
 width:50%;
 text-align:center;
@@ -55,8 +49,8 @@ const EditMyInfoCard = () => {
     const zType = [{ title: "프로필 변경" }, { title: "닉네임 변경" }, { title: "비밀번호 변경" }, { title: "전화번호 변경" }];
     useEffect(() => {
         let auth = JSON.parse(localStorage.getItem('auth'))
-        if(auth.profile_img){
-            setUrl(auth.profile_img.substring(0,4)=="http"?auth.profile_img:backUrl+auth.profile_img)
+        if (auth.profile_img) {
+            setUrl(auth.profile_img.substring(0, 4) == "http" ? auth.profile_img : backUrl + auth.profile_img)
         }
         setMyId(auth.id);
     }, [])
@@ -172,7 +166,7 @@ const EditMyInfoCard = () => {
         <>
             <WrapperForm>
                 <Title>마이페이지 수정</Title>
-                <SelectType>
+                <SelectType className="select-type">
                     {zType.map((item, idx) => (
                         <>
                             <Type style={{ borderBottom: `4px solid ${typeNum == idx ? theme.color.background1 : '#fff'}`, color: `${typeNum == idx ? theme.color.background1 : '#ccc'}` }} onClick={() => { onChangeTypeNum(idx) }}>{item.title}</Type>

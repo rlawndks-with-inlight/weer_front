@@ -1,17 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Title, Wrappers, Content } from "../../../components/elements/UserContentTemplete";
+import { Title, Wrappers, Content,SelectType } from "../../../components/elements/UserContentTemplete";
 import theme from "../../../styles/theme";
 import styled from "styled-components";
 
-const SelectType = styled.div`
-display:flex;
-width:100%;
-z-index:5;
-background:#fff;
-margin-bottom:16px;
-`
+
 const Type = styled.div`
 width:50%;
 text-align:center;
@@ -97,7 +91,7 @@ const NoticeList = (props) => {
             <Wrappers>
                 {isWebView ?
                     <>
-                        <SelectType>
+                        <SelectType className="select-type">
                             <Type style={{ borderBottom: `4px solid ${typeNum == 1 ? theme.color.background1 : '#fff'}`, color: `${typeNum == 1 ? theme.color.background1 : '#ccc'}` }} onClick={() => { changeType(1) }}>공지사항
                                 {isNoticeNew ?
                                     <>

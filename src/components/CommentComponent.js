@@ -25,7 +25,7 @@ const CommentComponent = (props) => {
         <>
 
             <Content style={{ marginTop: '32px' }}>
-                {JSON.parse(localStorage.getItem('auth')).pk > 0 ?
+                {JSON.parse(localStorage.getItem('auth'))?.pk > 0 ?
                     <>
                         <div style={{ border: `1px solid ${theme.color.font3}`, display: 'flex', flexDirection: 'column', padding: '16px' }}>
                             <textarea style={{ outline: 'none', resize: 'none', border: 'none', height: '54px', fontSize: theme.size.font4 }} className='comment' />
