@@ -214,11 +214,11 @@ const SignUpCard = () => {
                 <RegularNotice></RegularNotice>
                 <Button onClick={confirmCoincide} disabled={isCheckPhoneNumber}>{isCheckPhoneNumber ? '확인완료' : '인증번호 확인'}</Button>
                 <Button style={{ marginTop: '36px' }} onClick={onSignUp}>회원가입</Button>
-                <CategoryName>SNS 간편 회원가입</CategoryName>
+                {/* <CategoryName>SNS 간편 회원가입</CategoryName>
                 <FlexBox>
                     <SnsLogo src={kakao} />
                     <SnsLogo src={naver} />
-                </FlexBox>
+                </FlexBox> */}
 
             </WrapperForm>
         </>
