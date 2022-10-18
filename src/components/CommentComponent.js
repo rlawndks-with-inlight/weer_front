@@ -25,7 +25,7 @@ const CommentComponent = (props) => {
         <>
 
             <Content style={{ marginTop: '32px' }}>
-                {JSON.parse(localStorage.getItem('auth')) ?
+                {JSON.parse(localStorage.getItem('auth')).pk > 0 ?
                     <>
                         <div style={{ border: `1px solid ${theme.color.font3}`, display: 'flex', flexDirection: 'column', padding: '16px' }}>
                             <textarea style={{ outline: 'none', resize: 'none', border: 'none', height: '54px', fontSize: theme.size.font4 }} className='comment' />
@@ -48,7 +48,7 @@ const CommentComponent = (props) => {
                         {data.map((item, idx) => (
                             <>
                                 <div style={{ borderBottom: `1px solid ${theme.color.font3}`, display: 'flex', padding: '16px', fontSize: theme.size.font4 }}>
-                                    <img alt="프로필 사진" src={item?.profile_img?(item?.profile_img?.substring(0, 4) == 'http' ? item.profile_img : backUrl + item.profile_img):defaultImg} style={{ width: '64px', height: '64px', borderRadius: '50%', marginRight: '16px' }} />
+                                    <img alt="프로필 사진" src={item?.profile_img ? (item?.profile_img?.substring(0, 4) == 'http' ? item.profile_img : backUrl + item.profile_img) : defaultImg} style={{ width: '64px', height: '64px', borderRadius: '50%', marginRight: '16px' }} />
                                     <div>
                                         <div style={{ marginBottom: '6px', display: 'flex' }}><div style={{ marginRight: '6px' }}>{item.nickname}</div> <div style={{ color: theme.color.font3 }}>{item.date.substring(0, 16)}</div></div>
                                         <div style={{ wordBreak: 'break-all', marginBottom: '6px', fontSize: theme.size.font3 }}>{item.note}</div>
