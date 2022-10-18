@@ -25,6 +25,8 @@ import Master from '../pages/User/Master/Master';
 import Post from '../pages/User/Posts/Post';
 import Video from '../pages/User/Posts/Video';
 
+import Policy from '../pages/User/Policy/Policy';
+
 import MLogin from '../pages/Manager/MLogin';
 import MUserEdit from '../pages/Manager/MUserEdit';
 import MMasterEdit from '../pages/Manager/MMasterEdit';
@@ -69,6 +71,8 @@ const zRoute = [
     { link: '/post/notice/:pk', element: <Notice />, title: "공지사항" },
     { link: '/post/:table/:pk', element: <Post />, title: "게시물" },
     { link: '/video/:pk', element: <Video />, title: "핵심비디오" },
+
+    { link: '/policy/:pk', element: <Policy />, title: "" },
 
     { link: '/manager', element: <MLogin />, title: "관리자로그인" },
     { link: '/manager/login', element: <MLogin />, title: "관리자로그인" },

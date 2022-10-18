@@ -22,7 +22,7 @@ background:#fff;
 box-shadow: 5px 10px 10px rgb(0 0 0 / 3%);
 @media screen and (max-width:1050px) { 
   box-shadow:none;
-  height:3rem;
+  height:3.5rem;
 }
 `
 const HeaderContainer = styled.div`

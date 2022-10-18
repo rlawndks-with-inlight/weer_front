@@ -72,6 +72,7 @@ const Search = () => {
                 response.data.themes.length==0&&
                 response.data.videos.length==0){
                 alert('해당 검색 결과가 없습니다.');
+                navigate(-1);
             }
             setOneWords(response.data.oneWord);
             setOneEvents(response.data.oneEvent);

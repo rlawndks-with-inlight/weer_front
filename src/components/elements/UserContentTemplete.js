@@ -18,7 +18,7 @@ margin-right:auto;
 margin-bottom:6rem;
 min-height:58vh;
 @media screen and (max-width:1050px) { 
-    margin-top:3.5rem;
+    margin-top:4rem;
 }
 
 `

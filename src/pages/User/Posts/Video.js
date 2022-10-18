@@ -115,12 +115,10 @@ const Video = () => {
         }
         if (localStorage.getItem('auth')) {
             setAuth(JSON.parse(localStorage.getItem('auth')));
-            fetchPost();
-            fetchComments();
-        } else {
-            alert('로그인 후 이용 가능합니다.');
-            navigate(-1);
-        }
+            
+        } 
+        fetchPost();
+        fetchComments();
     }, [pathname])
     const fetchComments = async () => {
         const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk}&category=${categoryToNumber('video')}`);
@@ -128,6 +126,10 @@ const Video = () => {
     }
     
     const addComment = async () => {
+        if(!auth.pk){
+            alert("로그인 후 이용 가능합니다.")
+            return;
+        }
         const { data: response } = await axios.post('/api/addcomment', {
             userPk: auth.pk,
             userNick: auth.nickname,
@@ -155,7 +157,7 @@ const Video = () => {
                     </>
                     :
                     <>
-                        <div style={{ width: '100%', textAlign: 'end' }}>{post.nickname} / {post?.date?.substring(5, 10)} / {commarNumber(post?.views ?? 0)}</div>
+                        <div style={{ width: '100%', textAlign: 'end' }}>{post.nickname} / {post?.date?.substring(0, 10)} / {commarNumber(post?.views ?? 0)}</div>
                         <Title not_arrow={true}>{post.title}</Title>
                         <Iframe src={`https://www.youtube.com/embed/${post.link}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
 

@@ -1,8 +1,3 @@
-import { IoCaretForwardCircleOutline, IoAlbumsOutline } from "react-icons/io5"
-import { HiOutlineLightBulb } from 'react-icons/hi'
-import { FaRegThumbsUp } from 'react-icons/fa'
-import { TbMessageDots } from 'react-icons/tb'
-import { MdOutlineFeaturedPlayList } from 'react-icons/md'
 import albumImg from '../assets/images/icon/albums.svg';
 import albumActiveImg from '../assets/images/icon/albums-active.svg';
 import bulbImg from '../assets/images/icon/bulb.svg';
