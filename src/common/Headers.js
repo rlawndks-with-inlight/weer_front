@@ -139,7 +139,10 @@ const Headers = () => {
   const [searchDisplay, setSearchDisplay] = useState('none')
   const [isSearch, setIsSearch] = useState(false);
   const [isAlarm, setIsAlarm] = useState(false);
+  
   useEffect(() => {
+    
+    
     if (location.pathname.substring(0, 6) == '/post/' || location.pathname.substring(0, 7) == '/video/' || location.pathname == '/appsetting') {
       setIsPost(true);
     } else {
@@ -194,6 +197,15 @@ const Headers = () => {
           }
         }
 
+      }
+      if(1==2){
+        $('body').css("background","#000");
+        $('body > p').attr("style","color:#fff !important;");
+        $('.wrappers').css("background","#000");
+        $('.select-type').css("background","#000");
+        $('.title').css("background","#000");
+        $('.title').css("color","#fff");
+        $('.viewer').attr("style","background:#fff !important;");
       }
     }
     getAlarmCount();
@@ -296,7 +308,7 @@ const Headers = () => {
               <div>
                 {isPost ?
                   <>
-                    <MdNavigateBefore style={{ fontSize: '30px', marginLeft: '-7px' }} onClick={() => { navigate(-1) }} />
+                    <MdNavigateBefore style={{ fontSize: '30px', marginLeft: '-7px',color:'#2c2c2c' }} onClick={() => { navigate(-1) }} />
                   </>
                   :
                   <>

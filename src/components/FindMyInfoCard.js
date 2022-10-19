@@ -1,20 +1,13 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { WrapperForm, CategoryName, Input, Button, FlexBox, SnsLogo, RegularNotice } from './elements/AuthContentTemplete';
-import { Title } from "./elements/UserContentTemplete";
+import { Title,SelectType } from "./elements/UserContentTemplete";
 import theme from "../styles/theme";
 import $ from 'jquery';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { formatPhoneNumber } from "../functions/utils";
 
-const SelectType = styled.div`
-display:flex;
-width:100%;
-z-index:5;
-background:#fff;
-margin: 16px 0;
-`
 const Type = styled.div`
 width:50%;
 text-align:center;
@@ -185,7 +178,7 @@ const FindMyInfoCard = () => {
         <>
             <WrapperForm>
                 <Title>아이디/비밀번호 찾기</Title>
-                <SelectType>
+                <SelectType className="select-type">
                     <Type style={{ borderBottom: `4px solid ${typeNum == 1 ? theme.color.background1 : '#fff'}`, color: `${typeNum == 1 ? theme.color.background1 : '#ccc'}` }} onClick={() => { onChangeTypeNum(1) }}>아이디찾기</Type>
                     <Type style={{ borderBottom: `4px solid ${typeNum == 2 ? theme.color.background1 : '#fff'}`, color: `${typeNum == 2 ? theme.color.background1 : '#ccc'}` }} onClick={() => { onChangeTypeNum(2) }}>비밀번호 찾기</Type>
                 </SelectType>

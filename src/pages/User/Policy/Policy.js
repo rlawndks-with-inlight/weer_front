@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { Title, ViewerContainer, Wrappers } from "../../../components/elements/UserContentTemplete";
+import { Title, Wrappers } from "../../../components/elements/UserContentTemplete";
 
 const SubTitle = styled.div`
 font-weight:bold;

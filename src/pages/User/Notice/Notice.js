@@ -102,7 +102,7 @@ const Notice = () => {
                     <div style={{ margin: '0 4px' }}>{post?.date?.substring(0, 10)}</div>
                 </div>
                 <Title>{post.title}</Title>
-                <ViewerContainer>
+                <ViewerContainer className="viewer">
                     <Viewer initialValue={post?.note ?? `<body></body>`} />
                 </ViewerContainer>
                 <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />

@@ -34,13 +34,19 @@ export const Wrappers = (props) =>{
     },[])
     return (
         <>
-        <WrappersStyle style={{minHeight:`${minHeight}px`}}>
+        <WrappersStyle className="wrappers" style={{minHeight:`${minHeight}px`}}>
             {props.children??""}
         </WrappersStyle>
         </>
     )
 }
-
+export const TitleContainer = styled.div`
+display:flex;
+align-items:center;
+margin-top:24px;
+margin-bottom:8px;
+justify-content:space-between;
+`
 export const TitleStyle = styled.div`
 font-size:${props => props.theme.size.font2};
 font-weight:bold;
@@ -51,7 +57,7 @@ export const Title = (props) =>{
     const navigate = useNavigate();
     return (
         <>
-        <div style={{display:'flex',alignItems:'center',marginTop:'24px',marginBottom:'8px',justifyContent:'space-between'}} onClick={()=>{navigate(props.link)}}>
+        <TitleContainer className="title" onClick={()=>{navigate(props.link)}}>
         <TitleStyle>
             {props?.children??""}
         </TitleStyle>
@@ -66,7 +72,7 @@ export const Title = (props) =>{
 
         {/* <hr className="bar"/> */}
 
-        </div>
+        </TitleContainer>
         
         </>
     )
@@ -124,4 +130,11 @@ export const ViewerContainer = styled.div`
 max-width:1000px;
 width:100%;
 margin:0 auto;
+`
+export const SelectType = styled.div`
+display:flex;
+width:100%;
+z-index:5;
+background:#fff;
+margin:16px 0;
 `

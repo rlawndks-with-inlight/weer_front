@@ -121,7 +121,6 @@ const Post = () => {
         if (navigator.share) {
             navigator.share({
                 title: post.title,
-                text: '공유하기',
                 url: 'https://weare-first.com'+location.pathname,
             });
         }else{
@@ -142,14 +141,14 @@ const Post = () => {
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <div style={{ margin: '0 4px' }}>{post.nickname}</div> /
                                 <div style={{ margin: '0 4px' }}>{post?.date?.substring(0, 10)}</div> /
-                                <div style={{ margin: '0 8px 0 4px' }}>{commarNumber(post?.views ?? 0)}</div>
+                                <div style={{ margin: '0 8px 0 4px' }}>조회수 {commarNumber(post?.views ?? 0)}</div>
                                 <BsFillShareFill style={{ cursor: 'pointer' }} onClick={handleShare} />
                             </div>
                         </div>
                         <img src={backUrl + post.main_img} style={{ width: '100%', margin: '16px 0' }}  alt="#" />
                         <Title not_arrow={true}>{post.title}</Title>
                         <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post.hash}</div>
-                        <ViewerContainer>
+                        <ViewerContainer className="viewer">
                             <Viewer initialValue={post?.note ?? `<body></body>`} />
                         </ViewerContainer>
 
