@@ -89,7 +89,7 @@ const Post = () => {
           setAuth(response);
         } else {
           alert("로그인이 필요한 서비스입니다.");
-          navigate(-1);
+          navigate('/login');
         }
     }
     const fetchComments = async () => {
