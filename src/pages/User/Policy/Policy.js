@@ -7,11 +7,11 @@ import { Title, ViewerContainer, Wrappers } from "../../../components/elements/U
 const SubTitle = styled.div`
 font-weight:bold;
 margin-bottom:16px;
-font-size:${props=>props.theme.size.font3};
+font-size:${props => props.theme.size.font3};
 `
 const Text = styled.div`
 margin-bottom:24px;
-font-size:${props=>props.theme.size.font4};
+font-size:${props => props.theme.size.font4};
 line-height:20px;
 `
 const Policy = () => {

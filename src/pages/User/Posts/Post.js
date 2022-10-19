@@ -74,23 +74,24 @@ const Post = () => {
             setTimeout(() => setLoading(false), 1000);
         }
         if (params.table != 'notice') {
-            if (localStorage.getItem('auth')) {
-                setAuth(JSON.parse(localStorage.getItem('auth')));
-                fetchPost();
-                fetchComments();
-            } else {
-                alert('로그인 후 이용 가능합니다.');
-                navigate(-1);
-            }
-        } else {
-            fetchPost();
-            fetchComments();
-        }
+            myAuth();
+        } 
+        fetchPost();
+        fetchComments();
         window.addEventListener('scroll', function (el) {
             let per = Math.floor(($(window).scrollTop() / ($(document).height() - $(window).height())) * 100);
             setPercent(per);
         })
     }, [])
+    const myAuth = async () => {
+        const { data: response } = await axios('/api/auth')
+        if (response.pk > 0) {
+          setAuth(response);
+        } else {
+          alert("로그인이 필요한 서비스입니다.");
+          navigate(-1);
+        }
+    }
     const fetchComments = async () => {
         const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk}&category=${categoryToNumber(params.table)}`);
         setComments(response.data);

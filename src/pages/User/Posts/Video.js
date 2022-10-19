@@ -117,8 +117,8 @@ const Video = () => {
         }
         if (localStorage.getItem('auth')) {
             setAuth(JSON.parse(localStorage.getItem('auth')));
-            
-        } 
+
+        }
         fetchPost();
         fetchComments();
     }, [pathname])
@@ -126,9 +126,9 @@ const Video = () => {
         const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk}&category=${categoryToNumber('video')}`);
         setComments(response.data);
     }
-    
+
     const addComment = async () => {
-        if(!auth.pk){
+        if (!auth.pk) {
             alert("로그인 후 이용 가능합니다.")
             return;
         }
@@ -153,16 +153,16 @@ const Video = () => {
             navigator.share({
                 title: post.title,
                 text: '공유하기',
-                url: 'https://weare-first.com'+location.pathname,
+                url: 'https://weare-first.com' + location.pathname,
             });
-        }else{
+        } else {
             alert("공유하기가 지원되지 않는 환경 입니다.")
         }
-      }
+    }
     return (
         <>
             <Wrappers>
-                <MetaTag title={'weare-first - 위아 : 퍼스트 파트너스 | 주식 | 특징주 | 핵심이슈 | 핵심비디오 - 핵심비디오 / ' + post?.title??""} />
+                <MetaTag title={'weare-first - 위아 : 퍼스트 파트너스 | 주식 | 특징주 | 핵심이슈 | 핵심비디오 - 핵심비디오 / ' + post?.title ?? ""} />
 
                 {loading ?
                     <>
