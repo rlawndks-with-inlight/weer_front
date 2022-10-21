@@ -44,30 +44,31 @@ const Post = () => {
     const [percent, setPercent] = useState(0);
     const [auth, setAuth] = useState({})
     const [loading, setLoading] = useState(false)
-    const returnTitle = (ttl) =>{
-        if(params.table=='notice'){
-            return "weare-first - 위아 : 퍼스트 파트너스 - 공지사항 / "+ttl;
-        }else if(params.table=='issue'){
-            return "weare-first - 위아 : 퍼스트 파트너스 - 핵심이슈 / "+ttl;
-        }else if(params.table=='theme'){
-            return "weare-first - 위아 : 퍼스트 파트너스 - 핵심테마 / "+ttl;
-        }else if(params.table=='feature'){
-            return "weare-first - 위아 : 퍼스트 파트너스 - 특징주 / "+ttl;
-        }else if(params.table=='oneevent'){
-            return "weare-first - 위아 : 퍼스트 파트너스 - 하루1종목 / "+ttl;
-        }else if(params.table=='oneword'){
-            return "weare-first - 위아 : 퍼스트 파트너스 - 하루1단어 / "+ttl;
-        }else if(params.table=='strategy'){
-            return "weare-first - 위아 : 퍼스트 파트너스 - 전문가칼럼 / "+ttl;
-        }else{
+    const returnTitle = (ttl) => {
+        if (params.table == 'notice') {
+            return "weare-first - 위아 : 퍼스트 파트너스 - 공지사항 / " + ttl;
+        } else if (params.table == 'issue') {
+            return "weare-first - 위아 : 퍼스트 파트너스 - 핵심이슈 / " + ttl;
+        } else if (params.table == 'theme') {
+            return "weare-first - 위아 : 퍼스트 파트너스 - 핵심테마 / " + ttl;
+        } else if (params.table == 'feature') {
+            return "weare-first - 위아 : 퍼스트 파트너스 - 특징주 / " + ttl;
+        } else if (params.table == 'oneevent') {
+            return "weare-first - 위아 : 퍼스트 파트너스 - 하루1종목 / " + ttl;
+        } else if (params.table == 'oneword') {
+            return "weare-first - 위아 : 퍼스트 파트너스 - 하루1단어 / " + ttl;
+        } else if (params.table == 'strategy') {
+            return "weare-first - 위아 : 퍼스트 파트너스 - 전문가칼럼 / " + ttl;
+        } else {
             return "weare-first - 위아 : 퍼스트 파트너스";
         }
     }
     useEffect(() => {
+        
         async function fetchPost() {
             setLoading(true)
             const { data: response } = await axios.get(`/api/item?table=${params.table}&pk=${params.pk}&views=1`);
-            
+
             let obj = response.data;
             setPost(obj);
             await new Promise((r) => setTimeout(r, 100));
@@ -75,28 +76,41 @@ const Post = () => {
         }
         if (params.table != 'notice') {
             myAuth();
-        } 
+        }
+        if (localStorage.getItem('dark_mode')) {
+            $('body').addClass("dark-mode");
+            $('p').addClass("dark-mode");
+            $('.toastui-editor-contents p').attr("style","color:#fff!important");
+            $('.menu-container').addClass("dark-mode");
+            $('.header').addClass("dark-mode");
+            $('.select-type').addClass("dark-mode");
+            $('.wrappers > .viewer > p').addClass("dark-mode");
+            $('.footer').addClass("dark-mode");
+            $('.viewer > div > div > div > p').addClass("dark-mode");
+        }
         fetchPost();
         fetchComments();
+        
         window.addEventListener('scroll', function (el) {
             let per = Math.floor(($(window).scrollTop() / ($(document).height() - $(window).height())) * 100);
             setPercent(per);
         })
+       
     }, [])
     const myAuth = async () => {
         const { data: response } = await axios('/api/auth')
         if (response.pk > 0) {
-          setAuth(response);
+            setAuth(response);
         } else {
-          alert("로그인이 필요한 서비스입니다.");
-          navigate('/login');
+            alert("로그인이 필요한 서비스입니다.");
+            navigate('/login');
         }
     }
     const fetchComments = async () => {
         const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk}&category=${categoryToNumber(params.table)}`);
         setComments(response.data);
     }
-    
+
     const addComment = async () => {
         if (!$('.comment').val()) {
             alert('필수 값을 입력해 주세요.');
@@ -121,16 +135,16 @@ const Post = () => {
         if (navigator.share) {
             navigator.share({
                 title: post.title,
-                url: 'https://weare-first.com'+location.pathname,
+                url: 'https://weare-first.com' + location.pathname,
             });
-        }else{
+        } else {
             alert("공유하기가 지원되지 않는 환경 입니다.")
         }
-      }
+    }
     return (
         <>
             <Wrappers className="wrapper">
-                <MetaTag title={returnTitle(post?.title??"")} />
+                <MetaTag title={returnTitle(post?.title ?? "")} />
                 {loading ?
                     <>
                         <Loading />
@@ -145,11 +159,11 @@ const Post = () => {
                                 <BsFillShareFill style={{ cursor: 'pointer' }} onClick={handleShare} />
                             </div>
                         </div>
-                        <img src={backUrl + post.main_img} style={{ width: '100%', margin: '16px 0' }}  alt="#" />
+                        <img src={backUrl + post.main_img} style={{ width: '100%', margin: '16px 0' }} alt="#" />
                         <Title not_arrow={true}>{post.title}</Title>
                         <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post.hash}</div>
                         <ViewerContainer className="viewer">
-                            <Viewer initialValue={post?.note ?? `<body></body>`} />
+                            <Viewer initialValue={post?.note ?? `<body></body>`}  />
                         </ViewerContainer>
 
                         <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />

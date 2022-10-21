@@ -198,14 +198,16 @@ const Headers = () => {
         }
 
       }
-      if(1==2){
-        $('body').css("background","#000");
-        $('body > p').attr("style","color:#fff !important;");
-        $('.wrappers').css("background","#000");
-        $('.select-type').css("background","#000");
-        $('.title').css("background","#000");
-        $('.title').css("color","#fff");
-        $('.viewer').attr("style","background:#fff !important;");
+      if(localStorage.getItem('dark_mode')){
+        $('body').addClass("dark-mode");
+        $('p').addClass("dark-mode");
+        $('.toastui-editor-contents p').addClass("dark-mode");
+        $('.menu-container').addClass("dark-mode");
+        $('.header').addClass("dark-mode");
+        $('.select-type').addClass("dark-mode");
+        $('.footer').addClass("dark-mode");
+      }else{
+        
       }
     }
     getAlarmCount();
@@ -287,7 +289,7 @@ const Headers = () => {
   return (
     <>
 
-      <Header style={{ display: `${display}` }}>
+      <Header style={{ display: `${display}` }} className='header'>
 
         <HeaderContainer>{/*모바일 */}
           {isSearch ?
@@ -308,14 +310,14 @@ const Headers = () => {
               <div>
                 {isPost ?
                   <>
-                    <MdNavigateBefore style={{ fontSize: '30px', marginLeft: '-7px',color:'#2c2c2c' }} onClick={() => { navigate(-1) }} />
+                    <MdNavigateBefore style={{ fontSize: '30px', marginLeft: '-7px' }} onClick={() => { navigate(-1) }} />
                   </>
                   :
                   <>
                     <img src={logo} alt="홈으로" style={{ height: '2.5rem', marginTop: '0.25rem' }} onClick={() => { navigate('/') }} />
                   </>}
               </div>
-              <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '100px', justifyContent: 'space-between', position: 'relative' }}>
+              <div style={{ display: 'flex', fontSize: '1.2rem', width: '100px', justifyContent: 'space-between', position: 'relative' }}>
               <AiOutlineBell onClick={onClickBell} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
                 <AiOutlineSearch onClick={changeSearchModal} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
                 <AiOutlineSetting onClick={myAuth} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
@@ -342,7 +344,7 @@ const Headers = () => {
           <div style={{ position: 'absolute', right: '48%', top: '0.5rem' }}>
             <img src={logo} alt="홈으로" style={{ height: '5rem' }} onClick={() => { navigate('/') }} />
           </div>
-          <div style={{ display: 'flex', color: '#000', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between', position: 'relative' }}>
+          <div style={{ display: 'flex', fontSize: '1.2rem', width: '7rem', justifyContent: 'space-between', position: 'relative' }}>
             <AiOutlineBell onClick={onClickBell} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
             <AiOutlineSearch onClick={changeSearchModal} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
             <AiOutlineSetting onClick={myAuth} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />

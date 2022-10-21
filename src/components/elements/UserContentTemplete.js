@@ -11,7 +11,6 @@ display:flex;
 flex-direction:column;
 width:90%;
 max-width:1000px;
-background:#fff;
 margin-top:8rem;
 margin-left:auto;
 margin-right:auto;

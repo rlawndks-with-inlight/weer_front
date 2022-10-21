@@ -1,12 +1,17 @@
 import albumImg from '../assets/images/icon/albums.svg';
+import albumWhiteImg from '../assets/images/icon/albums-white.svg';
 import albumActiveImg from '../assets/images/icon/albums-active.svg';
 import bulbImg from '../assets/images/icon/bulb.svg';
+import bulbWhiteImg from '../assets/images/icon/bulb-white.svg';
 import bulbActiveImg from '../assets/images/icon/bulb-active.svg';
 import featureImg from '../assets/images/icon/features.svg';
+import featureWhiteImg from '../assets/images/icon/features-white.svg';
 import featureActiveImg from '../assets/images/icon/features-active.svg';
 import talkImg from '../assets/images/icon/talk.svg';
+import talkWhiteImg from '../assets/images/icon/talk-white.svg';
 import talkActiveImg from '../assets/images/icon/talk-active.svg';
 import thumbImg from '../assets/images/icon/thumb.svg';
+import thumbWhiteImg from '../assets/images/icon/thumb-white.svg';
 import thumbActiveImg from '../assets/images/icon/thumb-active.svg';
 import logo from '../assets/images/test/logo.svg'
 import { EditorState } from "draft-js"
@@ -20,14 +25,16 @@ export const editorState = {
 export const localization = {
     locale: 'ko',
 }
-export const zBottomMenu = [
-    { name: '핵심이슈', link: '/selectissuecategory', icon: <img src={bulbImg} className='menu-icon' alt="#" />, activeIcon: <img src={bulbActiveImg} className='menu-icon' alt="#" />, allowList: ['/selectissuecategory'] },
-    // { name: '핵심비디오', link: '/videolist', icon: <img src={playImg} className='menu-icon' alt="#" />, activeIcon: <img src={playActiveImg} className='menu-icon' alt="#" />, allowList: ['/videolist'] },
-    { name: '특징주', link: '/selectfeaturecategory', icon: <img src={featureImg} className='menu-icon' alt="#" />, activeIcon: <img src={featureActiveImg} className='menu-icon' alt="#" />, allowList: ['/selectfeaturecategory'] },
-    { name: '핵심테마', link: '/themelist', icon: <img src={albumImg} className='menu-icon' alt="#" />, activeIcon: <img src={albumActiveImg} className='menu-icon' alt="#" />, allowList: ['/themelist'] },
-    { name: '전문가칼럼', link: '/masterlist', icon: <img src={thumbImg} className='menu-icon' alt="#" />, activeIcon: <img src={thumbActiveImg} className='menu-icon' alt="#" />, allowList: ['/masterlist'] },
-    { name: '공지사항', link: '/noticelist', icon: <img src={talkImg} className='menu-icon' alt="#" />, activeIcon: <img src={talkActiveImg} className='menu-icon' alt="#" />, allowList: ['/noticelist'] }
+export const zBottomMenu =  [
+        { name: '핵심이슈', link: '/selectissuecategory', icon:<img src={localStorage.getItem('dark_mode')?bulbWhiteImg:bulbImg} className='menu-icon' alt="#" />, activeIcon: <img src={bulbActiveImg} className='menu-icon' alt="#" />, allowList: ['/selectissuecategory'] },
+        // { name: '핵심비디오', link: '/videolist', icon: <img src={playImg} className='menu-icon' alt="#" />, activeIcon: <img src={playActiveImg} className='menu-icon' alt="#" />, allowList: ['/videolist'] },
+        { name: '특징주', link: '/selectfeaturecategory', icon: <img src={localStorage.getItem('dark_mode')?featureWhiteImg:featureImg} className='menu-icon' alt="#" />, activeIcon: <img src={featureActiveImg} className='menu-icon' alt="#" />, allowList: ['/selectfeaturecategory'] },
+        { name: '핵심테마', link: '/themelist', icon: <img src={localStorage.getItem('dark_mode')?albumWhiteImg:albumImg} className='menu-icon' alt="#" />, activeIcon: <img src={albumActiveImg} className='menu-icon' alt="#" />, allowList: ['/themelist'] },
+        { name: '전문가칼럼', link: '/masterlist', icon: <img src={localStorage.getItem('dark_mode')?thumbWhiteImg:thumbImg} className='menu-icon' alt="#" />, activeIcon: <img src={thumbActiveImg} className='menu-icon' alt="#" />, allowList: ['/masterlist'] },
+        { name: '공지사항', link: '/noticelist', icon: <img src={localStorage.getItem('dark_mode')?talkWhiteImg:talkImg} className='menu-icon' alt="#" />, activeIcon: <img src={talkActiveImg} className='menu-icon' alt="#" />, allowList: ['/noticelist'] }
 ];
+
+
 
 export const cardDefaultColor = {
     font: "#000",
