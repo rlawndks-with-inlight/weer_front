@@ -198,17 +198,19 @@ const Headers = () => {
         }
 
       }
-      if(localStorage.getItem('dark_mode')){
-        $('body').addClass("dark-mode");
-        $('p').addClass("dark-mode");
-        $('.toastui-editor-contents p').addClass("dark-mode");
-        $('.menu-container').addClass("dark-mode");
-        $('.header').addClass("dark-mode");
-        $('.select-type').addClass("dark-mode");
-        $('.footer').addClass("dark-mode");
-      }else{
-        
-      }
+      
+    }
+    if(localStorage.getItem('dark_mode')){
+      $('body').addClass("dark-mode");
+      $('p').addClass("dark-mode");
+      $('.toastui-editor-contents p').addClass("dark-mode");
+      $('.menu-container').addClass("dark-mode");
+      $('.menu-container').css("border-top","none");
+      $('.header').addClass("dark-mode");
+      $('.select-type').addClass("dark-mode");
+      $('.footer').addClass("dark-mode");
+    }else{
+      
     }
     getAlarmCount();
   }, [location])

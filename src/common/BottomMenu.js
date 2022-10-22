@@ -88,6 +88,7 @@ const BottomMenu = () => {
                 arr.push(theme.color.background1);
             }
         }
+        
         setColorList(arr);
     }, [location])
 
