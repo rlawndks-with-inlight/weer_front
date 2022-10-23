@@ -64,7 +64,7 @@ const Post = () => {
         }
     }
     useEffect(() => {
-        
+
         async function fetchPost() {
             setLoading(true)
             const { data: response } = await axios.get(`/api/item?table=${params.table}&pk=${params.pk}&views=1`);
@@ -73,29 +73,31 @@ const Post = () => {
             setPost(obj);
             await new Promise((r) => setTimeout(r, 100));
             setTimeout(() => setLoading(false), 1000);
+            await new Promise((r) => setTimeout(r, 1100));
+            if (localStorage.getItem('dark_mode')) {
+                $('body').addClass("dark-mode");
+                $('p').addClass("dark-mode");
+                $('.toastui-editor-contents p').attr("style", "color:#fff!important");
+                $('.menu-container').addClass("dark-mode");
+                $('.header').addClass("dark-mode");
+                $('.select-type').addClass("dark-mode");
+                $('.wrappers > .viewer > p').addClass("dark-mode");
+                $('.footer').addClass("dark-mode");
+                $('.viewer > div > div > div > p').addClass("dark-mode");
+            }
         }
         if (params.table != 'notice') {
             myAuth();
         }
-        if (localStorage.getItem('dark_mode')) {
-            $('body').addClass("dark-mode");
-            $('p').addClass("dark-mode");
-            $('.toastui-editor-contents p').attr("style","color:#fff!important");
-            $('.menu-container').addClass("dark-mode");
-            $('.header').addClass("dark-mode");
-            $('.select-type').addClass("dark-mode");
-            $('.wrappers > .viewer > p').addClass("dark-mode");
-            $('.footer').addClass("dark-mode");
-            $('.viewer > div > div > div > p').addClass("dark-mode");
-        }
+
         fetchPost();
         fetchComments();
-        
+
         window.addEventListener('scroll', function (el) {
             let per = Math.floor(($(window).scrollTop() / ($(document).height() - $(window).height())) * 100);
             setPercent(per);
         })
-       
+
     }, [])
     const myAuth = async () => {
         const { data: response } = await axios('/api/auth')
@@ -163,7 +165,7 @@ const Post = () => {
                         <Title not_arrow={true}>{post.title}</Title>
                         <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post.hash}</div>
                         <ViewerContainer className="viewer">
-                            <Viewer initialValue={post?.note ?? `<body></body>`}  />
+                            <Viewer initialValue={post?.note ?? `<body></body>`} />
                         </ViewerContainer>
 
                         <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />

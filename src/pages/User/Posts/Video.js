@@ -114,6 +114,19 @@ const Video = () => {
             setLatests(video_list);
             await new Promise((r) => setTimeout(r, 100));
             setTimeout(() => setLoading(false), 1000);
+            await new Promise((r) => setTimeout(r, 1100));
+            if (localStorage.getItem('dark_mode')) {
+                $('body').addClass("dark-mode");
+                $('p').addClass("dark-mode");
+                $('.toastui-editor-contents p').attr("style", "color:#fff!important");
+                $('.toastui-editor-contents span').attr("style", "color:#fff!important");
+                $('.menu-container').addClass("dark-mode");
+                $('.header').addClass("dark-mode");
+                $('.select-type').addClass("dark-mode");
+                $('.wrappers > .viewer > p').addClass("dark-mode");
+                $('.footer').addClass("dark-mode");
+                $('.viewer > div > div > div > p').addClass("dark-mode");
+            }
         }
         if (localStorage.getItem('auth')) {
             setAuth(JSON.parse(localStorage.getItem('auth')));
