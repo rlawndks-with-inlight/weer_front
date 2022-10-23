@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom"
 import '../styles/style.css'
 import theme from '../styles/theme'
 import { zBottomMenu } from '../data/Data'
+import $ from 'jquery'
 const Container = styled.aside`
     background: #fff;
     border-top: 0.1rem solid #e6e6e6;
@@ -90,6 +91,7 @@ const BottomMenu = () => {
         }
         
         setColorList(arr);
+        
     }, [location])
 
     return (

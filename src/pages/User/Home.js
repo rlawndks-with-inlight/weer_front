@@ -175,13 +175,13 @@ const Home = () => {
                         </Content> */}
                         <Title link={'/masterlist'} className='pointer'>전문가 칼럼</Title>
 
-                        <SelectSubType className='subtype-container' style={{ marginBottom: '16px' }}>
-                            <SubType style={{ borderBottom: `2px solid ${0 == subTypeNum ? theme.color.background1 : '#fff'}`, fontWeight: `${0 == subTypeNum ? 'bold' : 'normal'}` }} onClick={() => { onChangeStrategyNum(0, 0) }}>
+                        <SelectSubType className='subtype-container' style={{ marginBottom: '16px',background:`${localStorage.getItem('dark_mode')?'#222':'#fff'}` }}>
+                            <SubType style={{ borderBottom: `2px solid ${0 == subTypeNum ? (theme.color.background1) : (localStorage.getItem('dark_mode')?'#222':'#fff')}`, fontWeight: `${0 == subTypeNum ? 'bold' : 'normal'}` }} onClick={() => { onChangeStrategyNum(0, 0) }}>
                                 All
                             </SubType>
                             {masters && masters.map((item, index) => (
                                 <>
-                                    <SubType style={{ borderBottom: `2px solid ${index + 1 == subTypeNum ? theme.color.background1 : '#fff'}`, fontWeight: `${index + 1 == subTypeNum ? 'bold' : 'normal'}` }} onClick={() => { onChangeStrategyNum(index + 1, item.pk) }}>
+                                    <SubType style={{ borderBottom: `2px solid ${index + 1 == subTypeNum ? (theme.color.background1) : (localStorage.getItem('dark_mode')?'#222':'#fff')}`, fontWeight: `${index + 1 == subTypeNum ? 'bold' : 'normal'}` }} onClick={() => { onChangeStrategyNum(index + 1, item.pk) }}>
                                         {item.nickname}
                                     </SubType>
                                 </>
