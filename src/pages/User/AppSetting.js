@@ -29,7 +29,7 @@ const AppSetting = () => {
                 setWantAlarm(obj.data?.is_want_alarm);
                 setIsWebView(true)
             });
-        }else{
+        } else {
             setIsWebView(false)
         }
     }, [])
@@ -43,10 +43,10 @@ const AppSetting = () => {
         }
     }
     const changeWantDark = (num) => {
-        if(num==1){
-            localStorage.setItem('dark_mode','1');
+        if (num == 1) {
+            localStorage.setItem('dark_mode', '1');
             window.location.reload();
-        }else{
+        } else {
             localStorage.removeItem('dark_mode');
             window.location.reload();
         }
@@ -55,18 +55,25 @@ const AppSetting = () => {
         <>
             <Wrappers className="wrapper" style={{ maxWidth: '800px' }}>
                 <Title>설정</Title>
-                <Content>
-                    <div>푸시알림</div>
-                    {wantAlarm == 1 ?
-                        <CgToggleOn style={{ color: `${theme.color.background1}`, cursor: 'pointer', fontSize: '30px' }} onClick={()=>changeWantAlarm(0)} /> :
-                        <CgToggleOff style={{ color: '#aaaaaa', cursor: 'pointer', fontSize: '30px' }} onClick={()=>changeWantAlarm(1)} />}
+                {isWebView ?
+                    <>
+                        <Content>
+                            <div>푸시알림</div>
+                            {wantAlarm == 1 ?
+                                <CgToggleOn style={{ color: `${theme.color.background1}`, cursor: 'pointer', fontSize: '30px' }} onClick={() => changeWantAlarm(0)} /> :
+                                <CgToggleOff style={{ color: '#aaaaaa', cursor: 'pointer', fontSize: '30px' }} onClick={() => changeWantAlarm(1)} />}
 
-                </Content>
+                        </Content>
+                    </>
+                    :
+                    <>
+                    </>}
+
                 <Content>
                     <div>다크모드</div>
                     {localStorage.getItem('dark_mode') ?
-                        <CgToggleOn style={{ color: `${theme.color.background1}`, cursor: 'pointer', fontSize: '30px' }} onClick={()=>changeWantDark(0)} /> :
-                        <CgToggleOff style={{ color: '#aaaaaa', cursor: 'pointer', fontSize: '30px' }} onClick={()=>changeWantDark(1)} />}
+                        <CgToggleOn style={{ color: `${theme.color.background1}`, cursor: 'pointer', fontSize: '30px' }} onClick={() => changeWantDark(0)} /> :
+                        <CgToggleOff style={{ color: '#aaaaaa', cursor: 'pointer', fontSize: '30px' }} onClick={() => changeWantDark(1)} />}
 
                 </Content>
             </Wrappers>
