@@ -13,11 +13,11 @@ import { CgToggleOn, CgToggleOff } from 'react-icons/cg'
 const MyCard = styled.div`
 display:flex;
 width:100%;
-height:300px;
+height:250px;
 border:1px solid ${props => props.theme.color.background3};
 @media screen and (max-width:700px) {
     flex-direction:column;
-    height:600px;
+    height:500px;
 }
 `
 const ProfileContainer = styled.div`
@@ -25,7 +25,7 @@ width:50%;
 display:flex;
 flex-direction:column;
 align-items:center;
-height:300px;
+height:250px;
 background:#f4f4f4;
 @media screen and (max-width:700px) {
     width:100%;
@@ -105,15 +105,7 @@ const MyPage = () => {
             }
         }
     }
-    const onChangeDarkMode = (num) =>{
-        if(num==1){
-            localStorage.setItem('dark_mode','1');
-            window.location.reload();
-        }else{
-            localStorage.removeItem('dark_mode');
-            window.location.reload();
-        }
-    }
+
     return (
         <>
             <Wrappers className="wrapper" style={{ maxWidth: '800px' }}>
@@ -149,33 +141,17 @@ const MyPage = () => {
                             <Category>개인정보동의</Category>
                             <Result>{'동의'}</Result>
                         </Content>
-                        <Content>
-                            <Category>다크모드</Category>
-                            <Result style={{ fontSize: '28px' }}>
-                                {localStorage.getItem('dark_mode') ?
-                                    <>
-                                        <CgToggleOn style={{ color: theme.color.background1,cursor:'pointer' }} onClick={()=>{onChangeDarkMode(0)}} />
-                                    </>
-                                    :
-                                    <>
-                                        <CgToggleOff style={{ color: '#ccc',cursor:'pointer' }} onClick={()=>{onChangeDarkMode(1)}} />
-                                    </>}
-                            </Result>
-                        </Content>
+
                     </Container>
                 </MyCard>
                 <LogoutButton onClick={onLogout}>
                     로그아웃
                 </LogoutButton>
-                {isWebView ?
-                    <>
-                        <LogoutButton onClick={() => navigate('/appsetting')}>
-                            앱 설정
-                        </LogoutButton>
-                    </>
-                    :
-                    <>
-                    </>}
+
+                <LogoutButton onClick={() => navigate('/appsetting')}>
+                    설정
+                </LogoutButton>
+
 
             </Wrappers>
         </>
