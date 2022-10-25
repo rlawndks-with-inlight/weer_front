@@ -42,6 +42,7 @@ const MAlarmEdit = () => {
                 const { data: response } = await axios.get(`/api/item?table=alarm&pk=${params.pk}`);
                 $(`.title`).val(response.data.title);
                 $(`.note`).val(response.data.note);
+                $(`.url`).val(response.data.url);
                 setTypeNum(response.data.type)
                 setSelectDaysList(JSON.parse(response.data.days));
                 await new Promise((r) => setTimeout(r, 100));
@@ -84,6 +85,7 @@ const MAlarmEdit = () => {
             let obj = {
                 title: $('.title').val(),//제목
                 note: $(`.note`).val(),//내용
+                url: $('.url').val(),//url
                 type: typeNum,//0-즉시, 1-
                 start_date: $(`.start-date`).val(),
                 days: JSON.stringify(selectDaysList),
@@ -122,6 +124,10 @@ const MAlarmEdit = () => {
                             <Col>
                                 <Title>제목</Title>
                                 <Input className='title' placeholder='제목을 입력해 주세요.' />
+                            </Col>
+                            <Col>
+                                <Title>url</Title>
+                                <Input className='url' placeholder='ex) /masterlist' />
                             </Col>
                         </Row>
                         <Row>
