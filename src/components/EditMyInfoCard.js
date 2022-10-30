@@ -105,6 +105,7 @@ const EditMyInfoCard = () => {
     }
     const addFile = (e) => {
         if (e.target.files[0]) {
+            console.log(e.target.files[0])
             setContent(e.target.files[0]);
             setUrl(URL.createObjectURL(e.target.files[0]))
         }
