@@ -7,6 +7,8 @@ import axios from 'axios';
 import logo from '../assets/images/test/logo.svg'
 import kakao from '../assets/images/icon/kakao.png'
 import naver from '../assets/images/icon/naver.png'
+import apple from '../assets/images/icon/apple.png'
+import appleDark from '../assets/images/icon/apple-dark.png'
 import { WrapperForm, CategoryName, Input, Button, FlexBox, SnsLogo } from './elements/AuthContentTemplete';
 
 const LoginCard = () => {
@@ -102,6 +104,10 @@ const LoginCard = () => {
             await window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(async function (result) {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
                 // JSON.parse(result)
+                console.log("##################################")
+                console.log(result);
+                console.log("##################################")
+
                 let obj = JSON.parse(result);
                 await onLoginBySns(obj.data);
             });
@@ -131,6 +137,31 @@ const LoginCard = () => {
                 <FlexBox>
                     <SnsLogo src={kakao} onClick={() => snsLogin(1)} />
                     <SnsLogo src={naver} onClick={() => snsLogin(2)} />
+                    {localStorage.getItem('is_ios')?
+                    <>
+                    {isWebView?
+                    <>
+                    {localStorage.getItem('dark_mode')?
+                    <>
+                    <SnsLogo src={apple} onClick={() => snsLogin(3)} />
+                    </>
+                    :
+                    <>
+                    <SnsLogo src={appleDark} onClick={() => snsLogin(3)} />
+                    </>
+                    }
+                    </>
+                    :
+                    <>
+                    </>
+                    }
+                    </>
+                    :
+                    <>
+                    </>
+                    }
+                    
+                    
                 </FlexBox>
                 <CategoryName style={{ marginTop: '0', fontSize: '11px' }}>
                     아직 weare 회원이 아니라면?<strong style={{ textDecoration: 'underline', cursor: 'pointer', marginLeft: '12px' }} onClick={() => { navigate('/signup') }}>회원가입</strong>
