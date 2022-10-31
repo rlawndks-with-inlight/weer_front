@@ -132,9 +132,19 @@ const Video = () => {
             setAuth(JSON.parse(localStorage.getItem('auth')));
 
         }
+        myAuth();
         fetchPost();
         fetchComments();
     }, [pathname])
+    const myAuth = async () => {
+        const { data: response } = await axios('/api/auth')
+        if (response.pk > 0) {
+            setAuth(response);
+        } else {
+            alert("로그인이 필요한 서비스입니다.");
+            navigate('/login');
+        }
+    }
     const fetchComments = async () => {
         const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk}&category=${categoryToNumber('video')}`);
         setComments(response.data);
