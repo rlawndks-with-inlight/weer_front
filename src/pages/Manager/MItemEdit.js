@@ -183,8 +183,8 @@ const MItemEdit = () => {
         }
     };
     const onChangeEditor = (e) => {
-
         const data = editorRef.current.getInstance().getHTML();
+        console.log(data)
     }
 
     const addComment = async () => {
@@ -353,7 +353,9 @@ const MItemEdit = () => {
                                         language="ko-KR"
                                         ref={editorRef}
                                         onChange={onChangeEditor}
+                                        
                                         hooks={{
+                                               
                                             addImageBlobHook: async (blob, callback) => {
 
                                                 noteFormData.append('note', blob);
