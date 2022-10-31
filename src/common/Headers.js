@@ -161,13 +161,10 @@ const Headers = () => {
       let flag = true;
       if (auth?.pk > 0) {//유저
         pk = auth?.pk;
-        console.log(1)
       } else if (window.flutter_inappwebview) {//맥
-        console.log(2)
 
         window.flutter_inappwebview.callHandler('native_get_mac_address', {}).then(async function (result) {
           //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
-          console.log(result)
           let obj = JSON.parse(result);
           obj = obj.data;
           mac_address = obj.mac_address;
@@ -183,7 +180,6 @@ const Headers = () => {
           pk: pk,
           mac_address: mac_address
         })
-        console.log(response)
         let obj = response.data;
         if (window.flutter_inappwebview) {
           if (obj.item.last_alarm_pk <= obj.alarm_ai || obj.item.last_notice_pk <= obj.notice_ai) {

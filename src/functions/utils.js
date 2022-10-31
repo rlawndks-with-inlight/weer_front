@@ -55,7 +55,6 @@ export const commarNumber = (num) => {
     return result;
 }
 export const formatPhoneNumber = (input) => {
-    console.log(input)
     const cleanInput = String(input).replaceAll(/[^0-9]/g, "");
     let result = "";
     const length = cleanInput.length;

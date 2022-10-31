@@ -110,7 +110,6 @@ const MAlarmEdit = () => {
         }
     };
     const handleClickType = (e) => {
-        console.log(e.target.value)
         setTypeNum(e.target.value)
     }
     return (
