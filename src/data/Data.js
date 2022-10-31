@@ -25,13 +25,13 @@ export const editorState = {
 export const localization = {
     locale: 'ko',
 }
-export const zBottomMenu =  [
-        { name: '핵심이슈', link: '/selectissuecategory', icon:<img src={localStorage.getItem('dark_mode')?bulbWhiteImg:bulbImg} className='menu-icon' alt="#" />, activeIcon: <img src={bulbActiveImg} className='menu-icon' alt="#" />, allowList: ['/selectissuecategory'] },
-        // { name: '핵심비디오', link: '/videolist', icon: <img src={playImg} className='menu-icon' alt="#" />, activeIcon: <img src={playActiveImg} className='menu-icon' alt="#" />, allowList: ['/videolist'] },
-        { name: '특징주', link: '/selectfeaturecategory', icon: <img src={localStorage.getItem('dark_mode')?featureWhiteImg:featureImg} className='menu-icon' alt="#" />, activeIcon: <img src={featureActiveImg} className='menu-icon' alt="#" />, allowList: ['/selectfeaturecategory'] },
-        { name: '핵심테마', link: '/themelist', icon: <img src={localStorage.getItem('dark_mode')?albumWhiteImg:albumImg} className='menu-icon' alt="#" />, activeIcon: <img src={albumActiveImg} className='menu-icon' alt="#" />, allowList: ['/themelist'] },
-        { name: '전문가칼럼', link: '/masterlist', icon: <img src={localStorage.getItem('dark_mode')?thumbWhiteImg:thumbImg} className='menu-icon' alt="#" />, activeIcon: <img src={thumbActiveImg} className='menu-icon' alt="#" />, allowList: ['/masterlist'] },
-        { name: '공지사항', link: '/noticelist', icon: <img src={localStorage.getItem('dark_mode')?talkWhiteImg:talkImg} className='menu-icon' alt="#" />, activeIcon: <img src={talkActiveImg} className='menu-icon' alt="#" />, allowList: ['/noticelist'] }
+export const zBottomMenu = [
+    { name: '핵심이슈', link: '/selectissuecategory', icon: <img src={localStorage.getItem('dark_mode') ? bulbWhiteImg : bulbImg} className='menu-icon' alt="#" />, activeIcon: <img src={bulbActiveImg} className='menu-icon' alt="#" />, allowList: ['/selectissuecategory'] },
+    // { name: '핵심비디오', link: '/videolist', icon: <img src={playImg} className='menu-icon' alt="#" />, activeIcon: <img src={playActiveImg} className='menu-icon' alt="#" />, allowList: ['/videolist'] },
+    { name: '특징주', link: '/selectfeaturecategory', icon: <img src={localStorage.getItem('dark_mode') ? featureWhiteImg : featureImg} className='menu-icon' alt="#" />, activeIcon: <img src={featureActiveImg} className='menu-icon' alt="#" />, allowList: ['/selectfeaturecategory'] },
+    { name: '핵심테마', link: '/themelist', icon: <img src={localStorage.getItem('dark_mode') ? albumWhiteImg : albumImg} className='menu-icon' alt="#" />, activeIcon: <img src={albumActiveImg} className='menu-icon' alt="#" />, allowList: ['/themelist'] },
+    { name: '전문가칼럼', link: '/masterlist', icon: <img src={localStorage.getItem('dark_mode') ? thumbWhiteImg : thumbImg} className='menu-icon' alt="#" />, activeIcon: <img src={thumbActiveImg} className='menu-icon' alt="#" />, allowList: ['/masterlist'] },
+    { name: '공지사항', link: '/noticelist', icon: <img src={localStorage.getItem('dark_mode') ? talkWhiteImg : talkImg} className='menu-icon' alt="#" />, activeIcon: <img src={talkActiveImg} className='menu-icon' alt="#" />, allowList: ['/noticelist'] }
 ];
 
 
@@ -254,6 +254,6 @@ export const slideSetting = {
     slidesToShow: 1.15,
     slidesToScroll: 1,
     breakpoint: 480,
-    beforeChange: (current, next) => {console.log(current)},
-    afterChange: current => {console.log(current)},
+    beforeChange: (current, next) => { console.log(current) },
+    afterChange: current => { console.log(current) },
 }

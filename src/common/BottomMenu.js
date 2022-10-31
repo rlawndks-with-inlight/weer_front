@@ -10,7 +10,7 @@ const Container = styled.aside`
     border-top: 0.1rem solid #e6e6e6;
     position: fixed;
     right: 0;
-    bottom: 0;
+    bottom: -1px;
     left: 0;
     z-index: 5;
     display:none;
@@ -65,6 +65,23 @@ const BottomMenu = () => {
     const [isPost, setIsPost] = useState(false);
 
     useEffect(() => {
+
+        let arr = [];
+
+        for (var i = 0; i < zBottomMenu.length; i++) {
+            for (var j = 0; j < zBottomMenu[i].allowList.length; j++) {
+                if (zBottomMenu[i].allowList[j] == location.pathname) {
+                    break;
+                }
+            }
+            if (j == zBottomMenu[i].allowList.length) {
+                arr.push(localStorage.getItem('dark_mode') ? '#fff' : theme.color.font1);
+            } else {
+                arr.push(theme.color.background1);
+            }
+        }
+
+        setColorList(arr);
         if (location.pathname.includes('/manager')) {
             setDisplay('none');
         } else {
@@ -75,56 +92,36 @@ const BottomMenu = () => {
         } else {
             setIsPost(false)
         }
-        let arr = [];
 
-        for (var i = 0; i < zBottomMenu.length; i++) {
-            for (var j = 0; j < zBottomMenu[i].allowList.length; j++) {
-                if (zBottomMenu[i].allowList[j] == location.pathname) {
-                    break;
-                }
-            }
-            if (j == zBottomMenu[i].allowList.length) {
-                arr.push(localStorage.getItem('dark_mode')?'#fff':theme.color.font1);
-            } else {
-                arr.push(theme.color.background1);
-            }
-        }
-        
-        setColorList(arr);
-        
+
     }, [location])
 
     return (
         <>
-            {display == 'flex' ?
+
+            {isPost ?
                 <>
-                    {isPost ?
-                        <>
-                        </>
-                        :
-                        <>
-                            <Container className='menu-container'>
-                                <MenuContainer>
-                                    {zBottomMenu.map((item, index) => (
-                                        <>
-                                            <OneMenuContainer onClick={() => { navigate(item.link) }} style={{ color: `${colorList[index]}` }} key={index}>
-                                                {colorList[index] == theme.color.background1 ? item.activeIcon : item.icon}
-                                                <OneMenuName style={{ color: `${colorList[index]}` }} >
-                                                    {item.name}
-                                                </OneMenuName>
-                                            </OneMenuContainer>
-                                        </>
-                                    ))}
-
-                                </MenuContainer>
-                            </Container>
-                        </>
-                    }
-
                 </>
                 :
                 <>
-                </>}
+                    <Container className='menu-container' style={{ display: `${display}`, background: `${localStorage.getItem('dark_mode') ? '#222' : '#fff'}` }}>
+                        <MenuContainer>
+                            {zBottomMenu.map((item, index) => (
+                                <>
+                                    <OneMenuContainer onClick={() => { navigate(item.link) }} style={{ color: `${colorList[index]}` }} key={index}>
+                                        {colorList[index] == theme.color.background1 ? item.activeIcon : item.icon}
+                                        <OneMenuName style={{ color: `${colorList[index]}` }} >
+                                            {item.name}
+                                        </OneMenuName>
+                                    </OneMenuContainer>
+                                </>
+                            ))}
+
+                        </MenuContainer>
+                    </Container>
+                </>
+            }
+
 
         </>
     )

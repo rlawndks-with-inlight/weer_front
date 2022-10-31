@@ -27,6 +27,7 @@ const SignUpCard = () => {
     const [fixPhoneNumber, setFixPhoneNumber] = useState("")
     const [typeNum, setTypeNum] = useState(0);
     const [state, setState] = useState(undefined)
+    const [coinsidePW, setCoinsidePw] = useState(true);
     useEffect(() => {
         if (location.state) {
             setState(location.state)
@@ -36,7 +37,7 @@ const SignUpCard = () => {
         if (!$('.id').val()) {
             alert('아이디를 입력해주세요.');
         } else if (!regExp('id', $('.id').val())) {
-            alert('정규식에 맞춰주세요.');
+            alert('아이디 정규식에 맞지 않습니다.');
         } else {
             const { data: response } = await axios.post('/api/checkexistid', { id: $('.id').val() });
             alert(response.message);
@@ -51,6 +52,8 @@ const SignUpCard = () => {
     const onCheckNickname = async () => {
         if (!$('.nickname').val()) {
             alert('아이디를 입력해주세요.');
+        } else if (!regExp('nickname', $('.nickname').val())) {
+            alert('닉네임 정규식에 맞지 않습니다.');
         } else {
             const { data: response } = await axios.post('/api/checkexistnickname', { nickname: $('.nickname').val() });
             alert(response.message);
@@ -109,7 +112,7 @@ const SignUpCard = () => {
             alert('필수값을 입력해주세요.');
         } else if (!isCheckId && !location.state) {
             alert('아이디 중복확인을 해주세요.');
-        } else if (!regExp('pw', $('.pw').val())&& !location.state) {
+        } else if (!regExp('pw', $('.pw').val()) && !location.state) {
             alert('비밀번호 정규식을 지켜주세요.');
         } else if ($('.pw').val() != $('.pw-check').val() && !location.state) {
             alert('비밀번호가 일치하지 않습니다.');
@@ -175,7 +178,13 @@ const SignUpCard = () => {
             confirmCoincide();
         }
     }
-
+    const onChangePwCheck = (e) =>{
+        if(e.target.value!=$('.pw').val()){
+            setCoinsidePw(false);
+        }else{
+            setCoinsidePw(true);
+        }
+    }
     return (
         <>
             <WrapperForm onSubmit={onSignUp} id='login_form'>
@@ -193,7 +202,8 @@ const SignUpCard = () => {
                         <Input placeholder='비밀번호를 입력해주세요.' type={'password'} className='pw' onKeyPress={onKeyPressPw} />
                         <RegularNotice>8~15자 내의 영문, 숫자, 특수문자 조합만 가능합니다.</RegularNotice>
                         <CategoryName>비밀번호 확인</CategoryName>
-                        <Input placeholder='비밀번호를 한번더 입력해주세요.' type={'password'} className='pw-check' onKeyPress={onKeyPressPwCheck} />
+                        <Input placeholder='비밀번호를 한번더 입력해주세요.' type={'password'} className='pw-check' onKeyPress={onKeyPressPwCheck} onChange={onChangePwCheck} />
+                        <RegularNotice>{!coinsidePW?'비밀번호가 일치하지 않습니다.':''}</RegularNotice>
                         <CategoryName>이름</CategoryName>
                         <Input placeholder='이름을 입력해주세요.' type={'text'} className='name' onKeyPress={onKeyPressName} />
                         <RegularNotice>실명으로 입력해주세요.</RegularNotice>
@@ -203,11 +213,11 @@ const SignUpCard = () => {
 
 
                 <CategoryName>닉네임</CategoryName>
-                <Input placeholder='닉네임을 입력해주세요.' type={'text'} className='nickname' onKeyPress={onKeyPressNickname} />
+                <Input placeholder='닉네임을 입력해주세요.' type={'text'} disabled={isCheckNickname} className='nickname' onKeyPress={onKeyPressNickname} />
                 <RegularNotice>2~8자 내의 한글, 영문, 숫자 조합만 가능합니다.</RegularNotice>
                 <Button onClick={onCheckNickname} disabled={isCheckNickname}>{isCheckNickname ? '사용가능' : '중복확인'}</Button>
                 <CategoryName>전화번호</CategoryName>
-                <CategoryName style={{marginTop:'8px',fontSize:'12px'}}>- 아이디 찾기 및 비밀번호 찾기에 이용됩니다.</CategoryName>
+                <CategoryName style={{ marginTop: '8px', fontSize: '12px' }}>- 아이디 찾기 및 비밀번호 찾기에 이용됩니다.</CategoryName>
                 <Input placeholder='전화번호를 입력해주세요.' type={'text'} className='phone' disabled={isCheckPhoneNumber} onKeyPress={onKeyPressPhone} />
                 <RegularNotice></RegularNotice>
                 <Button onClick={sendSms} disabled={isCheckPhoneNumber}>인증번호 발송</Button>
