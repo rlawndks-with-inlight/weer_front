@@ -98,29 +98,36 @@ const BottomMenu = () => {
 
     return (
         <>
-
-            {isPost ?
+            {display == 'flex' ?
                 <>
+                    {isPost ?
+                        <>
+                        </>
+                        :
+                        <>
+                            <Container className='menu-container' style={{ background: `${localStorage.getItem('dark_mode') ? '#222' : '#fff'}` }}>
+                                <MenuContainer>
+                                    {zBottomMenu.map((item, index) => (
+                                        <>
+                                            <OneMenuContainer onClick={() => { navigate(item.link) }} style={{ color: `${colorList[index]}` }} key={index}>
+                                                {colorList[index] == theme.color.background1 ? item.activeIcon : item.icon}
+                                                <OneMenuName style={{ color: `${colorList[index]}` }} >
+                                                    {item.name}
+                                                </OneMenuName>
+                                            </OneMenuContainer>
+                                        </>
+                                    ))}
+
+                                </MenuContainer>
+                            </Container>
+                        </>
+                    }
                 </>
                 :
                 <>
-                    <Container className='menu-container' style={{ display: `${display}`, background: `${localStorage.getItem('dark_mode') ? '#222' : '#fff'}` }}>
-                        <MenuContainer>
-                            {zBottomMenu.map((item, index) => (
-                                <>
-                                    <OneMenuContainer onClick={() => { navigate(item.link) }} style={{ color: `${colorList[index]}` }} key={index}>
-                                        {colorList[index] == theme.color.background1 ? item.activeIcon : item.icon}
-                                        <OneMenuName style={{ color: `${colorList[index]}` }} >
-                                            {item.name}
-                                        </OneMenuName>
-                                    </OneMenuContainer>
-                                </>
-                            ))}
-
-                        </MenuContainer>
-                    </Container>
                 </>
             }
+
 
 
         </>
