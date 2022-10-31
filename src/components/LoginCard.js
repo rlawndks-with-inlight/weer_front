@@ -44,18 +44,18 @@ const LoginCard = () => {
         if (response.result > 0) {
             let params = {
                 'login_type': 0,
-                'id':$('.id').val()
+                'id': $('.id').val()
             }
             if (window && window.flutter_inappwebview) {
                 await window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(async function (result) {
                     //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
                     // JSON.parse(result)
                     let obj = JSON.parse(result);
-                });    
+                });
             }
-            
+
             await localStorage.setItem('auth', JSON.stringify(response.data));
-            
+
             navigate('/mypage');
         }
     }
@@ -87,9 +87,9 @@ const LoginCard = () => {
         }
         const { data: response } = await axios.post('/api/loginbysns', objs);
         if (response.result > 0) {
-            if(response.result<=50){//신규유저
-                navigate('/signup',{state:{id:objs.id,typeNum:objs.typeNum,profile_img:objs.profile_img,name:objs.name}})
-            }else{
+            if (response.result <= 50) {//신규유저
+                navigate('/signup', { state: { id: objs.id, typeNum: objs.typeNum, profile_img: objs.profile_img, name: objs.name } })
+            } else {
                 await localStorage.setItem('auth', JSON.stringify(response.data));
                 navigate('/mypage');
             }
@@ -137,36 +137,36 @@ const LoginCard = () => {
                 <FlexBox>
                     <SnsLogo src={kakao} onClick={() => snsLogin(1)} />
                     <SnsLogo src={naver} onClick={() => snsLogin(2)} />
-                    {localStorage.getItem('is_ios')?
-                    <>
-                    {isWebView?
-                    <>
-                    {localStorage.getItem('dark_mode')?
-                    <>
-                    <SnsLogo src={apple} onClick={() => snsLogin(3)} />
-                    </>
-                    :
-                    <>
-                    <SnsLogo src={appleDark} onClick={() => snsLogin(3)} />
-                    </>
+                    {localStorage.getItem('is_ios') ?
+                        <>
+                            {isWebView ?
+                                <>
+                                    {localStorage.getItem('dark_mode') ?
+                                        <>
+                                            <SnsLogo src={apple} onClick={() => snsLogin(3)} />
+                                        </>
+                                        :
+                                        <>
+                                            <SnsLogo src={appleDark} onClick={() => snsLogin(3)} />
+                                        </>
+                                    }
+                                </>
+                                :
+                                <>
+                                </>
+                            }
+                        </>
+                        :
+                        <>
+                        </>
                     }
-                    </>
-                    :
-                    <>
-                    </>
-                    }
-                    </>
-                    :
-                    <>
-                    </>
-                    }
-                    
-                    
+
+
                 </FlexBox>
                 <CategoryName style={{ marginTop: '0', fontSize: '11px' }}>
                     아직 weare 회원이 아니라면?<strong style={{ textDecoration: 'underline', cursor: 'pointer', marginLeft: '12px' }} onClick={() => { navigate('/signup') }}>회원가입</strong>
                 </CategoryName>
-                        <Button style={{ marginTop: '36px' }} onClick={()=>navigate('/appsetting')}>설정</Button>
+                <Button style={{ marginTop: '36px' }} onClick={() => navigate('/appsetting')}>설정</Button>
             </WrapperForm>
         </>
     );
