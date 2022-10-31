@@ -36,6 +36,8 @@ const SignUpCard = () => {
     const onCheckId = async () => {
         if (!$('.id').val()) {
             alert('아이디를 입력해주세요.');
+        } else if ($('.id').val().includes(' ')) {
+            alert('아이디의 공백을 제거해 주세요.');
         } else if (!regExp('id', $('.id').val())) {
             alert('아이디 정규식에 맞지 않습니다.');
         } else {
@@ -52,6 +54,8 @@ const SignUpCard = () => {
     const onCheckNickname = async () => {
         if (!$('.nickname').val()) {
             alert('아이디를 입력해주세요.');
+        } else if ($('.nickname').val().includes(' ')) {
+            alert('닉네임의 공백을 제거해 주세요.');
         } else if (!regExp('nickname', $('.nickname').val())) {
             alert('닉네임 정규식에 맞지 않습니다.');
         } else {
@@ -118,10 +122,10 @@ const SignUpCard = () => {
             alert('비밀번호가 일치하지 않습니다.');
         } else if (!isCheckPhoneNumber) {
             alert('전화번호 인증을 완료해 주세요.');
-        } else if (!regExp('nickname', $('.nickname').val())) {
-            alert('닉네임 정규식을 지켜주세요.');
         } else if (!isCheckNickname) {
             alert('닉네임 중복확인을 해주세요.');
+        } else if (!regExp('nickname', $('.nickname').val())) {
+            alert('닉네임 정규식을 지켜주세요.');
         } else {
             if (window.confirm('회원가입 하시겠습니까?')) {
                 const { data: response } = await axios.post('/api/adduser', {
@@ -178,10 +182,10 @@ const SignUpCard = () => {
             confirmCoincide();
         }
     }
-    const onChangePwCheck = (e) =>{
-        if(e.target.value!=$('.pw').val()){
+    const onChangePwCheck = (e) => {
+        if (e.target.value != $('.pw').val()) {
             setCoinsidePw(false);
-        }else{
+        } else {
             setCoinsidePw(true);
         }
     }
@@ -203,7 +207,7 @@ const SignUpCard = () => {
                         <RegularNotice>8~15자 내의 영문, 숫자, 특수문자 조합만 가능합니다.</RegularNotice>
                         <CategoryName>비밀번호 확인</CategoryName>
                         <Input placeholder='비밀번호를 한번더 입력해주세요.' type={'password'} className='pw-check' onKeyPress={onKeyPressPwCheck} onChange={onChangePwCheck} />
-                        <RegularNotice>{!coinsidePW?'비밀번호가 일치하지 않습니다.':''}</RegularNotice>
+                        <RegularNotice>{!coinsidePW ? '비밀번호가 일치하지 않습니다.' : ''}</RegularNotice>
                         <CategoryName>이름</CategoryName>
                         <Input placeholder='이름을 입력해주세요.' type={'text'} className='name' onKeyPress={onKeyPressName} />
                         <RegularNotice>실명으로 입력해주세요.</RegularNotice>

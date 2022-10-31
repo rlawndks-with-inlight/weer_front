@@ -6,7 +6,7 @@ import theme from "../styles/theme";
 import $ from 'jquery';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { formatPhoneNumber } from "../functions/utils";
+import { formatPhoneNumber, regExp } from "../functions/utils";
 import defaultImg from '../assets/images/icon/default-profile.png';
 import { backUrl } from "../data/Data";
 
@@ -135,10 +135,22 @@ const EditMyInfoCard = () => {
                 alert("닉네임을 입력해주세요.");
                 return;
             }
+            if ($('.nickname').val().includes(' ')) {
+                alert("닉네임의 공백을 제거해 주세요.");
+                return;
+            }
+            if (!regExp('nickname', $('.nickname').val())) {
+                alert("닉네임 정규식에 맞지 않습니다.");
+                return;
+            }
             obj.nickname = $('.nickname').val();
         } else if (num == 2) {
             if ($('.new-pw').val() != $('.new-pw-check').val()) {
                 alert("비밀번호가 일치하지 않습니다.");
+                return;
+            }
+            if (!regExp('pw', $('.new-pw').val())) {
+                alert("비밀번호 정규식에 맞지 않습니다.");
                 return;
             }
             obj.newPw = $('.new-pw').val();
@@ -169,7 +181,7 @@ const EditMyInfoCard = () => {
                 <SelectType className="select-type">
                     {zType.map((item, idx) => (
                         <>
-                            <Type style={{ borderBottom: `4px solid ${typeNum == idx ? theme.color.background1 : '#fff'}`, color: `${typeNum == idx ? theme.color.background1 : (localStorage.getItem('dark_mode')?'#fff':'#ccc')}` }} onClick={() => { onChangeTypeNum(idx) }}>{item.title}</Type>
+                            <Type style={{ borderBottom: `4px solid ${typeNum == idx ? theme.color.background1 : '#fff'}`, color: `${typeNum == idx ? theme.color.background1 : (localStorage.getItem('dark_mode') ? '#fff' : '#ccc')}` }} onClick={() => { onChangeTypeNum(idx) }}>{item.title}</Type>
                         </>
                     ))}
 
