@@ -10,7 +10,7 @@ import ButtonContainer from '../../components/elements/button/ButtonContainer';
 import AddButton from '../../components/elements/button/AddButton';
 import $ from 'jquery';
 import { addItem, updateItem } from '../../functions/utils';
-import { Card, Title, Input, Row, Col } from '../../components/elements/ManagerTemplete';
+import { Card, Title, Input, Row, Col, Select } from '../../components/elements/ManagerTemplete';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
@@ -43,6 +43,7 @@ const MNoticeEdit = () => {
             if (params.pk > 0) {
                 const { data: response } = await axios.get(`/api/item?table=notice&pk=${params.pk}`);
                 $(`.title`).val(response.data.title);
+                $('.note-align').val(response.data.note_align);
                 editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001', backUrl));
             }
         }
@@ -84,6 +85,7 @@ const MNoticeEdit = () => {
             let obj = {
                 user_pk: auth.pk,
                 title: $('.title').val(),
+                note_align: $('.note-align').val(),
                 note: editorRef.current.getInstance().getHTML()
             }
             if (params.pk > 0) obj.pk = params.pk;
@@ -136,7 +138,16 @@ const MNoticeEdit = () => {
                                 <Input className='title' placeholder='제목을 입력해 주세요.' />
                             </Col>
                         </Row>
-
+                        <Row>
+                            <Col>
+                                <Title>내용 정렬</Title>
+                                <Select className='note-align'>
+                                    <option value={0}>가운데</option>
+                                    <option value={1}>오른쪽</option>
+                                    <option value={2}>왼쪽</option>
+                                </Select>
+                            </Col>
+                        </Row>
                         <Row>
                             <Col>
                                 <Title>내용</Title>

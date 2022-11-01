@@ -7,7 +7,7 @@ import theme from "../../../styles/theme";
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import $ from 'jquery'
 import styled from "styled-components";
-import { categoryToNumber } from "../../../functions/utils";
+import { categoryToNumber, getViewerMarginByNumber } from "../../../functions/utils";
 import CommentComponent from "../../../components/CommentComponent";
 import { Viewer } from '@toast-ui/react-editor';
 import Loading from '../../../components/Loading'
@@ -114,7 +114,7 @@ const Notice = () => {
                     <div style={{ margin: '0 4px' }}>{post?.date?.substring(0, 10)}</div>
                 </div>
                 <Title>{post.title}</Title>
-                <ViewerContainer className="viewer">
+                <ViewerContainer className="viewer" style={{margin:`${getViewerMarginByNumber(post?.note_align)}`}}>
                     <Viewer initialValue={post?.note ?? `<body></body>`} />
                 </ViewerContainer>
                 <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />

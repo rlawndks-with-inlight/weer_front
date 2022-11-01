@@ -80,6 +80,8 @@ const MItemEdit = () => {
                 $(`.suggest-title`).val(response.data.suggest_title);
                 $('.font-color').val(response.data.font_color)
                 $('.background-color').val(response.data.background_color)
+                $('.note-align').val(response.data.note_align);
+
                 if (params.table == 'issue' || params.table == 'feature') {
                     $(`.category`).val(response.data.category_pk);
                 }
@@ -196,6 +198,7 @@ const MItemEdit = () => {
             userPk: auth.pk,
             userNick: auth.nickname,
             pk: params.pk,
+            note_align: $('.note-align').val(),
             note: $('.comment').val(),
             category: categoryToNumber(params.table)
         })
@@ -351,6 +354,16 @@ const MItemEdit = () => {
                             <>
                             </>
                         }
+                        <Row>
+                            <Col>
+                                <Title>내용 정렬</Title>
+                                <Select className='note-align'>
+                                    <option value={0}>가운데</option>
+                                    <option value={1}>오른쪽</option>
+                                    <option value={2}>왼쪽</option>
+                                </Select>
+                            </Col>
+                        </Row>
 
                         <Row>
                             <Col>

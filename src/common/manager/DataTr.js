@@ -101,12 +101,23 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
             num: num
         })
     }
-
+    const getLoginTypeByNumber = (num) =>{
+        if(num==0){
+            return "일반";
+        }else if(num==1){
+            return "카카오";
+        }else if(num==2){
+            return "네이버";
+        }else if(num==3){
+            return "애플";
+        }
+    }
     return (
         <>
             <Tr ref={ref} data-handler-id={handlerId}>
                 {column.map((col, index) => (
                     <>
+
                         {col.type == 'text' ?
                             <>
                                 <Td style={{ width: `${col.width}%` }}>{data[`${col.column}`]}</Td>
@@ -121,7 +132,13 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
                             :
                             <>
                             </>}
-
+                            {col.type == 'login_type' ?
+                            <>
+                                <Td style={{ width: `${col.width}%` }}>{getLoginTypeByNumber(data[col.column])}</Td>
+                            </>
+                            :
+                            <>
+                            </>}
                         {col.type == 'level' ?
                             <>
                                 <Td style={{ width: `${col.width}%` }}>{data[col.column] == 0 ? '일반유저' : data[col.column] == 40 ? '관리자' : data[col.column] == 30 ? '대가' : '개발자'}</Td>

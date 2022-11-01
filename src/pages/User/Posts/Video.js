@@ -5,7 +5,7 @@ import { Title, Wrappers, ViewerContainer } from "../../../components/elements/U
 import { backUrl, slideSetting } from "../../../data/Data";
 import theme from "../../../styles/theme";
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-import { categoryToNumber, commarNumber, getIframeLinkByLink } from "../../../functions/utils";
+import { categoryToNumber, commarNumber, getIframeLinkByLink, getViewerMarginByNumber } from "../../../functions/utils";
 import $ from 'jquery';
 import { Content, SliderDiv, WrapDiv } from "../../../components/elements/UserContentTemplete";
 import Slider from 'react-slick'
@@ -205,7 +205,7 @@ const Video = () => {
 
                         </Iframe>
                         <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post.hash}</div>
-                        <ViewerContainer className="viewer">
+                        <ViewerContainer className="viewer" style={{margin:`${getViewerMarginByNumber(post?.note_align)}`}}>
                             <Viewer initialValue={post?.note ?? `<body></body>`} />
                         </ViewerContainer>
                         <Title>관련 영상</Title>

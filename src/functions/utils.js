@@ -153,3 +153,15 @@ export const regExp = (type, str) => {//id,pw,nickname,name
     }
     return reg.test(str)
 }
+export const getViewerMarginByNumber = (num) =>{
+    if(num==0){
+        return " 0 auto ";
+    }else if(num==1){
+        return " 0 auto 0 0 ";
+
+    }else if(num==2){
+        return " 0 0 0 auto ";
+    }else{
+        return " 0 auto ";
+    }
+}

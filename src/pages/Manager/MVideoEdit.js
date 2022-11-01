@@ -54,6 +54,7 @@ const MVideoEdit = () => {
                 $(`.channel`).val(response.data.video.user_pk);
                 $('.font-color').val(response.data.video.font_color);
                 $('.background-color').val(response.data.video.background_color);
+                $('.note-align').val(response.data.video.note_align);
                 let relate_list = response.data.relates ??[];
                 let relate_str = "";
                 for(var i =0;i<relate_list.length;i++){
@@ -149,6 +150,7 @@ const MVideoEdit = () => {
             userNick: auth.nickname,
             pk: params.pk,
             note: $('.comment').val(),
+            note_align: $('.note-align').val(),
             category: categoryToNumber('video')
         })
 
@@ -218,6 +220,16 @@ const MVideoEdit = () => {
                             <Col>
                                 <Title>카드 배경색</Title>
                                 <Input type={'color'} className='background-color' style={{ background: '#fff', height: '36px', width: '220px' }} />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Title>내용 정렬</Title>
+                                <Select className='note-align'>
+                                    <option value={0}>가운데</option>
+                                    <option value={1}>오른쪽</option>
+                                    <option value={2}>왼쪽</option>
+                                </Select>
                             </Col>
                         </Row>
                         <Row>
