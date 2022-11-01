@@ -118,7 +118,7 @@ const NoticeList = (props) => {
                     </>
                 }
                 {posts.map((item, idx) => (
-                    <Content onClick={() => { typeNum == 1 ? navigate(`/post/notice/${item?.pk}`) : console.log("") }} style={{ borderBottom: '1px solid #cccccc', paddingBottom: '16px', cursor: 'pointer' }}>
+                    <Content onClick={() => { typeNum == 1 ? navigate(`/post/notice/${item?.pk}`) : navigate(`${item?.url}`) }} style={{ borderBottom: '1px solid #cccccc', paddingBottom: '16px', cursor: 'pointer' }}>
                         <div >{item?.title ?? ""}</div>
                         <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{item?.date ?? ""}</div>
                     </Content>

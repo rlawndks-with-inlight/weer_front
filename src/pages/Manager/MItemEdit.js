@@ -85,7 +85,7 @@ const MItemEdit = () => {
                 }
                 editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001', backUrl));
                 setUrl(backUrl + response.data.main_img);
-                if(needTwoImage.includes(params.table))setUrl2(backUrl + response.data.second_img);
+                if (needTwoImage.includes(params.table)) setUrl2(backUrl + response.data.second_img);
                 setItem(response.data)
             } else {
 
@@ -134,12 +134,13 @@ const MItemEdit = () => {
             let auth = JSON.parse(localStorage.getItem('auth'))
             formData.append('table', params.table);
             formData.append('content', content);
-            if(needTwoImage.includes(params.table))formData.append('content2', content2);
+            if (needTwoImage.includes(params.table)) formData.append('content2', content2);
             formData.append('url', item.main_img)
-            if(needTwoImage.includes(params.table))formData.append('url2', item.second_img)
+            if (needTwoImage.includes(params.table)) formData.append('url2', item.second_img)
             formData.append('title', $(`.title`).val())
             formData.append('hash', $(`.hash`).val())
             formData.append('suggest_title', $(`.suggest-title`).val())
+            formData.append('want_push', $(`.want-push`).val())
             if (params.table == 'issue' || params.table == 'feature') {
                 formData.append('category', $(`.category`).val());
             }
@@ -289,6 +290,21 @@ const MItemEdit = () => {
                                 <>
                                 </>
                             }
+                            {params.pk > 0 ?
+                                <>
+                                    <Col>
+                                        <Title>푸쉬 발송</Title>
+                                        <Select className='want-push'>
+                                            <option value={1}>발송</option>
+                                            <option value={0}>발송 안함</option>
+                                        </Select>
+                                    </Col>
+                                </>
+                                :
+                                <>
+                                </>
+                            }
+
                         </Row>
                         <Row>
                             <Col>
@@ -349,13 +365,13 @@ const MItemEdit = () => {
                                         useCommandShortcut={false}
                                         useTuiEditorEmoji={true}
                                         hideModeSwitch={true}
-                                        plugins={[colorSyntax,fontSize]}
+                                        plugins={[colorSyntax, fontSize]}
                                         language="ko-KR"
                                         ref={editorRef}
                                         onChange={onChangeEditor}
-                                        
+
                                         hooks={{
-                                               
+
                                             addImageBlobHook: async (blob, callback) => {
 
                                                 noteFormData.append('note', blob);

@@ -148,7 +148,7 @@ const Home = () => {
                             <WrapDiv>
                                 {issues.map((item, idx) => (
                                     <>
-                                        <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} className='pointer'>
+                                        <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} className='pointer' style={{color: `${item?.font_color}`, background: `${item?.background_color}`}}>
                                             <Img src={backUrl + item?.main_img} alt="#" />
                                             <div style={{ padding: '16px 16px 0 16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
                                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
@@ -202,7 +202,7 @@ const Home = () => {
                             <WrapDiv>
                                 {features.map((item, idx) => (
                                     <>
-                                        <Card onClick={() => navigate(`/post/feature/${item?.pk}`)} >
+                                        <Card onClick={() => navigate(`/post/feature/${item?.pk}`)} style={{color: `${item?.font_color}`, background: `${item?.background_color}`}}>
                                             <Img src={backUrl + item?.main_img} alt="#" />
                                             <div style={{ padding: '16px 16px 0 16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
                                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
@@ -230,7 +230,7 @@ const Home = () => {
                             <WrapDiv>
                                 {themes.map((item, idx) => (
                                     <>
-                                        <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} >
+                                        <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{color: `${item?.font_color}`, background: `${item?.background_color}`}}>
                                             <Img src={backUrl + item?.main_img} alt="#" />
                                             <div style={{ padding: '16px 16px 0 16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
                                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
