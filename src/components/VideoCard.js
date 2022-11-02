@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { backUrl } from "../data/Data";
 import theme from "../styles/theme";
-import { Card} from "./elements/UserContentTemplete";
+import { Card } from "./elements/UserContentTemplete";
 import { AiFillHeart } from 'react-icons/ai'
 export const Img = styled.div`
 width: 90%;
@@ -42,16 +42,16 @@ const VideoCard = (props) => {
         <>
             <Card onClick={() => { navigate(`/video/${props.item.pk}`) }}
                 style={{
-                    background: `${background?background: props?.item?.background_color ? props?.item?.background_color : ''}`,
-                    color: `${background?'#000':props?.item?.font_color ? props?.item?.font_color : ''}`,
+                    background: `${background ? background : props?.item?.background_color ? props?.item?.background_color : ''}`,
+                    color: `${background ? '#000' : props?.item?.font_color ? props?.item?.font_color : ''}`,
                     paddingTop: `${isImgPadding ? '0.5%' : '0'}`,
-                    width:`${isTerm && window.innerWidth<=600?'95%':''}`
+                    width: `${isTerm && window.innerWidth <= 600 ? '95%' : ''}`
                 }}>
-                
+
                 <Img style={{ backgroundImage: `url(${`https://img.youtube.com/vi/${props.item.link}/0.jpg`})` }} alt="#" />
-                    
+
                 {/* <iframe style={{ width: '100%', height: 'auto', height: '80vw', maxHeight: '450px' }} src={`https://www.youtube.com/embed/${videos.link}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */}
-                <TextContainer style={{padding:`${isImgPadding?'0 20px':'20px'}`}}>
+                <TextContainer style={{ padding: `${isImgPadding ? '0 20px' : '20px'}` }}>
                     <div style={{ fontSize: `${theme.size.font3}` }}>{props?.item?.title}</div>
                     {props.isVideoList ?
                         <>

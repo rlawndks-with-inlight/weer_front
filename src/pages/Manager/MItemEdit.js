@@ -26,6 +26,7 @@ import { backUrl, needTwoImage } from '../../data/Data';
 import { objManagerListContent, cardDefaultColor } from '../../data/Data';
 import { categoryToNumber } from '../../functions/utils';
 import CommentComponent from '../../components/CommentComponent';
+
 const MItemEdit = () => {
     const { pathname } = useLocation();
     const params = useParams();
@@ -50,6 +51,7 @@ const MItemEdit = () => {
     const [backgroundColor, setBackgroundColor] = useState(cardDefaultColor.background)
     const [channelList, setChannelList] = useState([]);
 
+    
     const imgSetting = {
         oneword: ' 권장(800*600)',
         oneevent: ' 권장(800*600)',
@@ -148,6 +150,7 @@ const MItemEdit = () => {
             }
             formData.append('user_pk', auth.user_level >= 40 && params.table == 'strategy' ? $('.channel').val() : auth.pk)
             formData.append('note', editorRef.current.getInstance().getHTML());
+            formData.append('note_align', $('.note-align').val());
             if (params.table == 'issue' || params.table == 'feature') formData.append('category_pk', $('.category').val())
             if (params.pk > 0) formData.append('pk', params.pk);
             if (window.confirm(`저장하시겠습니까?`)) {
@@ -198,7 +201,6 @@ const MItemEdit = () => {
             userPk: auth.pk,
             userNick: auth.nickname,
             pk: params.pk,
-            note_align: $('.note-align').val(),
             note: $('.comment').val(),
             category: categoryToNumber(params.table)
         })
@@ -293,7 +295,7 @@ const MItemEdit = () => {
                                 <>
                                 </>
                             }
-                            {params.pk > 0 ?
+                            {params.pk == 0 ?
                                 <>
                                     <Col>
                                         <Title>푸쉬 발송</Title>

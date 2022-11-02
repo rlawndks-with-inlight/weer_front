@@ -76,11 +76,19 @@ const AppSetting = () => {
                         <CgToggleOff style={{ color: '#aaaaaa', cursor: 'pointer', fontSize: '30px' }} onClick={() => changeWantDark(1)} />}
 
                 </Content>
-                <Content onClick={()=>{navigate('/resign')}} style={{cursor:'pointer'}}>
-                    <div>회원탈퇴</div>
-                    <div/>
+                {localStorage.getItem('auth') ?
+                    <>
+                        <Content onClick={() => { navigate('/resign') }} style={{ cursor: 'pointer' }}>
+                            <div>회원탈퇴</div>
+                            <div />
 
-                </Content>
+                        </Content>
+                    </>
+                    :
+                    <>
+                    </>
+                }
+
             </Wrappers>
         </>
     )
