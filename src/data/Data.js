@@ -15,6 +15,8 @@ import thumbWhiteImg from '../assets/images/icon/thumb-white.svg';
 import thumbActiveImg from '../assets/images/icon/thumb-active.svg';
 import logo from '../assets/images/test/logo.svg'
 import { EditorState } from "draft-js"
+
+export const frontUrl = "https://weare-first.com";
 export const backUrl = "https://weare-first.com:8443";
 export const logoSrc = logo;
 //http://weare-first.com:8001
@@ -22,7 +24,7 @@ export const editorState = {
     editorState: EditorState.createEmpty()
 }
 export const KAKAO_CLIENT_ID = "5c686a9c9a72a12ef2ef700e07d03b31";
-export const KAKAO_REDIRECT_URI =  "http://localhost:3000/oauth/callback/kakao";
+export const KAKAO_REDIRECT_URI =  `${frontUrl}/oauth/callback/kakao`;
 export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
 export const localization = {
