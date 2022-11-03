@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 // 웹뷰에서 RN으로 데이터를 보낼때 사용합니다.
 export function sendToRN(num) {
     if (window.ReactNativeWebView) {

@@ -10,6 +10,7 @@ import naver from '../assets/images/icon/naver.png'
 import apple from '../assets/images/icon/apple.png'
 import appleDark from '../assets/images/icon/apple-dark.png'
 import { WrapperForm, CategoryName, Input, Button, FlexBox, SnsLogo } from './elements/AuthContentTemplete';
+import { KAKAO_AUTH_URL } from '../data/Data';
 
 const LoginCard = () => {
     const navigate = useNavigate();
@@ -75,6 +76,8 @@ const LoginCard = () => {
             nick = "카카오" + new Date().getTime()
         } else if (obj.login_type == 2) {
             nick = "네이버" + new Date().getTime()
+        } else if (obj.login_type == 3) {
+            nick = "애플" + new Date().getTime()
         }
         let objs = {
             id: obj.id,
@@ -107,12 +110,15 @@ const LoginCard = () => {
                 console.log("##################################")
                 console.log(result);
                 console.log("##################################")
-
                 let obj = JSON.parse(result);
                 await onLoginBySns(obj.data);
             });
         } else {
-            alert('웹뷰가 아닙니다.');
+            if(num==1){
+                window.location.href = KAKAO_AUTH_URL
+            }else{
+                alert('준비중입니다.');
+            }
         }
     }
 
