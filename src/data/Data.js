@@ -21,7 +21,17 @@ export const logoSrc = logo;
 export const editorState = {
     editorState: EditorState.createEmpty()
 }
+export const CLIENT_ID = "	5c686a9c9a72a12ef2ef700e07d03b31";
+export const REDIRECT_URI =  "설정한 리다이렉트 URL을 넣어준다";
 
+// 프런트엔드 리다이랙트 URI 예시
+// const REDIRECT_URI =  "http://localhost:3000/oauth/callback/kakao";
+
+// 백엔드 리다이랙트 URI 예시
+// const REDIRECT_URI =  "http://localhost:5000/kakao/code";
+
+
+export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 export const localization = {
     locale: 'ko',
 }

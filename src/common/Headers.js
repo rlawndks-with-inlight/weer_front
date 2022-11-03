@@ -208,7 +208,7 @@ const Headers = () => {
     }else{
       
     }
-    getAlarmCount();
+    //getAlarmCount();
   }, [location])
   setInterval(() => {
     if (localStorage.getItem('is_alarm') == '1') {

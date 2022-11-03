@@ -129,7 +129,9 @@ const SideBar = () => {
             const { data: response2 } = await axios.get('/api/items?table=feature_category')
             setZFeatureCategory(response2?.data);
         }
-        fetchPost()
+        if(location.pathname.includes('/manager')){
+            fetchPost();
+        }
     }, [])
     const onClickMenu = (link) => {
         if (link == '/manager/list/issue') {

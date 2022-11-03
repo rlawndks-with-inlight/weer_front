@@ -59,7 +59,9 @@ const Breadcrumb = (props) => {
                 }
             }
         }
-        isAuth();
+        if(location.pathname.includes('/manager')){
+            isAuth();
+        }
     },[])
     useEffect(() => {
         if (!localStorage.getItem('auth')) {
