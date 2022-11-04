@@ -144,7 +144,7 @@ export const regExp = (type, str) => {//id,pw,nickname,name
     if (type == 'id') {
         reg = /^(?=.*[a-zA-Z])(?=.*[0-9]).{5,12}$/;
     } else if (type == 'pw') {
-        reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$/;
+        reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~`!@#$%^&*()_+-=,./;'<>?:"])[A-Za-z\d~`!@#$%^&*()_+-=,./;'<>?:"]{8,15}$/;
     } else if (type == 'name') {
         reg = /^[가-힣]{2,5}$/;
     } else if (type == 'nickname') {
@@ -159,10 +159,21 @@ export const getViewerMarginByNumber = (num) =>{
         return " 0 auto ";
     }else if(num==1){
         return " 0 auto 0 0 ";
-
     }else if(num==2){
         return " 0 0 0 auto ";
     }else{
         return " 0 auto ";
+    }
+}
+export const getViewerAlignByNumber = (num) =>{
+    if(num==0){
+        return "center";
+    }else if(num==1){
+        return "left";
+
+    }else if(num==2){
+        return "end";
+    }else{
+        return "center";
     }
 }

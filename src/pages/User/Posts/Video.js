@@ -5,7 +5,7 @@ import { Title, Wrappers, ViewerContainer } from "../../../components/elements/U
 import { backUrl, slideSetting } from "../../../data/Data";
 import theme from "../../../styles/theme";
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-import { categoryToNumber, commarNumber, getIframeLinkByLink, getViewerMarginByNumber } from "../../../functions/utils";
+import { categoryToNumber, commarNumber, getIframeLinkByLink, getViewerAlignByNumber } from "../../../functions/utils";
 import $ from 'jquery';
 import { Content, SliderDiv, WrapDiv } from "../../../components/elements/UserContentTemplete";
 import Slider from 'react-slick'
@@ -150,7 +150,7 @@ const Video = () => {
         setComments(response.data);
     }
 
-    const addComment = async () => {
+    const addComment = async (parent_pk) => {
         if (!auth.pk) {
             alert("로그인 후 이용 가능합니다.")
             return;
@@ -159,13 +159,14 @@ const Video = () => {
             userPk: auth.pk,
             userNick: auth.nickname,
             pk: params.pk,
+            parentPk:parent_pk??0,
             title: post.title,
-            note: $('.comment').val(),
+            note: $(`.comment-${parent_pk??0}`).val(),
             category: categoryToNumber('video')
         })
 
         if (response.result > 0) {
-            $('.comment').val("")
+            $(`.comment-${parent_pk??0}`).val("")
             fetchComments();
         } else {
             alert(response.message)
@@ -205,7 +206,7 @@ const Video = () => {
 
                         </Iframe>
                         <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post.hash}</div>
-                        <ViewerContainer className="viewer" style={{margin:`${getViewerMarginByNumber(post?.note_align)}`}}>
+                        <ViewerContainer className="viewer" style={{textAlign:`${getViewerAlignByNumber(post?.note_align)}`}}>
                             <Viewer initialValue={post?.note ?? `<body></body>`} />
                         </ViewerContainer>
                         <Title>관련 영상</Title>

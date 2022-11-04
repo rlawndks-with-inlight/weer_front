@@ -28,6 +28,7 @@ const SignUpCard = () => {
     const [typeNum, setTypeNum] = useState(0);
     const [state, setState] = useState(undefined)
     const [coinsidePW, setCoinsidePw] = useState(true);
+    const [isRegPw, setIsRegPw] = useState(false)
     useEffect(() => {
         if (location.state) {
             setState(location.state)
@@ -133,7 +134,7 @@ const SignUpCard = () => {
                     pw: location.state ? "111" : $('.pw').val(),
                     name: location.state ? state.name : $('.name').val(),
                     nickname: $('.nickname').val(),
-                    phone: $('.phone').val(),
+                    phone: fixPhoneNumber,
                     user_level: 0,
                     type_num: location.state ? state.typeNum : typeNum,
                     profile_img: location.state ? state.profile_img : null
@@ -182,6 +183,9 @@ const SignUpCard = () => {
             confirmCoincide();
         }
     }
+    const onChangePw = (e) =>{
+        setIsRegPw(regExp('pw', e.target.value))
+    }
     const onChangePwCheck = (e) => {
         if (e.target.value != $('.pw').val()) {
             setCoinsidePw(false);
@@ -203,8 +207,8 @@ const SignUpCard = () => {
                         <RegularNotice>5~20자 내의 영문, 숫자 조합만 가능합니다.</RegularNotice>
                         <Button onClick={onCheckId} disabled={isCheckId}>{isCheckId ? '사용가능' : '중복확인'}</Button>
                         <CategoryName>비밀번호</CategoryName>
-                        <Input placeholder='비밀번호를 입력해주세요.' type={'password'} className='pw' onKeyPress={onKeyPressPw} />
-                        <RegularNotice>8~15자 내의 영문, 숫자, 특수문자 조합만 가능합니다.</RegularNotice>
+                        <Input placeholder='비밀번호를 입력해주세요.' type={'password'} className='pw' onKeyPress={onKeyPressPw} onChange={onChangePw} />
+                        <RegularNotice>{isRegPw?'':'8~15자 내의 영문, 숫자, 특수문자 조합만 가능합니다.'}</RegularNotice>
                         <CategoryName>비밀번호 확인</CategoryName>
                         <Input placeholder='비밀번호를 한번더 입력해주세요.' type={'password'} className='pw-check' onKeyPress={onKeyPressPwCheck} onChange={onChangePwCheck} />
                         <RegularNotice>{!coinsidePW ? '비밀번호가 일치하지 않습니다.' : ''}</RegularNotice>

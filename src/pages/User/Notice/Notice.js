@@ -80,21 +80,22 @@ const Notice = () => {
         setComments(response.data);
     }
     
-    const addComment = async () => {
-        if (!$('.comment').val()) {
+    const addComment = async (parent_pk) => {
+        if (!$(`.comment-${parent_pk??0}`).val()) {
             alert('필수 값을 입력해 주세요.');
         }
         const { data: response } = await axios.post('/api/addcomment', {
             userPk: auth.pk,
             userNick: auth.nickname,
             pk: params.pk,
+            parentPk:parent_pk??0,
             title: post.title,
-            note: $('.comment').val(),
+            note: $(`.comment-${parent_pk??0}`).val(),
             category: categoryToNumber('notice')
         })
 
         if (response.result > 0) {
-            $('.comment').val("")
+            $(`.comment-${parent_pk??0}`).val("")
             fetchComments();
         } else {
             alert(response.message)

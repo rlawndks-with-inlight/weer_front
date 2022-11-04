@@ -154,48 +154,7 @@ const Headers = () => {
     } else {
       setDisplay('flex');
     }
-    async function getAlarmCount() {
-      let auth = JSON.parse(localStorage.getItem('auth') ?? "{}");
-      let pk = undefined;
-      let mac_address = undefined;
-      let flag = true;
-      if (auth?.pk > 0) {//유저
-        pk = auth?.pk;
-      } else if (window.flutter_inappwebview) {//맥
-
-        window.flutter_inappwebview.callHandler('native_get_mac_address', {}).then(async function (result) {
-          //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
-          let obj = JSON.parse(result);
-          obj = obj.data;
-          mac_address = obj.mac_address;
-        });
-      } else {
-        flag = false;
-      }
-
-      if (!flag) {
-        setIsAlarm(false);
-      } else {
-        const { data: response } = await axios.post('/api/getcountnotreadnoti', {
-          pk: pk,
-          mac_address: mac_address
-        })
-        let obj = response.data;
-        if (window.flutter_inappwebview) {
-          if (obj.item.last_alarm_pk <= obj.alarm_ai || obj.item.last_notice_pk <= obj.notice_ai) {
-            setIsAlarm(true)
-            localStorage.setItem('is_alarm','1')
-          }
-        } else {
-          if (obj.item.last_notice_pk <= obj.notice_ai) {
-            setIsAlarm(true)
-            localStorage.setItem('is_alarm','1')
-          }
-        }
-
-      }
-      
-    }
+    
     if(localStorage.getItem('dark_mode')){
       $('body').addClass("dark-mode");
       $('p').addClass("dark-mode");
@@ -208,8 +167,8 @@ const Headers = () => {
     }else{
       
     }
-    //getAlarmCount();
   }, [location])
+
   setInterval(() => {
     if (localStorage.getItem('is_alarm') == '1') {
       setIsAlarm(true);

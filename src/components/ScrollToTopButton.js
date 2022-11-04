@@ -14,6 +14,7 @@ border-radius:50%;
 font-size:16px;
 cursor:pointer;
 animation: fadein 0.5s;
+z-index:3;
 @keyframes fadein {
     from {
         opacity: 0;

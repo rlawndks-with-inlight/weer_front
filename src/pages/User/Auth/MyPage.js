@@ -74,13 +74,14 @@ const MyPage = () => {
     useEffect(() => {
         async function isAdmin() {
             const { data: response } = await axios('/api/auth')
+            console.log(response)
             if (response.pk > 0) {
                 await localStorage.setItem('auth', JSON.stringify(response))
                 let obj = response;
                 setAuth(obj);
             } else {
                 localStorage.removeItem('auth');
-                navigate('/login')
+                onLogout();
             }
         }
         isAdmin();
@@ -89,7 +90,6 @@ const MyPage = () => {
         }
     }, [])
     const onLogout = async () => {
-        if (window.confirm('정말 로그아웃 하시겠습니까?')) {
             if (window && window.flutter_inappwebview) {
                 var params = { 'login_type': JSON.parse(localStorage.getItem('auth'))?.type };
                 window.flutter_inappwebview.callHandler('native_app_logout', JSON.stringify(params)).then(async function (result) {
@@ -103,7 +103,6 @@ const MyPage = () => {
             } else {
                 alert('error');
             }
-        }
     }
 
     return (

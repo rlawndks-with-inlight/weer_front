@@ -32,7 +32,6 @@ import Policy from '../pages/User/Policy/Policy';
 import MLogin from '../pages/Manager/MLogin';
 import MUserEdit from '../pages/Manager/MUserEdit';
 import MMasterEdit from '../pages/Manager/MMasterEdit';
-import MSetting from '../pages/Manager/MSetting';
 import MIssueCategoryEdit from '../pages/Manager/MIssueCategoryEdit';
 import MFeatureCategoryEdit from '../pages/Manager/MFeatureCategoryEdit';
 import MVideoEdit from '../pages/Manager/MVideoEdit';
@@ -83,7 +82,6 @@ const zRoute = [
     { link: '/manager/edit/user/:pk', element: <MUserEdit />, title: "회원관리" },
     { link: '/manager/edit/master/:pk', element: <MMasterEdit />, title: "대가관리" },
     { link: '/manager/edit/channel/:pk', element: <MChannelEdit />, title: "채널관리" },
-    { link: '/manager/setting', element: <MSetting />, title: "환경설정" },
     { link: '/manager/edit/video/:pk', element: <MVideoEdit />, title: "핵심비디오관리" },
     { link: '/manager/edit/notice/:pk', element: <MNoticeEdit />, title: "공지사항관리" },
     { link: '/manager/edit/alarm/:pk', element: <MAlarmEdit />, title: "알람관리" },

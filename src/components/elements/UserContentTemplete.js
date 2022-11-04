@@ -23,17 +23,16 @@ min-height:58vh;
 `
 
 export const Wrappers = (props) =>{
-    const [minHeight, setMinHeight] = useState(500);
     const {pathname} = useLocation();
     useEffect(()=>{
-        setMinHeight($(window).height()-224-173);
+        $('.wrappers').css('min-height',`${$(window).height()-224-173}px`);
     },[pathname])
     useEffect(()=>{
 
     },[])
     return (
         <>
-        <WrappersStyle className="wrappers" style={{minHeight:`${minHeight}px`}}>
+        <WrappersStyle className="wrappers" style={props.style}>
             {props.children??""}
         </WrappersStyle>
         </>
@@ -126,7 +125,7 @@ display:none;
 }
 `
 export const ViewerContainer = styled.div`
-max-width:1000px;
+
 margin:0 auto;
 `
 export const SelectType = styled.div`

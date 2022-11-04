@@ -32,7 +32,7 @@ const MUserEdit = () => {
                 $('.name').val(response.data.name)
                 $('.nickname').val(response.data.nickname)
                 $('.phone').val(response.data.phone)
-                $('.user_level').val(response.data.user_level)
+                $('.level').val(response.data.user_level)
             }
         }
         fetchPost();
@@ -49,7 +49,7 @@ const MUserEdit = () => {
                 params.pk == 0 ?
                     addItem('user', { id: $(`.id`).val(), pw: $(`.pw`).val(), name: $(`.name`).val(), nickname: $(`.nickname`).val(), phone: $(`.phone`).val(), user_level: $(`.user_level`).val() }) :
                     updateItem('user', {
-                        id: $(`.id`).val(), pw: $(`.pw`).val(), name: $(`.name`).val(), nickname: $(`.nickname`).val(), phone: $(`.phone`).val(), user_level: $(`.user_level`).val(), pk: params.pk
+                        id: $(`.id`).val(), pw: $(`.pw`).val(), name: $(`.name`).val(), nickname: $(`.nickname`).val(), phone: $(`.phone`).val(), user_level: $(`.level`).val(), pk: params.pk
                     })
             }
         }
@@ -90,7 +90,9 @@ const MUserEdit = () => {
                             <Col>
                                 <Title style={{ margintop: '32px' }}>유저레벨</Title>
                                 <Select className='level'>
+                                    <option value={-10}>불량회원</option>
                                     <option value={0}>일반유저</option>
+                                    <option value={30}>전문가</option>
                                     <option value={40}>관리자</option>
                                 </Select>
                             </Col>

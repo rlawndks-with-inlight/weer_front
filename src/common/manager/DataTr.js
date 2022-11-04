@@ -112,6 +112,21 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
             return "애플";
         }
     }
+    const getUserLevelByNumber = (num) =>{
+        if(num==-10){
+            return "불량회원";
+        }else if(num==0){
+            return "일반유저";
+        }else if(num==30){
+            return "전문가";
+        }else if(num==40){
+            return "관리자";
+        }else if(num==50){
+            return "개발자";
+        }else{
+            return "불량회원"
+        }
+    }
     return (
         <>
             <Tr ref={ref} data-handler-id={handlerId}>
@@ -141,7 +156,7 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
                             </>}
                         {col.type == 'level' ?
                             <>
-                                <Td style={{ width: `${col.width}%` }}>{data[col.column] == 0 ? '일반유저' : data[col.column] == 40 ? '관리자' : data[col.column] == 30 ? '대가' : '개발자'}</Td>
+                                <Td style={{ width: `${col.width}%` }}>{getUserLevelByNumber(data[col.column])}</Td>
                             </>
                             :
                             <>

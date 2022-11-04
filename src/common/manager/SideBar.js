@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi'
 import logo from '../../assets/images/test/logo.svg'
-import { BsPerson, BsCameraVideo, BsAlarm } from 'react-icons/bs'
+import { BsPerson, BsCameraVideo, BsAlarm, BsGraphUp } from 'react-icons/bs'
 import { MdOutlineAccessTime, MdNotificationImportant, MdOutlineFeaturedPlayList } from 'react-icons/md'
 import { IoStatsChartSharp, IoLogoReact } from 'react-icons/io5'
 import { FaChalkboardTeacher } from 'react-icons/fa'
@@ -13,6 +13,7 @@ import { WiDayHaze } from 'react-icons/wi'
 import { SiMicrostrategy } from 'react-icons/si'
 import {BiCommentDetail} from 'react-icons/bi'
 import axios from 'axios';
+import $ from 'jquery'
 const Wrappers = styled.div`
 display:flex;
 flex-direction:column;
@@ -25,17 +26,8 @@ background:#fff;
 overflow-y:auto;
 padding-bottom:16px;
 @media screen and (max-width:1000px) {
+    display:none;
     position:fixed;
-    display:${(props => props.display)};
-    transition:1s;
-    @keyframes fadein {
-        from {
-            left:-500px;
-        }
-        to {
-            left:0;
-        }
-      }
 }
 `
 const LogoWrappers = styled.div`
@@ -99,6 +91,7 @@ const SideBar = () => {
     const [featureCategoryDisplay, setFeatureCategoryDisplay] = useState(false);
     const zSidebar = [
         { name: '회원관리', link: '/manager/list/user', icon: <BsPerson />, level: 40, allow_list: ['/manager/list/user'] },
+       // { name: '회원통계', link: '/manager/statistics/user', icon: <BsGraphUp />, level: 40, allow_list: ['/manager/statistics/user'] },
         //{ name: '접속자현황', link: '/manager/list/user', icon: <MdOutlineAccessTime /> },
         //{ name: '회원통계', link: '/manager/list/user', icon: <IoStatsChartSharp /> },
         { name: '메인이미지관리', link: '/manager/edit/setting', icon: <AiOutlineRotateLeft />, level: 40, allow_list: ['/manager/edit/setting'] },
@@ -148,15 +141,32 @@ const SideBar = () => {
     const changeFeatureCategoryDisplay = () => {
         setFeatureCategoryDisplay(!featureCategoryDisplay);
     }
-
+    const onChangeMenuDisplay = async () =>{
+        if(display=='flex'){
+          $('.header-menu-list').animate({left:'-500px',opacity:'0'},1000);
+          if(window.innerWidth<=1050){
+            await new Promise((r) => setTimeout(r, 1000));
+            $('.header-menu-list').css("display","none");
+            
+          }
+        }else{
+          $('.header-menu-list').animate({left:'0',opacity:'1'},1000);
+          if(window.innerWidth<=1050){
+            $('.header-menu-list').css("display","flex");
+          }
+        }
+    
+        setDisplay(display=='flex'?'none':'flex');
+        
+      }
  
     return (
         <>
-            <HambergurContainer onClick={() => { setDisplay('flex') }}>
+            <HambergurContainer onClick={onChangeMenuDisplay}>
                 <GiHamburgerMenu />
             </HambergurContainer>
-            <Wrappers display={display} className='scroll-css'>
-                <HambergurContainer onClick={() => { setDisplay('none') }}>
+            <Wrappers className='scroll-css header-menu-list'>
+                <HambergurContainer onClick={onChangeMenuDisplay}>
                     <GiHamburgerMenu />
                 </HambergurContainer>
                 <LogoWrappers>

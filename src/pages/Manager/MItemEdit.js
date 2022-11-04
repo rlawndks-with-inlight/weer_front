@@ -111,13 +111,13 @@ const MItemEdit = () => {
         });
         $('button.emoji').on('click', function () {
             if ($('.emoji-picker-react').css('display') == 'none') {
-                $('.emoji-picker-react').attr('style', 'display: flex !important')
+                $('.emoji-picker-react').attr('style', 'display: flex !important');
             } else {
-                $('.emoji-picker-react').attr('style', 'display: none !important')
+                $('.emoji-picker-react').attr('style', 'display: none !important');
             }
         })
         $('.toastui-editor-toolbar-icons').on('click', function () {
-            $('.emoji-picker-react').attr('style', 'display: none !important')
+            $('.emoji-picker-react').attr('style', 'display: none !important');
         })
 
     }, [])
@@ -193,7 +193,7 @@ const MItemEdit = () => {
         console.log(data)
     }
 
-    const addComment = async () => {
+    const addComment = async (parent_pk) => {
         if (!$('.comment').val()) {
             alert('필수 값을 입력해 주세요.');
         }
@@ -201,12 +201,13 @@ const MItemEdit = () => {
             userPk: auth.pk,
             userNick: auth.nickname,
             pk: params.pk,
-            note: $('.comment').val(),
+            parentPk:parent_pk??0,
+            note: $(`.comment-${parent_pk??0}`).val(),
             category: categoryToNumber(params.table)
         })
 
         if (response.result > 0) {
-            $('.comment').val("")
+            $(`.comment-${parent_pk??0}`).val("")
             fetchComments();
         } else {
             alert(response.message)

@@ -141,21 +141,22 @@ const MVideoEdit = () => {
     const onChangeEditor = (e) => {
         const data = editorRef.current.getInstance().getHTML();
     }
-    const addComment = async () => {
-        if(!$('.comment').val()){
+    const addComment = async (parent_pk) => {
+        if(!$(`.comment-${parent_pk??0}`).val()){
             alert('필수 값을 입력해 주세요.');
         }
         const { data: response } = await axios.post('/api/addcomment', {
             userPk: auth.pk,
             userNick: auth.nickname,
             pk: params.pk,
-            note: $('.comment').val(),
+            parentPk:parent_pk??0,
+            note: $(`.comment-${parent_pk??0}`).val(),
             note_align: $('.note-align').val(),
             category: categoryToNumber('video')
         })
 
         if(response.result>0){
-            $('.comment').val("")
+            $(`.comment-${parent_pk??0}`).val("")
             fetchComments();
         }else{
             alert(response.message)
