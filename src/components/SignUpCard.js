@@ -115,21 +115,19 @@ const SignUpCard = () => {
     const onSignUp = async () => {
         if (!$('.id').val() && !location.state) {
             alert('필수값을 입력해주세요.');
-        } 
-        // else if (!isCheckId && !location.state) {
-        //     alert('아이디 중복확인을 해주세요.');
-        // } else if (!regExp('pw', $('.pw').val()) && !location.state) {
-        //     alert('비밀번호 정규식을 지켜주세요.');
-        // } else if ($('.pw').val() != $('.pw-check').val() && !location.state) {
-        //     alert('비밀번호가 일치하지 않습니다.');
-        // } else if (!isCheckPhoneNumber) {
-        //     alert('전화번호 인증을 완료해 주세요.');
-        // } else if (!isCheckNickname) {
-        //     alert('닉네임 중복확인을 해주세요.');
-        // } else if (!regExp('nickname', $('.nickname').val())) {
-        //     alert('닉네임 정규식을 지켜주세요.');
-        // } 
-        else {
+        } else if (!isCheckId && !location.state) {
+            alert('아이디 중복확인을 해주세요.');
+        } else if (!regExp('pw', $('.pw').val()) && !location.state) {
+            alert('비밀번호 정규식을 지켜주세요.');
+        } else if ($('.pw').val() != $('.pw-check').val() && !location.state) {
+            alert('비밀번호가 일치하지 않습니다.');
+        } else if (!isCheckPhoneNumber) {
+            alert('전화번호 인증을 완료해 주세요.');
+        } else if (!isCheckNickname) {
+            alert('닉네임 중복확인을 해주세요.');
+        } else if (!regExp('nickname', $('.nickname').val())) {
+            alert('닉네임 정규식을 지켜주세요.');
+        } else {
             if (window.confirm('회원가입 하시겠습니까?')) {
                 const { data: response } = await axios.post('/api/adduser', {
                     id: location.state ? state.id : $('.id').val(),
