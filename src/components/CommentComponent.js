@@ -39,15 +39,16 @@ const CommentContent = (props) => {
                     <div style={{ marginBottom: '6px', display: 'flex' }}><div style={{ marginRight: '6px' }}>{item.nickname}</div> <div style={{ color: theme.color.font3 }}>{item.date.substring(0, 16)}</div></div>
                     <div style={{ wordBreak: 'break-all', marginBottom: '6px', fontSize: theme.size.font3 }}>{item.note}</div>
                     <div style={{ display: 'flex' }}>
+                        {isReply ?
+                            <>
+                            </>
+                            :
+                            <>
+                                <div style={{ marginRight: '6px', cursor: 'pointer' }} onClick={displayReplyInput}>답글</div>
+                            </>}
                         {JSON.parse(localStorage.getItem('auth'))?.pk == item.user_pk || JSON.parse(localStorage.getItem('auth'))?.user_level >= 40 ?
                             <>
-                                {isReply ?
-                                    <>
-                                    </>
-                                    :
-                                    <>
-                                        <div style={{ marginRight: '6px', cursor: 'pointer' }} onClick={displayReplyInput}>답글</div>
-                                    </>}
+
                                 <div style={{ marginRight: '6px', cursor: 'pointer' }}>수정</div>
                                 <div style={{ cursor: 'pointer' }} onClick={() => deleteComment(item.pk)}>지우기</div>
                             </>
@@ -133,7 +134,7 @@ const CommentComponent = (props) => {
                     <>
                         {zComment.map((item, index) => (
                             <>
-                                <CommentContent item={item} deleteComment={deleteComment} displayReplyInput={() => displayReplyInput(item.pk)} />
+                                <CommentContent item={item} deleteComment={deleteComment} isReply={false} displayReplyInput={() => displayReplyInput(item.pk)} />
                                 {item?.reply_display ?
                                     <>
                                         <CommentInputContent addComment={addComment} parentPk={item.pk} />
