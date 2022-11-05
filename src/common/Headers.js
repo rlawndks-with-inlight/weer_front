@@ -174,7 +174,6 @@ const Headers = () => {
   useEffect(() => {
     async function getNoticeAndAlarmCount() {
       const { data: response } = await axios.get('/api/getnoticeandalarmlastpk');
-      console.log(response);
       let response_obj = response?.data ?? { alarm_last_pk: 0, notice_last_pk: 0 };
       setLastAlarmPk(response_obj.alarm_last_pk);
       setLastNoticePk(response_obj.notice_last_pk);

@@ -95,10 +95,10 @@ const Notice = () => {
         })
 
         if (response.result > 0) {
-            $(`.comment-${parent_pk??0}`).val("")
+            $(`.comment-${parent_pk??0}`).val("");
             fetchComments();
         } else {
-            alert(response.message)
+            alert(response.message);
         }
     }
 
