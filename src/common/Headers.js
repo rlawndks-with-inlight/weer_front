@@ -139,10 +139,11 @@ const Headers = () => {
   const [searchDisplay, setSearchDisplay] = useState('none')
   const [isSearch, setIsSearch] = useState(false);
   const [isAlarm, setIsAlarm] = useState(false);
-  
+  const [lastNoticePk, setLastNoticePk] = useState(0);
+  const [lastAlarmePk, setLastAlarmPk] = useState(0);
   useEffect(() => {
-    
-    
+
+
     if (location.pathname.substring(0, 6) == '/post/' || location.pathname.substring(0, 7) == '/video/' || location.pathname == '/appsetting') {
       setIsPost(true);
     } else {
@@ -154,26 +155,52 @@ const Headers = () => {
     } else {
       setDisplay('flex');
     }
-    
-    if(localStorage.getItem('dark_mode')){
+
+    if (localStorage.getItem('dark_mode')) {
       $('body').addClass("dark-mode");
       $('p').addClass("dark-mode");
       $('.toastui-editor-contents p').addClass("dark-mode");
       $('.menu-container').addClass("dark-mode");
-      $('.menu-container').css("border-top","none");
+      $('.menu-container').css("border-top", "none");
       $('.header').addClass("dark-mode");
       $('.select-type').addClass("dark-mode");
       $('.footer').addClass("dark-mode");
-    }else{
-      
+    } else {
+
     }
   }, [location])
 
-  setInterval(() => {
-    if (localStorage.getItem('is_alarm') == '1') {
-      setIsAlarm(true);
+
+  useEffect(() => {
+    async function getNoticeAndAlarmCount() {
+      const { data: response } = await axios.get('/api/getnoticeandalarmlastpk');
+      console.log(response);
+      let response_obj = response?.data ?? { alarm_last_pk: 0, notice_last_pk: 0 };
+      setLastAlarmPk(response_obj.alarm_last_pk);
+      setLastNoticePk(response_obj.notice_last_pk);
+      let my_last_count = {};
+      if (window.flutter_inappwebview) {
+        window.flutter_inappwebview.callHandler('native_get_alarm_and_notice_last_count', {}).then(async function (result) {
+          //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"\
+          let obj = JSON.parse(result);
+          if (obj?.data?.alarm_last_pk >= response_obj?.alarm_last_pk && obj?.data?.notice_last_pk >= response_obj?.notice_last_pk) {
+            setIsAlarm(false);
+          } else {
+            setIsAlarm(true);
+          }
+
+        });
+      } else {
+        my_last_count = JSON.parse(localStorage.getItem('alarm_and_notice_count') ?? '{}');
+        if (my_last_count?.notice_last_pk >= response_obj?.notice_last_pk) {
+          setIsAlarm(false);
+        } else {
+          setIsAlarm(true);
+        }
+      }
     }
-  }, 1500);
+    getNoticeAndAlarmCount();
+  }, [])
   // setInterval(() => {
   //   if (window.flutter_inappwebview) {
   //     window.flutter_inappwebview.callHandler('native_get_alarm_count', {}).then(async function (result) {
@@ -191,23 +218,16 @@ const Headers = () => {
   // }, 2000);
   const onClickBell = () => {
     if (window.flutter_inappwebview) {
-      window.flutter_inappwebview.callHandler('native_alarm_count_zero', {}).then(async function (result) {
-        //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
+      window.flutter_inappwebview.callHandler('native_alarm_count_zero', { alarm_last_pk: lastAlarmePk, notice_last_pk: lastNoticePk }).then(async function (result) {
+        setIsAlarm(false);
       });
+    } else {
+      localStorage.setItem('alarm_and_notice_count',JSON.stringify({notice_last_pk:lastNoticePk}));
+      setIsAlarm(false);
     }
     navigate('/noticelist');
   }
-  const [modal, setModal] = useState("none");
 
-  const handleModal = async () => {
-    if (modal == "none") {
-      setModal("flex");
-    }
-    else {
-
-      setModal("none");
-    }
-  };
   const myAuth = async () => {
     const { data: response } = await axios('/api/auth')
     if (response.pk > 0) {
@@ -275,7 +295,7 @@ const Headers = () => {
                   </>}
               </div>
               <div style={{ display: 'flex', fontSize: '1.2rem', width: '100px', justifyContent: 'space-between', position: 'relative' }}>
-              <AiOutlineBell onClick={onClickBell} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
+                <AiOutlineBell onClick={onClickBell} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
                 <AiOutlineSearch onClick={changeSearchModal} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
                 <AiOutlineSetting onClick={myAuth} style={{ width: '2rem', height: '1.5rem', cursor: 'pointer' }} />
                 {isAlarm ?
