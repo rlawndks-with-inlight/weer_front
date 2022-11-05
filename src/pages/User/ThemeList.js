@@ -6,7 +6,7 @@ import { Title, Wrappers } from "../../components/elements/UserContentTemplete";
 import ThemeCard from "../../components/ThemeCard";
 
 const ThemeList = () => {
-    const [posts, setPosts] = useState();
+    const [posts, setPosts] = useState([]);
 
     useEffect(() => {
         if(posts.length==0){
