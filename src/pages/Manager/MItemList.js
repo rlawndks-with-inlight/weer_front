@@ -11,7 +11,7 @@ import DataTable from '../../common/manager/DataTable';
 import MBottomContent from '../../components/elements/MBottomContent';
 import PageContainer from '../../components/elements/pagination/PageContainer';
 import PageButton from '../../components/elements/pagination/PageButton';
-import { range } from '../../functions/utils';
+import { range, returnMoment } from '../../functions/utils';
 import AddButton from '../../components/elements/button/AddButton';
 import Loading from '../../components/Loading';
 import theme from '../../styles/theme';
@@ -51,16 +51,16 @@ const MItemList = () => {
     const [page, setPage] = useState(1)
     const [pageList, setPageList] = useState([])
     const [loading, setLoading] = useState(false)
-    const [isUseLoading, setIsUseLoading] = useState(true)
+    const [isUseLoading, setIsUseLoading] = useState(true);
+    const [yearList, setYearList] = useState([])
     const notAddList = [
-        'comment','all'
+        'comment', 'all', 'user_statistics'
     ]
     useEffect(() => {
         setZColumn(objManagerListContent[`${params.table}`].zColumn ?? {})
         async function fetchPost() {
             setLoading(true)
             $('.page-cut').val(15)
-            setPage(1)
             let str = '';
             if (params.table == 'master') {
                 str = `/api/users?page=1&level=30`
@@ -70,10 +70,20 @@ const MItemList = () => {
                 str = `/api/users?page=1&level=0`
             } else if ((params.table == 'issue' || params.table == 'feature') && params.pk) {
                 str = `/api/items?table=${params.table}&page=1&category_pk=${params.pk}`
-            }else if(params.table == 'comment'){
+            } else if (params.table == 'comment') {
                 str = `/api/items?table=${params.table}&page=1&order=pk`
-            } else if(params.table == 'all'){
+            } else if (params.table == 'all') {
                 str = `/api/getallposts?page=1&order=date`
+            } else if (params.table == 'user_statistics') {
+                let year = parseInt(returnMoment().substring(0, 4));
+                let year_list = [];
+                for(var i = 0;i<10;i++){
+                    if(year-i>=2020){
+                        year_list.push(year-i);
+                    }
+                }
+                setYearList(year_list)
+                str = `/api/getuserstatistics?page=1&type=${$('.statistics-type').val()}&year=${year}`
             } else {
                 let auth = JSON.parse(localStorage.getItem('auth'))
                 str = `/api/items?table=${params.table}&page=1`
@@ -94,32 +104,40 @@ const MItemList = () => {
         let keyword = $('.search').val();
         let str = '';
         if (params.table == 'master') {
-            str = `/api/users?page=${num}&level=30`
+            str = `/api/users?level=30`
         } else if (params.table == 'channel') {
-            str = `/api/users?page=${num}&level=25`
+            str = `/api/users?level=25`
         } else if (params.table == 'user') {
-            str = `/api/users?page=${num}&level=0`
+            str = `/api/users?level=0`
         } else if ((params.table == 'issue' || params.table == 'feature') && params.pk) {
-            str = `/api/items?table=${params.table}&page=${num}&category_pk=${params.pk}`
-        } else if(params.table == 'comment'){
-            str = `/api/items?table=${params.table}&page=${num}&order=pk`
-        }else if(params.table == 'all'){
-            str = `/api/getallposts?page=${num}&order=date`
-        }else {
-            str = `/api/items?table=${params.table}&page=${num}`
+            str = `/api/items?table=${params.table}&category_pk=${params.pk}`
+        } else if (params.table == 'comment') {
+            str = `/api/items?table=${params.table}&order=pk`
+        } else if (params.table == 'all') {
+            str = `/api/getallposts?order=date`
+        } else if (params.table == 'user_statistics') {
+            str = `/api/getuserstatistics?type=${$('.statistics-type').val()}&year=${$('.statistics-year').val()}`
+        } else {
+            str = `/api/items?table=${params.table}`
         }
-        str += `&page_cut=${parseInt($('.page-cut').val())}&keyword=${keyword}`;
+        str += `&page_cut=${parseInt($('.page-cut').val())}&keyword=${keyword}&page=${num}`;
         const { data: response } = await axios.get(str)
         setPosts(response.data.data)
         setPageList(range(1, response.data.maxPage))
         setLoading(false)
     }
-    const onchangeSelectPageCut = (e) => {
+    const onChangeSelectPageCut = (e) => {
         changePage(page)
     }
-    const opTheTopItem = useCallback(async (pk,sort, schema) => {
+    const onChangeStatisticsType = (e) =>{
+        changePage(1)
+    }
+    const onChangeStatisticsYear = (e) =>{
+        changePage(1)
+    }
+    const opTheTopItem = useCallback(async (pk, sort, schema) => {
         if (window.confirm('가장 위로 올리겠습니까?')) {
-            const { data: response } = await axios.post('/api/onthetopitem', { table: schema, pk: pk,sort:sort });
+            const { data: response } = await axios.post('/api/onthetopitem', { table: schema, pk: pk, sort: sort });
             if (response.result > 0) {
                 changePage(page)
             } else {
@@ -133,10 +151,10 @@ const MItemList = () => {
         } else {
             const { data: response } = await axios.post('/api/changeitemsequence', {
                 pk: pk,
-                sort:sort,
+                sort: sort,
                 table: schema,
                 change_pk: posts[idx].pk,
-                change_sort:posts[idx].sort
+                change_sort: posts[idx].sort
             });
             if (response.result > 0) {
                 changePage(page)
@@ -173,40 +191,42 @@ const MItemList = () => {
             str = `/api/users?level=0`
         } else if ((params.table == 'issue' || params.table == 'feature') && params.pk) {
             str = `/api/items?table=${params.table}&category_pk=${params.pk}`
-        }else if(params.table == 'all'){
+        } else if (params.table == 'all') {
             str = `/api/getallposts?order=date`
+        } else if (params.table == 'user_statistics') {
+            str = `/api/getuserstatistics`
         } else {
             str = `/api/items?table=${params.table}`
         }
         const { data: response } = await axios.get(str)
         excelDownload(response.data);
-        
+
     }
     const excelFileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
     const excelFileExtension = '.xlsx';
     const excelFileName = params.table;
 
     const excelDownload = (excelData) => {
-        let ignore_name_list = ['맨위로','수정','삭제'];
-        let ignore_column_list = ['','edit','delete'];
+        let ignore_name_list = ['맨위로', '수정', '삭제'];
+        let ignore_column_list = ['', 'edit', 'delete'];
         let name_list = [];
         let column_list = [];
-        for(var i = 0;i<objManagerListContent[`${params.table}`].zColumn.length;i++){
-            if(!ignore_name_list.includes(objManagerListContent[`${params.table}`].zColumn[i].name)){
+        for (var i = 0; i < objManagerListContent[`${params.table}`].zColumn.length; i++) {
+            if (!ignore_name_list.includes(objManagerListContent[`${params.table}`].zColumn[i].name)) {
                 name_list.push(objManagerListContent[`${params.table}`].zColumn[i].name)
                 column_list.push(objManagerListContent[`${params.table}`].zColumn[i].column)
             }
         }
         const ws = XLSX.utils.aoa_to_sheet([
             ['weare']
-            ,[]
-            ,name_list
+            , []
+            , name_list
         ]);
         excelData.map((data) => {
             XLSX.utils.sheet_add_aoa(
                 ws,
                 [
-                    column_list.map(item=>{
+                    column_list.map(item => {
                         return data[`${item}`]
                     })
                 ],
@@ -233,18 +253,44 @@ const MItemList = () => {
                         {/* 옵션카드 */}
                         <OptionCardWrappers>
                             <Row>
-                                <SearchContainer>
-                                    <Input style={{ margin: '12px 0 12px 24px', border: 'none' }} className='search' placeholder='두 글자 이상 입력해주세요.' onKeyPress={(e)=>{e.key=='Enter'?changePage(1):console.log("")}}/>
-                                    <AiOutlineSearch className='search-button' style={{ padding: '14px', cursor: 'pointer' }} onClick={()=>changePage(1)}/>
-                                </SearchContainer>
-                                <Select className='page-cut' style={{ margin: '12px 24px 12px 24px' }} onChange={onchangeSelectPageCut}>
+                                {params.table == 'user_statistics' ?
+                                    <>
+                                        <Select className='statistics-type' style={{ margin: '12px 24px 12px 24px' }} onChange={onChangeStatisticsType}>
+                                            <option value={'month'}>월별 요약</option>
+                                            <option value={'day'}>일차별 요약</option>
+                                        </Select>
+                                        <Select className='statistics-year' style={{ margin: '12px 24px 12px 24px' }} onChange={onChangeStatisticsYear}>
+                                            {yearList.map((item, index)=>(
+                                                <>
+                                                <option value={item}>{`${item}년`}</option>
+                                                </>
+                                            ))}
+                                        </Select>
+                                    </>
+                                    :
+                                    <>
+                                    </>
+                                }
+                                {params.table != 'user_statistics' ?
+                                    <>
+                                        <SearchContainer>
+                                            <Input style={{ margin: '12px 0 12px 24px', border: 'none' }} className='search' placeholder='두 글자 이상 입력해주세요.' onKeyPress={(e) => { e.key == 'Enter' ? changePage(1) : console.log("") }} />
+                                            <AiOutlineSearch className='search-button' style={{ padding: '14px', cursor: 'pointer' }} onClick={() => changePage(1)} />
+                                        </SearchContainer>
+                                    </>
+                                    :
+                                    <>
+                                    </>
+                                }
+
+                                <Select className='page-cut' style={{ margin: '12px 24px 12px 24px' }} onChange={onChangeSelectPageCut}>
                                     <option value={15}>15개</option>
                                     <option value={20}>20개</option>
                                     <option value={30}>30개</option>
                                 </Select>
-                                
-                                        <AddButton style={{ margin: '12px 24px 12px 24px', width: '96px', alignItems: 'center', display: 'flex', justifyContent: 'space-around' }} onClick={exportExcel}><SiMicrosoftexcel /> 액셀추출</AddButton>
-                                   
+
+                                <AddButton style={{ margin: '12px 24px 12px 24px', width: '96px', alignItems: 'center', display: 'flex', justifyContent: 'space-around' }} onClick={exportExcel}><SiMicrosoftexcel /> 액셀추출</AddButton>
+
                             </Row>
 
                         </OptionCardWrappers>
@@ -276,14 +322,14 @@ const MItemList = () => {
                                 마지막
                             </PageButton>
                         </PageContainer>
-                        {notAddList.includes(params.table)?
-                        <>
-                        <div/>
-                        </>
-                        :
-                        <>
-                        <AddButton onClick={() => navigate(`/manager/edit/${params.table}/0`)}>+ 추가</AddButton>
-                        </>
+                        {notAddList.includes(params.table) ?
+                            <>
+                                <div />
+                            </>
+                            :
+                            <>
+                                <AddButton onClick={() => navigate(`/manager/edit/${params.table}/0`)}>+ 추가</AddButton>
+                            </>
                         }
                     </MBottomContent>
                 </ManagerContentWrappers>

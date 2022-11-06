@@ -63,6 +63,18 @@ export const objManagerListContent = {
             { name: '삭제', width: 6, type: 'delete', column: 'delete' }
         ]
     },
+    user_statistics: {
+        breadcrumb: '회원통계',
+        schema: 'user_statistics',
+        zColumn: [
+            { name: '일자', width: 11, type: 'text', column: 'date' },
+            { name: '가입', width: 11, type: 'number', column: 'user_count' },
+            { name: '방문', width: 11, type: 'number', column: 'visit_count' },
+            { name: '새글', width: 11, type: 'number', column: 'post_count' },
+            { name: '댓글', width: 11, type: 'number', column: 'comment_count' },
+            { name: '페이지뷰', width: 15, type: 'number', column: 'views_count' },
+        ]
+    },
     comment: {
         breadcrumb: '댓글',
         schema: 'comment',

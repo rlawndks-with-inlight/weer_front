@@ -27,6 +27,7 @@ margin-bottom:6px;
 const ItemTypes = { CARD: 'card' }
 
 const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTopItem, changeItemSequence, deleteItem }) => {
+    const notUseCard = ['all','user_statistics'];
     const navigate = useNavigate();
     const ref = useRef(null)
     const [status, setStatus] = useState(data?.status);
@@ -41,7 +42,7 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
             }
         },
         hover(item, monitor) {
-
+            if(notUseCard.includes(schema))return;
             if (!ref.current) {
                 return
             }
@@ -101,48 +102,50 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
             num: num
         })
     }
-    const getLoginTypeByNumber = (num) =>{
-        if(num==0){
+    const getLoginTypeByNumber = (num) => {
+        if (num == 0) {
             return "일반";
-        }else if(num==1){
+        } else if (num == 1) {
             return "카카오";
-        }else if(num==2){
+        } else if (num == 2) {
             return "네이버";
-        }else if(num==3){
+        } else if (num == 3) {
             return "애플";
         }
     }
-    const getUserLevelByNumber = (num) =>{
-        if(num==-10){
+    const getUserLevelByNumber = (num) => {
+        if (num == -10) {
             return "불량회원";
-        }else if(num==0){
+        } else if (num == 0) {
             return "일반유저";
-        }else if(num==30){
+        } else if (num == 30) {
             return "전문가";
-        }else if(num==40){
+        } else if (num == 40) {
             return "관리자";
-        }else if(num==50){
+        } else if (num == 50) {
             return "개발자";
-        }else{
+        } else {
             return "불량회원"
         }
     }
-    const getPostCategoryNameByEng = (str) =>{
-        if(str=='oneword'){
+    const getPostCategoryNameByEng = (str) => {
+        if (str == 'oneword') {
             return "하루1단어";
-        }else if(str=='oneevent'){
+        } else if (str == 'oneevent') {
             return "하루1종목";
-        }else if(str=='theme'){
+        } else if (str == 'theme') {
             return "핵심테마";
-        }else if(str=='strategy'){
+        } else if (str == 'strategy') {
             return "전문가칼럼";
-        }else if(str=='issue'){
+        } else if (str == 'issue') {
             return "핵심이슈";
-        }else if(str=='feature'){
+        } else if (str == 'feature') {
             return "특징주";
-        }else if(str=='video'){
+        } else if (str == 'video') {
             return "핵심비디오";
-        }else {
+        } else if (str == 'notice') {
+            return "공지사항";
+        } else {
             return "---";
         }
     }
@@ -159,7 +162,7 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
                             :
                             <>
                             </>}
-                            {col.type == 'number' ?
+                        {col.type == 'number' ?
                             <>
                                 <Td style={{ width: `${col.width}%` }}>{commarNumber(data[`${col.column}`])}</Td>
                             </>
@@ -173,7 +176,7 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
                             :
                             <>
                             </>}
-                            {col.type == 'login_type' ?
+                        {col.type == 'login_type' ?
                             <>
                                 <Td style={{ width: `${col.width}%` }}>{getLoginTypeByNumber(data[col.column])}</Td>
                             </>
@@ -223,7 +226,7 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
                             :
                             <>
                             </>}
-                            {col.type == 'alarm_type' ?
+                        {col.type == 'alarm_type' ?
                             <>
                                 <Td style={{ width: `${col.width}%` }}>
                                     {data[`${col.column}`] == 1 ?
@@ -234,7 +237,7 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
                             :
                             <>
                             </>}
-                            {col.type == 'category_type' ?
+                        {col.type == 'category_type' ?
                             <>
                                 <Td style={{ width: `${col.width}%` }}>
                                     {numberToCategory(data[`${col.column}`]).name}
@@ -243,7 +246,7 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
                             :
                             <>
                             </>}
-                            {col.type == 'post_category' ?
+                        {col.type == 'post_category' ?
                             <>
                                 <Td style={{ width: `${col.width}%` }}>
                                     {getPostCategoryNameByEng(data[`${col.column}`])}
