@@ -235,11 +235,15 @@ const Headers = () => {
       navigate('/login');
     }
   }
-  const changeSearchModal = () => {
+  const changeSearchModal = async () => {
     if (window.innerWidth <= 1050) {//모바일
       setIsSearch(true)
+      await new Promise((r) => setTimeout(r, 100));
+      $('.search').focus();
     } else {//pc
       setIsSearch(!isSearch)
+      await new Promise((r) => setTimeout(r, 100));
+      $('.search-pc').focus();
     }
   }
   const onKeyPress = (e) => {

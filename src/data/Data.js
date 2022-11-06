@@ -101,6 +101,17 @@ export const objManagerListContent = {
             { name: '삭제', width: 12, type: 'delete', column: 'delete' }
         ],
     },
+    all: {
+        breadcrumb: '게시물',
+        schema: 'all',
+        zColumn: [
+            { name: '작성위치', width: 24, type: 'img', column: 'channel_img' },
+            { name: '제목', width: 24, type: 'text', column: 'nickname' },
+            { name: '작성자', width: 28, type: 'text', column: 'date' },
+            { name: '조회수', width: 12, type: 'edit', column: 'edit' },
+            { name: '댓글수', width: 12, type: 'delete', column: 'delete' }
+        ],
+    },
     oneword: {
         breadcrumb: '하루1단어',
         schema: 'oneword',

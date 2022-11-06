@@ -39,7 +39,6 @@ const MNoticeEdit = () => {
     useEffect(() => {
         let authObj = JSON.parse(localStorage.getItem('auth'));
         setAuth(authObj);
-        console.log(authObj)
         async function fetchPost() {
             if (params.pk > 0) {
                 const { data: response } = await axios.get(`/api/item?table=notice&pk=${params.pk}`);
@@ -89,7 +88,6 @@ const MNoticeEdit = () => {
                 note_align: $('.note-align').val(),
                 note: editorRef.current.getInstance().getHTML()
             }
-            console.log(obj)
             if (params.pk > 0) obj.pk = params.pk;
 
             if (window.confirm(`저장하시겠습니까?`)) {

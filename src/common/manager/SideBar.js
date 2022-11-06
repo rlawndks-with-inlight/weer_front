@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi'
 import logo from '../../assets/images/test/logo.svg'
 import { BsPerson, BsCameraVideo, BsAlarm, BsGraphUp } from 'react-icons/bs'
-import { MdOutlineAccessTime, MdNotificationImportant, MdOutlineFeaturedPlayList } from 'react-icons/md'
+import { MdOutlineAccessTime, MdNotificationImportant, MdOutlineFeaturedPlayList, MdOutlineStickyNote2 } from 'react-icons/md'
 import { IoStatsChartSharp, IoLogoReact } from 'react-icons/io5'
 import { FaChalkboardTeacher } from 'react-icons/fa'
 import { AiOutlineQuestionCircle, AiOutlineRotateLeft, AiOutlineComment } from 'react-icons/ai'
@@ -96,8 +96,9 @@ const SideBar = () => {
         //{ name: '회원통계', link: '/manager/list/user', icon: <IoStatsChartSharp /> },
         { name: '메인이미지관리', link: '/manager/edit/setting', icon: <AiOutlineRotateLeft />, level: 40, allow_list: ['/manager/edit/setting'] },
         { name: '전문가관리', link: '/manager/list/master', icon: <FaChalkboardTeacher />, level: 40, allow_list: ['/manager/list/master'] },
-        { name: '댓글관리', link: '/manager/list/comment', icon: <BiCommentDetail />, level: 40, allow_list: ['/manager/list/comment'] },
         { name: '채널관리', link: '/manager/list/channel', icon: <FaChalkboardTeacher />, level: 40, allow_list: ['/manager/list/channel'] },
+        { name: '댓글관리', link: '/manager/list/comment', icon: <BiCommentDetail />, level: 40, allow_list: ['/manager/list/comment'] },
+        { name: '게시물관리', link: '/manager/list/all', icon: <MdOutlineStickyNote2 />, level: 40, allow_list: ['/manager/list/all'] },
         //{ name: '댓글관리', link: '/manager/list/comment', icon: <AiOutlineComment />, level: 40, allow_list: ['/manager/list/comment'] },
         { name: '하루1단어', link: '/manager/list/oneword', icon: <WiDayHaze />, level: 40, allow_list: ['/manager/list/oneword'] },
         { name: '하루1종목', link: '/manager/list/oneevent', icon: <WiDayHaze />, level: 40, allow_list: ['/manager/list/oneevent'] },

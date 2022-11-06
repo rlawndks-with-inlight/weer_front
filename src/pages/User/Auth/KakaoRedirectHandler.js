@@ -11,10 +11,8 @@ const KakaoRedirectHandler = () => {
     useEffect(() => {
         async function fechKakao() {
             let params = new URL(document.location.toString()).searchParams;
-            console.log(params)
 
             let code = params.get("code"); // 인가코드 받는 부분
-            console.log(code)
             let grant_type = "authorization_code";
 
             let result = await axios.post(`https://kauth.kakao.com/oauth/token?grant_type=${grant_type}&client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}&code=${code}`, {
@@ -22,12 +20,10 @@ const KakaoRedirectHandler = () => {
                     'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
                 }
             })
-            console.log(result)
             if (result.status == 200) {
                 const { data: response } = await axios.post('/api/kakao/callback', {
                     token: result?.data['access_token']
                 })
-                console.log(response)
                 let obj = {
                     id: response.data.id,
                     login_type: 1,

@@ -72,6 +72,8 @@ const MItemList = () => {
                 str = `/api/items?table=${params.table}&page=1&category_pk=${params.pk}`
             }else if(params.table == 'comment'){
                 str = `/api/items?table=${params.table}&page=1&order=pk`
+            } else if(params.table == 'all'){
+                str = `/api/getallschema`
             } else {
                 let auth = JSON.parse(localStorage.getItem('auth'))
                 str = `/api/items?table=${params.table}&page=1`
@@ -81,7 +83,6 @@ const MItemList = () => {
             }
             const { data: response } = await axios.get(str)
             setPosts(response.data.data)
-
             setPageList(range(1, response.data.maxPage))
             setLoading(false)
         }
