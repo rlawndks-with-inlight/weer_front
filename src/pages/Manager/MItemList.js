@@ -194,7 +194,7 @@ const MItemList = () => {
         } else if (params.table == 'all') {
             str = `/api/getallposts?order=date`
         } else if (params.table == 'user_statistics') {
-            str = `/api/getuserstatistics`
+            str = `/api/getuserstatistics?type=${$('.statistics-type').val()}&year=${$('.statistics-year').val()}`
         } else {
             str = `/api/items?table=${params.table}`
         }
