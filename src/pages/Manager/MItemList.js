@@ -78,7 +78,7 @@ const MItemList = () => {
                 let year = parseInt(returnMoment().substring(0, 4));
                 let year_list = [];
                 for(var i = 0;i<10;i++){
-                    if(year-i>=2020){
+                    if(year-i>=2022){
                         year_list.push(year-i);
                     }
                 }
