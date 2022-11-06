@@ -46,7 +46,7 @@ const Home = () => {
     useEffect(() => {
         setPosts(zTalk[0].image_list);
         async function fetchPost() {
-            setLoading(true)
+            //setLoading(true)
 
             const { data: response } = await axios.get('/api/gethomecontent')
             setSetting(response.data.setting);
