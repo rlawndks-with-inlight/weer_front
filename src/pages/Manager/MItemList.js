@@ -82,7 +82,6 @@ const MItemList = () => {
                 }
             }
             const { data: response } = await axios.get(str)
-            console.log(response)
             setPosts(response.data.data)
             setPageList(range(1, response.data.maxPage))
             setLoading(false)
@@ -174,6 +173,8 @@ const MItemList = () => {
             str = `/api/users?level=0`
         } else if ((params.table == 'issue' || params.table == 'feature') && params.pk) {
             str = `/api/items?table=${params.table}&category_pk=${params.pk}`
+        }else if(params.table == 'all'){
+            str = `/api/getallposts?order=date`
         } else {
             str = `/api/items?table=${params.table}`
         }
@@ -188,7 +189,6 @@ const MItemList = () => {
     const excelDownload = (excelData) => {
         let ignore_name_list = ['맨위로','수정','삭제'];
         let ignore_column_list = ['','edit','delete'];
-        
         let name_list = [];
         let column_list = [];
         for(var i = 0;i<objManagerListContent[`${params.table}`].zColumn.length;i++){

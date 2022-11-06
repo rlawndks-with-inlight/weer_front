@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useState } from 'react'
 import { GrLinkTop } from 'react-icons/gr'
-import { numberToCategory } from '../../functions/utils'
+import { commarNumber, numberToCategory } from '../../functions/utils'
 
 const Tr = styled.tr`
 box-shadow:1px 1px 1px #00000029;
@@ -155,6 +155,13 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
                         {col.type == 'text' ?
                             <>
                                 <Td style={{ width: `${col.width}%` }}>{data[`${col.column}`]}</Td>
+                            </>
+                            :
+                            <>
+                            </>}
+                            {col.type == 'number' ?
+                            <>
+                                <Td style={{ width: `${col.width}%` }}>{commarNumber(data[`${col.column}`])}</Td>
                             </>
                             :
                             <>

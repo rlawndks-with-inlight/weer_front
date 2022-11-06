@@ -91,7 +91,7 @@ const SideBar = () => {
     const [featureCategoryDisplay, setFeatureCategoryDisplay] = useState(false);
     const zSidebar = [
         { name: '회원관리', link: '/manager/list/user', icon: <BsPerson />, level: 40, allow_list: ['/manager/list/user'] },
-       // { name: '회원통계', link: '/manager/statistics/user', icon: <BsGraphUp />, level: 40, allow_list: ['/manager/statistics/user'] },
+        { name: '회원통계', link: '/manager/statistics/user', icon: <BsGraphUp />, level: 40, allow_list: ['/manager/statistics/user'] },
         //{ name: '접속자현황', link: '/manager/list/user', icon: <MdOutlineAccessTime /> },
         //{ name: '회원통계', link: '/manager/list/user', icon: <IoStatsChartSharp /> },
         { name: '메인이미지관리', link: '/manager/edit/setting', icon: <AiOutlineRotateLeft />, level: 40, allow_list: ['/manager/edit/setting'] },
