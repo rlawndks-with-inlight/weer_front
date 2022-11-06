@@ -144,14 +144,14 @@ const SideBar = () => {
     }
     const onChangeMenuDisplay = async () =>{
         if(display=='flex'){
-          $('.header-menu-list').animate({left:'-500px',opacity:'0'},1000);
+          $('.header-menu-list').animate({left:'-500px',opacity:'0'},700);
           if(window.innerWidth<=1050){
-            await new Promise((r) => setTimeout(r, 1000));
+            await new Promise((r) => setTimeout(r, 700));
             $('.header-menu-list').css("display","none");
             
           }
         }else{
-          $('.header-menu-list').animate({left:'0',opacity:'1'},1000);
+          $('.header-menu-list').animate({left:'0',opacity:'1'},700);
           if(window.innerWidth<=1050){
             $('.header-menu-list').css("display","flex");
           }

@@ -53,7 +53,7 @@ const MItemList = () => {
     const [loading, setLoading] = useState(false)
     const [isUseLoading, setIsUseLoading] = useState(true)
     const notAddList = [
-        'comment'
+        'comment','all'
     ]
     useEffect(() => {
         setZColumn(objManagerListContent[`${params.table}`].zColumn ?? {})
@@ -73,7 +73,7 @@ const MItemList = () => {
             }else if(params.table == 'comment'){
                 str = `/api/items?table=${params.table}&page=1&order=pk`
             } else if(params.table == 'all'){
-                str = `/api/getallschema`
+                str = `/api/getallposts?page=1&order=date`
             } else {
                 let auth = JSON.parse(localStorage.getItem('auth'))
                 str = `/api/items?table=${params.table}&page=1`
@@ -82,6 +82,7 @@ const MItemList = () => {
                 }
             }
             const { data: response } = await axios.get(str)
+            console.log(response)
             setPosts(response.data.data)
             setPageList(range(1, response.data.maxPage))
             setLoading(false)
@@ -103,6 +104,8 @@ const MItemList = () => {
             str = `/api/items?table=${params.table}&page=${num}&category_pk=${params.pk}`
         } else if(params.table == 'comment'){
             str = `/api/items?table=${params.table}&page=${num}&order=pk`
+        }else if(params.table == 'all'){
+            str = `/api/getallposts?page=${num}&order=date`
         }else {
             str = `/api/items?table=${params.table}&page=${num}`
         }

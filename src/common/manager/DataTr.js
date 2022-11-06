@@ -127,6 +127,25 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
             return "불량회원"
         }
     }
+    const getPostCategoryNameByEng = (str) =>{
+        if(str=='oneword'){
+            return "하루1단어";
+        }else if(str=='oneevent'){
+            return "하루1종목";
+        }else if(str=='theme'){
+            return "핵심테마";
+        }else if(str=='strategy'){
+            return "전문가칼럼";
+        }else if(str=='issue'){
+            return "핵심이슈";
+        }else if(str=='feature'){
+            return "특징주";
+        }else if(str=='video'){
+            return "핵심비디오";
+        }else {
+            return "---";
+        }
+    }
     return (
         <>
             <Tr ref={ref} data-handler-id={handlerId}>
@@ -212,6 +231,15 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
                             <>
                                 <Td style={{ width: `${col.width}%` }}>
                                     {numberToCategory(data[`${col.column}`]).name}
+                                </Td>
+                            </>
+                            :
+                            <>
+                            </>}
+                            {col.type == 'post_category' ?
+                            <>
+                                <Td style={{ width: `${col.width}%` }}>
+                                    {getPostCategoryNameByEng(data[`${col.column}`])}
                                 </Td>
                             </>
                             :
