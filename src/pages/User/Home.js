@@ -135,10 +135,10 @@ const Home = () => {
                     :
                     <>
                         <Content>
-                            <img src={backUrl + setting?.main_img} alt="#" style={{ width: '100%', maxWidth: '500px', margin: '0 auto' }} />
+                            <img src={backUrl + setting?.main_img} alt="#" style={{ width: '100%', maxWidth: '500px', margin: '0 auto',minHeight:'30vh' }} />
                         </Content>
                         <Title className='pointer' link={'/onewordlist'}>하루 1단어</Title>
-                        <Content onClick={() => { navigate(`/post/oneword/${oneWord?.pk}`) }} className='pointer'>
+                        <Content onClick={() => { navigate(`/post/oneword/${oneWord?.pk}`) }} className='pointer' style={{minHeight:'40px'}}>
                             <div >{oneWord?.title ?? ""}</div>
                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneWord?.hash ?? ""}</div>
                         </Content>
