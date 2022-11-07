@@ -1,9 +1,7 @@
 // 구현 코드
 
 import { useEffect, useRef } from 'react'
-import $ from 'jquery'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import naverLogo from '../../../assets/images/icon/naver.png'
 import { SnsLogo } from '../../../components/elements/AuthContentTemplete'
 const NaverLogin = (props) => {
@@ -16,6 +14,11 @@ const NaverLogin = (props) => {
     const NAVER_CALLBACK_URL = 'https://weare-first.com/login'
 
     const initializeNaverLogin = (click) => {
+        const naverScript = document.createElement("script");
+        naverScript.src =
+            "https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js";
+        naverScript.type = "text/javascript";
+        document.head.appendChild(naverScript);
         const naverLogin = new naver.LoginWithNaverId({
             clientId: NAVER_CLIENT_ID,
             callbackUrl: NAVER_CALLBACK_URL,
@@ -26,7 +29,7 @@ const NaverLogin = (props) => {
         naverLogin.init()
         if (click) {
             console.log('naver')
-            try{
+            try {
                 naverLogin.getLoginStatus(async function (status) {
                     console.log(status)
                     if (status) {
@@ -42,14 +45,13 @@ const NaverLogin = (props) => {
                         onLoginBySns(obj);
                     }
                 })
-            }catch(err){
+            } catch (err) {
                 console.log(err)
             }
-           
+
         }
 
     }
-
 
 
     const userAccessToken = () => {
@@ -66,7 +68,7 @@ const NaverLogin = (props) => {
         userAccessToken()
     }, [])
 
-    
+
 
     return (
         <>
