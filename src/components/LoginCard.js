@@ -113,7 +113,7 @@ const LoginCard = () => {
     }
 
     const snsLogin = async (num) => {
-        if (window && window.flutter_inappwebview && num!=2 ) {
+        if (window && window.flutter_inappwebview) {
             var params = { 'login_type': num };
             await window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(async function (result) {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
