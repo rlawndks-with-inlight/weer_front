@@ -26,6 +26,7 @@ export const editorState = {
 export const KAKAO_CLIENT_ID = "5c686a9c9a72a12ef2ef700e07d03b31";
 export const KAKAO_REDIRECT_URI =  `${frontUrl}/oauth/callback/kakao`;
 export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
+export const NAVER_AUTH_URL = `/login`;
 
 export const localization = {
     locale: 'ko',

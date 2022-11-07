@@ -9,7 +9,7 @@ const KakaoRedirectHandler = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        async function fechKakao() {
+        async function fetchKakao() {
             let params = new URL(document.location.toString()).searchParams;
 
             let code = params.get("code"); // 인가코드 받는 부분
@@ -35,7 +35,7 @@ const KakaoRedirectHandler = () => {
                 navigate('/login');
             }
         }
-        fechKakao();
+        fetchKakao();
     }, [])
     const onLoginBySns = async (obj) => {
         let nick = "";

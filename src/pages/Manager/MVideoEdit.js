@@ -55,11 +55,11 @@ const MVideoEdit = () => {
                 $('.font-color').val(response.data.video.font_color);
                 $('.background-color').val(response.data.video.background_color);
                 $('.note-align').val(response.data.video.note_align);
-                let relate_list = response.data.relates ??[];
+                let relate_list = response.data.relates ?? [];
                 let relate_str = "";
-                for(var i =0;i<relate_list.length;i++){
-                    if(i!=0){
-                        relate_str +="/"
+                for (var i = 0; i < relate_list.length; i++) {
+                    if (i != 0) {
+                        relate_str += "/"
                     }
                     relate_str += relate_list[i].pk;
                 }
@@ -75,23 +75,23 @@ const MVideoEdit = () => {
         fetchPost();
         fetchComments();
     }, [pathname])
-    useEffect(()=>{
-        $('html').on('click',function(e) { 
-            if($(e.target).parents('.emoji-picker-react').length < 1 && $('.emoji-picker-react').css('display')=='flex'&& $(e.target).attr('class') != 'emoji'){
+    useEffect(() => {
+        $('html').on('click', function (e) {
+            if ($(e.target).parents('.emoji-picker-react').length < 1 && $('.emoji-picker-react').css('display') == 'flex' && $(e.target).attr('class') != 'emoji') {
                 $('.emoji-picker-react').attr('style', 'display: none !important')
             }
         });
         $('button.emoji').on('click', function () {
-            if($('.emoji-picker-react').css('display')=='none'){
+            if ($('.emoji-picker-react').css('display') == 'none') {
                 $('.emoji-picker-react').attr('style', 'display: flex !important')
-            }else{
+            } else {
                 $('.emoji-picker-react').attr('style', 'display: none !important')
             }
         })
         $('.toastui-editor-toolbar-icons').on('click', function () {
             $('.emoji-picker-react').attr('style', 'display: none !important')
         })
-    },[])
+    }, [])
     const [chosenEmoji, setChosenEmoji] = useState(null);
 
     const onEmojiClick = (event, emojiObject) => {
@@ -108,8 +108,8 @@ const MVideoEdit = () => {
         } else {
             let str = $('.relate').val().split("/");
             let relate_results = [];
-            for(var i =0;i<str.length;i++){
-                if(!isNaN(parseInt(str[i]))){
+            for (var i = 0; i < str.length; i++) {
+                if (!isNaN(parseInt(str[i]))) {
                     relate_results.push(parseInt(str[i]));
                 }
             }
@@ -118,9 +118,11 @@ const MVideoEdit = () => {
                 user_pk: auth.user_level < 40 ? auth.pk : $('.channel').val(),
                 title: $('.title').val(),
                 link: $('.link').val(),
-                font_color:$('.font-color').val(),
-                background_color:$('.background-color').val(),
-                relate_video:relate_results,
+                font_color: $('.font-color').val(),
+                background_color: $('.background-color').val(),
+                relate_video: relate_results,
+                note_align: $('.note-align').val(),
+
                 note: editorRef.current.getInstance().getHTML()
             }
             if (params.pk > 0) obj.pk = params.pk;
@@ -142,23 +144,22 @@ const MVideoEdit = () => {
         const data = editorRef.current.getInstance().getHTML();
     }
     const addComment = async (parent_pk) => {
-        if(!$(`.comment-${parent_pk??0}`).val()){
+        if (!$(`.comment-${parent_pk ?? 0}`).val()) {
             alert('필수 값을 입력해 주세요.');
         }
         const { data: response } = await axios.post('/api/addcomment', {
             userPk: auth.pk,
             userNick: auth.nickname,
             pk: params.pk,
-            parentPk:parent_pk??0,
-            note: $(`.comment-${parent_pk??0}`).val(),
-            note_align: $('.note-align').val(),
+            parentPk: parent_pk ?? 0,
+            note: $(`.comment-${parent_pk ?? 0}`).val(),
             category: categoryToNumber('video')
         })
 
-        if(response.result>0){
-            $(`.comment-${parent_pk??0}`).val("")
+        if (response.result > 0) {
+            $(`.comment-${parent_pk ?? 0}`).val("")
             fetchComments();
-        }else{
+        } else {
             alert(response.message)
         }
     }
@@ -185,7 +186,7 @@ const MVideoEdit = () => {
                                         <Select className='channel'>
                                             {channelList.map((item, idx) => (
                                                 <>
-                                                    <option value={item.pk} key={idx}>{item.nickname}{item.user_level>=30?' '+item.name+'(전문가)':''}</option>
+                                                    <option value={item.pk} key={idx}>{item.nickname}{item.user_level >= 30 ? ' ' + item.name + '(전문가)' : ''}</option>
                                                 </>
                                             ))}
                                         </Select>
@@ -204,7 +205,7 @@ const MVideoEdit = () => {
                         </Row>
                         <Row>
                             <Col>
-                                <Title style={{maxWidth:'300px'}}>관련영상(동영상 번호를 '/'을 기준으로 분류)</Title>
+                                <Title style={{ maxWidth: '300px' }}>관련영상(동영상 번호를 '/'을 기준으로 분류)</Title>
                                 <Input className='relate' placeholder='1/2/33/55' />
                             </Col>
                         </Row>
@@ -237,7 +238,7 @@ const MVideoEdit = () => {
                             <Col>
                                 <Title>내용</Title>
                                 <div id="editor">
-                                <Picker onEmojiClick={onEmojiClick} />
+                                    <Picker onEmojiClick={onEmojiClick} />
                                     <Editor
                                         placeholder="내용을 입력해주세요."
                                         previewStyle="vertical"
@@ -245,7 +246,7 @@ const MVideoEdit = () => {
                                         initialEditType="wysiwyg"
                                         useCommandShortcut={false}
                                         hideModeSwitch={true}
-                                        plugins={[colorSyntax,fontSize]}
+                                        plugins={[colorSyntax, fontSize]}
                                         language="ko-KR"
                                         ref={editorRef}
                                         onChange={onChangeEditor}
@@ -274,10 +275,10 @@ const MVideoEdit = () => {
                     </ButtonContainer>
                     {params.pk > 0 ?
                         <>
-                            <Card style={{minHeight:'240px'}}>
+                            <Card style={{ minHeight: '240px' }}>
                                 <Row>
                                     <Col>
-                                    <Title>댓글 관리</Title>
+                                        <Title>댓글 관리</Title>
                                     </Col>
                                 </Row>
                                 <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />

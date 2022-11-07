@@ -107,7 +107,7 @@ const MNoticeEdit = () => {
         const data = editorRef.current.getInstance().getHTML();
     }
     const addComment = async (parent_pk) => {
-        if (!$('.comment').val()) {
+        if (!$(`.comment-${parent_pk??0}`).val()) {
             alert('필수 값을 입력해 주세요.');
         }
         const { data: response } = await axios.post('/api/addcomment', {

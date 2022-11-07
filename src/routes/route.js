@@ -16,6 +16,7 @@ import FindMyInfo from '../pages/User/Auth/FindMyInfo';
 import SignUp from '../pages/User/Auth/SignUp';
 import Resign from '../pages/User/Auth/Resign';
 import KakaoRedirectHandler from '../pages/User/Auth/KakaoRedirectHandler';
+import NaverLogin from '../pages/User/Auth/NaverLogin';
 
 import OneEventList from '../pages/User/OneEvent/OneEventList';
 import OneWordList from '../pages/User/OneWord/OneWordList';
@@ -70,6 +71,7 @@ const zRoute = [
     { link: '/signup', element: <SignUp />, title: "회원가입" },
     { link: '/resign', element: <Resign />, title: "회원탈퇴" },
     { link: '/oauth/callback/kakao', element: <KakaoRedirectHandler />, title: "" },
+    { link: '/oauth/callback/naver', element: <NaverLogin />, title: "" },
 
     { link: '/post/notice/:pk', element: <Notice />, title: "공지사항" },
     { link: '/post/:table/:pk', element: <Post />, title: "게시물" },
