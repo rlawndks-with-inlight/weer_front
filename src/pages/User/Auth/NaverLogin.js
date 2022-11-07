@@ -2,7 +2,7 @@ import naverLogo from '../../../assets/images/icon/naver.png'
 import { SnsLogo } from '../../../components/elements/AuthContentTemplete'
 import NaverLogin from 'react-login-by-naver';
 const NaverLoginButton = (props) => {
-    const { onLoginBySns } = props;
+    const { onLoginBySns, snsLogin } = props;
 
     const NAVER_CLIENT_ID = 'SWTGhEi_FBpd22xfxU12'
     const NAVER_CALLBACK_URL = 'https://weare-first.com/login'
@@ -19,7 +19,13 @@ const NaverLoginButton = (props) => {
 
     return (
         <>
-            <NaverLogin
+        {window && window.flutter_inappwebview?
+        <>
+        <SnsLogo src={naverLogo} onClick={()=>snsLogin(2)}/>
+        </>
+        :
+        <>
+        <NaverLogin
                 clientId={NAVER_CLIENT_ID}
                 callbackUrl={NAVER_CALLBACK_URL}
                 isPopup={false}
@@ -27,6 +33,9 @@ const NaverLoginButton = (props) => {
                 onSuccess={(naverUser) => onNaverLogin(naverUser)}
                 onFailure={(result) => console.error(result)}
             />
+        </>
+        }
+            
         </>
     )
 }
