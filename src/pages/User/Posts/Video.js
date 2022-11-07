@@ -19,6 +19,7 @@ import Loading from '../../../components/Loading'
 import CommentComponent from "../../../components/CommentComponent";
 import MetaTag from "../../../components/MetaTag";
 import { BsFillShareFill } from 'react-icons/bs';
+import ZoomButton from "../../../components/ZoomButton";
 
 
 const Iframe = styled.iframe`
@@ -184,7 +185,7 @@ const Video = () => {
     }
     return (
         <>
-            <Wrappers>
+            <Wrappers className="post-container">
                 <MetaTag title={'weare-first - 위아 : 퍼스트 파트너스 | 주식 | 특징주 | 핵심이슈 | 핵심비디오 - 핵심비디오 / ' + post?.title ?? ""} />
 
                 {loading ?
@@ -247,7 +248,7 @@ const Video = () => {
                                 </Slider>
                             </SliderDiv>
                         </Content>
-
+                        <ZoomButton/>
                         <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />
 
                     </>

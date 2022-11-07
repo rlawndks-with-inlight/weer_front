@@ -11,6 +11,7 @@ import { categoryToNumber, getViewerMarginByNumber } from "../../../functions/ut
 import CommentComponent from "../../../components/CommentComponent";
 import { Viewer } from '@toast-ui/react-editor';
 import Loading from '../../../components/Loading'
+import ZoomButton from "../../../components/ZoomButton";
 const Logo = styled.img`
 position: fixed;
 bottom: 0;
@@ -104,7 +105,7 @@ const Notice = () => {
 
     return (
         <>
-            <Wrappers className="wrapper">
+            <Wrappers className="post-container">
                 {loading?
                 <>
                 <Loading/>
@@ -118,6 +119,7 @@ const Notice = () => {
                 <ViewerContainer className="viewer" style={{margin:`${getViewerMarginByNumber(post?.note_align)}`}}>
                     <Viewer initialValue={post?.note ?? `<body></body>`} />
                 </ViewerContainer>
+                <ZoomButton/>
                 <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />
                 <Progress value={`${percent}`} max="100"></Progress>
                 </>

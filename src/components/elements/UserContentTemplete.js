@@ -23,6 +23,7 @@ min-height:58vh;
 `
 
 export const Wrappers = (props) =>{
+    let {className, style} = props;
     const {pathname} = useLocation();
     useEffect(()=>{
         $('.wrappers').css('min-height',`${$(window).height()-224-173}px`);
@@ -32,7 +33,7 @@ export const Wrappers = (props) =>{
     },[])
     return (
         <>
-        <WrappersStyle className="wrappers" style={props.style}>
+        <WrappersStyle className={`wrappers ${className}`} style={style}>
             {props.children??""}
         </WrappersStyle>
         </>

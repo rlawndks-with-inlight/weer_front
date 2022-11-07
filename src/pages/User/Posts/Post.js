@@ -13,6 +13,8 @@ import CommentComponent from "../../../components/CommentComponent";
 import { Viewer } from '@toast-ui/react-editor';
 import Loading from '../../../components/Loading'
 import MetaTag from "../../../components/MetaTag";
+import ScrollToTopButton from "../../../components/ScrollToTopButton";
+import ZoomButton from "../../../components/ZoomButton";
 
 const Progress = styled.progress`
 
@@ -157,7 +159,7 @@ const Post = (props) => {
 
     return (
         <>
-            <Wrappers className="wrapper">
+            <Wrappers className="post-container">
                 <MetaTag title={returnTitle(post?.title ?? "")} />
                 {loading ?
                     <>
@@ -179,7 +181,7 @@ const Post = (props) => {
                         <ViewerContainer className="viewer" style={{ textAlign: `${getViewerAlignByNumber(post?.note_align)}` }}>
                             <Viewer initialValue={post?.note ?? `<body></body>`} />
                         </ViewerContainer>
-
+                        <ZoomButton/>
                         <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />
 
                     </>}
