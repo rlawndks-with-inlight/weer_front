@@ -13,7 +13,7 @@ const NaverLogin = (props) => {
     const { naver } = window;
 
     const NAVER_CLIENT_ID = 'SWTGhEi_FBpd22xfxU12'
-    const NAVER_CALLBACK_URL = 'http://localhost:3000/login'
+    const NAVER_CALLBACK_URL = 'https://weare-first.com/login'
 
     const initializeNaverLogin = (click) => {
         const naverLogin = new naver.LoginWithNaverId({
