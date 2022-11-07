@@ -26,20 +26,25 @@ const NaverLogin = (props) => {
         naverLogin.init()
         if (click) {
             console.log('naver')
-            naverLogin.getLoginStatus(async function (status) {
-                if (status) {
-                    // 아래처럼 선택하여 추출이 가능하고, 
-                    console.log(naverLogin.user)
-                    let obj = {
-                        id: naverLogin.user.id,
-                        profile_nickname: naverLogin.user.name,
-                        login_type: 2,
-                        profile_image_url: naverLogin.user.profile_image,
+            try{
+                naverLogin.getLoginStatus(async function (status) {
+                    if (status) {
+                        // 아래처럼 선택하여 추출이 가능하고, 
+                        console.log(naverLogin.user)
+                        let obj = {
+                            id: naverLogin.user.id,
+                            profile_nickname: naverLogin.user.name,
+                            login_type: 2,
+                            profile_image_url: naverLogin.user.profile_image,
+                        }
+                        console.log(naverLogin.user.id)
+                        onLoginBySns(obj);
                     }
-                    console.log(naverLogin.user.id)
-                    onLoginBySns(obj);
-                }
-            })
+                })
+            }catch(err){
+                console.log(err)
+            }
+           
         }
 
     }
