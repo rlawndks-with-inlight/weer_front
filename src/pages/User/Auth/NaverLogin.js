@@ -1,80 +1,33 @@
-// 구현 코드
-
-import { useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
 import naverLogo from '../../../assets/images/icon/naver.png'
 import { SnsLogo } from '../../../components/elements/AuthContentTemplete'
-const NaverLogin = (props) => {
+import NaverLogin from 'react-login-by-naver';
+const NaverLoginButton = (props) => {
     const { onLoginBySns } = props;
-    const navigate = useNavigate();
-    const naverRef = useRef();
-    const { naver } = window;
 
     const NAVER_CLIENT_ID = 'SWTGhEi_FBpd22xfxU12'
     const NAVER_CALLBACK_URL = 'https://weare-first.com/login'
 
-    const initializeNaverLogin = (click) => {
-        const naverScript = document.createElement("script");
-        naverScript.src =
-            "https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js";
-        naverScript.type = "text/javascript";
-        document.head.appendChild(naverScript);
-        const naverLogin = new naver.LoginWithNaverId({
-            clientId: NAVER_CLIENT_ID,
-            callbackUrl: NAVER_CALLBACK_URL,
-            isPopup: false,
-            loginButton: { color: 'green', type: 1, height: 42 },
-            callbackHandle: true,
-        })
-        naverLogin.init()
-        if (click) {
-            console.log('naver')
-            try {
-                naverLogin.getLoginStatus(async function (status) {
-                    console.log(status)
-                    if (status) {
-                        // 아래처럼 선택하여 추출이 가능하고, 
-                        console.log(naverLogin.user)
-                        let obj = {
-                            id: naverLogin.user.id,
-                            profile_nickname: naverLogin.user.name,
-                            login_type: 2,
-                            profile_image_url: naverLogin.user.profile_image,
-                        }
-                        console.log(naverLogin.user.id)
-                        onLoginBySns(obj);
-                    }
-                })
-            } catch (err) {
-                console.log(err)
-            }
-
+    const onNaverLogin = (obj) =>{
+        let objs = {
+            id: obj.id,
+            profile_nickname: obj.name,
+            login_type: 2,
+            profile_image_url: obj.profile_image,
         }
-
+        onLoginBySns(objs);
     }
-
-
-    const userAccessToken = () => {
-        window.location.href.includes('access_token') && getToken()
-    }
-    const getToken = () => {
-        const token = window.location.href.split('=')[1].split('&')[0]
-    }
-
-
-    // 화면 첫 렌더링이후 바로 실행하기 위해 useEffect 를 사용하였다.
-    useEffect(() => {
-        initializeNaverLogin()
-        userAccessToken()
-    }, [])
-
-
 
     return (
         <>
-            <SnsLogo src={naverLogo} onClick={() => initializeNaverLogin(true)} />
-            <div id="naverIdLogin" style={{ display: 'none' }} ref={naverRef} />
+            <NaverLogin
+                clientId={NAVER_CLIENT_ID}
+                callbackUrl={NAVER_CALLBACK_URL}
+                isPopup={false}
+                render={(props) => <SnsLogo src={naverLogo} onClick={props.onClick}/>}
+                onSuccess={(naverUser) => onNaverLogin(naverUser)}
+                onFailure={(result) => console.error(result)}
+            />
         </>
     )
 }
-export default NaverLogin;
+export default NaverLoginButton;
