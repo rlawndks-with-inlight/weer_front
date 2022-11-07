@@ -47,9 +47,9 @@ z-index:3;
 `
 const ZoomButton = () => {
     const [width, setWidth] = useState(90);
-    useEffect(()=>{
+    useEffect(() => {
         $('.post-container').css('width', `90%`);
-    },[])
+    }, [])
     const onZoomIn = () => {
         if (width < 200) {
             $('.post-container').css('width', `${width + 10}%`);
@@ -66,12 +66,19 @@ const ZoomButton = () => {
     }
     return (
         <>
-            <MinusButton onClick={onZoomOut} >
-                <AiOutlineMinus />
-            </MinusButton>
-            <PlusButton onClick={onZoomIn} >
-                <AiOutlinePlus />
-            </PlusButton>
+            {window.innerWidth <= 1000 ?
+                <>
+                    <MinusButton onClick={onZoomOut} >
+                        <AiOutlineMinus />
+                    </MinusButton>
+                    <PlusButton onClick={onZoomIn} >
+                        <AiOutlinePlus />
+                    </PlusButton>
+                </>
+                :
+                <>
+                </>
+            }
         </>
     )
 }
