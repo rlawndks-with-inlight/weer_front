@@ -25,6 +25,7 @@ const NaverLogin = (props) => {
         })
         naverLogin.init()
         if (click) {
+            console.log('naver')
             naverLogin.getLoginStatus(async function (status) {
                 if (status) {
                     // 아래처럼 선택하여 추출이 가능하고, 
