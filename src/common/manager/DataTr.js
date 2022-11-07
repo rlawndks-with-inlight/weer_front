@@ -11,7 +11,8 @@ import axios from 'axios'
 import { useState } from 'react'
 import { GrLinkTop } from 'react-icons/gr'
 import { commarNumber, numberToCategory } from '../../functions/utils'
-
+import { useEffect } from 'react'
+import $ from 'jquery'
 const Tr = styled.tr`
 box-shadow:1px 1px 1px #00000029;
 font-size:14px;
@@ -31,6 +32,9 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
     const navigate = useNavigate();
     const ref = useRef(null)
     const [status, setStatus] = useState(data?.status);
+    useEffect(()=>{
+        $('.manager-data-tr > td').css('word-break','break-all');
+    },[])
     const [{ handlerId }, drop] = useDrop({
         accept: ItemTypes.CARD,
         drop(item) {
@@ -151,7 +155,7 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
     }
     return (
         <>
-            <Tr ref={ref} data-handler-id={handlerId}>
+            <Tr ref={ref} data-handler-id={handlerId} className='manager-data-tr'>
                 {column.map((col, index) => (
                     <>
 
