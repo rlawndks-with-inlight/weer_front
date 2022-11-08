@@ -26,7 +26,7 @@ export const Wrappers = (props) =>{
     let {className, style} = props;
     const {pathname} = useLocation();
     useEffect(()=>{
-        $('.wrappers').css('min-height',`${$(window).height()-224-173}px`);
+        $('.wrappers').css('min-height',`${$(window).height()-372}px`);
     },[pathname])
     useEffect(()=>{
 

@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 const PlusButton = styled.div`
 position:fixed;
-right:48px;
-bottom:2rem;
+right:6px;
+bottom:8rem;
 background:${props => props.theme.color.background1};
 padding:7px 8px 5px 8px;
 color:#000;
@@ -26,8 +26,8 @@ z-index:3;
 `
 const MinusButton = styled.div`
 position:fixed;
-right:90px;
-bottom:2rem;
+right:6px;
+bottom:5rem;
 background:${props => props.theme.color.background1};
 padding:7px 8px 5px 8px;
 color:#000;
@@ -52,14 +52,14 @@ const ZoomButton = () => {
     }, [])
     const onZoomIn = () => {
         if (width < 200) {
-            $('.post-container').css('width', `${width + 10}%`);
+            $('.post-container').animate({width:`${width + 10}%`},500);
             setWidth(width + 10);
         }
-
+       
     }
     const onZoomOut = () => {
         if (width > 50) {
-            $('.post-container').css('width', `${width - 10}%`);
+            $('.post-container').animate({width:`${width - 10}%`},500);
             setWidth(width - 10);
         }
 

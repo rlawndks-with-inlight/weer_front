@@ -119,7 +119,8 @@ export const objManagerListContent = {
         zColumn: [
             { name: '작성위치', width: 24, type: 'post_category', column: 'category' },
             { name: '제목', width: 24, type: 'text', column: 'title' },
-            { name: '작성자', width: 28, type: 'text', column: 'nickname' },
+            { name: '작성자', width: 14, type: 'text', column: 'nickname' },
+            { name: '게시일', width: 12, type: 'text', column: 'date' },
             { name: '조회수', width: 12, type: 'number', column: 'views' },
             { name: '댓글수', width: 12, type: 'number', column: 'comment_num' }
         ],

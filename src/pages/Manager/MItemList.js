@@ -53,6 +53,8 @@ const MItemList = () => {
     const [loading, setLoading] = useState(false)
     const [isUseLoading, setIsUseLoading] = useState(true);
     const [yearList, setYearList] = useState([])
+    const month_list = [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+    const [statisticsType, setStatisticsType] = useState('month')
     const notAddList = [
         'comment', 'all', 'user_statistics'
     ]
@@ -77,9 +79,9 @@ const MItemList = () => {
             } else if (params.table == 'user_statistics') {
                 let year = parseInt(returnMoment().substring(0, 4));
                 let year_list = [];
-                for(var i = 0;i<10;i++){
-                    if(year-i>=2022){
-                        year_list.push(year-i);
+                for (var i = 0; i < 10; i++) {
+                    if (year - i >= 2022) {
+                        year_list.push(year - i);
                     }
                 }
                 setYearList(year_list)
@@ -116,7 +118,7 @@ const MItemList = () => {
         } else if (params.table == 'all') {
             str = `/api/getallposts?order=date`
         } else if (params.table == 'user_statistics') {
-            str = `/api/getuserstatistics?type=${$('.statistics-type').val()}&year=${$('.statistics-year').val()}`
+            str = `/api/getuserstatistics?type=${$('.statistics-type').val()}&year=${$('.statistics-year').val()}&month=${$('.statistics-month').val() ?? parseInt(returnMoment().substring(5, 7))}`
         } else {
             str = `/api/items?table=${params.table}`
         }
@@ -129,10 +131,14 @@ const MItemList = () => {
     const onChangeSelectPageCut = (e) => {
         changePage(page)
     }
-    const onChangeStatisticsType = (e) =>{
+    const onChangeStatisticsType = (e) => {
+        setStatisticsType(e.target.value)
         changePage(1)
     }
-    const onChangeStatisticsYear = (e) =>{
+    const onChangeStatisticsYear = (e) => {
+        changePage(1)
+    }
+    const onChangeStatisticsMonth = (e) => {
         changePage(1)
     }
     const opTheTopItem = useCallback(async (pk, sort, schema) => {
@@ -194,7 +200,7 @@ const MItemList = () => {
         } else if (params.table == 'all') {
             str = `/api/getallposts?order=date`
         } else if (params.table == 'user_statistics') {
-            str = `/api/getuserstatistics?type=${$('.statistics-type').val()}&year=${$('.statistics-year').val()}`
+            str = `/api/getuserstatistics?type=${$('.statistics-type').val()}&year=${$('.statistics-year').val()}&month=${$('.statistics-month').val() ?? parseInt(returnMoment().substring(5, 7))}`
         } else {
             str = `/api/items?table=${params.table}`
         }
@@ -260,12 +266,34 @@ const MItemList = () => {
                                             <option value={'day'}>일차별 요약</option>
                                         </Select>
                                         <Select className='statistics-year' style={{ margin: '12px 24px 12px 24px' }} onChange={onChangeStatisticsYear}>
-                                            {yearList.map((item, index)=>(
+                                            {yearList.map((item, index) => (
                                                 <>
-                                                <option value={item}>{`${item}년`}</option>
+                                                    <option value={item}>{`${item}년`}</option>
                                                 </>
                                             ))}
                                         </Select>
+                                        {statisticsType == 'day' ?
+                                            <>
+                                                <Select className='statistics-month' style={{ margin: '12px 24px 12px 24px' }} onChange={onChangeStatisticsMonth}>
+                                                    {month_list.map((item) => (
+                                                        <>
+                                                            {`${$('.statistics-year').val()}-${item < 10 ? '0' + item : item}` <= returnMoment().substring(0, 7) ?
+                                                                <>
+                                                                    <option value={item}>{`${item}월`}</option>
+                                                                </>
+                                                                :
+                                                                <>
+                                                                </>
+                                                            }
+                                                        </>
+                                                    ))}
+                                                </Select>
+                                            </>
+                                            :
+                                            <>
+                                            </>
+                                        }
+
                                     </>
                                     :
                                     <>

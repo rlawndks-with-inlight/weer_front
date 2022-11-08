@@ -7,6 +7,8 @@ import axios from 'axios';
 import defaultImg from '../assets/images/icon/default-profile.png';
 import { useEffect, useState } from 'react';
 import { TbArrowForward } from 'react-icons/tb'
+import { ImBubble2 } from 'react-icons/im'
+import { commarNumber } from '../functions/utils';
 const CommentInputContent = (props) => {
     const { addComment, parentPk } = props;
     return (
@@ -118,6 +120,7 @@ const CommentComponent = (props) => {
         <>
 
             <Content style={{ marginTop: '32px' }}>
+                <div style={{color:`${theme.color.font3}`,display:'flex',alignItems:'center',fontSize:theme.size.font4,marginBottom:'8px'}}><ImBubble2 style={{marginRight:'4px'}}/><div><div>{commarNumber(data.length??0)}</div></div></div>
                 {JSON.parse(localStorage.getItem('auth'))?.pk > 0 ?
                     <>
                         <CommentInputContent addComment={addComment} parentPk={0} />
