@@ -100,12 +100,12 @@ const SideBar = () => {
         { name: '댓글관리', link: '/manager/list/comment', icon: <BiCommentDetail />, level: 40, allow_list: ['/manager/list/comment'] },
         { name: '게시물관리', link: '/manager/list/all', icon: <MdOutlineStickyNote2 />, level: 40, allow_list: ['/manager/list/all'] },
         //{ name: '댓글관리', link: '/manager/list/comment', icon: <AiOutlineComment />, level: 40, allow_list: ['/manager/list/comment'] },
-        { name: '하루1단어', link: '/manager/list/oneword', icon: <WiDayHaze />, level: 40, allow_list: ['/manager/list/oneword'] },
-        { name: '하루1종목', link: '/manager/list/oneevent', icon: <WiDayHaze />, level: 40, allow_list: ['/manager/list/oneevent'] },
-        { name: '핵심테마', link: '/manager/list/theme', icon: <IoLogoReact />, level: 40, allow_list: ['/manager/list/theme'] },
+        { name: '하루1단어', link: '/manager/list/oneword', icon: <WiDayHaze />, level: 30, allow_list: ['/manager/list/oneword'] },
+        { name: '하루1종목', link: '/manager/list/oneevent', icon: <WiDayHaze />, level: 30, allow_list: ['/manager/list/oneevent'] },
+        { name: '핵심테마', link: '/manager/list/theme', icon: <IoLogoReact />, level: 30, allow_list: ['/manager/list/theme'] },
         { name: '전문가칼럼', link: '/manager/list/strategy', icon: <SiMicrostrategy />, level: 30, allow_list: ['/manager/list/strategy'] },
         { name: '핵심이슈 카테고리', link: '/manager/list/issue_category', icon: <MdNotificationImportant />, level: 40, allow_list: ['/manager/list/issue_category'] },
-        { name: '핵심이슈', link: '/manager/list/issue', icon: <MdNotificationImportant />, level: 40, allow_list: ['/manager/list/issue', '/manager/list/issue/1', '/manager/list/issue/2', '/manager/list/issue/3', '/manager/list/issue/4', '/manager/list/issue/5', '/manager/list/issue/6', '/manager/list/issue/7', '/manager/list/issue/8', '/manager/list/issue/9'] },
+        { name: '핵심이슈', link: '/manager/list/issue', icon: <MdNotificationImportant />, level: 30, allow_list: ['/manager/list/issue'] },
         // { name: '핵심비디오', link: '/manager/list/video', icon: <BsCameraVideo />, level: 30 },
         //{ name: '문의관리', link: '/manager/list/inquiry', icon: <AiOutlineQuestionCircle />, level: 40 },
     ];
@@ -160,7 +160,6 @@ const SideBar = () => {
         setDisplay(display=='flex'?'none':'flex');
         
       }
- 
     return (
         <>
             <HambergurContainer onClick={onChangeMenuDisplay}>
@@ -176,7 +175,7 @@ const SideBar = () => {
                 <div style={{ maxHeight: '80vh',paddingBottom:'32px' }}>
                     {zSidebar.map((item, index) => (
                         <>
-                            {JSON.parse(localStorage.getItem('auth'))?.user_level??0 >= item.level ?
+                            {JSON.parse(localStorage.getItem('auth'))?.user_level >= item.level ?
                                 <>
                                     {item.allow_list.includes(location.pathname) ?
                                         <>
@@ -214,7 +213,7 @@ const SideBar = () => {
                         :
                         <>
                         </>}
-                    {JSON.parse(localStorage.getItem('auth'))?.user_level??0 >= 40 ?
+                    {JSON.parse(localStorage.getItem('auth'))?.user_level >= 40 ?
                         <>
                             {'/manager/list/feature_category' == location.pathname ?
                                 <>
@@ -236,7 +235,7 @@ const SideBar = () => {
                         </>
                     }
 
-                    {JSON.parse(localStorage.getItem('auth'))?.user_level??0 >= 40 ?
+                    {JSON.parse(localStorage.getItem('auth'))?.user_level >= 30 ?
                         <>
                             {'/manager/list/feature' == location.pathname ?
                                 <>
@@ -272,7 +271,7 @@ const SideBar = () => {
                         :
                         <>
                         </>}
-                    {JSON.parse(localStorage.getItem('auth'))?.user_level??0 >= 30 ?
+                    {JSON.parse(localStorage.getItem('auth'))?.user_level >= 30 ?
                         <>
                             {'/manager/list/video' == location.pathname ?
                                 <>
@@ -295,7 +294,7 @@ const SideBar = () => {
                     }
 
 
-                    {JSON.parse(localStorage.getItem('auth'))?.user_level??0 >= 40 ?
+                    {JSON.parse(localStorage.getItem('auth'))?.user_level >= 30 ?
                         <>
                             {'/manager/list/notice' == location.pathname ?
                                 <>
@@ -316,7 +315,7 @@ const SideBar = () => {
                         <>
                         </>
                     }
-                    {JSON.parse(localStorage.getItem('auth'))?.user_level??0 >= 40 ?
+                    {JSON.parse(localStorage.getItem('auth'))?.user_level >= 30 ?
                         <>
                             {'/manager/list/alarm' == location.pathname ?
                                 <>

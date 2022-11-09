@@ -62,6 +62,11 @@ const MItemList = () => {
         setZColumn(objManagerListContent[`${params.table}`].zColumn ?? {})
         async function fetchPost() {
             setLoading(true)
+            if((params.table=='master'||params.table=='channel'||params.table=='user'||params.table=='user_statistics'||params.table=='setting'||params.table=='issue_category'||params.table=='feature_category')){
+                if(JSON.parse(localStorage.getItem('auth'))?.user_level < 40){
+                    navigate(-1);
+                }
+            }   
             $('.page-cut').val(15)
             let str = '';
             if (params.table == 'master') {
@@ -69,7 +74,7 @@ const MItemList = () => {
             } else if (params.table == 'channel') {
                 str = `/api/users?page=1&level=25`
             } else if (params.table == 'user') {
-                str = `/api/users?page=1&level=0`
+                str = `/api/users?page=1`
             } else if ((params.table == 'issue' || params.table == 'feature') && params.pk) {
                 str = `/api/items?table=${params.table}&page=1&category_pk=${params.pk}`
             } else if (params.table == 'comment') {
@@ -106,23 +111,23 @@ const MItemList = () => {
         let keyword = $('.search').val();
         let str = '';
         if (params.table == 'master') {
-            str = `/api/users?level=30`
+            str = `/api/users?level=30&`
         } else if (params.table == 'channel') {
-            str = `/api/users?level=25`
+            str = `/api/users?level=25&`
         } else if (params.table == 'user') {
-            str = `/api/users?level=0`
+            str = `/api/users?${$('.user-type').val()>=0?`userType=${$('.user-type').val()}&`:''}`
         } else if ((params.table == 'issue' || params.table == 'feature') && params.pk) {
-            str = `/api/items?table=${params.table}&category_pk=${params.pk}`
+            str = `/api/items?table=${params.table}&category_pk=${params.pk}&`
         } else if (params.table == 'comment') {
-            str = `/api/items?table=${params.table}&order=pk`
+            str = `/api/items?table=${params.table}&order=pk&`
         } else if (params.table == 'all') {
-            str = `/api/getallposts?order=date`
+            str = `/api/getallposts?order=date&`
         } else if (params.table == 'user_statistics') {
-            str = `/api/getuserstatistics?type=${$('.statistics-type').val()}&year=${$('.statistics-year').val()}&month=${$('.statistics-month').val() ?? parseInt(returnMoment().substring(5, 7))}`
+            str = `/api/getuserstatistics?type=${$('.statistics-type').val()}&year=${$('.statistics-year').val()}&month=${$('.statistics-month').val() ?? parseInt(returnMoment().substring(5, 7))}&`
         } else {
-            str = `/api/items?table=${params.table}`
+            str = `/api/items?table=${params.table}&`
         }
-        str += `&page_cut=${parseInt($('.page-cut').val())}&keyword=${keyword}&page=${num}`;
+        str += `page_cut=${parseInt($('.page-cut').val())}&keyword=${keyword}&page=${num}`;
         const { data: response } = await axios.get(str)
         setPosts(response.data.data)
         setPageList(range(1, response.data.maxPage))
@@ -139,6 +144,9 @@ const MItemList = () => {
         changePage(1)
     }
     const onChangeStatisticsMonth = (e) => {
+        changePage(1)
+    }
+    const onChangeUserType = (e) => {
         changePage(1)
     }
     const opTheTopItem = useCallback(async (pk, sort, schema) => {
@@ -259,6 +267,19 @@ const MItemList = () => {
                         {/* 옵션카드 */}
                         <OptionCardWrappers>
                             <Row>
+                                {params.table=='user'?
+                                <>
+                                 <Select className='user-type' style={{ margin: '12px 24px 12px 24px' }} onChange={onChangeUserType}>
+                                            <option value={-1}>전체</option>
+                                            <option value={0}>일반</option>
+                                            <option value={1}>카카오</option>
+                                            <option value={2}>네이버</option>
+                                            <option value={3}>애플</option>
+                                        </Select>
+                                </>
+                                :
+                                <>
+                                </>}
                                 {params.table == 'user_statistics' ?
                                     <>
                                         <Select className='statistics-type' style={{ margin: '12px 24px 12px 24px' }} onChange={onChangeStatisticsType}>

@@ -18,8 +18,8 @@ const VideoList = () => {
     const [channelVideoConnectObj, setChannelVideoConnectObj] = useState({});
     useEffect(() => {
         async function fetchPosts() {
-            const { data: response0 } = await axios.get('/api/items?table=user&level=30');
-            const { data: response1 } = await axios.get('/api/items?table=user&level=25');
+            const { data: response0 } = await axios.get('/api/items?table=user&level=30&status=1');
+            const { data: response1 } = await axios.get('/api/items?table=user&level=25&status=1');
             setChannels([...response0?.data, ...response1?.data]);
             let obj = {};
             let channel_list = [...response0?.data, ...response1?.data] ?? [];

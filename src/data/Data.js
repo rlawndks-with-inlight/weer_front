@@ -82,7 +82,8 @@ export const objManagerListContent = {
             { name: '카테고리', width: 11, type: 'category_type', column: 'category_pk' },
             { name: '제목', width: 22, type: 'text', column: 'item_title' },
             { name: '닉네임', width: 11, type: 'text', column: 'user_nickname' },
-            { name: '댓글', width: 44, type: 'text', column: 'note' },
+            { name: '생성일', width: 17, type: 'text', column: 'date' },
+            { name: '댓글', width: 28, type: 'text', column: 'note' },
             { name: '삭제', width: 12, type: 'delete', column: 'delete' }
         ]
     },
