@@ -8,7 +8,7 @@ import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import $ from 'jquery'
 import styled from "styled-components";
 import { BsFillShareFill } from 'react-icons/bs';
-import { commarNumber, categoryToNumber, getViewerAlignByNumber } from "../../../functions/utils";
+import { commarNumber, categoryToNumber, getViewerAlignByNumber, getViewerMarginByNumber } from "../../../functions/utils";
 import CommentComponent from "../../../components/CommentComponent";
 import { Viewer } from '@toast-ui/react-editor';
 import Loading from '../../../components/Loading'
@@ -75,8 +75,10 @@ const Post = (props) => {
             setPostPk(params.pk || post_pk)
             setPostTable(params.table || post_table)
             const { data: response } = await axios.get(`/api/item?table=${params.table || post_table}&pk=${params.pk || post_pk}&views=1`);
-
-            let obj = response.data;
+            let obj = response.data??{};
+            console.log(obj)
+            obj.note = obj?.note.replaceAll('<p><br></p>','<br>');
+            await new Promise((r) => setTimeout(r, 300));
             setPost(obj);
             await new Promise((r) => setTimeout(r, 100));
             setTimeout(() => setLoading(false), 1000);
@@ -183,7 +185,7 @@ const Post = (props) => {
                         <img src={backUrl + post.main_img} style={{ width: '100%', margin: '16px 0' }} alt="#" />
                         <Title not_arrow={true}>{post.title}</Title>
                         <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post.hash}</div>
-                        <ViewerContainer className="viewer" style={{ textAlign: `${getViewerAlignByNumber(post?.note_align)}` }}>
+                        <ViewerContainer className="viewer" style={{margin:`${getViewerMarginByNumber(post?.note_align)}`}}>
                             <Viewer initialValue={post?.note ?? `<body></body>`} />
                         </ViewerContainer>
                         <ZoomButton/>

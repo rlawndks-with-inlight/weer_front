@@ -122,11 +122,10 @@ const MVideoEdit = () => {
                 background_color: $('.background-color').val(),
                 relate_video: relate_results,
                 note_align: $('.note-align').val(),
-
+                want_push: $(`.want-push`).val(),
                 note: editorRef.current.getInstance().getHTML()
             }
             if (params.pk > 0) obj.pk = params.pk;
-
             if (window.confirm(`저장하시겠습니까?`)) {
 
                 if (params.pk > 0) {
@@ -233,6 +232,20 @@ const MVideoEdit = () => {
                                     <option value={2}>왼쪽</option>
                                 </Select>
                             </Col>
+                            {params.pk == 0 ?
+                                <>
+                                    <Col>
+                                        <Title>푸쉬 발송</Title>
+                                        <Select className='want-push'>
+                                            <option value={1}>발송</option>
+                                            <option value={0}>발송 안함</option>
+                                        </Select>
+                                    </Col>
+                                </>
+                                :
+                                <>
+                                </>
+                            }
                         </Row>
                         <Row>
                             <Col>
