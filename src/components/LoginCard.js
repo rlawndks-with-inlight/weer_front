@@ -150,7 +150,7 @@ const LoginCard = () => {
                 <CategoryName style={{ marginTop: '36px' }}>SNS 간편 로그인</CategoryName>
                 <FlexBox>
                     <SnsLogo src={kakao} onClick={() => snsLogin(1)} />
-                    <NaverLogin snsLogin={snsLogin} onLoginBySns={onLoginBySns}/>
+                    {/* <NaverLogin snsLogin={snsLogin} onLoginBySns={onLoginBySns}/> */}
                     {localStorage.getItem('is_ios') ?
                         <>
                             {isWebView ?
