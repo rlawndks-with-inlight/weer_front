@@ -41,12 +41,12 @@ const CommentContent = (props) => {
                     <div style={{ marginBottom: '6px', display: 'flex' }}><div style={{ marginRight: '6px' }}>{item.nickname}</div> <div style={{ color: theme.color.font3 }}>{item.date.substring(0, 16)}</div></div>
                     <div style={{ wordBreak: 'break-all', marginBottom: '6px', fontSize: theme.size.font3 }}>{item.note}</div>
                     <div style={{ display: 'flex' }}>
-                        {isReply ?
+                        {!isReply && localStorage.getItem('auth') && JSON.parse(localStorage.getItem('auth'))?.user_level >= 0 ?
                             <>
+                                <div style={{ marginRight: '6px', cursor: 'pointer' }} onClick={displayReplyInput}>답글</div>
                             </>
                             :
                             <>
-                                <div style={{ marginRight: '6px', cursor: 'pointer' }} onClick={displayReplyInput}>답글</div>
                             </>}
                         {JSON.parse(localStorage.getItem('auth'))?.pk == item.user_pk || JSON.parse(localStorage.getItem('auth'))?.user_level >= 40 ?
                             <>
