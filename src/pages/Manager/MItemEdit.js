@@ -275,10 +275,7 @@ const MItemEdit = () => {
                             </>}
 
                         <Row>
-                            <Col>
-                                <Title>추천 게시물 제목</Title>
-                                <Input className='suggest-title' placeholder='[주식용어] 유상증자' />
-                            </Col>
+                            
                             {params.table == 'issue' || params.table == 'feature' ?
                                 <>
                                     <Col>

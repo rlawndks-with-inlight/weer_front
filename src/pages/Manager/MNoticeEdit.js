@@ -45,7 +45,7 @@ const MNoticeEdit = () => {
                 let obj = response.data??{};
                 $(`.title`).val(response.data.title);
                 $('.note-align').val(response.data.note_align);
-                editorRef.current.getInstance().setHTML(obj.note);
+                editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001', backUrl));
             }
         }
         $('div.toastui-editor-defaultUI-toolbar > div:nth-child(4)').append(`<button type="button" class='emoji' aria-label='이모티콘' style='font-size:18px;'>🙂</button>`);
@@ -169,20 +169,22 @@ const MNoticeEdit = () => {
                             <Col>
                                 <Title>내용</Title>
                                 <div id="editor">
-                                    <Picker onEmojiClick={onEmojiClick} />
-
+                                    <Picker onEmojiClick={onEmojiClick} style={{ color: 'red' }} />
                                     <Editor
                                         placeholder="내용을 입력해주세요."
                                         previewStyle="vertical"
                                         height="600px"
                                         initialEditType="wysiwyg"
                                         useCommandShortcut={false}
+                                        useTuiEditorEmoji={true}
                                         hideModeSwitch={true}
-                                        plugins={[colorSyntax,fontSize]}
+                                        plugins={[colorSyntax, fontSize]}
                                         language="ko-KR"
                                         ref={editorRef}
                                         onChange={onChangeEditor}
+
                                         hooks={{
+
                                             addImageBlobHook: async (blob, callback) => {
 
                                                 noteFormData.append('note', blob);
