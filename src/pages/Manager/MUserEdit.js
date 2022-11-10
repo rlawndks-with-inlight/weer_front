@@ -92,6 +92,7 @@ const MUserEdit = () => {
                                 <Select className='level'>
                                     <option value={-10}>불량회원</option>
                                     <option value={0}>일반유저</option>
+                                    <option value={30}>전문가</option>
                                     <option value={40}>관리자</option>
                                 </Select>
                             </Col>

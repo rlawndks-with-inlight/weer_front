@@ -42,9 +42,10 @@ const MNoticeEdit = () => {
         async function fetchPost() {
             if (params.pk > 0) {
                 const { data: response } = await axios.get(`/api/item?table=notice&pk=${params.pk}`);
+                let obj = response.data??{};
                 $(`.title`).val(response.data.title);
                 $('.note-align').val(response.data.note_align);
-                editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001', backUrl));
+                editorRef.current.getInstance().setHTML(obj.note);
             }
         }
         $('div.toastui-editor-defaultUI-toolbar > div:nth-child(4)').append(`<button type="button" class='emoji' aria-label='이모티콘' style='font-size:18px;'>🙂</button>`);
@@ -86,6 +87,7 @@ const MNoticeEdit = () => {
                 user_pk: auth.pk,
                 title: $('.title').val(),
                 note_align: $('.note-align').val(),
+                want_push: $(`.want-push`).val(),
                 note: editorRef.current.getInstance().getHTML()
             }
             if (params.pk > 0) obj.pk = params.pk;
@@ -148,6 +150,20 @@ const MNoticeEdit = () => {
                                     <option value={2}>오른쪽</option>
                                 </Select>
                             </Col>
+                            {params.pk == 0 ?
+                                <>
+                                    <Col>
+                                        <Title>푸쉬 발송</Title>
+                                        <Select className='want-push'>
+                                            <option value={1}>발송</option>
+                                            <option value={0}>발송 안함</option>
+                                        </Select>
+                                    </Col>
+                                </>
+                                :
+                                <>
+                                </>
+                            }
                         </Row>
                         <Row>
                             <Col>

@@ -49,6 +49,7 @@ const MVideoEdit = () => {
             }
             if (params.pk > 0) {
                 const { data: response } = await axios.get(`/api/getvideocontent?pk=${params.pk}`);
+                let obj = response.data.video??{};
                 $(`.title`).val(response.data.video.title);
                 $(`.link`).val(response.data.video.link);
                 $(`.channel`).val(response.data.video.user_pk);
@@ -64,7 +65,9 @@ const MVideoEdit = () => {
                     relate_str += relate_list[i].pk;
                 }
                 $('.relate').val(relate_str);
-                editorRef.current.getInstance().setHTML(response.data.video.note.replaceAll('http://localhost:8001', backUrl));
+                obj.note = obj?.note.replaceAll('http://localhost:8001', backUrl);
+                editorRef.current.getInstance().setHTML(obj.note);
+                
             } else {
                 $('.font-color').val(cardDefaultColor.font)
                 $('.background-color').val(cardDefaultColor.background)
