@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Title, Wrappers, ViewerContainer } from "../../../components/elements/UserContentTemplete";
 import { backUrl } from "../../../data/Data";
 import theme from "../../../styles/theme";
@@ -39,6 +39,7 @@ border-right: 10px solid transparent;
 }
 `
 const Notice = () => {
+    const navigate = useNavigate();
     const params = useParams();
     const [post, setPost] = useState({})
     const [comments, setComments] = useState([]);
@@ -66,9 +67,7 @@ const Notice = () => {
                 $('.viewer > div > div > div > p').addClass("dark-mode");
             }
         }
-        if (localStorage.getItem('auth')) {
-            setAuth(JSON.parse(localStorage.getItem('auth')));
-        }
+        myAuth();
         fetchPost();
         fetchComments();
         window.addEventListener('scroll', function (el) {
@@ -80,7 +79,18 @@ const Notice = () => {
         const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk}&category=${categoryToNumber('notice')}`);
         setComments(response.data);
     }
-
+    const myAuth = async () => {
+        const { data: response } = await axios('/api/auth')
+        if (response.pk > 0 && response.user_level >= 0) {
+            setAuth(response);
+        } else {
+            if (response.user_level < 0) {
+                alert("접근 권한이 없습니다.");
+                navigate(-1);
+            }
+            
+        }
+    }
     const addComment = async (parent_pk) => {
         if (!$(`.comment-${parent_pk ?? 0}`).val()) {
             alert('필수 값을 입력해 주세요.');

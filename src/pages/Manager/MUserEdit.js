@@ -47,7 +47,7 @@ const MUserEdit = () => {
             }
             if (window.confirm(`${params.pk == 0 ? '추가하시겠습니까?' : '수정하시겠습니까?'}`)) {
                 params.pk == 0 ?
-                    addItem('user', { id: $(`.id`).val(), pw: $(`.pw`).val(), name: $(`.name`).val(), nickname: $(`.nickname`).val(), phone: $(`.phone`).val(), user_level: $(`.user_level`).val() }) :
+                    addItem('user', { id: $(`.id`).val(), pw: $(`.pw`).val(), name: $(`.name`).val(), nickname: $(`.nickname`).val(), phone: $(`.phone`).val(), user_level: $(`.level`).val() }) :
                     updateItem('user', {
                         id: $(`.id`).val(), pw: $(`.pw`).val(), name: $(`.name`).val(), nickname: $(`.nickname`).val(), phone: $(`.phone`).val(), user_level: $(`.level`).val(), pk: params.pk
                     })
@@ -92,7 +92,6 @@ const MUserEdit = () => {
                                 <Select className='level'>
                                     <option value={-10}>불량회원</option>
                                     <option value={0}>일반유저</option>
-                                    <option value={30}>전문가</option>
                                     <option value={40}>관리자</option>
                                 </Select>
                             </Col>

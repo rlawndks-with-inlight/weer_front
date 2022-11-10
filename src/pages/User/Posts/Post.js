@@ -76,7 +76,6 @@ const Post = (props) => {
             setPostTable(params.table || post_table)
             const { data: response } = await axios.get(`/api/item?table=${params.table || post_table}&pk=${params.pk || post_pk}&views=1`);
             let obj = response.data??{};
-            console.log(obj)
             obj.note = obj?.note.replaceAll('<p><br></p>','<br>');
             await new Promise((r) => setTimeout(r, 300));
             setPost(obj);

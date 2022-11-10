@@ -139,10 +139,15 @@ const Video = () => {
     }, [pathname])
     const myAuth = async () => {
         const { data: response } = await axios('/api/auth')
-        if (response.pk > 0) {
+        if (response.pk > 0 && response.user_level >= 0) {
             setAuth(response);
         } else {
-            alert("로그인이 필요한 서비스입니다.");
+            if (response.user_level < 0) {
+                alert("접근 권한이 없습니다.");
+            }
+            if (response.pk < 0) {
+                alert("로그인이 필요한 서비스입니다.");
+            }
             navigate('/login');
         }
     }
