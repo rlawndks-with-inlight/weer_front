@@ -228,8 +228,8 @@ const MVideoEdit = () => {
                                 <Title>내용 정렬</Title>
                                 <Select className='note-align'>
                                     <option value={0}>가운데</option>
-                                    <option value={1}>오른쪽</option>
-                                    <option value={2}>왼쪽</option>
+                                    <option value={1}>왼쪽</option>
+                                    <option value={2}>오른쪽</option>
                                 </Select>
                             </Col>
                             {params.pk == 0 ?
