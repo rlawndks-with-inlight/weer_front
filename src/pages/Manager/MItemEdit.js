@@ -132,7 +132,7 @@ const MItemEdit = () => {
         setComments(response.data);
     }
     const editItem = async () => {
-        if ((!content && !url) || !$(`.hash`).val() || !$(`.title`).val() || !$(`.suggest-title`).val()) {
+        if ((!content && !url) || !$(`.hash`).val() || !$(`.title`).val()) {
             alert('필요값이 비어있습니다.');
         } else {
             let auth = JSON.parse(localStorage.getItem('auth'))
@@ -143,7 +143,7 @@ const MItemEdit = () => {
             if (needTwoImage.includes(params.table)) formData.append('url2', item.second_img)
             formData.append('title', $(`.title`).val())
             formData.append('hash', $(`.hash`).val())
-            formData.append('suggest_title', $(`.suggest-title`).val())
+           // formData.append('suggest_title', $(`.suggest-title`).val())
             formData.append('want_push', $(`.want-push`).val())
             if (params.table == 'issue' || params.table == 'feature') {
                 formData.append('category', $(`.category`).val());
