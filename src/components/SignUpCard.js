@@ -31,6 +31,9 @@ const SignUpCard = () => {
     const [isRegPw, setIsRegPw] = useState(false)
     useEffect(() => {
         if (location.state) {
+            if(!location.state.id){
+                navigate(-1);
+            }
             setState(location.state)
         }
     }, [])
