@@ -49,15 +49,15 @@ const Search = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
     };
-    useEffect(()=>{
-        if(location.state){
+    useEffect(() => {
+        if (location.state) {
             $('.search').val(location.state);
             let str = location.state;
-            if(str.length>=2){
+            if (str.length >= 2) {
                 onSearchAllItem();
             }
         }
-    },[location.state])
+    }, [location.state])
     const onSearchAllItem = async () => {
         let str = $('.search').val()
         if (str.length < 2) {
@@ -65,12 +65,12 @@ const Search = () => {
         } else {
             setLoading(true)
             const { data: response } = await axios.get(`/api/onsearchallitem?keyword=${str}`);
-            if(response.data.oneWord.length==0&&
-                response.data.oneEvent.length==0&&
-                response.data.issues.length==0&&
-                response.data.features.length==0&&
-                response.data.themes.length==0&&
-                response.data.videos.length==0){
+            if (response.data.oneWord.length == 0 &&
+                response.data.oneEvent.length == 0 &&
+                response.data.issues.length == 0 &&
+                response.data.features.length == 0 &&
+                response.data.themes.length == 0 &&
+                response.data.videos.length == 0) {
                 alert('해당 검색 결과가 없습니다.');
                 navigate(-1);
             }
@@ -92,8 +92,8 @@ const Search = () => {
             <Wrappers className='wrappers'>
                 {/* <Content style={{ position: 'relative' }}>
                     <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #cccccc', margin: '0 auto' }}> */}
-                        <Input className='search' placeholder='두 글자 이상 입력해주세요.'  />
-                        {/* <AiOutlineSearch className='search-button' style={{ padding: '14px', cursor: 'pointer' }} onClick={onSearchAllItem} />
+                <Input className='search' placeholder='두 글자 이상 입력해주세요.' />
+                {/* <AiOutlineSearch className='search-button' style={{ padding: '14px', cursor: 'pointer' }} onClick={onSearchAllItem} />
                     </div>
                 </Content> */}
                 {loading ?
@@ -144,7 +144,7 @@ const Search = () => {
                                         {issues.map((item, idx) => (
                                             <>
                                                 <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} >
-                                                    <Img style={{ backgroundImage: `url(${backUrl + item?.main_img})` }}  />
+                                                    <Img style={{ backgroundImage: `url(${backUrl + item?.main_img})` }} />
                                                     <div style={{ padding: '16px 16px 0 16px', fontWeight: 'bold' }}>{item?.date.substring(0, 10) ?? ""} {item?.title}</div>
                                                     <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
                                                 </Card>
@@ -153,7 +153,7 @@ const Search = () => {
 
                                     </WrapDiv>
                                     <SliderDiv>
-                                        <Slider {...slideSetting} className='board-container'>
+                                        <Slider {...slideSetting(1)} className='board-container slider1'>
                                             {issues.map((item, idx) => (
                                                 <>
                                                     <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
@@ -188,7 +188,7 @@ const Search = () => {
 
                                     </WrapDiv>
                                     <SliderDiv>
-                                        <Slider {...slideSetting} className='board-container'>
+                                        <Slider {...slideSetting(2)} className='board-container slider2'>
                                             {features.map((item, idx) => (
                                                 <>
                                                     <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
@@ -243,7 +243,7 @@ const Search = () => {
                                         ))}
                                     </WrapDiv>
                                     <SliderDiv>
-                                        <Slider {...slideSetting} className='board-container'>
+                                        <Slider {...slideSetting(3)} className='board-container slider3'>
                                             {themes.map((item, idx) => (
                                                 <>
                                                     <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }}>
@@ -277,7 +277,7 @@ const Search = () => {
                                         ))}
                                     </WrapDiv>
                                     <SliderDiv>
-                                        <Slider {...slideSetting} className='board-container'>
+                                        <Slider {...slideSetting(4)} className='board-container slider4'>
                                             {videos.map((item, idx) => (
                                                 <>
                                                     <VideoCard item={item} paddingBottom={'32px'} isSlide={true} isImgPadding={true} isTerm={true} />

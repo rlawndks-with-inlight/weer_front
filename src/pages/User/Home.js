@@ -17,6 +17,15 @@ import { Wrappers, Title, Content, Card, Img, WrapDiv, SliderDiv } from '../../c
 import ThemeCard from '../../components/ThemeCard'
 import VideoCard from '../../components/VideoCard';
 import Loading from '../../components/Loading';
+import $ from 'jquery';
+const Dot = styled.div`
+  width: 15px;
+  height: 15px;
+  border: solid 3px #2c2c2c;
+  background-color: transparent;
+  border-radius: 100%;
+  margin: 0px 5px;
+`;
 
 const Home = () => {
     const navigate = useNavigate();
@@ -46,7 +55,7 @@ const Home = () => {
     useEffect(() => {
         setPosts(zTalk[0].image_list);
         async function fetchPost() {
-            setLoading(true)
+           // setLoading(true)
 
             const { data: response } = await axios.get('/api/gethomecontent')
             setSetting(response.data.setting);
@@ -79,6 +88,19 @@ const Home = () => {
         if (window && window.flutter_inappwebview) {
             isLogined();
         }
+       
+        // let observer = new IntersectionObserver((e)=>{
+        //     e.forEach((box)=>{
+        //         console.log(box)
+        //     })
+        // });
+        // let slide_div = document.querySelectorAll('div.board-container');
+        // observer.observe(slide_div[0]);
+        // observer.observe(slide_div[1]);
+        // observer.observe(slide_div[2]);
+        // observer.observe(slide_div[3]);
+
+
     }, [])
     const onChangeStrategyNum = async (num, pk) => {
         setSubTypeNum(num)
@@ -125,6 +147,7 @@ const Home = () => {
         }
     }
     */
+    
     return (
         <>
             <Wrappers className='wrappers'>
@@ -157,7 +180,7 @@ const Home = () => {
 
                             </WrapDiv>
                             <SliderDiv>
-                                <Slider {...slideSetting} className='board-container pointer'>
+                                <Slider {...slideSetting(1)} className='board-container pointer slider1'>
                                     {issues.map((item, idx) => (
                                         <>
                                             <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
@@ -211,7 +234,7 @@ const Home = () => {
 
                             </WrapDiv>
                             <SliderDiv>
-                                <Slider {...slideSetting} className='board-container'>
+                                <Slider {...slideSetting(2)} className='board-container slider2'>
                                     {features.map((item, idx) => (
                                         <>
                                             <Card onClick={() => navigate(`/post/feature/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
@@ -239,7 +262,7 @@ const Home = () => {
 
                             </WrapDiv>
                             <SliderDiv>
-                                <Slider {...slideSetting} className='board-container'>
+                                <Slider {...slideSetting(3)} className='board-container slider3'>
                                     {themes.map((item, idx) => (
                                         <>
                                             <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
@@ -263,7 +286,7 @@ const Home = () => {
                                 ))}
                             </WrapDiv>
                             <SliderDiv>
-                                <Slider {...slideSetting} className='board-container'>
+                                <Slider {...slideSetting(4)} className='board-container slider4'>
                                     {videos.map((item, idx) => (
                                         <>
                                             <VideoCard item={item} paddingBottom={'32px'} isSlide={true} isImgPadding={true} isTerm={true} />

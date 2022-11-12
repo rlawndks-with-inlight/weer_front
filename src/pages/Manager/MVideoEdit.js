@@ -165,6 +165,22 @@ const MVideoEdit = () => {
             alert(response.message)
         }
     }
+    const updateComment = async (pk) => {
+        if (!$(`.update-comment-${pk ?? 0}`).val()) {
+            alert('필수 값을 입력해 주세요.');
+        }
+        const { data: response } = await axios.post('/api/updatecomment', {
+            pk: pk,
+            note: $(`.update-comment-${pk ?? 0}`).val(),
+        })
+
+        if (response.result > 0) {
+            $(`.update-comment-${pk ?? 0}`).val("")
+            fetchComments();
+        } else {
+            alert(response.message)
+        }
+    }
     return (
         <>
             <ManagerWrappers>
@@ -297,7 +313,7 @@ const MVideoEdit = () => {
                                         <Title>댓글 관리</Title>
                                     </Col>
                                 </Row>
-                                <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />
+                                <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} updateComment={updateComment} />
                             </Card>
                         </>
                         :

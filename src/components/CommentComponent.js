@@ -9,22 +9,23 @@ import { useEffect, useState } from 'react';
 import { TbArrowForward } from 'react-icons/tb'
 import { ImBubble2 } from 'react-icons/im'
 import { commarNumber } from '../functions/utils';
+import $ from 'jquery'
 const CommentInputContent = (props) => {
-    const { addComment, parentPk } = props;
+    const { addComment, parentPk, is_update, pk, updateComment } = props;
     return (
         <>
             <div style={{ border: `1px solid ${theme.color.font3}`, display: 'flex', flexDirection: 'column', padding: '16px' }}>
-                <textarea style={{ outline: 'none', resize: 'none', border: 'none', height: '54px', fontSize: theme.size.font4 }} className={`comment-${parentPk}`} />
+                <textarea style={{ outline: 'none', resize: 'none', border: 'none', height: '54px', fontSize: theme.size.font4 }} className={is_update ? `update-comment-${pk}` : `comment-${parentPk}`} />
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '16px' }}>
                     <IoImageOutline style={{ color: theme.color.font3 }} />
-                    <AddButton style={{ background: theme.color.font2, boxShadow: 'none' }} onClick={() => addComment(parentPk)}>작성</AddButton>
+                    <AddButton style={{ background: theme.color.font2, boxShadow: 'none' }} onClick={() => is_update ? updateComment(pk) : addComment(parentPk)}>{is_update ? '수정' : '작성'}</AddButton>
                 </div>
             </div>
         </>
     )
 }
 const CommentContent = (props) => {
-    const { item, deleteComment, isReply, displayReplyInput } = props;
+    const { item, deleteComment, isReply, displayReplyInput, displayUpdateInput, updateCommentObj, updateComment } = props;
     return (
         <>
             <div style={{ borderBottom: `1px solid ${theme.color.font3}`, display: 'flex', padding: '16px', fontSize: theme.size.font4, width: `${isReply ? '90%' : '100%'}`, margin: `${isReply ? '0 0 0 auto' : '0'}` }}>
@@ -51,7 +52,7 @@ const CommentContent = (props) => {
                         {JSON.parse(localStorage.getItem('auth'))?.pk == item.user_pk || JSON.parse(localStorage.getItem('auth'))?.user_level >= 40 ?
                             <>
 
-                                <div style={{ marginRight: '6px', cursor: 'pointer' }}>수정</div>
+                                <div style={{ marginRight: '6px', cursor: 'pointer' }} onClick={() => displayUpdateInput(item.pk)}>수정</div>
                                 <div style={{ cursor: 'pointer' }} onClick={() => deleteComment(item.pk)}>지우기</div>
                             </>
                             :
@@ -62,12 +63,21 @@ const CommentContent = (props) => {
                     </div>
                 </div>
             </div>
+            {updateCommentObj[item.pk].display ?
+                <>
+                    <CommentInputContent is_update={true} pk={item.pk} updateComment={updateComment} />
+                </>
+                :
+                <>
+                </>
+            }
         </>
     )
 }
 const CommentComponent = (props) => {
-    const { data, addComment, fetchComments } = props;
+    const { data, addComment, updateComment, fetchComments } = props;
     const [zComment, setZComment] = useState([]);
+    const [updateCommentObj, setUpdateCommentObj] = useState([]);
     const [replyObj, setreplyObj] = useState({});
     const deleteComment = async (pk) => {
         if (window.confirm('정말 삭제하시겠습니까?')) {
@@ -85,10 +95,20 @@ const CommentComponent = (props) => {
     }
     useEffect(() => {
         let comment_list = [...data];
+        let update_comment_obj = {};
+        for (var i = 0; i < comment_list.length; i++) {
+            update_comment_obj[comment_list[i].pk] = {
+                display: false,
+                note: comment_list[i].note
+            }
+        }
+        setUpdateCommentObj(update_comment_obj);
+
         let comment_list_desc = [...comment_list].reverse();
 
         let list = [];
         let reply_obj = {};
+
         for (var i = 0; i < comment_list.length; i++) {
             if (comment_list[i]?.parent_pk == 0) {
                 comment_list[i].reply_display = false;
@@ -107,7 +127,7 @@ const CommentComponent = (props) => {
         setreplyObj(reply_obj)
 
     }, [data])
-    const displayReplyInput = (num) => {
+    const displayReplyInput = (num, type) => {
         let list = [...zComment];
         for (var i = 0; i < list.length; i++) {
             if (list[i].pk == num) {
@@ -116,11 +136,19 @@ const CommentComponent = (props) => {
         }
         setZComment(list)
     }
+    const displayUpdateInput = async (pk) => {
+        let update_comment_obj = { ...updateCommentObj };
+        updateCommentObj[pk].display = !updateCommentObj[pk].display;
+        setUpdateCommentObj(update_comment_obj);
+        await new Promise((r) => setTimeout(r, 200));
+        $(`.update-comment-${pk}`).val(updateCommentObj[pk].note)
+
+    }
     return (
         <>
 
             <Content style={{ marginTop: '32px' }}>
-                <div style={{color:`${theme.color.font3}`,display:'flex',alignItems:'center',fontSize:theme.size.font4,marginBottom:'8px'}}><ImBubble2 style={{marginRight:'4px'}}/><div><div>{commarNumber(data.length??0)}</div></div></div>
+                <div style={{ color: `${theme.color.font3}`, display: 'flex', alignItems: 'center', fontSize: theme.size.font4, marginBottom: '8px' }}><ImBubble2 style={{ marginRight: '4px' }} /><div><div>{commarNumber(data.length ?? 0)}</div></div></div>
                 {JSON.parse(localStorage.getItem('auth'))?.pk > 0 ?
                     <>
                         <CommentInputContent addComment={addComment} parentPk={0} />
@@ -137,10 +165,12 @@ const CommentComponent = (props) => {
                     <>
                         {zComment.map((item, index) => (
                             <>
-                                <CommentContent item={item} deleteComment={deleteComment} isReply={false} displayReplyInput={() => displayReplyInput(item.pk)} />
+                                <CommentContent item={item} deleteComment={deleteComment} isReply={false} displayReplyInput={() => displayReplyInput(item.pk)} displayUpdateInput={displayUpdateInput} updateCommentObj={updateCommentObj} updateComment={updateComment} />
+
                                 {item?.reply_display ?
                                     <>
                                         <CommentInputContent addComment={addComment} parentPk={item.pk} />
+
                                     </>
                                     :
                                     <>
@@ -149,7 +179,7 @@ const CommentComponent = (props) => {
                                     <>
                                         {replyObj[item?.pk].map((itm, idx) => (
                                             <>
-                                                <CommentContent item={itm} deleteComment={deleteComment} isReply={true} />
+                                                <CommentContent item={itm} deleteComment={deleteComment} isReply={true} displayUpdateInput={displayUpdateInput} updateCommentObj={updateCommentObj} updateComment={updateComment} />
                                             </>
                                         ))}
                                     </>

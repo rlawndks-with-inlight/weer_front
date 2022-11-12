@@ -152,6 +152,23 @@ const Post = (props) => {
             alert(response.message)
         }
     }
+    const updateComment = async (pk) => {
+        if (!$(`.update-comment-${pk ?? 0}`).val()) {
+            alert('필수 값을 입력해 주세요.');
+        }
+        const { data: response } = await axios.post('/api/updatecomment', {
+            pk: pk,
+            note: $(`.update-comment-${pk ?? 0}`).val(),
+            category: categoryToNumber(postTable)
+        })
+
+        if (response.result > 0) {
+            $(`.update-comment-${pk ?? 0}`).val("")
+            fetchComments();
+        } else {
+            alert(response.message)
+        }
+    }
     const handleShare = () => {
         if (navigator.share) {
             navigator.share({
@@ -188,7 +205,7 @@ const Post = (props) => {
                             <Viewer initialValue={post?.note ?? `<body></body>`} />
                         </ViewerContainer>
                         <ZoomButton/>
-                        <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} />
+                        <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} updateComment={updateComment} />
 
                     </>}
 

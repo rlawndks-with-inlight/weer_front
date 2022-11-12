@@ -38,7 +38,6 @@ const NoticeList = (props) => {
                 //     }
                 // });
             }
-            console.log(location.state)
             let str = '';
             if(location.state=='alarm'){
                 str = '/api/items?table=alarm_log&order=pk';
