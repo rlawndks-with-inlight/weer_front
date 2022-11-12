@@ -137,6 +137,14 @@ const MItemEdit = () => {
             alert('필요값이 비어있습니다.');
         } else {
             $('br').removeClass('ProseMirror-trailingBreak')
+            // $('a').each(function(){
+            //     if($(this).attr('href')!='#'){
+            //         let href = $(this).attr('href');
+            //         $(this).addClass(href);
+            //         $(this).addClass('link');
+            //         $(this).attr('href','javascript:void(0);')
+            //     }
+            // })
             await new Promise((r) => setTimeout(r, 100));
             let auth = JSON.parse(localStorage.getItem('auth'))
             formData.append('table', params.table);

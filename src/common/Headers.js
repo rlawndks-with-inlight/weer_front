@@ -172,6 +172,20 @@ const Headers = () => {
 
 
   useEffect(() => {
+    async function isLogined() {
+      await window.flutter_inappwebview.callHandler('native_app_logined', {}).then(async function (result) {
+        //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
+        // JSON.parse(result)
+        let obj = JSON.parse(result);
+        if (obj['is_ios']) {
+          await localStorage.setItem('is_ios', '1');
+        }
+        await onLoginBySns(obj.data);
+      });
+    }
+    if (window && window.flutter_inappwebview) {
+      isLogined();
+    }
     async function getNoticeAndAlarmCount() {
       const { data: response } = await axios.get('/api/getnoticeandalarmlastpk');
       let response_obj = response?.data ?? { alarm_last_pk: 0, notice_last_pk: 0 };
@@ -199,7 +213,31 @@ const Headers = () => {
       }
     }
     getNoticeAndAlarmCount();
+    
   }, [])
+  const onLoginBySns = async (obj) => {
+    let nick = "";
+    if (obj.login_type == 1) {
+        nick = "카카오" + new Date().getTime();
+    } else if (obj.login_type == 2) {
+        nick = "네이버" + new Date().getTime();
+    }
+    let objs = {
+        id: obj.id,
+        name: obj.legal_name,
+        nickname: nick,
+        phone: obj.phone_number,
+        user_level: 0,
+        typeNum: obj.login_type,
+        profile_img: obj.profile_image_url
+    }
+    const { data: response } = await axios.post('/api/loginbysns', objs);
+    if (response.result > 0) {
+        await localStorage.setItem('auth', JSON.stringify(response.data));
+    } else {
+        //alert(response.message);
+    }
+}
   // setInterval(() => {
   //   if (window.flutter_inappwebview) {
   //     window.flutter_inappwebview.callHandler('native_get_alarm_count', {}).then(async function (result) {
@@ -221,10 +259,10 @@ const Headers = () => {
         setIsAlarm(false);
       });
     } else {
-      localStorage.setItem('alarm_and_notice_count',JSON.stringify({notice_last_pk:lastNoticePk}));
+      localStorage.setItem('alarm_and_notice_count', JSON.stringify({ notice_last_pk: lastNoticePk }));
       setIsAlarm(false);
     }
-    navigate('/noticelist',{state:'alarm'});
+    navigate('/noticelist', { state: 'alarm' });
   }
 
   const myAuth = async () => {
@@ -266,6 +304,14 @@ const Headers = () => {
       }
     }
   }
+  const onClickNavigateBefore = () =>{
+    if(document.referrer){
+      navigate(-1);
+    }else{
+      navigate('/home');
+    }
+    
+  }
   return (
     <>
 
@@ -290,7 +336,7 @@ const Headers = () => {
               <div>
                 {isPost ?
                   <>
-                    <MdNavigateBefore style={{ fontSize: '30px', marginLeft: '-7px' }} onClick={() => { navigate(-1) }} />
+                    <MdNavigateBefore style={{ fontSize: '30px', marginLeft: '-7px' }} onClick={onClickNavigateBefore} />
                   </>
                   :
                   <>

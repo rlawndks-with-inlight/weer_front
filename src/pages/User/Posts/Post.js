@@ -77,11 +77,13 @@ const Post = (props) => {
             const { data: response } = await axios.get(`/api/item?table=${params.table || post_table}&pk=${params.pk || post_pk}&views=1`);
             let obj = response.data??{};
             obj.note = obj?.note.replaceAll('<p><br></p>','<br>');
+            
             await new Promise((r) => setTimeout(r, 300));
             setPost(obj);
             await new Promise((r) => setTimeout(r, 100));
             setTimeout(() => setLoading(false), 1000);
             await new Promise((r) => setTimeout(r, 1500));
+            
             if (localStorage.getItem('dark_mode')) {
                 $('body').addClass("dark-mode");
                 $('p').addClass("dark-mode");
@@ -110,7 +112,7 @@ const Post = (props) => {
             let per = Math.floor(($(window).scrollTop() / ($(document).height() - $(window).height())) * 100);
             setPercent(per);
         })
-
+        
     }, [])
     const myAuth = async () => {
         const { data: response } = await axios('/api/auth')
