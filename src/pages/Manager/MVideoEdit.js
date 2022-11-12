@@ -67,6 +67,7 @@ const MVideoEdit = () => {
                 $('.relate').val(relate_str);
                 obj.note = obj?.note.replaceAll('http://localhost:8001', backUrl);
                 editorRef.current.getInstance().setHTML(obj.note);
+                $('br').removeClass('ProseMirror-trailingBreak');
                 
             } else {
                 $('.font-color').val(cardDefaultColor.font)
@@ -109,6 +110,8 @@ const MVideoEdit = () => {
         if (!$(`.title`).val() || !$(`.link`).val()) {
             alert('필요값이 비어있습니다.');
         } else {
+            $('br').removeClass('ProseMirror-trailingBreak')
+            await new Promise((r) => setTimeout(r, 100));
             let str = $('.relate').val().split("/");
             let relate_results = [];
             for (var i = 0; i < str.length; i++) {

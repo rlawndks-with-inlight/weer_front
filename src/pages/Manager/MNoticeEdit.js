@@ -46,6 +46,7 @@ const MNoticeEdit = () => {
                 $(`.title`).val(response.data.title);
                 $('.note-align').val(response.data.note_align);
                 editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001', backUrl));
+                $('br').removeClass('ProseMirror-trailingBreak');
             }
         }
         $('div.toastui-editor-defaultUI-toolbar > div:nth-child(4)').append(`<button type="button" class='emoji' aria-label='이모티콘' style='font-size:18px;'>🙂</button>`);
@@ -80,9 +81,12 @@ const MNoticeEdit = () => {
         setComments(response.data);
     }
     const editItem = async () => {
+        
         if (!$(`.title`).val()) {
             alert('필요값이 비어있습니다.');
         } else {
+            $('br').removeClass('ProseMirror-trailingBreak')
+            await new Promise((r) => setTimeout(r, 100));
             let obj = {
                 user_pk: auth.pk,
                 title: $('.title').val(),
@@ -129,14 +133,16 @@ const MNoticeEdit = () => {
         }
     }
     const updateComment = async (pk) => {
+
         if (!$(`.update-comment-${pk ?? 0}`).val()) {
             alert('필수 값을 입력해 주세요.');
         }
+        
         const { data: response } = await axios.post('/api/updatecomment', {
             pk: pk,
             note: $(`.update-comment-${pk ?? 0}`).val(),
         })
-
+        
         if (response.result > 0) {
             $(`.update-comment-${pk ?? 0}`).val("")
             fetchComments();

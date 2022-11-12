@@ -88,6 +88,7 @@ const MItemEdit = () => {
                     $(`.category`).val(response.data.category_pk);
                 }
                 editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001', backUrl));
+                $('br').removeClass('ProseMirror-trailingBreak');
                 setUrl(backUrl + response.data.main_img);
                 if (needTwoImage.includes(params.table)) setUrl2(backUrl + response.data.second_img);
                 setItem(response.data)
@@ -135,6 +136,8 @@ const MItemEdit = () => {
         if ((!content && !url) || !$(`.hash`).val() || !$(`.title`).val()) {
             alert('필요값이 비어있습니다.');
         } else {
+            $('br').removeClass('ProseMirror-trailingBreak')
+            await new Promise((r) => setTimeout(r, 100));
             let auth = JSON.parse(localStorage.getItem('auth'))
             formData.append('table', params.table);
             formData.append('content', content);
