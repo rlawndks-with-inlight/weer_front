@@ -163,6 +163,8 @@ const Video = () => {
         }
         if (!$(`.comment-${parent_pk ?? 0}`).val()) {
             alert('필수 값을 입력해 주세요.');
+            return;
+
         }
         const { data: response } = await axios.post('/api/addcomment', {
             userPk: auth.pk,

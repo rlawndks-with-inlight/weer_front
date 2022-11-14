@@ -81,7 +81,9 @@ const MAlarmEdit = () => {
     const editItem = async () => {
         if (!$(`.title`).val() || !$(`.note`).val() || (typeNum == 1 && (!$(`.start-date`).val() || selectDaysList.length == 0 || !$(`.time`).val()))) {
             alert('필요값이 비어있습니다.');
-        } else {
+        } else if($(`.url`).val().includes('weare-first.com')){
+            alert("도메인을 제외한 뒤에 uri만 입력해 주세요. \n ex) 'masterlist'");
+        }else {
             let obj = {
                 title: $('.title').val(),//제목
                 note: $(`.note`).val(),//내용
