@@ -91,7 +91,12 @@ body::-webkit-scrollbar-thumb {
 .subtype-container::-webkit-scrollbar {
     display: none;
 }
-
+.lazy-load-image-background{
+    width: 64px; 
+    height: 64px;
+    border-radius: 50%; 
+    margin-right: 16px;
+}
 .note {
     width: 100%;
     margin: 16px 0;

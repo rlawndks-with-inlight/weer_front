@@ -10,6 +10,8 @@ import { TbArrowForward } from 'react-icons/tb'
 import { ImBubble2 } from 'react-icons/im'
 import { commarNumber } from '../functions/utils';
 import $ from 'jquery'
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+
 const CommentInputContent = (props) => {
     const { addComment, parentPk, is_update, pk, updateComment } = props;
     return (
@@ -36,8 +38,12 @@ const CommentContent = (props) => {
                     :
                     <>
                     </>}
-                <img alt="프로필 사진" src={item?.profile_img ? (item?.profile_img?.substring(0, 4) == 'http' ? item.profile_img : backUrl + item.profile_img) : defaultImg} style={{ width: '64px', height: '64px', borderRadius: '50%', marginRight: '16px' }} />
-
+                <LazyLoadImage
+                    alt={item.nickname}
+                    effect="blur"
+                    height={64}
+                    src={item?.profile_img ? (item?.profile_img?.substring(0, 4) == 'http' ? item.profile_img : backUrl + item.profile_img) : defaultImg} // use normal <img> attributes as props
+                    width={64} />
                 <div>
                     <div style={{ marginBottom: '6px', display: 'flex' }}><div style={{ marginRight: '6px' }}>{item.nickname}</div> <div style={{ color: theme.color.font3 }}>{item.date.substring(0, 16)}</div></div>
                     <div style={{ wordBreak: 'break-all', marginBottom: '6px', fontSize: theme.size.font3 }}>{item.note}</div>
