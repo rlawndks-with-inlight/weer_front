@@ -100,7 +100,6 @@ const Video = () => {
         async function fetchPost() {
             setLoading(true)
             const { data: response } = await axios.get(`/api/getvideocontent?pk=${params.pk}&views=1`);
-            console.log(response)
             if(response.result<0){
                 alert(response.message);
                 if(response.result==-150){
