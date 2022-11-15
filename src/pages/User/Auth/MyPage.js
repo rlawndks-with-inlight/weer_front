@@ -126,6 +126,7 @@ const MyPage = () => {
                             <Result>
                                 {auth?.type != 0 ? "---" : auth.id}
                             </Result>
+                            
                         </Content>
                         <Content>
                             <Category>비밀번호</Category>
