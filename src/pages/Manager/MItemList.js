@@ -11,7 +11,7 @@ import DataTable from '../../common/manager/DataTable';
 import MBottomContent from '../../components/elements/MBottomContent';
 import PageContainer from '../../components/elements/pagination/PageContainer';
 import PageButton from '../../components/elements/pagination/PageButton';
-import { range, returnMoment } from '../../functions/utils';
+import { commarNumber, range, returnMoment } from '../../functions/utils';
 import AddButton from '../../components/elements/button/AddButton';
 import Loading from '../../components/Loading';
 import theme from '../../styles/theme';
@@ -52,6 +52,7 @@ const MItemList = () => {
     const [pageList, setPageList] = useState([])
     const [loading, setLoading] = useState(false)
     const [isUseLoading, setIsUseLoading] = useState(true);
+    const [userCount, setUserCount] = useState(0);
     const [yearList, setYearList] = useState([])
     const month_list = [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
     const [statisticsType, setStatisticsType] = useState('month')
@@ -62,11 +63,11 @@ const MItemList = () => {
         setZColumn(objManagerListContent[`${params.table}`].zColumn ?? {})
         async function fetchPost() {
             setLoading(true)
-            if((params.table=='master'||params.table=='channel'||params.table=='user'||params.table=='user_statistics'||params.table=='setting'||params.table=='issue_category'||params.table=='feature_category')){
-                if(JSON.parse(localStorage.getItem('auth'))?.user_level < 40){
+            if ((params.table == 'master' || params.table == 'channel' || params.table == 'user' || params.table == 'user_statistics' || params.table == 'setting' || params.table == 'issue_category' || params.table == 'feature_category')) {
+                if (JSON.parse(localStorage.getItem('auth'))?.user_level < 40) {
                     navigate(-1);
                 }
-            }   
+            }
             $('.page-cut').val(15)
             let str = '';
             if (params.table == 'master') {
@@ -82,6 +83,8 @@ const MItemList = () => {
             } else if (params.table == 'all') {
                 str = `/api/getallposts?page=1&order=date`
             } else if (params.table == 'user_statistics') {
+                const { data: count_response } = await axios.get('/api/itemcount?table=user');
+                setUserCount(count_response?.data?.count ?? 0);
                 let year = parseInt(returnMoment().substring(0, 4));
                 let year_list = [];
                 for (var i = 0; i < 10; i++) {
@@ -98,10 +101,11 @@ const MItemList = () => {
                     str += `&user_pk=${auth.pk}`
                 }
             }
-            const { data: response } = await axios.get(str)
-            setPosts(response.data.data)
-            setPageList(range(1, response.data.maxPage))
-            setLoading(false)
+            const { data: response } = await axios.get(str);
+            console.log(response)
+            setPosts(response.data.data);
+            setPageList(range(1, response.data.maxPage));
+            setLoading(false);
         }
         fetchPost();
     }, [pathname])
@@ -115,7 +119,7 @@ const MItemList = () => {
         } else if (params.table == 'channel') {
             str = `/api/users?level=25&`
         } else if (params.table == 'user') {
-            str = `/api/users?${$('.user-type').val()>=0?`userType=${$('.user-type').val()}&`:''}`
+            str = `/api/users?${$('.user-type').val() >= 0 ? `userType=${$('.user-type').val()}&` : ''}`
         } else if ((params.table == 'issue' || params.table == 'feature') && params.pk) {
             str = `/api/items?table=${params.table}&category_pk=${params.pk}&`
         } else if (params.table == 'comment') {
@@ -265,21 +269,22 @@ const MItemList = () => {
                     <Breadcrumb title={objManagerListContent[`${params.table}`].breadcrumb + '관리'} />
                     <div style={{ overflowX: 'auto' }}>
                         {/* 옵션카드 */}
+
                         <OptionCardWrappers>
                             <Row>
-                                {params.table=='user'?
-                                <>
-                                 <Select className='user-type' style={{ margin: '12px 24px 12px 24px' }} onChange={onChangeUserType}>
+                                {params.table == 'user' ?
+                                    <>
+                                        <Select className='user-type' style={{ margin: '12px 24px 12px 24px' }} onChange={onChangeUserType}>
                                             <option value={-1}>전체</option>
                                             <option value={0}>일반</option>
                                             <option value={1}>카카오</option>
                                             <option value={2}>네이버</option>
                                             <option value={3}>애플</option>
                                         </Select>
-                                </>
-                                :
-                                <>
-                                </>}
+                                    </>
+                                    :
+                                    <>
+                                    </>}
                                 {params.table == 'user_statistics' ?
                                     <>
                                         <Select className='statistics-type' style={{ margin: '12px 24px 12px 24px' }} onChange={onChangeStatisticsType}>
@@ -343,6 +348,16 @@ const MItemList = () => {
                             </Row>
 
                         </OptionCardWrappers>
+                        {params.table == 'user_statistics' ?
+                            <>
+                                <OptionCardWrappers>
+                                    <div style={{ padding: '12px 24px' }}>전체 사용자: {commarNumber(userCount)}명</div>
+                                </OptionCardWrappers>
+                            </>
+                            :
+                            <>
+                            </>}
+
                     </div>
                     {loading ?
                         <>

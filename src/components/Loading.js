@@ -4,6 +4,9 @@ import theme from '../styles/theme';
 import loadingGif from '../assets/images/test/loading.gif'
 const LoadingContainer = styled.div`
 margin: 15vw auto;
+display:flex;
+flex-direction:column;
+align-items:center;
 @media (max-width: 1000px) {
     margin: 25vw auto;
 }
@@ -14,11 +17,13 @@ margin: 15vw auto;
     margin: 30vh auto;
 }
 `
-const Loading = () => {
+const Loading = (props) => {
+    const { text } = props;
     return (
         <>
             <LoadingContainer>
-                <img src={loadingGif} style={{width:'100px'}}/>
+                <img src={loadingGif} style={{ width: '100px' }} />
+                <div style={{marginTop:'16px'}}>{text}</div>
             </LoadingContainer>
         </>
     )

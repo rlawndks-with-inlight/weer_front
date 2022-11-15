@@ -12,10 +12,13 @@ import appleDark from '../assets/images/icon/apple-dark.png'
 import { WrapperForm, CategoryName, Input, Button, FlexBox, SnsLogo } from './elements/AuthContentTemplete';
 import { KAKAO_AUTH_URL } from '../data/Data';
 import NaverLogin from '../pages/User/Auth/NaverLogin';
+import Loading from './Loading';
 
 const LoginCard = () => {
     const navigate = useNavigate();
     const [isWebView, setIsWebView] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [loadingText, setLoadingText] = useState("");
     useEffect(() => {
         async function isAdmin() {
             const { data: response } = await axios.get('/api/auth', {
@@ -93,17 +96,7 @@ const LoginCard = () => {
             if (response.result <= 50) {//신규유저
                 navigate('/signup', { state: { id: objs.id, typeNum: objs.typeNum, profile_img: objs.profile_img, name: objs.name } })
             } else {
-                let params = {
-                    'login_type': objs.typeNum,
-                    'id': objs.id
-                }
-                if (window && window.flutter_inappwebview) {
-                    await window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(async function (result) {
-                        //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
-                        // JSON.parse(result)
-                        let obj = JSON.parse(result);
-                    });
-                }
+                
                 await localStorage.setItem('auth', JSON.stringify(response.data));
                 navigate('/mypage');
             }
@@ -114,17 +107,22 @@ const LoginCard = () => {
 
     const snsLogin = async (num) => {
         if (window && window.flutter_inappwebview) {
+            setLoading(true);
+            setLoadingText(num==1?'카카오 로그인 중입니다...':'')
             var params = { 'login_type': num };
             await window.flutter_inappwebview.callHandler('native_app_login', JSON.stringify(params)).then(async function (result) {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
                 // JSON.parse(result)
                 let obj = JSON.parse(result);
+
                 await onLoginBySns(obj.data);
             });
+            setLoading(false);
+
         } else {
-            if(num==1){
+            if (num == 1) {
                 window.location.href = KAKAO_AUTH_URL
-            }else{
+            } else {
                 alert('준비중입니다.');
             }
         }
@@ -133,35 +131,45 @@ const LoginCard = () => {
     return (
         <>
             <WrapperForm onSubmit={onLogin} id='login_form'>
-
-                <CategoryName>가입 정보로 로그인</CategoryName>
-                <Input placeholder='아이디를 입력해주세요.' type={'text'} className='id' onKeyPress={onKeyPressId} />
-                <Input placeholder='비밀번호를 입력해주세요.' type={'password'} className='pw' onKeyPress={onKeyPressPw} />
-                <FlexBox style={{ justifyContent: 'space-between', fontSize: '11px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <input type={'checkbox'} className='login-lock' style={{ border: '1px solid #000', outline: 'none', borderRadius: '0' }} />
-                        <div>로그인 상태 유지</div>
-                    </div>
-                    <div style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={() => navigate('/findmyinfo')}>
-                        아이디/비밀번호 찾기
-                    </div>
-                </FlexBox>
-                <Button onClick={onLogin}>로그인</Button>
-                <CategoryName style={{ marginTop: '36px' }}>SNS 간편 로그인</CategoryName>
-                <FlexBox>
-                    <SnsLogo src={kakao} onClick={() => snsLogin(1)} />
-                    {/* <NaverLogin snsLogin={snsLogin} onLoginBySns={onLoginBySns}/> */}
-                    {localStorage.getItem('is_ios') ?
-                        <>
-                            {isWebView ?
+                {loading ?
+                    <>
+                        <Loading text={loadingText} />
+                    </>
+                    :
+                    <>
+                        <CategoryName>가입 정보로 로그인</CategoryName>
+                        <Input placeholder='아이디를 입력해주세요.' type={'text'} className='id' onKeyPress={onKeyPressId} />
+                        <Input placeholder='비밀번호를 입력해주세요.' type={'password'} className='pw' onKeyPress={onKeyPressPw} />
+                        <FlexBox style={{ justifyContent: 'space-between', fontSize: '11px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <input type={'checkbox'} className='login-lock' style={{ border: '1px solid #000', outline: 'none', borderRadius: '0' }} />
+                                <div>로그인 상태 유지</div>
+                            </div>
+                            <div style={{ textDecoration: 'underline', cursor: 'pointer' }} onClick={() => navigate('/findmyinfo')}>
+                                아이디/비밀번호 찾기
+                            </div>
+                        </FlexBox>
+                        <Button onClick={onLogin}>로그인</Button>
+                        <CategoryName style={{ marginTop: '36px' }}>SNS 간편 로그인</CategoryName>
+                        <FlexBox>
+                            <SnsLogo src={kakao} onClick={() => snsLogin(1)} />
+                            {/* <NaverLogin snsLogin={snsLogin} onLoginBySns={onLoginBySns}/> */}
+                            {localStorage.getItem('is_ios') ?
                                 <>
-                                    {localStorage.getItem('dark_mode') ?
+                                    {isWebView ?
                                         <>
-                                            <SnsLogo src={apple} onClick={() => snsLogin(3)} />
+                                            {localStorage.getItem('dark_mode') ?
+                                                <>
+                                                    <SnsLogo src={apple} onClick={() => snsLogin(3)} />
+                                                </>
+                                                :
+                                                <>
+                                                    <SnsLogo src={appleDark} onClick={() => snsLogin(3)} />
+                                                </>
+                                            }
                                         </>
                                         :
                                         <>
-                                            <SnsLogo src={appleDark} onClick={() => snsLogin(3)} />
                                         </>
                                     }
                                 </>
@@ -169,18 +177,15 @@ const LoginCard = () => {
                                 <>
                                 </>
                             }
-                        </>
-                        :
-                        <>
-                        </>
-                    }
 
 
-                </FlexBox>
-                <CategoryName style={{ marginTop: '0', fontSize: '11px' }}>
-                    아직 weare 회원이 아니라면?<strong style={{ textDecoration: 'underline', cursor: 'pointer', marginLeft: '12px' }} onClick={() => { navigate('/signup') }}>회원가입</strong>
-                </CategoryName>
-                <Button style={{ marginTop: '36px' }} onClick={() => navigate('/appsetting')}>설정</Button>
+                        </FlexBox>
+                        <CategoryName style={{ marginTop: '0', fontSize: '11px' }}>
+                            아직 weare 회원이 아니라면?<strong style={{ textDecoration: 'underline', cursor: 'pointer', marginLeft: '12px' }} onClick={() => { navigate('/signup') }}>회원가입</strong>
+                        </CategoryName>
+                        <Button style={{ marginTop: '36px' }} onClick={() => navigate('/appsetting')}>설정</Button>
+                    </>}
+
             </WrapperForm>
         </>
     );
