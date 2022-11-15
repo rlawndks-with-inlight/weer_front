@@ -75,6 +75,14 @@ const Post = (props) => {
             setPostPk(params.pk || post_pk)
             setPostTable(params.table || post_table)
             const { data: response } = await axios.get(`/api/item?table=${params.table || post_table}&pk=${params.pk || post_pk}&views=1`);
+            if(response.result<0){
+                alert(response.message);
+                if(response.result==-150){
+                    navigate('/login')
+                }else{
+                    navigate(-1);
+                }
+            }
             let obj = response.data??{};
             obj.note = obj?.note.replaceAll('<p><br></p>','<br>');
             
@@ -102,7 +110,6 @@ const Post = (props) => {
             }
         }
         if ((params.table || post_table) != 'notice') {
-            myAuth();
         }
 
         fetchPost();
@@ -114,20 +121,7 @@ const Post = (props) => {
         })
         
     }, [])
-    const myAuth = async () => {
-        const { data: response } = await axios('/api/auth')
-        if (response.pk > 0 && response.user_level >= 0) {
-            setAuth(response);
-        } else {
-            if (response.user_level < 0) {
-                alert("접근 권한이 없습니다.");
-            }
-            if (response.pk < 0) {
-                alert("로그인이 필요한 서비스입니다.");
-            }
-            navigate('/login');
-        }
-    }
+    
     const fetchComments = async () => {
         const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk || post_pk}&category=${categoryToNumber(params.table || post_table)}`);
         setComments(response.data);

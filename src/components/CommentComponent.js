@@ -43,7 +43,9 @@ const CommentContent = (props) => {
                     effect="blur"
                     height={64}
                     src={item?.profile_img ? (item?.profile_img?.substring(0, 4) == 'http' ? item.profile_img : backUrl + item.profile_img) : defaultImg} // use normal <img> attributes as props
-                    width={64} />
+                    width={64} 
+                    style={{borderRadius:'50%'}}
+                    onError={defaultImg}/>
                 <div>
                     <div style={{ marginBottom: '6px', display: 'flex' }}><div style={{ marginRight: '6px' }}>{item.nickname}</div> <div style={{ color: theme.color.font3 }}>{item.date.substring(0, 16)}</div></div>
                     <div style={{ wordBreak: 'break-all', marginBottom: '6px', fontSize: theme.size.font3 }}>{item.note}</div>

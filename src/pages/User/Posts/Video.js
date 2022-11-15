@@ -100,6 +100,15 @@ const Video = () => {
         async function fetchPost() {
             setLoading(true)
             const { data: response } = await axios.get(`/api/getvideocontent?pk=${params.pk}&views=1`);
+            console.log(response)
+            if(response.result<0){
+                alert(response.message);
+                if(response.result==-150){
+                    navigate('/login')
+                }else{
+                    navigate(-1);
+                }
+            }
             let obj = response.data.video;
             obj.link = getIframeLinkByLink(obj.link);
             setPost(obj);
@@ -133,24 +142,10 @@ const Video = () => {
             setAuth(JSON.parse(localStorage.getItem('auth')));
 
         }
-        myAuth();
         fetchPost();
         fetchComments();
     }, [pathname])
-    const myAuth = async () => {
-        const { data: response } = await axios('/api/auth')
-        if (response.pk > 0 && response.user_level >= 0) {
-            setAuth(response);
-        } else {
-            if (response.user_level < 0) {
-                alert("접근 권한이 없습니다.");
-            }
-            if (response.pk < 0) {
-                alert("로그인이 필요한 서비스입니다.");
-            }
-            navigate('/login');
-        }
-    }
+    
     const fetchComments = async () => {
         const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk}&category=${categoryToNumber('video')}`);
         setComments(response.data);
