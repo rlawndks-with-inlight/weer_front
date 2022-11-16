@@ -13,7 +13,7 @@ import $ from 'jquery'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const CommentInputContent = (props) => {
-    const { addComment, parentPk, is_update, pk, updateComment } = props;
+    const { addComment, parentPk, pk, userPk, is_update,  updateComment } = props;
     return (
         <>
             <div style={{ border: `1px solid ${theme.color.font3}`, display: 'flex', flexDirection: 'column', padding: '16px' }}>
