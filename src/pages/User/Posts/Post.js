@@ -69,7 +69,20 @@ const Post = (props) => {
         }
     }
     useEffect(() => {
-
+        async function isLogined() {
+            await window.flutter_inappwebview.callHandler('native_app_logined', {}).then(async function (result) {
+              //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
+              // JSON.parse(result)
+              let obj = JSON.parse(result);
+              if (obj['is_ios']) {
+                await localStorage.setItem('is_ios', '1');
+              }
+              await onLoginBySns(obj.data);
+            });
+          }
+          if (window && window.flutter_inappwebview && !localStorage.getItem('auth')) {
+            isLogined();
+          }
         async function fetchPost() {
             setLoading(true)
             setPostPk(params.pk || post_pk)
@@ -121,7 +134,29 @@ const Post = (props) => {
         })
         
     }, [])
-    
+    const onLoginBySns = async (obj) => {
+        let nick = "";
+        if (obj.login_type == 1) {
+            nick = "카카오" + new Date().getTime();
+        } else if (obj.login_type == 2) {
+            nick = "네이버" + new Date().getTime();
+        }
+        let objs = {
+            id: obj.id,
+            name: obj.legal_name,
+            nickname: nick,
+            phone: obj.phone_number,
+            user_level: 0,
+            typeNum: obj.login_type,
+            profile_img: obj.profile_image_url
+        }
+        const { data: response } = await axios.post('/api/loginbysns', objs);
+        if (response.result > 0) {
+            await localStorage.setItem('auth', JSON.stringify(response.data));
+        } else {
+            //alert(response.message);
+        }
+    }
     const fetchComments = async () => {
         const { data: response } = await axios.get(`/api/getcommnets?pk=${params.pk || post_pk}&category=${categoryToNumber(params.table || post_table)}`);
         setComments(response.data);

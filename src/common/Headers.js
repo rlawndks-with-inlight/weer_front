@@ -12,6 +12,7 @@ import { MdNavigateBefore } from 'react-icons/md';
 import theme from '../styles/theme';
 import { IoMdArrowBack } from 'react-icons/io';
 import $ from 'jquery';
+import reactReferer from 'react-referer';
 const Header = styled.header`
 position:fixed;
 height:6rem;
@@ -143,7 +144,7 @@ const Headers = () => {
   const [lastAlarmePk, setLastAlarmPk] = useState(0);
   useEffect(() => {
 
-
+    
     if (location.pathname.substring(0, 6) == '/post/' || location.pathname.substring(0, 7) == '/video/' || location.pathname == '/appsetting') {
       setIsPost(true);
     } else {
@@ -168,24 +169,11 @@ const Headers = () => {
     } else {
 
     }
+
   }, [location])
 
 
   useEffect(() => {
-    async function isLogined() {
-      await window.flutter_inappwebview.callHandler('native_app_logined', {}).then(async function (result) {
-        //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
-        // JSON.parse(result)
-        let obj = JSON.parse(result);
-        if (obj['is_ios']) {
-          await localStorage.setItem('is_ios', '1');
-        }
-        await onLoginBySns(obj.data);
-      });
-    }
-    if (window && window.flutter_inappwebview) {
-      isLogined();
-    }
     async function getNoticeAndAlarmCount() {
       const { data: response } = await axios.get('/api/getnoticeandalarmlastpk');
       let response_obj = response?.data ?? { alarm_last_pk: 0, notice_last_pk: 0 };
@@ -215,29 +203,7 @@ const Headers = () => {
     getNoticeAndAlarmCount();
     
   }, [])
-  const onLoginBySns = async (obj) => {
-    let nick = "";
-    if (obj.login_type == 1) {
-        nick = "카카오" + new Date().getTime();
-    } else if (obj.login_type == 2) {
-        nick = "네이버" + new Date().getTime();
-    }
-    let objs = {
-        id: obj.id,
-        name: obj.legal_name,
-        nickname: nick,
-        phone: obj.phone_number,
-        user_level: 0,
-        typeNum: obj.login_type,
-        profile_img: obj.profile_image_url
-    }
-    const { data: response } = await axios.post('/api/loginbysns', objs);
-    if (response.result > 0) {
-        await localStorage.setItem('auth', JSON.stringify(response.data));
-    } else {
-        //alert(response.message);
-    }
-}
+ 
   // setInterval(() => {
   //   if (window.flutter_inappwebview) {
   //     window.flutter_inappwebview.callHandler('native_get_alarm_count', {}).then(async function (result) {
@@ -310,7 +276,6 @@ const Headers = () => {
     }else{
       navigate('/home');
     }
-    
   }
   return (
     <>

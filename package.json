@@ -41,6 +41,7 @@
     "react-naver-maps": "0.0.13",
     "react-quill-emoji": "^0.1.9",
     "react-redux": "^8.0.2",
+    "react-referer": "^1.0.1",
     "react-responsive": "^8.2.0",
     "react-router-dom": "^6.3.0",
     "react-router-sitemap": "^1.2.0",
