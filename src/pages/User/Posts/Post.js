@@ -109,6 +109,7 @@ const Post = (props) => {
                 $('body').addClass("dark-mode");
                 $('p').addClass("dark-mode");
                 $('.toastui-editor-contents p').attr("style", "color:#ffffff !important");
+                $('.toastui-editor-contents span').attr("style", "color:#ffffff !important");
                 $('.toastui-editor-contents h1').attr("style", "color:#ffffff !important");
                 $('.toastui-editor-contents h2').attr("style", "color:#ffffff !important");
                 $('.toastui-editor-contents h3').attr("style", "color:#ffffff !important");

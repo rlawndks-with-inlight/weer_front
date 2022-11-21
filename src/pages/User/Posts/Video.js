@@ -141,8 +141,13 @@ const Video = () => {
             if (localStorage.getItem('dark_mode')) {
                 $('body').addClass("dark-mode");
                 $('p').addClass("dark-mode");
-                $('.toastui-editor-contents p').attr("style", "color:#fff!important");
-                $('.toastui-editor-contents span').attr("style", "color:#fff!important");
+                $('.toastui-editor-contents p').attr("style", "color:#ffffff !important");
+                $('.toastui-editor-contents span').attr("style", "color:#ffffff !important");
+                $('.toastui-editor-contents h1').attr("style", "color:#ffffff !important");
+                $('.toastui-editor-contents h2').attr("style", "color:#ffffff !important");
+                $('.toastui-editor-contents h3').attr("style", "color:#ffffff !important");
+                $('.toastui-editor-contents h4').attr("style", "color:#ffffff !important");
+                $('.toastui-editor-contents h5').attr("style", "color:#ffffff !important");
                 $('.menu-container').addClass("dark-mode");
                 $('.header').addClass("dark-mode");
                 $('.select-type').addClass("dark-mode");
