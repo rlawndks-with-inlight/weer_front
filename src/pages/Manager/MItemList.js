@@ -118,7 +118,7 @@ const MItemList = () => {
         } else if (params.table == 'channel') {
             str = `/api/users?level=25&`
         } else if (params.table == 'user') {
-            str = `/api/users?${$('.user-type').val() >= 0 ? `userType=${$('.user-type').val()}&` : ''}`
+            str = `/api/users?${$('.user-type').val() >= 0 ? `userType=${$('.user-type').val()}&` : ''}${$('.user-level').val() == '#' ? '' : `userLevel=${$('.user-level').val()}&`}`
         } else if ((params.table == 'issue' || params.table == 'feature') && params.pk) {
             str = `/api/items?table=${params.table}&category_pk=${params.pk}&`
         } else if (params.table == 'comment') {
@@ -150,6 +150,9 @@ const MItemList = () => {
         changePage(1)
     }
     const onChangeUserType = (e) => {
+        changePage(1)
+    }
+    const onChangeUserLevel = (e) => {
         changePage(1)
     }
     const opTheTopItem = useCallback(async (pk, sort, schema) => {
@@ -279,6 +282,13 @@ const MItemList = () => {
                                             <option value={1}>카카오</option>
                                             <option value={2}>네이버</option>
                                             <option value={3}>애플</option>
+                                        </Select>
+                                        <Select className='user-level' style={{ margin: '12px 24px 12px 24px' }} onChange={onChangeUserLevel}>
+                                            <option value={'#'}>전체</option>
+                                            <option value={-10}>불량회원</option>
+                                            <option value={0}>일반회원</option>
+                                            <option value={30}>전문가</option>
+                                            <option value={40}>관리자</option>
                                         </Select>
                                     </>
                                     :
