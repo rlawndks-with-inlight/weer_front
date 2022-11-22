@@ -108,11 +108,12 @@ const Video = () => {
               await onLoginBySns(obj.data);
             });
           }
-          if (window && window.flutter_inappwebview && !localStorage.getItem('auth')) {
-            isLogined();
-          }
+          
         async function fetchPost() {
             setLoading(true)
+            if (window && window.flutter_inappwebview && !localStorage.getItem('auth')) {
+                await isLogined();
+            }
             const { data: response } = await axios.get(`/api/getvideocontent?pk=${params.pk}&views=1`);
             if(response.result<0){
                 alert(response.message);

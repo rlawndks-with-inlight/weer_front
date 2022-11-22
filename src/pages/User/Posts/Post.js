@@ -80,11 +80,12 @@ const Post = (props) => {
               await onLoginBySns(obj.data);
             });
           }
-          if (window && window.flutter_inappwebview && !localStorage.getItem('auth')) {
-            isLogined();
-          }
+          
         async function fetchPost() {
             setLoading(true)
+            if (window && window.flutter_inappwebview && !localStorage.getItem('auth')) {
+                await isLogined();
+            }
             setPostPk(params.pk || post_pk)
             setPostTable(params.table || post_table)
             const { data: response } = await axios.get(`/api/item?table=${params.table || post_table}&pk=${params.pk || post_pk}&views=1`);
