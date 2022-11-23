@@ -338,7 +338,7 @@ const Video = () => {
                                 </Slider>
                             </SliderDiv>
                         </Content>
-                        <ZoomButton/>
+                        {/* <ZoomButton/> */}
                         <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} updateComment={updateComment}/>
 
                     </>
