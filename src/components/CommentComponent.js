@@ -30,7 +30,7 @@ const CommentContent = (props) => {
     const { item, deleteComment, isReply, displayReplyInput, displayUpdateInput, updateCommentObj, updateComment } = props;
     return (
         <>
-            <div style={{ borderBottom: `1px solid ${theme.color.font3}`, display: 'flex', padding: '16px', fontSize: theme.size.font4, width: `${isReply ? '90%' : '100%'}`, margin: `${isReply ? '0 0 0 auto' : '0'}` }}>
+            <div style={{ borderBottom: `1px solid ${theme.color.font3}`, display: 'flex', padding: '16px', fontSize: theme.size.font4, width: `${isReply ? '80%' : '90%'}`, margin: `${isReply ? '0 0 0 auto' : '0'}` }}>
                 {isReply ?
                     <>
                         <TbArrowForward style={{ fontSize: theme.size.font2 }} />
