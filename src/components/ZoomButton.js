@@ -66,7 +66,7 @@ const ZoomButton = () => {
     }
     return (
         <>
-            {window.innerWidth <= 1000 ?
+            {/* {window.innerWidth <= 1000 ?
                 <>
                     <MinusButton onClick={onZoomOut} >
                         <AiOutlineMinus />
@@ -78,7 +78,7 @@ const ZoomButton = () => {
                 :
                 <>
                 </>
-            }
+            } */}
         </>
     )
 }
