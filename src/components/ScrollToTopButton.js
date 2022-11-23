@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 const Button = styled.div`
 position:fixed;
-right:6px;
+right:1rem;
 bottom:6rem;
 background:${props => props.theme.color.background1};
 padding:7px 8px 5px 8px;
@@ -59,7 +59,7 @@ const ScrollToTopButton = () => {
     }
     return (
         <>
-            <Button onClick={scrollToTop} style={{bottom:`${isPost?'2rem':'6rem'}`, display:`${display}`}}>
+            <Button onClick={scrollToTop} style={{bottom:`${isPost?'4rem':'6rem'}`, display:`${display}`}}>
                 <AiOutlineUp />
             </Button>
         </>
