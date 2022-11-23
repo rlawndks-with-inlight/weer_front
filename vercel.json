@@ -6,4 +6,4 @@
         "destination": "https://weare-first.com:8443/api/:path*"
       }
     ]
-  }
+}

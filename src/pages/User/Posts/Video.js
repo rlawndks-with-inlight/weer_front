@@ -20,8 +20,22 @@ import CommentComponent from "../../../components/CommentComponent";
 import MetaTag from "../../../components/MetaTag";
 import { BsFillShareFill } from 'react-icons/bs';
 import ZoomButton from "../../../components/ZoomButton";
-
-
+import youtubeIcon from '../../../assets/images/icon/youtube.svg'
+export const Img = styled.div`
+width: 700px;
+height: 525px;
+background:#fff;
+background-size: cover;
+background-repeat: no-repeat;
+background-position: center center;
+background-blend-mode: multiply;
+margin:2rem auto;
+display:flex;
+@media screen and (max-width:800px) {
+    width: 100%;
+    height: 67.5vw;
+}
+`
 const Iframe = styled.iframe`
 width: 100%;
 height: auto;
@@ -110,7 +124,7 @@ const Video = () => {
           }
           
         async function fetchPost() {
-            setLoading(true)
+            //setLoading(true)
             if (window && window.flutter_inappwebview && !localStorage.getItem('auth')) {
                 await isLogined();
             }
@@ -245,6 +259,16 @@ const Video = () => {
             alert("공유하기가 지원되지 않는 환경 입니다.")
         }
     }
+    const onClickYoutubeIcon = async () =>{
+        if (window && window.flutter_inappwebview ){
+            let obj = {url:`https://www.youtube.com/watch?v=${post.link}`,company:'com.google.android.youtube'};
+            await window.flutter_inappwebview.callHandler('native_app_open_youtube', obj).then(async function (result) {
+            
+            });
+        }else{
+            window.open(`https://www.youtube.com/watch?v=${post.link}`);
+        }
+    }
     return (
         <>
             <Wrappers className="post-container">
@@ -265,9 +289,13 @@ const Video = () => {
                             </div>
                         </div>
                         <Title not_arrow={true}>{post.title}</Title>
-                        <Iframe src={`https://www.youtube.com/embed/${post.link}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
+                        <Img style={{ backgroundImage: `url(${`https://img.youtube.com/vi/${post?.link}/0.jpg`})` }} alt="#">
+                            <img src={youtubeIcon} style={{width:'124px',height:'auto',margin:'auto',cursor:'pointer'}} onClick={onClickYoutubeIcon} />
+                        </Img>
 
-                        </Iframe>
+                        {/* <Iframe src={`https://www.youtube.com/embed/${post.link}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
+
+                        </Iframe> */}
                         <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post.hash}</div>
                         <ViewerContainer className="viewer" style={{margin:`${getViewerMarginByNumber(post?.note_align)}`}}>
                             <Viewer initialValue={post?.note ?? `<body></body>`} />
