@@ -42,7 +42,7 @@ const CommentContent = (props) => {
                     alt={item.nickname}
                     effect="blur"
                     height={64}
-                    src={item?.profile_img ? (item?.profile_img?.substring(0, 4) == 'http' ? item.profile_img : backUrl + item.profile_img) : defaultImg} // use normal <img> attributes as props
+                    src={item?.profile_img ? (item?.profile_img?.substring(0, 4) == 'http' ? item.profile_img.replaceAll('http://','https://') : backUrl + item.profile_img) : defaultImg} // use normal <img> attributes as props
                     width={64} 
                     style={{borderRadius:'50%'}}
                     onError={defaultImg}/>
