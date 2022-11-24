@@ -46,6 +46,8 @@ const MNoticeEdit = () => {
                 $(`.title`).val(response.data.title);
                 $('.note-align').val(response.data.note_align);
                 editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001', backUrl));
+                editorRef.current.getInstance().setHTML(response.data.video.note.replaceAll('https://weare-first.com:8443', backUrl));
+
                 $('br').removeClass('ProseMirror-trailingBreak');
             }
         }

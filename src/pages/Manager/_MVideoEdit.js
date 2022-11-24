@@ -91,6 +91,7 @@ const MVideoEdit = () => {
                 }
                 setRelatePkList(relate_pk_list)
                 editorRef.current.getInstance().setHTML(response.data.video.note.replaceAll('http://localhost:8001', backUrl));
+                editorRef.current.getInstance().setHTML(response.data.video.note.replaceAll('https://weare-first.com:8443', backUrl));
             } else {
                 $('.font-color').val(cardDefaultColor.font)
                 $('.background-color').val(cardDefaultColor.background)

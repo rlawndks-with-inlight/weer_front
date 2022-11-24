@@ -88,6 +88,8 @@ const MItemEdit = () => {
                     $(`.category`).val(response.data.category_pk);
                 }
                 editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001', backUrl));
+                editorRef.current.getInstance().setHTML(response.data.video.note.replaceAll('https://weare-first.com:8443', backUrl));
+
                 $('br').removeClass('ProseMirror-trailingBreak');
                 setUrl(backUrl + response.data.main_img);
                 if (needTwoImage.includes(params.table)) setUrl2(backUrl + response.data.second_img);

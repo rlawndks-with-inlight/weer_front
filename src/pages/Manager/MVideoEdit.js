@@ -66,6 +66,8 @@ const MVideoEdit = () => {
                 }
                 $('.relate').val(relate_str);
                 obj.note = obj?.note.replaceAll('http://localhost:8001', backUrl);
+                obj.note = obj?.note.replaceAll('https://weare-first.com:8443', backUrl);
+                
                 editorRef.current.getInstance().setHTML(obj.note);
                 $('br').removeClass('ProseMirror-trailingBreak');
                 

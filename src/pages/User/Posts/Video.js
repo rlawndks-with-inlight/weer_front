@@ -139,6 +139,8 @@ const Video = () => {
             }
             let obj = response.data.video;
             obj.link = getIframeLinkByLink(obj.link);
+            obj.note = obj?.note.replaceAll('http://localhost:8001',backUrl);
+            obj.note = obj?.note.replaceAll('https://weare-first.com:8443',backUrl);
             setPost(obj);
             let relate_list = response.data?.relates ?? [];
             for (var i = 0; i < relate_list.length; i++) {
