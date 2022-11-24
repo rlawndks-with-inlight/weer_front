@@ -291,13 +291,13 @@ const Video = () => {
                             </div>
                         </div>
                         <Title not_arrow={true}>{post.title}</Title>
-                        <Img style={{ backgroundImage: `url(${`https://img.youtube.com/vi/${post?.link}/0.jpg`})` }} alt="#">
+                        {/* <Img style={{ backgroundImage: `url(${`https://img.youtube.com/vi/${post?.link}/0.jpg`})` }} alt="#">
                             <img src={youtubeIcon} style={{width:'124px',height:'auto',margin:'auto',cursor:'pointer'}} onClick={onClickYoutubeIcon} />
-                        </Img>
+                        </Img> */}
 
-                        {/* <Iframe src={`https://www.youtube.com/embed/${post.link}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
+                        <Iframe src={`https://www.youtube.com/embed/${post.link}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
 
-                        </Iframe> */}
+                        </Iframe>
                         <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post.hash}</div>
                         <ViewerContainer className="viewer" style={{margin:`${getViewerMarginByNumber(post?.note_align)}`}}>
                             <Viewer initialValue={post?.note ?? `<body></body>`} />
