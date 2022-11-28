@@ -83,22 +83,22 @@ const MItemEdit = () => {
                 $('.font-color').val(response.data.font_color)
                 $('.background-color').val(response.data.background_color)
                 $('.note-align').val(response.data.note_align);
-
                 if (params.table == 'issue' || params.table == 'feature') {
                     $(`.category`).val(response.data.category_pk);
                 }
                 editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001', backUrl));
-                editorRef.current.getInstance().setHTML(response.data.video.note.replaceAll('https://weare-first.com:8443', backUrl));
+                editorRef.current.getInstance().setHTML(response.data.note.replaceAll('https://weare-first.com:8443', backUrl));
 
                 $('br').removeClass('ProseMirror-trailingBreak');
                 setUrl(backUrl + response.data.main_img);
-                if (needTwoImage.includes(params.table)) setUrl2(backUrl + response.data.second_img);
+                console.log(backUrl + response.data.main_img)
+                if (needTwoImage.includes(params.table)){
+                    setUrl2(backUrl + response.data.second_img);  
+                } 
                 setItem(response.data)
             } else {
-
                 $('.font-color').val(cardDefaultColor.font)
                 $('.background-color').val(cardDefaultColor.background)
-
             }
 
         }

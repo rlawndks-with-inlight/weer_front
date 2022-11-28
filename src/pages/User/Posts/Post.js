@@ -130,7 +130,7 @@ const Post = (props) => {
 
         fetchPost();
         fetchComments();
-
+        $('.lazy-load-image-background').addClass('comment-img');
         window.addEventListener('scroll', function (el) {
             let per = Math.floor(($(window).scrollTop() / ($(document).height() - $(window).height())) * 100);
             setPercent(per);
@@ -156,6 +156,7 @@ const Post = (props) => {
         const { data: response } = await axios.post('/api/loginbysns', objs);
         if (response.result > 0) {
             await localStorage.setItem('auth', JSON.stringify(response.data));
+            setAuth(response.data);
         } else {
             //alert(response.message);
         }
@@ -241,7 +242,7 @@ const Post = (props) => {
                             <Viewer initialValue={post?.note ?? `<body></body>`} />
                         </ViewerContainer>
                         {/* <ZoomButton/> */}
-                        <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} updateComment={updateComment} />
+                        <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} updateComment={updateComment} auth={auth} />
 
                     </>}
 

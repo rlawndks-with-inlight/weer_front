@@ -18,6 +18,7 @@ import ThemeCard from '../../components/ThemeCard'
 import VideoCard from '../../components/VideoCard';
 import Loading from '../../components/Loading';
 import $ from 'jquery';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 const Dot = styled.div`
   width: 15px;
   height: 15px;
@@ -56,7 +57,6 @@ const Home = () => {
         setPosts(zTalk[0].image_list);
         async function fetchPost() {
             setLoading(true)
-
             const { data: response } = await axios.get('/api/gethomecontent')
             setSetting(response.data.setting);
             setMasters(response.data.masters)
@@ -72,15 +72,16 @@ const Home = () => {
             }
             setVideos(video_list);
             setTimeout(() => setLoading(false), 1000);
+            $('span.lazy-load-image-background').addClass('width-100');
         }
         fetchPost();
-        async function isLogined(){
-            await window.flutter_inappwebview.callHandler('native_app_logined',{}).then(async function (result) {
+        async function isLogined() {
+            await window.flutter_inappwebview.callHandler('native_app_logined', {}).then(async function (result) {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
                 // JSON.parse(result)
                 let obj = JSON.parse(result);
-                if(obj['is_ios']){
-                    await localStorage.setItem('is_ios','1');
+                if (obj['is_ios']) {
+                    await localStorage.setItem('is_ios', '1');
                 }
                 await onLoginBySns(obj.data);
             });
@@ -88,7 +89,7 @@ const Home = () => {
         if (window && window.flutter_inappwebview) {
             isLogined();
         }
-       
+
         // let observer = new IntersectionObserver((e)=>{
         //     e.forEach((box)=>{
         //         console.log(box)
@@ -111,7 +112,7 @@ const Home = () => {
         const { data: response } = await axios.get(str);
         setStrategies(response?.data)
     }
-    
+
     /*
     const snsLogin = () => {
         if (window && window.flutter_inappwebview) {
@@ -158,10 +159,11 @@ const Home = () => {
                     :
                     <>
                         <Content>
-                            <img src={backUrl + setting?.main_img} alt="#" style={{ width: '100%', maxWidth: '500px', margin: '0 auto',minHeight:'30vh' }} />
+                            <img src={backUrl + setting?.main_img} alt="#" style={{ width: '100%', maxWidth: '500px', margin: '0 auto', minHeight: '30vh' }} />
+                           
                         </Content>
                         <Title className='pointer' link={'/onewordlist'}>하루 1단어</Title>
-                        <Content onClick={() => { navigate(`/post/oneword/${oneWord?.pk}`) }} className='pointer' style={{minHeight:'40px'}}>
+                        <Content onClick={() => { navigate(`/post/oneword/${oneWord?.pk}`) }} className='pointer' style={{ minHeight: '40px' }}>
                             <div >{oneWord?.title ?? ""}</div>
                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneWord?.hash ?? ""}</div>
                         </Content>
@@ -170,8 +172,13 @@ const Home = () => {
                             <WrapDiv>
                                 {issues.map((item, idx) => (
                                     <>
-                                        <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} className='pointer' style={{color: `${item?.font_color}`, background: `${item?.background_color}`}}>
-                                            <Img src={backUrl + item?.main_img} alt="#" />
+                                        <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} className='pointer' style={{ color: `${item?.font_color}`, background: `${item?.background_color}` }}>
+                                            <LazyLoadImage
+                                                alt={"#"}
+                                                effect="blur"
+                                                src={backUrl + item?.main_img}
+                                                className='card-img' />
+                                            {/* <Img src={backUrl + item?.main_img} alt="#" /> */}
                                             <div style={{ padding: '16px 16px 0 16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
                                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
                                         </Card>
@@ -184,7 +191,11 @@ const Home = () => {
                                     {issues.map((item, idx) => (
                                         <>
                                             <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
-                                                <Img src={backUrl + item?.main_img} alt="#" />
+                                            <LazyLoadImage
+                                                alt={"#"}
+                                                effect="blur"
+                                                src={backUrl + item?.main_img}
+                                                className='card-img' />
                                                 <div style={{ padding: '16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
                                                 <div style={{ fontSize: `${theme.size.font4}`, padding: '8px 16px', height: '50px' }}>{item?.hash}</div>
                                             </Card>
@@ -200,13 +211,13 @@ const Home = () => {
                         </Content> */}
                         <Title link={'/masterlist'} className='pointer'>전문가 칼럼</Title>
 
-                        <SelectSubType className='subtype-container' style={{ marginBottom: '16px',background:`${localStorage.getItem('dark_mode')?'#222':'#fff'}` }}>
-                            <SubType style={{ borderBottom: `2px solid ${0 == subTypeNum ? (theme.color.background1) : (localStorage.getItem('dark_mode')?'#222':'#fff')}`, fontWeight: `${0 == subTypeNum ? 'bold' : 'normal'}` }} onClick={() => { onChangeStrategyNum(0, 0) }}>
+                        <SelectSubType className='subtype-container' style={{ marginBottom: '16px', background: `${localStorage.getItem('dark_mode') ? '#222' : '#fff'}` }}>
+                            <SubType style={{ borderBottom: `2px solid ${0 == subTypeNum ? (theme.color.background1) : (localStorage.getItem('dark_mode') ? '#222' : '#fff')}`, fontWeight: `${0 == subTypeNum ? 'bold' : 'normal'}` }} onClick={() => { onChangeStrategyNum(0, 0) }}>
                                 All
                             </SubType>
                             {masters && masters.map((item, index) => (
                                 <>
-                                    <SubType style={{ borderBottom: `2px solid ${index + 1 == subTypeNum ? (theme.color.background1) : (localStorage.getItem('dark_mode')?'#222':'#fff')}`, fontWeight: `${index + 1 == subTypeNum ? 'bold' : 'normal'}` }} onClick={() => { onChangeStrategyNum(index + 1, item.pk) }}>
+                                    <SubType style={{ borderBottom: `2px solid ${index + 1 == subTypeNum ? (theme.color.background1) : (localStorage.getItem('dark_mode') ? '#222' : '#fff')}`, fontWeight: `${index + 1 == subTypeNum ? 'bold' : 'normal'}` }} onClick={() => { onChangeStrategyNum(index + 1, item.pk) }}>
                                         {item.nickname}
                                     </SubType>
                                 </>
@@ -224,8 +235,12 @@ const Home = () => {
                             <WrapDiv>
                                 {features.map((item, idx) => (
                                     <>
-                                        <Card onClick={() => navigate(`/post/feature/${item?.pk}`)} style={{color: `${item?.font_color}`, background: `${item?.background_color}`}}>
-                                            <Img src={backUrl + item?.main_img} alt="#" />
+                                        <Card onClick={() => navigate(`/post/feature/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}` }}>
+                                            <LazyLoadImage
+                                                alt={"#"}
+                                                effect="blur"
+                                                src={backUrl + item?.main_img}
+                                                className='card-img' />
                                             <div style={{ padding: '16px 16px 0 16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
                                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
                                         </Card>
@@ -238,7 +253,12 @@ const Home = () => {
                                     {features.map((item, idx) => (
                                         <>
                                             <Card onClick={() => navigate(`/post/feature/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
-                                                <Img src={backUrl + item?.main_img} alt="#" />
+                                                
+                                                <LazyLoadImage
+                                                alt={"#"}
+                                                effect="blur"
+                                                src={backUrl + item?.main_img}
+                                                className='card-img' />
                                                 <div style={{ padding: '16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
                                                 <div style={{ fontSize: `${theme.size.font4}`, padding: '8px 16px', height: '50px' }}>{item?.hash}</div>
                                             </Card>
@@ -252,8 +272,13 @@ const Home = () => {
                             <WrapDiv>
                                 {themes.map((item, idx) => (
                                     <>
-                                        <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{color: `${item?.font_color}`, background: `${item?.background_color}`}}>
-                                            <Img src={backUrl + item?.main_img} alt="#" />
+                                        <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}` }}>
+                                           
+                                            <LazyLoadImage
+                                                alt={"#"}
+                                                effect="blur"
+                                                src={backUrl + item?.main_img}
+                                                className='card-img' />
                                             <div style={{ padding: '16px 16px 0 16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
                                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
                                         </Card>
@@ -266,7 +291,11 @@ const Home = () => {
                                     {themes.map((item, idx) => (
                                         <>
                                             <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
-                                                <Img src={backUrl + item?.main_img} alt="#" />
+                                                <LazyLoadImage
+                                                alt={"#"}
+                                                effect="blur"
+                                                src={backUrl + item?.main_img}
+                                                className='card-img' />
                                                 <div style={{ padding: '16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
                                                 <div style={{ fontSize: `${theme.size.font4}`, padding: '8px 16px', height: '50px' }}>{item?.hash}</div>
                                             </Card>
@@ -275,7 +304,7 @@ const Home = () => {
                                 </Slider>
                             </SliderDiv>
                         </Content>
-                        
+
                         <Title link={'/videolist'}>핵심 비디오</Title>
                         <Content>
                             <WrapDiv>

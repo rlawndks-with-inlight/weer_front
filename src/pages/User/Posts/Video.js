@@ -179,6 +179,7 @@ const Video = () => {
         }
         fetchPost();
         fetchComments();
+        
     }, [pathname])
     const onLoginBySns = async (obj) => {
         let nick = "";
@@ -199,6 +200,8 @@ const Video = () => {
         const { data: response } = await axios.post('/api/loginbysns', objs);
         if (response.result > 0) {
             await localStorage.setItem('auth', JSON.stringify(response.data));
+            setAuth(response.data);
+
         } else {
             //alert(response.message);
         }
@@ -341,7 +344,7 @@ const Video = () => {
                             </SliderDiv>
                         </Content>
                         {/* <ZoomButton/> */}
-                        <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} updateComment={updateComment}/>
+                        <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} updateComment={updateComment} auth={auth}/>
 
                     </>
                 }

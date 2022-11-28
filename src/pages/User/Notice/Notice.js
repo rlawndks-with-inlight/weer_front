@@ -160,7 +160,7 @@ const Notice = () => {
                             <Viewer initialValue={post?.note ?? `<body></body>`} />
                         </ViewerContainer>
                         {/* <ZoomButton /> */}
-                        <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} updateComment={updateComment} />
+                        <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} updateComment={updateComment} auth={auth} />
                         <Progress value={`${percent}`} max="100"></Progress>
                     </>
                 }

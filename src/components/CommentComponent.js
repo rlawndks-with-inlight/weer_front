@@ -13,7 +13,7 @@ import $ from 'jquery'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const CommentInputContent = (props) => {
-    const { addComment, parentPk, pk, userPk, is_update,  updateComment } = props;
+    const { addComment, parentPk, pk, userPk, is_update, updateComment } = props;
     return (
         <>
             <div style={{ border: `1px solid ${theme.color.font3}`, display: 'flex', flexDirection: 'column', padding: '16px' }}>
@@ -27,7 +27,8 @@ const CommentInputContent = (props) => {
     )
 }
 const CommentContent = (props) => {
-    const { item, deleteComment, isReply, displayReplyInput, displayUpdateInput, updateCommentObj, updateComment } = props;
+    const { item, deleteComment, isReply, displayReplyInput, displayUpdateInput, updateCommentObj, updateComment, auth } = props;
+    
     return (
         <>
             <div style={{ borderBottom: `1px solid ${theme.color.font3}`, display: 'flex', padding: '16px', fontSize: theme.size.font4, width: `${isReply ? '80%' : '90%'}`, margin: `${isReply ? '0 0 0 auto' : '0'}` }}>
@@ -42,22 +43,22 @@ const CommentContent = (props) => {
                     alt={item.nickname}
                     effect="blur"
                     height={64}
-                    src={item?.profile_img ? (item?.profile_img?.substring(0, 4) == 'http' ? item.profile_img.replaceAll('http://','https://') : backUrl + item.profile_img) : defaultImg} // use normal <img> attributes as props
-                    width={64} 
-                    style={{borderRadius:'50%'}}
-                    onError={defaultImg}/>
-                <div>
+                    width={64}
+                    src={item?.profile_img ? (item?.profile_img?.substring(0, 4) == 'http' ? item.profile_img.replaceAll("http://", "https://") : backUrl + item.profile_img) : defaultImg} // use normal <img> attributes as props
+                    style={{ borderRadius: '50%'}}
+                    onError={defaultImg} />
+                <div style={{marginLeft:'16px'}}>
                     <div style={{ marginBottom: '6px', display: 'flex' }}><div style={{ marginRight: '6px' }}>{item.nickname}</div> <div style={{ color: theme.color.font3 }}>{item.date.substring(0, 16)}</div></div>
                     <div style={{ wordBreak: 'break-all', marginBottom: '6px', fontSize: theme.size.font3 }}>{item.note}</div>
                     <div style={{ display: 'flex' }}>
-                        {!isReply && localStorage.getItem('auth') && JSON.parse(localStorage.getItem('auth'))?.user_level >= 0 ?
+                        {!isReply && ((localStorage.getItem('auth') && JSON.parse(localStorage.getItem('auth'))?.user_level >= 0) || (auth && auth?.user_level >= 0)) ?
                             <>
                                 <div style={{ marginRight: '6px', cursor: 'pointer' }} onClick={displayReplyInput}>답글</div>
                             </>
                             :
                             <>
                             </>}
-                        {JSON.parse(localStorage.getItem('auth'))?.pk == item.user_pk || JSON.parse(localStorage.getItem('auth'))?.user_level >= 40 ?
+                        {(JSON.parse(localStorage.getItem('auth'))?.pk == item.user_pk || JSON.parse(localStorage.getItem('auth'))?.user_level >= 40) || (auth?.pk == item.user_pk || auth?.user_level >= 40) ?
                             <>
 
                                 <div style={{ marginRight: '6px', cursor: 'pointer' }} onClick={() => displayUpdateInput(item.pk)}>수정</div>
@@ -83,7 +84,7 @@ const CommentContent = (props) => {
     )
 }
 const CommentComponent = (props) => {
-    const { data, addComment, updateComment, fetchComments } = props;
+    const { data, addComment, updateComment, fetchComments, auth } = props;
     const [zComment, setZComment] = useState([]);
     const [updateCommentObj, setUpdateCommentObj] = useState([]);
     const [replyObj, setreplyObj] = useState({});
@@ -157,7 +158,7 @@ const CommentComponent = (props) => {
 
             <Content style={{ marginTop: '32px' }}>
                 <div style={{ color: `${theme.color.font3}`, display: 'flex', alignItems: 'center', fontSize: theme.size.font4, marginBottom: '8px' }}><ImBubble2 style={{ marginRight: '4px' }} /><div><div>{commarNumber(data.length ?? 0)}</div></div></div>
-                {JSON.parse(localStorage.getItem('auth'))?.pk > 0 ?
+                {JSON.parse(localStorage.getItem('auth'))?.pk || auth?.pk > 0 ?
                     <>
                         <CommentInputContent addComment={addComment} parentPk={0} />
                     </>
@@ -173,7 +174,7 @@ const CommentComponent = (props) => {
                     <>
                         {zComment.map((item, index) => (
                             <>
-                                <CommentContent item={item} deleteComment={deleteComment} isReply={false} displayReplyInput={() => displayReplyInput(item.pk)} displayUpdateInput={displayUpdateInput} updateCommentObj={updateCommentObj} updateComment={updateComment} />
+                                <CommentContent auth={auth} item={item} deleteComment={deleteComment} isReply={false} displayReplyInput={() => displayReplyInput(item.pk)} displayUpdateInput={displayUpdateInput} updateCommentObj={updateCommentObj} updateComment={updateComment} />
 
                                 {item?.reply_display ?
                                     <>
@@ -187,7 +188,7 @@ const CommentComponent = (props) => {
                                     <>
                                         {replyObj[item?.pk].map((itm, idx) => (
                                             <>
-                                                <CommentContent item={itm} deleteComment={deleteComment} isReply={true} displayUpdateInput={displayUpdateInput} updateCommentObj={updateCommentObj} updateComment={updateComment} />
+                                                <CommentContent auth={auth} item={itm} deleteComment={deleteComment} isReply={true} displayUpdateInput={displayUpdateInput} updateCommentObj={updateCommentObj} updateComment={updateComment} />
                                             </>
                                         ))}
                                     </>

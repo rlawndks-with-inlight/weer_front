@@ -1,3 +1,4 @@
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { backUrl, needTwoImage } from "../data/Data";
@@ -66,7 +67,11 @@ const ThemeCard = (props) => {
     return (
         <>
             <Card onClick={() => navigate(`/post/${props.category}/${props.item?.pk}`)}>
-                <Img src={backUrl + `${needTwoImage.includes(props.category) ? props.item?.second_img : props.item?.main_img}`} alt="#" />
+                <LazyLoadImage
+                    alt={"#"}
+                    effect="blur"
+                    src={backUrl + `${needTwoImage.includes(props.category) ? props.item?.second_img : props.item?.main_img}`}
+                    className='theme-img' />
                 <TextContainer>
                     <Title> {props.item?.title ?? ""}</Title>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
