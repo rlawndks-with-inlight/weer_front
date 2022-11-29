@@ -79,11 +79,11 @@ const MAlarmEdit = () => {
     };
 
     const editItem = async () => {
-        if (!$(`.title`).val() || !$(`.note`).val() || (typeNum == 1 && (!$(`.start-date`).val() || selectDaysList.length == 0 || !$(`.time`).val()))) {
+        if (!$(`.title`).val() || !$(`.note`).val() || ((typeNum == 1 || typeNum == 2) && (!$(`.start-date`).val() || (typeNum == 1 && selectDaysList.length == 0) || !$(`.time`).val()))) {
             alert('필요값이 비어있습니다.');
-        } else if($(`.url`).val().includes('weare-first.com')){
+        } else if ($(`.url`).val().includes('weare-first.com')) {
             alert("도메인을 제외한 뒤에 uri만 입력해 주세요. \n ex) 'masterlist'");
-        }else {
+        } else {
             let obj = {
                 title: $('.title').val(),//제목
                 note: $(`.note`).val(),//내용
@@ -149,6 +149,10 @@ const MAlarmEdit = () => {
                                         <input type={'radio'} name='alarm-type' id='alarm-1' value={1} checked={typeNum == 1} onChange={handleClickType} />
                                         <label for='alarm-1'>스케줄링</label>
                                     </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', margin: '0 8px 8px 0' }}>
+                                        <input type={'radio'} name='alarm-type' id='alarm-2' value={2} checked={typeNum == 2} onChange={handleClickType} />
+                                        <label for='alarm-2'>예약발송</label>
+                                    </div>
                                 </Row>
                             </Col>
                         </Row>
@@ -189,6 +193,17 @@ const MAlarmEdit = () => {
                                         <Input type={'time'} className='time' />
                                     </Col>
                                 </Row>
+                            </>
+                            :
+                            <>
+                            </>
+                        }
+                        {typeNum == 2 ?
+                            <>
+                                <Title>발송할 날짜</Title>
+                                <Input type={'date'} className='start-date' />
+                                <Title>발송할 시간 (5분 단위 추천)</Title>
+                                <Input type={'time'} className='time' />
                             </>
                             :
                             <>

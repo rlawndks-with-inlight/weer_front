@@ -28,13 +28,13 @@ margin-bottom:6px;
 const ItemTypes = { CARD: 'card' }
 
 const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTopItem, changeItemSequence, deleteItem }) => {
-    const notUseCard = ['all','user_statistics'];
+    const notUseCard = ['all', 'user_statistics'];
     const navigate = useNavigate();
     const ref = useRef(null)
     const [status, setStatus] = useState(data?.status);
-    useEffect(()=>{
-        $('.manager-data-tr > td').css('word-break','break-all');
-    },[])
+    useEffect(() => {
+        $('.manager-data-tr > td').css('word-break', 'break-all');
+    }, [])
     const [{ handlerId }, drop] = useDrop({
         accept: ItemTypes.CARD,
         drop(item) {
@@ -46,7 +46,7 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
             }
         },
         hover(item, monitor) {
-            if(notUseCard.includes(schema))return;
+            if (notUseCard.includes(schema)) return;
             if (!ref.current) {
                 return
             }
@@ -233,9 +233,15 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
                         {col.type == 'alarm_type' ?
                             <>
                                 <Td style={{ width: `${col.width}%` }}>
+                                    {data[`${col.column}`] == 0 ?
+                                        '즉시실행' :
+                                        ''}
                                     {data[`${col.column}`] == 1 ?
                                         '스케줄링' :
-                                        '즉시실행'}
+                                        ''}
+                                    {data[`${col.column}`] == 2 ?
+                                        '예약발송' :
+                                        ''}
                                 </Td>
                             </>
                             :
