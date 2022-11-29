@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { formatPhoneNumber, regExp } from "../functions/utils";
 import defaultImg from '../assets/images/icon/default-profile.png';
 import { backUrl } from "../data/Data";
-
+import imageCompression from 'browser-image-compression';
 
 const Type = styled.div`
 width:50%;
@@ -103,10 +103,23 @@ const EditMyInfoCard = () => {
             setTypeNum(num);
         }
     }
-    const addFile = (e) => {
+    const addFile = async (e) => {
         if (e.target.files[0]) {
-            setContent(e.target.files[0]);
-            setUrl(URL.createObjectURL(e.target.files[0]))
+            const options = { 
+                maxSizeMB: 2, 
+                maxWidthOrHeight: 64
+            }
+            try{
+                const compressedFile = await imageCompression(e.target.files[0], options);
+                const promise = imageCompression.getDataUrlFromFile(compressedFile);
+                promise.then(result => {
+                    setUrl(result);
+                })
+                setContent(compressedFile);
+            }catch(err){
+                console.log(err);
+            }
+            
         }
     };
     const onSave = async (num) => {
