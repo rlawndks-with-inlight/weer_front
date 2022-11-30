@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Title, Wrappers, ViewerContainer } from "../../../components/elements/UserContentTemplete";
-import { backUrl } from "../../../data/Data";
+import { axiosInstance, backUrl } from "../../../data/Data";
 import theme from "../../../styles/theme";
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import $ from 'jquery'
@@ -49,30 +49,45 @@ const Notice = () => {
     useEffect(() => {
         async function fetchPost() {
             setLoading(true)
-            const { data: response } = await axios.get(`/api/item?table=notice&pk=${params.pk}&views=1`)
-            let obj = response.data;
-            obj.note = obj?.note.replaceAll('http://localhost:8001',backUrl);
-            obj.note = obj?.note.replaceAll('https://weare-first.com:8443',backUrl);
-            setPost(obj);
-            await new Promise((r) => setTimeout(r, 100));
-            setTimeout(() => setLoading(false), 1000);
-            await new Promise((r) => setTimeout(r, 1200));
-            if (localStorage.getItem('dark_mode')) {
-                $('body').addClass("dark-mode");
-                $('p').addClass("dark-mode");
-                $('.toastui-editor-contents p').attr("style", "color:#ffffff !important");
-                $('.toastui-editor-contents span').attr("style", "color:#ffffff !important");
-                $('.toastui-editor-contents h1').attr("style", "color:#ffffff !important");
-                $('.toastui-editor-contents h2').attr("style", "color:#ffffff !important");
-                $('.toastui-editor-contents h3').attr("style", "color:#ffffff !important");
-                $('.toastui-editor-contents h4').attr("style", "color:#ffffff !important");
-                $('.toastui-editor-contents h5').attr("style", "color:#ffffff !important");
-                $('.menu-container').addClass("dark-mode");
-                $('.header').addClass("dark-mode");
-                $('.select-type').addClass("dark-mode");
-                $('.wrappers > .viewer > p').addClass("dark-mode");
-                $('.footer').addClass("dark-mode");
-                $('.viewer > div > div > div > p').addClass("dark-mode");
+            try {
+                const { data: response } = await axiosInstance.get(`/api/item?table=notice&pk=${params.pk}&views=1`)
+                if (response.result < 0) {
+                    if (response.result == -150) {
+                    } else {
+                        alert(response.message);
+                        navigate(-1);
+                    }
+                }
+                let obj = response.data;
+                obj.note = obj?.note.replaceAll('http://localhost:8001', backUrl);
+                obj.note = obj?.note.replaceAll('https://weare-first.com:8443', backUrl);
+                setPost(obj);
+                await new Promise((r) => setTimeout(r, 100));
+                setTimeout(() => setLoading(false), 1000);
+                await new Promise((r) => setTimeout(r, 1200));
+                if (localStorage.getItem('dark_mode')) {
+                    $('body').addClass("dark-mode");
+                    $('p').addClass("dark-mode");
+                    $('.toastui-editor-contents p').attr("style", "color:#ffffff !important");
+                    $('.toastui-editor-contents span').attr("style", "color:#ffffff !important");
+                    $('.toastui-editor-contents h1').attr("style", "color:#ffffff !important");
+                    $('.toastui-editor-contents h2').attr("style", "color:#ffffff !important");
+                    $('.toastui-editor-contents h3').attr("style", "color:#ffffff !important");
+                    $('.toastui-editor-contents h4').attr("style", "color:#ffffff !important");
+                    $('.toastui-editor-contents h5').attr("style", "color:#ffffff !important");
+                    $('.menu-container').addClass("dark-mode");
+                    $('.header').addClass("dark-mode");
+                    $('.select-type').addClass("dark-mode");
+                    $('.wrappers > .viewer > p').addClass("dark-mode");
+                    $('.footer').addClass("dark-mode");
+                    $('.viewer > div > div > div > p').addClass("dark-mode");
+                }
+            } catch (err) {
+                if (err?.message?.includes('timeout of')) {
+                    if (window.confirm('요청시간이 초과되었습니다. (인터넷 환경을 확인해주시기 바랍니다.)')) {
+
+                    }
+                }
             }
         }
         myAuth();
@@ -96,7 +111,7 @@ const Notice = () => {
                 alert("접근 권한이 없습니다.");
                 navigate(-1);
             }
-            
+
         }
     }
     const addComment = async (parent_pk) => {

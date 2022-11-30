@@ -17,6 +17,7 @@ import thumbActiveImg from '../assets/images/icon/thumb-active.svg';
 import logo from '../assets/images/test/logo.svg'
 import { EditorState } from "draft-js"
 import theme from '../styles/theme';
+import axios from 'axios';
 
 export const frontUrl = "https://weare-first.com";
 export const backUrl = "https://purplevery6.cafe24.com:8443";
@@ -41,7 +42,10 @@ export const zBottomMenu = [
     { name: '공지사항', link: '/noticelist', icon: <img src={localStorage.getItem('dark_mode') ? talkWhiteImg : talkImg} className='menu-icon' alt="#" />, activeIcon: <img src={talkActiveImg} className='menu-icon' alt="#" />, allowList: ['/noticelist'] }
 ];
 
-
+export const axiosInstance = axios.create({
+    baseURL: `/`,
+    timeout: 30000,
+});
 
 export const cardDefaultColor = {
     font: "#000",

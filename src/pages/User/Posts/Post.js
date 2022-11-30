@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Title, ViewerContainer, Wrappers } from "../../../components/elements/UserContentTemplete";
-import { backUrl } from "../../../data/Data";
+import { axiosInstance, backUrl } from "../../../data/Data";
 import theme from "../../../styles/theme";
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import $ from 'jquery'
@@ -49,6 +49,7 @@ const Post = (props) => {
     const [loading, setLoading] = useState(false)
     const [postPk, setPostPk] = useState(0);
     const [postTable, setPostTable] = useState('');
+
     const returnTitle = (ttl) => {
         if (postTable == 'notice') {
             return "weare-first - 위아 : 퍼스트 파트너스 - 공지사항 / " + ttl;
@@ -71,16 +72,16 @@ const Post = (props) => {
     useEffect(() => {
         async function isLogined() {
             await window.flutter_inappwebview.callHandler('native_app_logined', {}).then(async function (result) {
-              //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
-              // JSON.parse(result)
-              let obj = JSON.parse(result);
-              if (obj['is_ios']) {
-                await localStorage.setItem('is_ios', '1');
-              }
-              await onLoginBySns(obj.data);
+                //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
+                // JSON.parse(result)
+                let obj = JSON.parse(result);
+                if (obj['is_ios']) {
+                    await localStorage.setItem('is_ios', '1');
+                }
+                await onLoginBySns(obj.data);
             });
-          }
-          
+        }
+
         async function fetchPost() {
             setLoading(true)
             if (window && window.flutter_inappwebview && !localStorage.getItem('auth')) {
@@ -88,42 +89,51 @@ const Post = (props) => {
             }
             setPostPk(params.pk || post_pk)
             setPostTable(params.table || post_table)
-            const { data: response } = await axios.get(`/api/item?table=${params.table || post_table}&pk=${params.pk || post_pk}&views=1`);
-            if(response.result<0){
-                alert(response.message);
-                if(response.result==-150){
-                    navigate('/login')
-                }else{
-                    navigate(-1);
+            try {
+                const { data: response } = await axiosInstance.get(`/api/item?table=${params.table}&pk=${params.pk}&views=1`);
+                if (response.result < 0) {
+                    alert(response.message);
+                    if (response.result == -150) {
+                        navigate('/login')
+                    } else {
+                        navigate(-1);
+                    }
+                }
+                let obj = response.data ?? {};
+                obj.note = obj?.note.replaceAll('<p><br></p>', '<br>');
+                obj.note = obj?.note.replaceAll('http://localhost:8001', backUrl);
+                obj.note = obj?.note.replaceAll('https://weare-first.com:8443', backUrl);
+                await new Promise((r) => setTimeout(r, 300));
+                setPost(obj);
+                await new Promise((r) => setTimeout(r, 100));
+                setTimeout(() => setLoading(false), 1000);
+                await new Promise((r) => setTimeout(r, 1500));
+
+                if (localStorage.getItem('dark_mode')) {
+                    $('body').addClass("dark-mode");
+                    $('p').addClass("dark-mode");
+                    $('.toastui-editor-contents p').attr("style", "color:#ffffff !important");
+                    $('.toastui-editor-contents span').attr("style", "color:#ffffff !important");
+                    $('.toastui-editor-contents h1').attr("style", "color:#ffffff !important");
+                    $('.toastui-editor-contents h2').attr("style", "color:#ffffff !important");
+                    $('.toastui-editor-contents h3').attr("style", "color:#ffffff !important");
+                    $('.toastui-editor-contents h4').attr("style", "color:#ffffff !important");
+                    $('.toastui-editor-contents h5').attr("style", "color:#ffffff !important");
+                    $('.menu-container').addClass("dark-mode");
+                    $('.header').addClass("dark-mode");
+                    $('.select-type').addClass("dark-mode");
+                    $('.wrappers > .viewer > p').addClass("dark-mode");
+                    $('.footer').addClass("dark-mode");
+                    $('.viewer > div > div > div > p').addClass("dark-mode");
+                }
+            } catch (err) {
+                if (err?.message?.includes('timeout of')) {
+                    if (window.confirm('요청시간이 초과되었습니다. (인터넷 환경을 확인해주시기 바랍니다.)')) {
+
+                    }
                 }
             }
-            let obj = response.data??{};
-            obj.note = obj?.note.replaceAll('<p><br></p>','<br>');
-            obj.note = obj?.note.replaceAll('http://localhost:8001',backUrl);
-            obj.note = obj?.note.replaceAll('https://weare-first.com:8443',backUrl);
-            await new Promise((r) => setTimeout(r, 300));
-            setPost(obj);
-            await new Promise((r) => setTimeout(r, 100));
-            setTimeout(() => setLoading(false), 1000);
-            await new Promise((r) => setTimeout(r, 1500));
-            
-            if (localStorage.getItem('dark_mode')) {
-                $('body').addClass("dark-mode");
-                $('p').addClass("dark-mode");
-                $('.toastui-editor-contents p').attr("style", "color:#ffffff !important");
-                $('.toastui-editor-contents span').attr("style", "color:#ffffff !important");
-                $('.toastui-editor-contents h1').attr("style", "color:#ffffff !important");
-                $('.toastui-editor-contents h2').attr("style", "color:#ffffff !important");
-                $('.toastui-editor-contents h3').attr("style", "color:#ffffff !important");
-                $('.toastui-editor-contents h4').attr("style", "color:#ffffff !important");
-                $('.toastui-editor-contents h5').attr("style", "color:#ffffff !important");
-                $('.menu-container').addClass("dark-mode");
-                $('.header').addClass("dark-mode");
-                $('.select-type').addClass("dark-mode");
-                $('.wrappers > .viewer > p').addClass("dark-mode");
-                $('.footer').addClass("dark-mode");
-                $('.viewer > div > div > div > p').addClass("dark-mode");
-            }
+
         }
         if ((params.table || post_table) != 'notice') {
         }
@@ -135,7 +145,7 @@ const Post = (props) => {
             let per = Math.floor(($(window).scrollTop() / ($(document).height() - $(window).height())) * 100);
             setPercent(per);
         })
-        
+
     }, [])
     const onLoginBySns = async (obj) => {
         let nick = "";
@@ -238,7 +248,7 @@ const Post = (props) => {
                         <img src={backUrl + post.main_img} style={{ width: '100%', margin: '16px 0' }} alt="#" />
                         <Title not_arrow={true}>{post.title}</Title>
                         <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post.hash}</div>
-                        <ViewerContainer className="viewer" style={{margin:`${getViewerMarginByNumber(post?.note_align)}`}}>
+                        <ViewerContainer className="viewer" style={{ margin: `${getViewerMarginByNumber(post?.note_align)}` }}>
                             <Viewer initialValue={post?.note ?? `<body></body>`} />
                         </ViewerContainer>
                         {/* <ZoomButton/> */}

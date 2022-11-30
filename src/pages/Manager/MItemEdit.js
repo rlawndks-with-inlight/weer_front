@@ -91,7 +91,6 @@ const MItemEdit = () => {
 
                 $('br').removeClass('ProseMirror-trailingBreak');
                 setUrl(backUrl + response.data.main_img);
-                console.log(backUrl + response.data.main_img)
                 if (needTwoImage.includes(params.table)){
                     setUrl2(backUrl + response.data.second_img);  
                 } 
