@@ -93,6 +93,7 @@ const Video = () => {
     const [percent, setPercent] = useState(0);
     const [auth, setAuth] = useState({})
     const [loading, setLoading] = useState(false)
+    const [loadingText, setLoadingText] = useState("")
 
     const settings = {
         infinite: false,
@@ -126,9 +127,11 @@ const Video = () => {
         async function fetchPost() {
             //setLoading(true)
             if (window && window.flutter_inappwebview && !localStorage.getItem('auth')) {
+                setLoadingText("로그인 정보 확인중 입니다...");
                 await isLogined();
             }
             try {
+                setLoadingText("콘텐츠를 불러오는 중입니다...");
                 const { data: response } = await axiosInstance.get(`/api/getvideocontent?pk=${params.pk}&views=1`);
                 if (response.result < 0) {
                     alert(response.message);
@@ -289,7 +292,7 @@ const Video = () => {
 
                 {loading ?
                     <>
-                        <Loading />
+                        <Loading text={loadingText}/>
                     </>
                     :
                     <>

@@ -49,7 +49,7 @@ const Post = (props) => {
     const [loading, setLoading] = useState(false)
     const [postPk, setPostPk] = useState(0);
     const [postTable, setPostTable] = useState('');
-
+    const [loadingText, setLoadingText] = useState("")
     const returnTitle = (ttl) => {
         if (postTable == 'notice') {
             return "weare-first - 위아 : 퍼스트 파트너스 - 공지사항 / " + ttl;
@@ -85,11 +85,13 @@ const Post = (props) => {
         async function fetchPost() {
             setLoading(true)
             if (window && window.flutter_inappwebview && !localStorage.getItem('auth')) {
+                setLoadingText("로그인 정보 확인중 입니다...");
                 await isLogined();
             }
             setPostPk(params.pk || post_pk)
             setPostTable(params.table || post_table)
             try {
+                setLoadingText("콘텐츠를 불러오는 중입니다...");
                 const { data: response } = await axiosInstance.get(`/api/item?table=${params.table}&pk=${params.pk}&views=1`);
                 if (response.result < 0) {
                     alert(response.message);
@@ -233,7 +235,7 @@ const Post = (props) => {
                 <MetaTag title={returnTitle(post?.title ?? "")} />
                 {loading ?
                     <>
-                        <Loading />
+                        <Loading text={loadingText}/>
                     </>
                     :
                     <>
