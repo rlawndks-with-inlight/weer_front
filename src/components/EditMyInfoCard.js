@@ -45,9 +45,14 @@ const EditMyInfoCard = () => {
     const [isCoinside, setIsCoinside] = useState(false);
     const [isSendSms, setIsSendSms] = useState(false)
     const [fixPhoneNumber, setFixPhoneNumber] = useState("")
-
-    const zType = [{ title: "프로필 변경" }, { title: "닉네임 변경" }, { title: "비밀번호 변경" }, { title: "전화번호 변경" }];
+    const [zType, setZType] = useState([ { title: "닉네임 변경", type:1 }, { title: "비밀번호 변경", type:2 }, { title: "전화번호 변경", type:3 }])
     useEffect(() => {
+        if(localStorage.getItem('is_ios')){
+            setTypeNum(1)
+        }else{
+            setZType([...[{ title: "프로필 변경", type:0 }],...zType])
+            setTypeNum(0);
+        }
         let auth = JSON.parse(localStorage.getItem('auth'))
         if (auth.profile_img) {
             setUrl(auth.profile_img.substring(0, 4) == "http" ? auth.profile_img : backUrl + auth.profile_img)
@@ -194,40 +199,48 @@ const EditMyInfoCard = () => {
                 <SelectType className="select-type">
                     {zType.map((item, idx) => (
                         <>
-                            <Type style={{ borderBottom: `4px solid ${typeNum == idx ? theme.color.background1 : '#fff'}`, color: `${typeNum == idx ? theme.color.background1 : (localStorage.getItem('dark_mode') ? '#fff' : '#ccc')}` }} onClick={() => { onChangeTypeNum(idx) }}>{item.title}</Type>
+                            <Type style={{ borderBottom: `4px solid ${typeNum == item?.type ? theme.color.background1 : '#fff'}`, color: `${typeNum == item?.type ? theme.color.background1 : (localStorage.getItem('dark_mode') ? '#fff' : '#ccc')}` }} onClick={() => { onChangeTypeNum(item?.type) }}>{item.title}</Type>
                         </>
                     ))}
 
                 </SelectType>
-                {typeNum == 0 ?
+                {localStorage.getItem('is_ios') ?
                     <>
-                        <CategoryName>이미지 업로드</CategoryName>
-                        <label for="file1" style={{ margin: '0 auto' }}>
-                            {url ?
-                                <>
-                                    <img src={url} alt="#"
-                                        style={{
-                                            width: '8rem', height: '8rem',
-                                            margin: '2rem auto', borderRadius: '50%'
-                                        }} />
-                                </>
-                                :
-                                <>
-                                    <img src={defaultImg} alt="#"
-                                        style={{
-                                            width: '8rem', height: '8rem',
-                                            margin: '2rem auto', borderRadius: '50%'
-                                        }} />
-                                </>}
-                        </label>
-                        <div>
-                            <input type="file" id="file1" onChange={addFile} style={{ display: 'none' }} />
-                        </div>
                     </>
                     :
                     <>
+                        {typeNum == 0 ?
+                            <>
+                                <CategoryName>이미지 업로드</CategoryName>
+                                <label for="file1" style={{ margin: '0 auto' }}>
+                                    {url ?
+                                        <>
+                                            <img src={url} alt="#"
+                                                style={{
+                                                    width: '8rem', height: '8rem',
+                                                    margin: '2rem auto', borderRadius: '50%'
+                                                }} />
+                                        </>
+                                        :
+                                        <>
+                                            <img src={defaultImg} alt="#"
+                                                style={{
+                                                    width: '8rem', height: '8rem',
+                                                    margin: '2rem auto', borderRadius: '50%'
+                                                }} />
+                                        </>}
+                                </label>
+                                <div>
+                                    <input type="file" id="file1" onChange={addFile} style={{ display: 'none' }} />
+                                </div>
+                            </>
+                            :
+                            <>
+                            </>
+                        }
                     </>
                 }
+
                 {typeNum == 1 ?
                     <>
                         <CategoryName>비밀번호</CategoryName>
