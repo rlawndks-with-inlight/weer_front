@@ -2,6 +2,8 @@ import { Circles } from 'react-loader-spinner';
 import styled from 'styled-components';
 import theme from '../styles/theme';
 import loadingGif from '../assets/images/test/loading.gif'
+import useNetwork from './useNetwork';
+import { useEffect } from 'react';
 const LoadingContainer = styled.div`
 margin: 15vw auto;
 display:flex;
@@ -19,11 +21,22 @@ align-items:center;
 `
 const Loading = (props) => {
     const { text } = props;
+    const handleNetworkChange = (online) => {
+        console.log(online ? "We just went online" : "We are offline");
+    };
+    const onLine = useNetwork(handleNetworkChange);
     return (
         <>
             <LoadingContainer>
-                <img src={loadingGif} style={{ width: '100px' }} />
-                <div style={{marginTop:'16px'}}>{text}</div>
+                {onLine ?
+                    <>
+                        <img src={loadingGif} style={{ width: '100px' }} />
+                        <div style={{ marginTop: '16px' }}>{text}</div>
+                    </>
+                    :
+                    <>
+                        <div>인터넷 연결을 확인해 주세요.</div>
+                    </>}
             </LoadingContainer>
         </>
     )
