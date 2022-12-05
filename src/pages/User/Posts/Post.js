@@ -138,6 +138,9 @@ const Post = (props) => {
                     if (window.confirm('요청시간이 초과되었습니다. (인터넷 환경을 확인해주시기 바랍니다.)')) {
 
                     }
+                }else{
+                    if(window.confirm(err?.message)){
+                    }
                 }
             }
 
