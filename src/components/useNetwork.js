@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const useNetwork = (onChange) => {
-
+    const {pathname} = useLocation();
     const [status, setStatus] = useState(navigator.onLine);
     const handleChange = () => {
       onChange(navigator.onLine);
@@ -14,7 +15,7 @@ const useNetwork = (onChange) => {
         window.removeEventListener("online", handleChange);
         window.removeEventListener("offline", handleChange);
       };
-    }, []);
+    }, [pathname]);
     return status;
   };
    
