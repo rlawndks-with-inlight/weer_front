@@ -120,7 +120,12 @@ const Video = () => {
                 if (obj['is_ios']) {
                     await localStorage.setItem('is_ios', '1');
                 }
-                await onLoginBySns(obj.data);
+                if(obj?.data?.id){
+                    await onLoginBySns(obj.data);
+                }else{
+                    alert("로그인 해주세요.");
+                    navigate('/login');
+                }
             });
         }
 

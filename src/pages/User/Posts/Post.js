@@ -75,10 +75,15 @@ const Post = (props) => {
                 //result = "{'code':100, 'message':'success', 'data':{'login_type':1, 'id': 1000000}}"
                 // JSON.parse(result)
                 let obj = JSON.parse(result);
-                if (obj['is_ios']) {
-                    await localStorage.setItem('is_ios', '1');
+                // if (obj['is_ios']) {
+                //     await localStorage.setItem('is_ios', '1');
+                // }
+                if(obj?.data?.id){
+                    await onLoginBySns(obj.data);
+                }else{
+                    alert("로그인 해주세요.");
+                    navigate('/login');
                 }
-                await onLoginBySns(obj.data);
             });
         }
 
@@ -96,7 +101,7 @@ const Post = (props) => {
                 if (response.result < 0) {
                     alert(response.message);
                     if (response.result == -150) {
-                        navigate('/login')
+                        navigate('/login');
                     } else {
                         navigate(-1);
                     }
