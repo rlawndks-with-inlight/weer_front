@@ -107,9 +107,11 @@ const Post = (props) => {
                     }
                 }
                 let obj = response.data ?? {};
-                obj.note = obj?.note.replaceAll('<p><br></p>', '<br>');
-                obj.note = obj?.note.replaceAll('http://localhost:8001', backUrl);
-                obj.note = obj?.note.replaceAll('https://weare-first.com:8443', backUrl);
+                if(obj?.note){
+                    obj.note = obj?.note.replaceAll('<p><br></p>', '<br>');
+                    obj.note = obj?.note.replaceAll('http://localhost:8001', backUrl);
+                    obj.note = obj?.note.replaceAll('https://weare-first.com:8443', backUrl);
+                }
                 await new Promise((r) => setTimeout(r, 300));
                 setPost(obj);
                 await new Promise((r) => setTimeout(r, 100));
