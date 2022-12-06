@@ -148,7 +148,7 @@ const Video = () => {
                 }
                 let obj = response.data.video;
                 obj.link = getIframeLinkByLink(obj.link);
-                if(obj?.note){
+                if(obj?.note && (typeof obj?.note == 'string')){
                     obj.note = obj?.note.replaceAll('http://localhost:8001', backUrl);
                     obj.note = obj?.note.replaceAll('https://weare-first.com:8443', backUrl);
                 }

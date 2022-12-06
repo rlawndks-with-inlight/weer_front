@@ -67,7 +67,7 @@ const Home = () => {
             setFeatures(response.data.features);
             setThemes(response.data.themes);
             let video_list = response.data?.videos
-            for (var i = 0; i < video_list.length; i++) {
+            for (var i = 0; i < video_list?.length; i++) {
                 video_list[i].link = getIframeLinkByLink(video_list[i].link);
             }
             setVideos(video_list);
@@ -160,7 +160,7 @@ const Home = () => {
                     <>
                         <Content>
                             <img src={backUrl + setting?.main_img} alt="#" style={{ width: '100%', maxWidth: '500px', margin: '0 auto', minHeight: '30vh' }} />
-                           
+
                         </Content>
                         <Title className='pointer' link={'/onewordlist'}>하루 1단어</Title>
                         <Content onClick={() => { navigate(`/post/oneword/${oneWord?.pk}`) }} className='pointer' style={{ minHeight: '40px' }}>
@@ -170,7 +170,7 @@ const Home = () => {
                         <Title className='pointer' link={'/selectissuecategory'} >핵심 이슈{'&'}공시</Title>
                         <Content>
                             <WrapDiv>
-                                {issues.map((item, idx) => (
+                                {issues && issues.map((item, idx) => (
                                     <>
                                         <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} className='pointer' style={{ color: `${item?.font_color}`, background: `${item?.background_color}` }}>
                                             <LazyLoadImage
@@ -188,14 +188,14 @@ const Home = () => {
                             </WrapDiv>
                             <SliderDiv>
                                 <Slider {...slideSetting(1)} className='board-container pointer slider1'>
-                                    {issues.map((item, idx) => (
+                                    {issues && issues.map((item, idx) => (
                                         <>
                                             <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
-                                            <LazyLoadImage
-                                                alt={"#"}
-                                                effect="blur"
-                                                src={backUrl + item?.main_img}
-                                                className='card-img' />
+                                                <LazyLoadImage
+                                                    alt={"#"}
+                                                    effect="blur"
+                                                    src={backUrl + item?.main_img}
+                                                    className='card-img' />
                                                 <div style={{ padding: '16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
                                                 <div style={{ fontSize: `${theme.size.font4}`, padding: '8px 16px', height: '50px' }}>{item?.hash}</div>
                                             </Card>
@@ -224,7 +224,7 @@ const Home = () => {
                             ))}
                         </SelectSubType>
                         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                            {strategies.map((item, idx) => (
+                            {strategies && strategies.map((item, idx) => (
                                 <>
                                     <ThemeCard item={item} category='strategy' />
                                 </>
@@ -233,7 +233,7 @@ const Home = () => {
                         <Title link={'/selectfeaturecategory'}>특징주</Title>
                         <Content>
                             <WrapDiv>
-                                {features.map((item, idx) => (
+                                {features && features.map((item, idx) => (
                                     <>
                                         <Card onClick={() => navigate(`/post/feature/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}` }}>
                                             <LazyLoadImage
@@ -250,15 +250,15 @@ const Home = () => {
                             </WrapDiv>
                             <SliderDiv>
                                 <Slider {...slideSetting(2)} className='board-container slider2'>
-                                    {features.map((item, idx) => (
+                                    {features && features.map((item, idx) => (
                                         <>
                                             <Card onClick={() => navigate(`/post/feature/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
-                                                
+
                                                 <LazyLoadImage
-                                                alt={"#"}
-                                                effect="blur"
-                                                src={backUrl + item?.main_img}
-                                                className='card-img' />
+                                                    alt={"#"}
+                                                    effect="blur"
+                                                    src={backUrl + item?.main_img}
+                                                    className='card-img' />
                                                 <div style={{ padding: '16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
                                                 <div style={{ fontSize: `${theme.size.font4}`, padding: '8px 16px', height: '50px' }}>{item?.hash}</div>
                                             </Card>
@@ -270,10 +270,10 @@ const Home = () => {
                         <Title link={'/themelist'}>핵심 테마</Title>
                         <Content>
                             <WrapDiv>
-                                {themes.map((item, idx) => (
+                                {themes && themes.map((item, idx) => (
                                     <>
                                         <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}` }}>
-                                           
+
                                             <LazyLoadImage
                                                 alt={"#"}
                                                 effect="blur"
@@ -288,14 +288,14 @@ const Home = () => {
                             </WrapDiv>
                             <SliderDiv>
                                 <Slider {...slideSetting(3)} className='board-container slider3'>
-                                    {themes.map((item, idx) => (
+                                    {themes && themes.map((item, idx) => (
                                         <>
                                             <Card onClick={() => navigate(`/post/theme/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
                                                 <LazyLoadImage
-                                                alt={"#"}
-                                                effect="blur"
-                                                src={backUrl + item?.main_img}
-                                                className='card-img' />
+                                                    alt={"#"}
+                                                    effect="blur"
+                                                    src={backUrl + item?.main_img}
+                                                    className='card-img' />
                                                 <div style={{ padding: '16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
                                                 <div style={{ fontSize: `${theme.size.font4}`, padding: '8px 16px', height: '50px' }}>{item?.hash}</div>
                                             </Card>
@@ -308,7 +308,7 @@ const Home = () => {
                         <Title link={'/videolist'}>핵심 비디오</Title>
                         <Content>
                             <WrapDiv>
-                                {videos.map((item, idx) => (
+                                {videos && videos.map((item, idx) => (
                                     <>
                                         <VideoCard item={item} isImgPadding={true} />
                                     </>
@@ -316,7 +316,7 @@ const Home = () => {
                             </WrapDiv>
                             <SliderDiv>
                                 <Slider {...slideSetting(4)} className='board-container slider4'>
-                                    {videos.map((item, idx) => (
+                                    {videos && videos.map((item, idx) => (
                                         <>
                                             <VideoCard item={item} paddingBottom={'32px'} isSlide={true} isImgPadding={true} isTerm={true} />
                                         </>
