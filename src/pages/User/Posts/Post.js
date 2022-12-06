@@ -151,7 +151,6 @@ const Post = (props) => {
         }
         if ((params.table || post_table) != 'notice') {
         }
-
         fetchPost();
         fetchComments();
         $('.lazy-load-image-background').addClass('comment-img');

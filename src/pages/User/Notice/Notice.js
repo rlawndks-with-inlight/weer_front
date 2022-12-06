@@ -92,7 +92,6 @@ const Notice = () => {
                 }
             }
         }
-        myAuth();
         fetchPost();
         fetchComments();
         window.addEventListener('scroll', function (el) {
