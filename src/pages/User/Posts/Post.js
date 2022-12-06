@@ -107,8 +107,6 @@ const Post = (props) => {
                     }
                 }
                 let obj = response.data ?? {};
-                console.log(response);
-                console.log(response?.data);
                 if(obj?.note && (typeof obj?.note == 'string')){
                     obj.note = obj?.note.replaceAll('<p><br></p>', '<br>');
                     obj.note = obj?.note.replaceAll('http://localhost:8001', backUrl);
