@@ -130,7 +130,7 @@ const Video = () => {
         }
 
         async function fetchPost() {
-            //setLoading(true)
+            setLoading(true)
             if (window && window.flutter_inappwebview && !localStorage.getItem('auth')) {
                 setLoadingText("로그인 정보 확인중 입니다...");
                 await isLogined();
@@ -138,6 +138,7 @@ const Video = () => {
             try {
                 setLoadingText("콘텐츠를 불러오는 중입니다...");
                 const { data: response } = await axiosInstance.get(`/api/getvideocontent?pk=${params.pk}&views=1`);
+                console.log(response)
                 if (response.result < 0) {
                     alert(response.message);
                     if (response.result == -150) {
@@ -319,7 +320,7 @@ const Video = () => {
                         <Iframe src={`https://www.youtube.com/embed/${post.link}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
 
                         </Iframe>
-                        <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post.hash}</div>
+                        <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post?.hash}</div>
                         <ViewerContainer className="viewer" style={{ margin: `${getViewerMarginByNumber(post?.note_align)}` }}>
                             <Viewer initialValue={post?.note ?? `<body></body>`} />
                         </ViewerContainer>

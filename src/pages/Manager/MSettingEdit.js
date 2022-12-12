@@ -44,15 +44,19 @@ const MSettingEdit = () => {
     const navigate = useNavigate();
     const [myNick, setMyNick] = useState("")
     const [url, setUrl] = useState('')
+    const [url2, setUrl2] = useState('')
     const [setting, setSetting] = useState({});
     const [content, setContent] = useState(undefined)
+    const [content2, setContent2] = useState(undefined)
     const [formData] = useState(new FormData())
     useEffect(() => {
         async function fetchPost() {
             const { data: response } = await axios.get('/api/setting');
+            console.log(response)
             setSetting(response.data ?? {});
             if (response.data) {
-                setUrl(backUrl + response.data.main_img);
+                setUrl(response?.data?.main_img?(backUrl + response?.data?.main_img):"");
+                setUrl2(response?.data?.banner_2_img?(backUrl + response?.data?.banner_2_img):"");
             }
         }
         fetchPost();
@@ -62,7 +66,8 @@ const MSettingEdit = () => {
             alert("필요값이 비어있습니다.");
         } else {
 
-            formData.append('master', content);
+            formData.append('content', content);
+            formData.append('content2', content2);
             if (setting.main_img) {
                 if (window.confirm("정말 수정하시겠습니까?")) {
                     formData.append('pk', setting?.pk);
@@ -88,17 +93,23 @@ const MSettingEdit = () => {
             setUrl(URL.createObjectURL(e.target.files[0]))
         }
     };
+    const addFile2 = (e) => {
+        if (e.target.files[0]) {
+            setContent2(e.target.files[0]);
+            setUrl2(URL.createObjectURL(e.target.files[0]))
+        }
+    };
     return (
         <>
             <ManagerWrappers>
                 <SideBar />
                 <ManagerContentWrappers>
-                    <Breadcrumb title={'메인 이미지'} nickname={myNick} />
+                    <Breadcrumb title={'배너 관리'} nickname={myNick} />
                     <Card>
 
                         <Row>
                             <Col>
-                                <Title>이미지</Title>
+                                <Title>상단 이미지</Title>
                                 <ImageContainer for="file1">
 
                                     {url ?
@@ -116,7 +127,26 @@ const MSettingEdit = () => {
                                 </div>
                             </Col>
                         </Row>
+                        <Row>
+                            <Col>
+                                <Title>하루 1단어, 핵심 이슈&공시 사이 이미지</Title>
+                                <ImageContainer for="file2">
 
+                                    {url2 ?
+                                        <>
+                                            <Img src={url2} alt="#"
+                                            />
+                                        </>
+                                        :
+                                        <>
+                                            <AiFillFileImage style={{ margin: '6rem auto', fontSize: '4rem', color: `${theme.color.manager.font3}` }} />
+                                        </>}
+                                </ImageContainer>
+                                <div>
+                                    <input type="file" id="file2" onChange={addFile2} style={{ display: 'none' }} />
+                                </div>
+                            </Col>
+                        </Row>
                     </Card>
                     <ButtonContainer>
                         <CancelButton onClick={() => navigate(-1)}>x 취소</CancelButton>

@@ -126,7 +126,6 @@ display:none;
 }
 `
 export const ViewerContainer = styled.div`
-
 margin:0 auto;
 `
 export const SelectType = styled.div`

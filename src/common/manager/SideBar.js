@@ -94,7 +94,7 @@ const SideBar = () => {
         { name: '회원통계', link: '/manager/list/user_statistics', icon: <BsGraphUp />, level: 40, allow_list: ['/manager/list/user_statistics'] },
         //{ name: '접속자현황', link: '/manager/list/user', icon: <MdOutlineAccessTime /> },
         //{ name: '회원통계', link: '/manager/list/user', icon: <IoStatsChartSharp /> },
-        { name: '메인이미지관리', link: '/manager/edit/setting', icon: <AiOutlineRotateLeft />, level: 40, allow_list: ['/manager/edit/setting'] },
+        { name: '배너관리', link: '/manager/edit/setting', icon: <AiOutlineRotateLeft />, level: 40, allow_list: ['/manager/edit/setting'] },
         { name: '전문가관리', link: '/manager/list/master', icon: <FaChalkboardTeacher />, level: 40, allow_list: ['/manager/list/master'] },
         { name: '채널관리', link: '/manager/list/channel', icon: <FaChalkboardTeacher />, level: 40, allow_list: ['/manager/list/channel'] },
         { name: '댓글관리', link: '/manager/list/comment', icon: <BiCommentDetail />, level: 40, allow_list: ['/manager/list/comment'] },
