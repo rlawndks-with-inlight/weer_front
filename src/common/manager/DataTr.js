@@ -274,6 +274,15 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
                             :
                             <>
                             </>}
+                            {col.type == 'master_edit' ?
+                            <>
+                                <Td style={{ width: `${col.width}%`, fontSize: '20px' }}>
+                                    <BiEditAlt style={{ cursor: 'pointer', color: '#546de5' }} onClick={() => navigate(`/manager/edit/master/${data.pk}`)} />
+                                </Td>
+                            </>
+                            :
+                            <>
+                            </>}
                         {col.type == 'delete' ?
                             <>
                                 <Td style={{ width: `${col.width}%`, fontSize: '20px' }}>

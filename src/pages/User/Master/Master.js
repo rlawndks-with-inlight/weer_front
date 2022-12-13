@@ -37,9 +37,11 @@ const Master = () => {
     const [posts, setPosts] = useState([]);
     const [typeNum, setTypeNum] = useState(1)
     const [subTypeNum, setSubTypeNum] = useState(0)
-
+    const [master, setMaster] = useState({})
     useEffect(() => {
         async function fetchPosts() {
+            const {data:master_response} = await axios.get(`/api/item?table=user&pk=${params.pk}`);
+            setMaster(master_response?.data)
             const { data: response } = await axios.get(`/api/items?table=strategy&user_pk=${params.pk}`);
             setPosts(response.data)
         }
@@ -68,10 +70,10 @@ const Master = () => {
             <Wrappers>
                 <Card2 onClick={() => { }}>
                     <div style={{ width: '50%', padding: '20px' }}>
-                        <div>{state.nickname}</div>
-                        <div style={{ fontSize: `${theme.size.font5}`, marginTop: '8px', color: `${theme.color.font2}` }}>{state.name} 전문가</div>
+                        <div>{master?.nickname}</div>
+                        <div style={{ fontSize: `${theme.size.font5}`, marginTop: '8px', color: `${theme.color.font2}` }}>{master?.name} 전문가</div>
                     </div>
-                    <img style={{ position: 'absolute', bottom: '0', right: '5%', height: '80%' }} alt="#" src={backUrl + state.img} />
+                    <img style={{ position: 'absolute', bottom: '0', right: '5%', height: '80%' }} alt="#" src={backUrl + master?.profile_img} />
                 </Card2>
                 <SelectType className="select-type">
                     <Type style={{ borderBottom: `4px solid ${typeNum == 1 ? theme.color.background1 : '#fff'}`, color: `${typeNum == 1 ? theme.color.background1 : '#ccc'}` }} onClick={() => { changeType(1) }}>전문가칼럼</Type>

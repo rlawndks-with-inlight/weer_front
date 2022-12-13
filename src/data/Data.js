@@ -57,16 +57,16 @@ export const objManagerListContent = {
         breadcrumb: '회원',
         schema: 'user',
         zColumn: [
-            { name: '로그인타입', width: 11, type: 'login_type', column: 'type' },
-            { name: '아이디', width: 11, type: 'text', column: 'id' },
-            { name: '닉네임', width: 11, type: 'text', column: 'nickname' },
-            { name: '이름', width: 11, type: 'text', column: 'name' },
-            { name: '폰번호', width: 15, type: 'text', column: 'phone' },
-            { name: '레벨', width: 11, type: 'level', column: 'user_level' },
-            { name: '로그인시간', width: 16, type: 'text', column: 'last_login' },
-            // { name: '상태', width: 8, type: 'status', column: 'status' },
-            { name: '수정', width: 6, type: 'edit', column: 'edit' },
-            { name: '삭제', width: 6, type: 'delete', column: 'delete' }
+            { name: '로그인타입', width: '8', type: 'login_type', column: 'type' },
+            { name: '아이디', width: '8', type: 'text', column: 'id' },
+            { name: '닉네임', width: '8', type: 'text', column: 'nickname' },
+            { name: '이름', width: '8', type: 'text', column: 'name' },
+            { name: '폰번호', width: '10', type: 'text', column: 'phone' },
+            { name: '레벨', width: '8', type: 'level', column: 'user_level' },
+            { name: '로그인시간', width: '17', type: 'text', column: 'last_login' },
+             { name: '가입일', width: '17', type: 'text', column: 'date' },
+            { name: '수정', width: '8', type: 'edit', column: 'edit' },
+            { name: '삭제', width: '8', type: 'delete', column: 'delete' }
         ]
     },
     user_statistics: {
@@ -105,7 +105,7 @@ export const objManagerListContent = {
             { name: '생성시간', width: 12, type: 'text', column: 'date' },
             { name: '맨위로', width: 8, type: 'top', column: '' },
             { name: '노출여부', width: 8, type: 'status', column: 'status' },
-            { name: '수정', width: 8, type: 'edit', column: 'edit' },
+            { name: '수정', width: 8, type: 'master_edit', column: 'edit' },
             { name: '삭제', width: 8, type: 'delete', column: 'delete' }
         ],
     },

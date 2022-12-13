@@ -99,7 +99,7 @@ const MMasterEdit = () => {
                             </Col>
                             <Col>
                                 <Title>비밀번호</Title>
-                                <Input className='pw' placeholder='****' type={'password'} />
+                                <Input className='pw' placeholder='****' type={'password'} autoComplete={'new-password'}  />
                             </Col>
 
                         </Row>
