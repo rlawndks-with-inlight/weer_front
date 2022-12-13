@@ -173,12 +173,12 @@ const Search = () => {
                         }
                         {features && features.length > 0 ?
                             <>
-                                <Title className='pointer' link={'/selectissuecategory'} >특징주</Title>
+                                <Title className='pointer' link={'/selectfeaturecategory'} >특징주</Title>
                                 <Content className='pointer'>
                                     <WrapDiv>
                                         {features.map((item, idx) => (
                                             <>
-                                                <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} >
+                                                <Card onClick={() => navigate(`/post/feature/${item?.pk}`)} >
                                                     <Img style={{ backgroundImage: `url(${backUrl + item?.main_img})` }} />
                                                     <div style={{ padding: '16px 16px 0 16px', fontWeight: 'bold' }}>{item?.date.substring(0, 10) ?? ""} {item?.title}</div>
                                                     <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 16px 16px 16px' }}>{item?.hash}</div>
@@ -191,7 +191,7 @@ const Search = () => {
                                         <Slider {...slideSetting(2)} className='board-container slider2'>
                                             {features.map((item, idx) => (
                                                 <>
-                                                    <Card onClick={() => navigate(`/post/issue/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
+                                                    <Card onClick={() => navigate(`/post/feature/${item?.pk}`)} style={{ color: `${item?.font_color}`, background: `${item?.background_color}`, width: `${window.innerWidth <= 600 ? '95%' : ''}` }} >
                                                         <Img style={{ backgroundImage: `url(${backUrl + item?.main_img})` }} />
                                                         <div style={{ padding: '16px', height: '70px', fontWeight: 'bold' }}> {item?.title}</div>
                                                         <div style={{ fontSize: `${theme.size.font4}`, padding: '8px 16px', height: '50px' }}>{item?.hash}</div>
