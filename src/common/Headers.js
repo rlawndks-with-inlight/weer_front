@@ -7,12 +7,16 @@ import logo from '../assets/images/test/logo.svg'
 import { AiOutlineBell, AiOutlineSearch, AiOutlineSetting } from 'react-icons/ai'
 import Modal from '../components/Modal';
 import axios from 'axios'
-import { zBottomMenu } from '../data/Data';
+import { backUrl, zBottomMenu } from '../data/Data';
 import { MdNavigateBefore } from 'react-icons/md';
 import theme from '../styles/theme';
 import { IoMdArrowBack } from 'react-icons/io';
 import $ from 'jquery';
 import reactReferer from 'react-referer';
+import { returnMoment } from '../functions/utils';
+import { Viewer } from '@toast-ui/react-editor';
+import { IoMdClose } from 'react-icons/io'
+import { IoCloseCircleOutline, IoCloseCircleSharp } from 'react-icons/io5'
 const Header = styled.header`
 position:fixed;
 height:6rem;
@@ -129,7 +133,29 @@ width:500px;
 }
 
 `
-
+const PopupContainer = styled.div`
+position:absolute;
+top:16px;
+left:0px;
+display:flex;
+flex-wrap:wrap;
+`
+const PopupContent = styled.div`
+background:#fff;
+margin-right:16px;
+margin-bottom:16px;
+padding:24px 24px 48px 24px;
+box-shadow:${props => props.theme.boxShadow};
+border-radius:8px;
+width:300px;
+min-height:200px;
+position:relative;
+opacity:0.95;
+z-index:10;
+@media screen and (max-width:400px) { 
+width:78vw;
+}
+`
 const Headers = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -142,9 +168,10 @@ const Headers = () => {
   const [isAlarm, setIsAlarm] = useState(false);
   const [lastNoticePk, setLastNoticePk] = useState(0);
   const [lastAlarmePk, setLastAlarmPk] = useState(0);
+  const [popupList, setPopupList] = useState([])
   useEffect(() => {
 
-    
+
     if (location.pathname.substring(0, 6) == '/post/' || location.pathname.substring(0, 7) == '/video/' || location.pathname == '/appsetting') {
       setIsPost(true);
     } else {
@@ -169,9 +196,14 @@ const Headers = () => {
     } else {
 
     }
-
+    if (location.pathname == '/' || location.pathname == '/home') {
+      fetchPopup();
+    }
   }, [location])
-
+  async function fetchPopup() {
+    const { data: response } = await axios.get('/api/items?table=popup&status=1')
+    setPopupList(response?.data ?? []);
+  }
 
   useEffect(() => {
     async function getNoticeAndAlarmCount() {
@@ -201,9 +233,21 @@ const Headers = () => {
       }
     }
     getNoticeAndAlarmCount();
-    
+
   }, [])
- 
+  const onClosePopup = async (pk, is_not_see) => {
+    if (is_not_see) {
+      await localStorage.setItem(`not_see_popup_${pk}_${returnMoment().substring(0, 10).replaceAll('-', '_')}`, '1');
+    }
+    let popup_list = [];
+    for (var i = 0; i < popupList.length; i++) {
+      if (pk == popupList[i]?.pk) {
+      } else {
+        popup_list.push(popupList[i]);
+      }
+    }
+    setPopupList(popup_list);
+  }
   // setInterval(() => {
   //   if (window.flutter_inappwebview) {
   //     window.flutter_inappwebview.callHandler('native_get_alarm_count', {}).then(async function (result) {
@@ -270,10 +314,10 @@ const Headers = () => {
       }
     }
   }
-  const onClickNavigateBefore = () =>{
-    if(document.referrer){
+  const onClickNavigateBefore = () => {
+    if (document.referrer) {
       navigate(-1);
-    }else{
+    } else {
       navigate('/home');
     }
   }
@@ -281,7 +325,36 @@ const Headers = () => {
     <>
 
       <Header style={{ display: `${display}` }} className='header'>
+        {popupList.length > 0 ?
+          <>
+            <PopupContainer>
 
+              {popupList && popupList.map((item, idx) => (
+                <>
+                  {localStorage.getItem(`not_see_popup_${item?.pk}_${returnMoment().substring(0, 10).replaceAll('-', '_')}`) ?
+                    <>
+
+                    </>
+                    :
+                    <>
+                      <PopupContent>
+                        <IoMdClose style={{ color: theme.color.background1, position: 'absolute', right: '8px', top: '8px', fontSize: theme.size.font3, cursor: 'pointer' }} onClick={() => { onClosePopup(item?.pk) }} />
+                        <img src={backUrl + item?.img_src} style={{ width: '100%', height: 'auto' }} onClick={() => { navigate(item?.link) }} />
+                        <div style={{ display: 'flex', alignItems: 'center', position: 'absolute', left: '8px', bottom: '8px' }}>
+                          <IoCloseCircleOutline style={{ color: theme.color.background1, fontSize: theme.size.font3, marginRight: '4px', cursor: 'pointer' }} onClick={() => { onClosePopup(item?.pk, true) }} />
+                          <div style={{ fontSize: theme.size.font5 }}>오늘 하루 보지않기</div>
+                        </div>
+                      </PopupContent>
+                    </>
+                  }
+                </>
+              ))}
+            </PopupContainer>
+
+          </>
+          :
+          <>
+          </>}
         <HeaderContainer>{/*모바일 */}
           {isSearch ?
             <>

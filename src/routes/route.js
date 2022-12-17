@@ -43,6 +43,7 @@ import MItemList from '../pages/Manager/MItemList';
 import MChannelEdit from '../pages/Manager/MChannelEdit';
 import Notice from '../pages/User/Notice/Notice';
 import MAlarmEdit from '../pages/Manager/MAlarmEdit';
+import MPopupEdit from '../pages/Manager/MPopupEdit';
 
 const zRoute = [
     { link: '/', element: <Home />, title: "홈" },
@@ -85,6 +86,7 @@ const zRoute = [
     { link: '/manager/edit/video/:pk', element: <MVideoEdit />, title: "핵심비디오관리" },
     { link: '/manager/edit/notice/:pk', element: <MNoticeEdit />, title: "공지사항관리" },
     { link: '/manager/edit/alarm/:pk', element: <MAlarmEdit />, title: "알람관리" },
+    { link: '/manager/edit/popup/:pk', element: <MPopupEdit />, title: "팝업관리" },
     { link: '/manager/edit/issue_category/:pk', element: <MIssueCategoryEdit />, title: "핵심이슈카테고리관리" },
     { link: '/manager/edit/feature_category/:pk', element: <MFeatureCategoryEdit />, title: "특징주카테고리관리" },
     { link: '/manager/edit/setting', element: <MSettingEdit />, title: "환경설정" },

@@ -14,6 +14,7 @@ import { SiMicrostrategy } from 'react-icons/si'
 import {BiCommentDetail} from 'react-icons/bi'
 import axios from 'axios';
 import $ from 'jquery'
+import {GoRepoPush} from 'react-icons/go'
 const Wrappers = styled.div`
 display:flex;
 flex-direction:column;
@@ -329,6 +330,27 @@ const SideBar = () => {
                                     <MenuContent onClick={() => { onClickMenu('/manager/list/alarm') }}>
                                         <BsAlarm />
                                         <MenuText>푸시알람</MenuText>
+                                    </MenuContent>
+                                </>}
+                        </>
+                        :
+                        <>
+                        </>
+                    }
+                    {JSON.parse(localStorage.getItem('auth'))?.user_level >= 40 ?
+                        <>
+                            {'/manager/list/popup' == location.pathname ?
+                                <>
+                                    <SelectMenuContent onClick={() => { onClickMenu('/manager/list/popup') }}>
+                                        <GoRepoPush />
+                                        <MenuText>팝업관리</MenuText>
+                                    </SelectMenuContent>
+                                </>
+                                :
+                                <>
+                                    <MenuContent onClick={() => { onClickMenu('/manager/list/popup') }}>
+                                        <GoRepoPush />
+                                        <MenuText>팝업관리</MenuText>
                                     </MenuContent>
                                 </>}
                         </>

@@ -259,6 +259,17 @@ export const objManagerListContent = {
             { name: '삭제', width: 8, type: 'delete', column: 'delete' }
         ],
     },
+    popup: {
+        breadcrumb: '팝업',
+        schema: 'popup',
+        zColumn: [
+            { name: '이미지', width: 38, type: 'img', column: 'img_src' },
+            { name: '생성시간', width: 38, type: 'text', column: 'date' },
+            { name: '노출여부', width: 8, type: 'status', column: 'status' },
+            { name: '수정', width: 8, type: 'edit', column: 'edit' },
+            { name: '삭제', width: 8, type: 'delete', column: 'delete' }
+        ],
+    },
     alarm: {
         breadcrumb: '푸시알람',
         schema: 'alarm',

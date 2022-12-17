@@ -167,10 +167,16 @@ const Home = () => {
                             <div >{oneWord?.title ?? ""}</div>
                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneWord?.hash ?? ""}</div>
                         </Content>
+                        {setting?.banner_2_status>0?
+                        <>
                         <Content>
                             <img src={backUrl + setting?.banner_2_img} alt="#" style={{ width: '100%', margin: '0 auto', minHeight: '100px',height:'auto',cursor:'pointer' }} onClick={()=>navigate(setting?.file2_link??"#")} />
-
                         </Content>
+                        </>
+                        :
+                        <>
+                        </>
+                        }
                         <Title className='pointer' link={'/selectissuecategory'} >핵심 이슈{'&'}공시</Title>
                         <Content>
                             <WrapDiv>

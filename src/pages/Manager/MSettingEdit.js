@@ -55,9 +55,10 @@ const MSettingEdit = () => {
             console.log(response)
             setSetting(response.data ?? {});
             if (response.data) {
-                setUrl(response?.data?.main_img?(backUrl + response?.data?.main_img):"");
-                setUrl2(response?.data?.banner_2_img?(backUrl + response?.data?.banner_2_img):"");
+                setUrl(response?.data?.main_img ? (backUrl + response?.data?.main_img) : "");
+                setUrl2(response?.data?.banner_2_img ? (backUrl + response?.data?.banner_2_img) : "");
                 $('.file2-link').val(response?.data?.file2_link);
+                $('.banner_2_status').val(response?.data?.banner_2_status);
             }
         }
         fetchPost();
@@ -70,6 +71,7 @@ const MSettingEdit = () => {
             formData.append('content', content);
             formData.append('content2', content2);
             formData.append('file2_link', $('.file2-link').val());
+            formData.append('banner_2_status',$('.banner_2_status').val());
             if (setting.main_img) {
                 if (window.confirm("정말 수정하시겠습니까?")) {
                     formData.append('pk', setting?.pk);
@@ -152,8 +154,15 @@ const MSettingEdit = () => {
                                 <Title style={{ margintop: '32px' }}>클릭시 링크</Title>
                                 <Input className='file2-link' />
                             </Col>
+                            <Col>
+                                <Title style={{ margintop: '32px' }}>노출여부</Title>
+                                <Select className='banner_2_status'>
+                                    <option value={1}>on</option>
+                                    <option value={0}>off</option>
+                                </Select>
+                            </Col>
                         </Row>
-                        
+
                     </Card>
                     <ButtonContainer>
                         <CancelButton onClick={() => navigate(-1)}>x 취소</CancelButton>
