@@ -173,7 +173,27 @@ const Notice = () => {
                         </div>
                         <Title>{post.title}</Title>
                         <ViewerContainer className="viewer" style={{ margin: `${getViewerMarginByNumber(post?.note_align)}` }}>
-                            <Viewer initialValue={post?.note ?? `<body></body>`} />
+                            <Viewer initialValue={post?.note ?? `<body></body>`} 
+                            customHTMLRenderer={{
+                                htmlBlock: {
+                                  iframe(node: any) {
+                                    return [
+                                      {
+                                        type: "openTag",
+                                        tagName: "iframe",
+                                        outerNewLine: true,
+                                        attributes: node.attrs,
+                                      },
+                                      { type: "html", content: node.childrenHTML },
+                                      {
+                                        type: "closeTag",
+                                        tagName: "iframe",
+                                        outerNewLine: false,
+                                      },
+                                    ];
+                                  },
+                                },
+                              }}/>
                         </ViewerContainer>
                         {/* <ZoomButton /> */}
                         <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} updateComment={updateComment} auth={auth} />
