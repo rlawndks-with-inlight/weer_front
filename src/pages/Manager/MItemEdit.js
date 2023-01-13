@@ -26,6 +26,7 @@ import { backUrl, needTwoImage } from '../../data/Data';
 import { objManagerListContent, cardDefaultColor } from '../../data/Data';
 import { categoryToNumber } from '../../functions/utils';
 import CommentComponent from '../../components/CommentComponent';
+import videoPlugin from '@leeonfield/editor-plugin-video';
 
 const MItemEdit = () => {
     const { pathname } = useLocation();
@@ -51,7 +52,7 @@ const MItemEdit = () => {
     const [backgroundColor, setBackgroundColor] = useState(cardDefaultColor.background)
     const [channelList, setChannelList] = useState([]);
 
-    
+
     const imgSetting = {
         oneword: ' 권장(800*600)',
         oneevent: ' 권장(800*600)',
@@ -91,9 +92,9 @@ const MItemEdit = () => {
 
                 $('br').removeClass('ProseMirror-trailingBreak');
                 setUrl(backUrl + response.data.main_img);
-                if (needTwoImage.includes(params.table)){
-                    setUrl2(backUrl + response.data.second_img);  
-                } 
+                if (needTwoImage.includes(params.table)) {
+                    setUrl2(backUrl + response.data.second_img);
+                }
                 setItem(response.data)
             } else {
                 $('.font-color').val(cardDefaultColor.font)
@@ -155,7 +156,7 @@ const MItemEdit = () => {
             if (needTwoImage.includes(params.table)) formData.append('url2', item.second_img)
             formData.append('title', $(`.title`).val())
             formData.append('hash', $(`.hash`).val())
-           // formData.append('suggest_title', $(`.suggest-title`).val())
+            // formData.append('suggest_title', $(`.suggest-title`).val())
             formData.append('want_push', $(`.want-push`).val())
             if (params.table == 'issue' || params.table == 'feature') {
                 formData.append('category', $(`.category`).val());
@@ -202,11 +203,10 @@ const MItemEdit = () => {
     };
     const onChangeEditor = (e) => {
         const data = editorRef.current.getInstance().getHTML();
-        console.log(data)
     }
 
     const addComment = async (parent_pk) => {
-        if (!$(`.comment-${parent_pk??0}`).val()) {
+        if (!$(`.comment-${parent_pk ?? 0}`).val()) {
             alert('필수 값을 입력해 주세요.');
             return;
         }
@@ -214,13 +214,13 @@ const MItemEdit = () => {
             userPk: auth.pk,
             userNick: auth.nickname,
             pk: params.pk,
-            parentPk:parent_pk??0,
-            note: $(`.comment-${parent_pk??0}`).val(),
+            parentPk: parent_pk ?? 0,
+            note: $(`.comment-${parent_pk ?? 0}`).val(),
             category: categoryToNumber(params.table)
         })
 
         if (response.result > 0) {
-            $(`.comment-${parent_pk??0}`).val("")
+            $(`.comment-${parent_pk ?? 0}`).val("")
             fetchComments();
         } else {
             alert(response.message)
@@ -304,7 +304,7 @@ const MItemEdit = () => {
                             </>}
 
                         <Row>
-                            
+
                             {params.table == 'issue' || params.table == 'feature' ?
                                 <>
                                     <Col>
@@ -406,12 +406,11 @@ const MItemEdit = () => {
                                         initialEditType="wysiwyg"
                                         useCommandShortcut={false}
                                         useTuiEditorEmoji={true}
-                                        hideModeSwitch={true}
+                                        hideModeSwitch={false}
                                         plugins={[colorSyntax, fontSize]}
                                         language="ko-KR"
                                         ref={editorRef}
                                         onChange={onChangeEditor}
-
                                         hooks={{
 
                                             addImageBlobHook: async (blob, callback) => {
@@ -424,6 +423,23 @@ const MItemEdit = () => {
                                                 } else {
                                                     noteFormData.delete('note');
                                                     return;
+                                                }
+                                            }
+                                        }}
+                                        customHTMLRenderer={{
+                                            htmlBlock: {
+                                                iframe(node: any) {
+                                                    console.log(node)
+                                                    return [
+                                                        {
+                                                            type: 'openTag',
+                                                            tagName: 'iframe',
+                                                            outerNewLine: true,
+                                                            attributes: node.attrs
+                                                        },
+                                                        { type: 'html', content: node.childrenHTML },
+                                                        { type: 'closeTag', tagName: 'iframe', outerNewLine: true }
+                                                    ];
                                                 }
                                             }
                                         }}

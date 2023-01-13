@@ -203,7 +203,7 @@ const MNoticeEdit = () => {
                                         initialEditType="wysiwyg"
                                         useCommandShortcut={false}
                                         useTuiEditorEmoji={true}
-                                        hideModeSwitch={true}
+                                        hideModeSwitch={false}
                                         plugins={[colorSyntax, fontSize]}
                                         language="ko-KR"
                                         ref={editorRef}
@@ -221,6 +221,23 @@ const MNoticeEdit = () => {
                                                 } else {
                                                     noteFormData.delete('note');
                                                     return;
+                                                }
+                                            }
+                                        }}
+                                        customHTMLRenderer={{
+                                            htmlBlock: {
+                                                iframe(node: any) {
+                                                    console.log(node)
+                                                    return [
+                                                        {
+                                                            type: 'openTag',
+                                                            tagName: 'iframe',
+                                                            outerNewLine: true,
+                                                            attributes: node.attrs
+                                                        },
+                                                        { type: 'html', content: node.childrenHTML },
+                                                        { type: 'closeTag', tagName: 'iframe', outerNewLine: true }
+                                                    ];
                                                 }
                                             }
                                         }}

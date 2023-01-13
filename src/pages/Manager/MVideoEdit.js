@@ -49,7 +49,7 @@ const MVideoEdit = () => {
             }
             if (params.pk > 0) {
                 const { data: response } = await axios.get(`/api/getvideocontent?pk=${params.pk}`);
-                let obj = response.data.video??{};
+                let obj = response.data.video ?? {};
                 $(`.title`).val(response.data.video.title);
                 $(`.link`).val(response.data.video.link);
                 $(`.channel`).val(response.data.video.user_pk);
@@ -67,10 +67,10 @@ const MVideoEdit = () => {
                 $('.relate').val(relate_str);
                 obj.note = obj?.note.replaceAll('http://localhost:8001', backUrl);
                 obj.note = obj?.note.replaceAll('https://weare-first.com:8443', backUrl);
-                
+
                 editorRef.current.getInstance().setHTML(obj.note);
                 $('br').removeClass('ProseMirror-trailingBreak');
-                
+
             } else {
                 $('.font-color').val(cardDefaultColor.font)
                 $('.background-color').val(cardDefaultColor.background)
@@ -284,7 +284,7 @@ const MVideoEdit = () => {
                                         height="600px"
                                         initialEditType="wysiwyg"
                                         useCommandShortcut={false}
-                                        hideModeSwitch={true}
+                                        hideModeSwitch={false}
                                         plugins={[colorSyntax, fontSize]}
                                         language="ko-KR"
                                         ref={editorRef}
@@ -300,6 +300,23 @@ const MVideoEdit = () => {
                                                 } else {
                                                     noteFormData.delete('note');
                                                     return;
+                                                }
+                                            }
+                                        }}
+                                        customHTMLRenderer={{
+                                            htmlBlock: {
+                                                iframe(node: any) {
+                                                    console.log(node)
+                                                    return [
+                                                        {
+                                                            type: 'openTag',
+                                                            tagName: 'iframe',
+                                                            outerNewLine: true,
+                                                            attributes: node.attrs
+                                                        },
+                                                        { type: 'html', content: node.childrenHTML },
+                                                        { type: 'closeTag', tagName: 'iframe', outerNewLine: true }
+                                                    ];
                                                 }
                                             }
                                         }}
