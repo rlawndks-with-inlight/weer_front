@@ -98,7 +98,7 @@ const AppSetting = () => {
                     <>
                     </>
                 }
-            </Wrappers>
+            </Wrappers> 
         </>
     )
 }
