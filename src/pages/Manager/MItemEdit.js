@@ -428,7 +428,7 @@ const MItemEdit = () => {
                                         }}
                                         customHTMLRenderer={{
                                             htmlBlock: {
-                                                iframe(node: any) {
+                                                iframe(node) {
                                                     console.log(node)
                                                     return [
                                                         {

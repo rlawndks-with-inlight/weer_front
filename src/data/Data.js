@@ -85,11 +85,12 @@ export const objManagerListContent = {
         breadcrumb: '댓글',
         schema: 'comment',
         zColumn: [
-            { name: '카테고리', width: 11, type: 'category_type', column: 'category_pk' },
-            { name: '제목', width: 22, type: 'text', column: 'item_title' },
-            { name: '닉네임', width: 11, type: 'text', column: 'user_nickname' },
+            { name: '카테고리', width: 10, type: 'category_type', column: 'category_pk' },
+            { name: '제목', width: 18, type: 'text', column: 'item_title' },
+            { name: '닉네임', width: 10, type: 'text', column: 'user_nickname' },
+            { name: '신고수', width: 8, type: 'text', column: 'declare_count' },
             { name: '생성일', width: 17, type: 'text', column: 'date' },
-            { name: '댓글', width: 28, type: 'text', column: 'note' },
+            { name: '댓글', width: 26, type: 'text', column: 'note' },
             { name: '삭제', width: 12, type: 'delete', column: 'delete' }
         ]
     },
@@ -232,6 +233,28 @@ export const objManagerListContent = {
             { name: '노출여부', width: 8, type: 'status', column: 'status' },
             { name: '수정', width: 8, type: 'edit', column: 'edit' },
             { name: '삭제', width: 8, type: 'delete', column: 'delete' }
+        ],
+    },
+    hate_comment: {
+        breadcrumb: '신고댓글관리',
+        schema: 'hate',
+        zColumn: [
+            { name: '신고자아이디', width: '', type: 'text', column: 'user_id' },
+            { name: '피신고댓글', width: '', type: 'text', column: 'comment' },
+            { name: '피신고댓글작성자아이디', width: '', type: 'text', column: 'p_user_id' },
+            { name: '피신고댓글작성자닉네임', width: '', type: 'text', column: 'p_user_nick' },
+            { name: '신고일', width: '', type: 'text', column: 'date' },
+            { name: '삭제', width: '', type: 'delete', column: 'delete' }
+        ],
+    },
+    hate_user: {
+        breadcrumb: '사용자차단관리',
+        schema: 'hate',
+        zColumn: [
+            { name: '차단자아이디', width: '', type: 'text', column: 'u_t_id' },
+            { name: '피차단자아이디', width: '', type: 'text', column: 'i_t_id' },
+            { name: '차단일', width: '', type: 'text', column: 'date' },
+            { name: '삭제', width: '', type: 'delete', column: 'delete' }
         ],
     },
     video: {

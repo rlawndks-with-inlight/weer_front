@@ -27,8 +27,8 @@ const CommentInputContent = (props) => {
     )
 }
 const CommentContent = (props) => {
-    const { item, deleteComment, isReply, displayReplyInput, displayUpdateInput, updateCommentObj, updateComment, auth } = props;
-    
+    const { item, deleteComment, isReply, displayReplyInput, displayUpdateInput, updateCommentObj, updateComment, auth, onHateItem } = props;
+
     return (
         <>
             <div style={{ borderBottom: `1px solid ${theme.color.font3}`, display: 'flex', padding: '16px', fontSize: theme.size.font4, width: `${isReply ? '80%' : '90%'}`, margin: `${isReply ? '0 0 0 auto' : '0'}` }}>
@@ -45,9 +45,9 @@ const CommentContent = (props) => {
                     height={64}
                     width={64}
                     src={item?.profile_img ? (item?.profile_img?.substring(0, 4) == 'http' ? item.profile_img.replaceAll("http://", "https://") : backUrl + item.profile_img) : defaultImg} // use normal <img> attributes as props
-                    style={{ borderRadius: '50%'}}
+                    style={{ borderRadius: '50%' }}
                     onError={defaultImg} />
-                <div style={{marginLeft:'16px'}}>
+                <div style={{ marginLeft: '16px' }}>
                     <div style={{ marginBottom: '6px', display: 'flex' }}><div style={{ marginRight: '6px' }}>{item.nickname}</div> <div style={{ color: theme.color.font3 }}>{item.date.substring(0, 16)}</div></div>
                     <div style={{ wordBreak: 'break-all', marginBottom: '6px', fontSize: theme.size.font3 }}>{item.note}</div>
                     <div style={{ display: 'flex' }}>
@@ -66,6 +66,15 @@ const CommentContent = (props) => {
                             </>
                             :
                             <>
+                                {((localStorage.getItem('auth') && JSON.parse(localStorage.getItem('auth'))?.user_level >= 0) || (auth && auth?.user_level >= 0)) ?
+                                    <>
+                                        <div style={{ marginRight: '6px', cursor: 'pointer' }} onClick={() => { if (window.confirm('신고 하시겠습니까?')) { onHateItem(0, item.pk) } }}>신고</div>
+                                        <div style={{ marginRight: '6px', cursor: 'pointer' }} onClick={() => { if (window.confirm(`${item?.nickname} 유저를 차단 하시겠습니까?`)) { onHateItem(1, item.user_pk) } }}>사용자차단</div>
+                                    </>
+                                    :
+                                    <>
+                                    </>}
+
                             </>
                         }
 
@@ -100,6 +109,23 @@ const CommentComponent = (props) => {
             } else {
                 alert('error')
             }
+        }
+    }
+    const onHateItem = async (type, item_pk) => {
+        const { data: response } = await axios.post('/api/onhateitem', {
+            item_pk: item_pk,
+            type: type,
+        })
+        if (response.result > 0) {
+            let message = "";
+            if (type == 0)
+                message = "성공적으로 신고 되었습니다.";
+            else if (type == 1)
+                message = "성공적으로 차단 되었습니다.";
+            alert(message);
+            fetchComments();
+        } else {
+            alert(response?.message);
         }
     }
     useEffect(() => {
@@ -174,7 +200,17 @@ const CommentComponent = (props) => {
                     <>
                         {zComment.map((item, index) => (
                             <>
-                                <CommentContent auth={auth} item={item} deleteComment={deleteComment} isReply={false} displayReplyInput={() => displayReplyInput(item.pk)} displayUpdateInput={displayUpdateInput} updateCommentObj={updateCommentObj} updateComment={updateComment} />
+                                <CommentContent
+                                    auth={auth}
+                                    item={item}
+                                    deleteComment={deleteComment}
+                                    isReply={false}
+                                    displayReplyInput={() => displayReplyInput(item.pk)}
+                                    displayUpdateInput={displayUpdateInput}
+                                    updateCommentObj={updateCommentObj}
+                                    updateComment={updateComment}
+                                    onHateItem={onHateItem}
+                                />
 
                                 {item?.reply_display ?
                                     <>
@@ -188,7 +224,16 @@ const CommentComponent = (props) => {
                                     <>
                                         {replyObj[item?.pk].map((itm, idx) => (
                                             <>
-                                                <CommentContent auth={auth} item={itm} deleteComment={deleteComment} isReply={true} displayUpdateInput={displayUpdateInput} updateCommentObj={updateCommentObj} updateComment={updateComment} />
+                                                <CommentContent
+                                                    auth={auth}
+                                                    item={itm}
+                                                    deleteComment={deleteComment}
+                                                    isReply={true}
+                                                    displayUpdateInput={displayUpdateInput}
+                                                    updateCommentObj={updateCommentObj}
+                                                    updateComment={updateComment}
+                                                    onHateItem={onHateItem}
+                                                />
                                             </>
                                         ))}
                                     </>

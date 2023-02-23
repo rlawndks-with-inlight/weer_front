@@ -57,7 +57,7 @@ const MItemList = () => {
     const month_list = [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
     const [statisticsType, setStatisticsType] = useState('month')
     const notAddList = [
-        'comment', 'all', 'user_statistics'
+        'comment', 'all', 'user_statistics', 'hate_user', 'hate_comment'
     ]
     useEffect(() => {
         setZColumn(objManagerListContent[`${params.table}`].zColumn ?? {})
@@ -76,6 +76,10 @@ const MItemList = () => {
                 str = `/api/users?page=1&level=25`
             } else if (params.table == 'user') {
                 str = `/api/users?page=1`
+            } else if (params.table == 'hate_comment') {
+                str = `/api/items?table=hate&type=0&order=pk&page=1`
+            } else if (params.table == 'hate_user') {
+                str = `/api/items?table=hate&type=1&order=pk&page=1`
             } else if ((params.table == 'issue' || params.table == 'feature') && params.pk) {
                 str = `/api/items?table=${params.table}&page=1&category_pk=${params.pk}`
             } else if (params.table == 'comment') {
@@ -101,6 +105,7 @@ const MItemList = () => {
                     str += `&user_pk=${auth.pk}`
                 }
             }
+            console.log(str)
             const { data: response } = await axios.get(str);
             setPosts(response.data.data);
             setPageList(range(1, response.data.maxPage));
@@ -119,6 +124,10 @@ const MItemList = () => {
             str = `/api/users?level=25&`
         } else if (params.table == 'user') {
             str = `/api/users?${$('.user-type').val() >= 0 ? `userType=${$('.user-type').val()}&` : ''}${$('.user-level').val() == '#' ? '' : `userLevel=${$('.user-level').val()}&`}`
+        } else if (params.table == 'hate_comment') {
+            str = `/api/items?table=hate&type=0&order=pk&`
+        } else if (params.table == 'hate_user') {
+            str = `/api/items?table=hate&type=1&order=pk&`
         } else if ((params.table == 'issue' || params.table == 'feature') && params.pk) {
             str = `/api/items?table=${params.table}&category_pk=${params.pk}&`
         } else if (params.table == 'comment') {
@@ -209,6 +218,10 @@ const MItemList = () => {
             str = `/api/users?level=25`
         } else if (params.table == 'user') {
             str = `/api/users?level=0`
+        } else if (params.table == 'hate_comment') {
+            str = `/api/items?table=hate&type=0&order=pk`
+        } else if (params.table == 'hate_user') {
+            str = `/api/items?table=hate&type=1&order=pk`
         } else if ((params.table == 'issue' || params.table == 'feature') && params.pk) {
             str = `/api/items?table=${params.table}&category_pk=${params.pk}`
         } else if (params.table == 'all') {

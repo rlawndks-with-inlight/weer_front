@@ -44,6 +44,7 @@ import MChannelEdit from '../pages/Manager/MChannelEdit';
 import Notice from '../pages/User/Notice/Notice';
 import MAlarmEdit from '../pages/Manager/MAlarmEdit';
 import MPopupEdit from '../pages/Manager/MPopupEdit';
+import BlockUserSetting from '../pages/User/Auth/BlockUserSetting';
 
 const zRoute = [
     { link: '/', element: <Home />, title: "홈" },
@@ -51,6 +52,7 @@ const zRoute = [
     { link: '/search', element: <Search />, title: "검색" },
     
     { link: '/appsetting', element: <AppSetting />, title: "앱 세팅" },
+    { link: '/blockusersetting', element: <BlockUserSetting />, title: "차단자설정" },
 
     { link: '/selectissuecategory', element: <SelectIssueCategory />, title: "핵심이슈" },
     { link: '/selectfeaturecategory', element: <SelectFeatureCategory />, title: "특징주" },

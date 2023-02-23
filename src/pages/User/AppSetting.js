@@ -81,14 +81,23 @@ const AppSetting = () => {
                         <Content onClick={() => { navigate('/resign') }} style={{ cursor: 'pointer' }}>
                             <div>회원탈퇴</div>
                             <div />
-
                         </Content>
                     </>
                     :
                     <>
                     </>
                 }
-
+                {localStorage.getItem('auth') ?
+                    <>
+                        <Content onClick={() => { navigate('/blockusersetting') }} style={{ cursor: 'pointer' }}>
+                            <div>차단자설정</div>
+                            <div />
+                        </Content>
+                    </>
+                    :
+                    <>
+                    </>
+                }
             </Wrappers>
         </>
     )
