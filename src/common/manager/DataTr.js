@@ -29,7 +29,7 @@ max-width:300px;
 const ItemTypes = { CARD: 'card' }
 
 const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTopItem, changeItemSequence, deleteItem }) => {
-    const notUseCard = ['all', 'user_statistics','hate_comment','hate_user','hate'];
+    const notUseCard = ['all', 'user_statistics', 'hate_comment', 'hate_user', 'hate'];
     const navigate = useNavigate();
     const ref = useRef(null)
     const [status, setStatus] = useState(data?.status);
@@ -156,7 +156,7 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
     }
     return (
         <>
-            <Tr ref={notUseCard.includes(schema)?null:ref} data-handler-id={handlerId} className='manager-data-tr'>
+            <Tr ref={notUseCard.includes(schema) ? null : ref} data-handler-id={handlerId} className='manager-data-tr'>
                 {column.map((col, index) => (
                     <>
                         {col.type == 'text' ?
@@ -274,7 +274,7 @@ const DataTr = ({ id, data, index, moveCard, column, schema, list, sort, opTheTo
                             :
                             <>
                             </>}
-                            {col.type == 'master_edit' ?
+                        {col.type == 'master_edit' ?
                             <>
                                 <Td style={{ width: `${col.width}%`, fontSize: '20px' }}>
                                     <BiEditAlt style={{ cursor: 'pointer', color: '#546de5' }} onClick={() => navigate(`/manager/edit/master/${data.pk}`)} />

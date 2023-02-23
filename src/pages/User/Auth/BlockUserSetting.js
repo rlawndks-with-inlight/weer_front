@@ -30,19 +30,19 @@ const BlockUserSetting = () => {
         const { data: response } = await axios.get('/api/gethatelist');
         setHateList(response?.data);
     }
-    const deleteBlockUser =async  (item) =>{
-        if(window.confirm(`${item?.nickname} 유저 차단을 취소 하시겠습니까?`)){
-            const {data:response} = await axios.post('/api/deletehate',{
-                pk:item?.pk
+    const deleteBlockUser = async (item) => {
+        if (window.confirm(`${item?.nickname} 유저 차단을 취소 하시겠습니까?`)) {
+            const { data: response } = await axios.post('/api/deletehate', {
+                pk: item?.pk
             })
-            if(response?.result<0){
+            if (response?.result < 0) {
                 alert(response?.message);
-            }else{
+            } else {
                 alert('차단 해제가 완료되었습니다.');
-                getblockUsers(); 
+                getblockUsers();
             }
         }
-        
+
     }
     return (
         <>
@@ -52,7 +52,7 @@ const BlockUserSetting = () => {
                     <>
                         <Content>
                             <div>{item?.nickname}</div>
-                            <AiFillDelete style={{color:'red',cursor:'pointer'}} onClick={()=>deleteBlockUser(item)}/>
+                            <AiFillDelete style={{ color: 'red', cursor: 'pointer' }} onClick={() => deleteBlockUser(item)} />
                         </Content>
                     </>
                 ))}
