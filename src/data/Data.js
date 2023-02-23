@@ -236,7 +236,7 @@ export const objManagerListContent = {
         ],
     },
     hate_comment: {
-        breadcrumb: '신고댓글관리',
+        breadcrumb: '신고댓글',
         schema: 'hate',
         zColumn: [
             { name: '신고자아이디', width: '', type: 'text', column: 'user_id' },
@@ -248,7 +248,7 @@ export const objManagerListContent = {
         ],
     },
     hate_user: {
-        breadcrumb: '사용자차단관리',
+        breadcrumb: '사용자차단',
         schema: 'hate',
         zColumn: [
             { name: '차단자아이디', width: '', type: 'text', column: 'u_t_id' },
