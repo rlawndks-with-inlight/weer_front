@@ -153,7 +153,7 @@ const CommentComponent = (props) => {
         for (var i = 0; i < comment_list_desc.length; i++) {
             if (comment_list_desc[i]?.parent_pk != 0) {
                 if (!reply_obj[comment_list_desc[i]?.parent_pk]) {
-                    reply_obj[comment_list_desc[i]?.parent_pk] = [];
+                    reply_obj[comment_list_desc[i]?.parent_pk] = []; 
                 }
                 reply_obj[comment_list_desc[i]?.parent_pk].push(comment_list_desc[i])
             }
