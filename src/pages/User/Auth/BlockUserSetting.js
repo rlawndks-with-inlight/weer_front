@@ -39,7 +39,7 @@ const BlockUserSetting = () => {
                 alert(response?.message);
             }else{
                 alert('차단 해제가 완료되었습니다.');
-                getblockUsers();
+                getblockUsers(); 
             }
         }
         
