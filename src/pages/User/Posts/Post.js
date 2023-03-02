@@ -177,7 +177,6 @@ const Post = (props) => {
         const { data: response } = await axios.post('/api/loginbysns', objs);
         if (response.result > 0) {
             await localStorage.setItem('auth', JSON.stringify(response.data));
-            setAuth(response.data);
         } else {
             //alert(response.message);
         }

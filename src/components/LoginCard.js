@@ -11,7 +11,6 @@ import apple from '../assets/images/icon/apple.png'
 import appleDark from '../assets/images/icon/apple-dark.png'
 import { WrapperForm, CategoryName, Input, Button, FlexBox, SnsLogo } from './elements/AuthContentTemplete';
 import { KAKAO_AUTH_URL } from '../data/Data';
-import NaverLogin from '../pages/User/Auth/NaverLogin';
 import Loading from './Loading';
 
 const LoginCard = () => {
