@@ -28,7 +28,6 @@ const CommentInputContent = (props) => {
 }
 const CommentContent = (props) => {
     const { item, deleteComment, isReply, displayReplyInput, displayUpdateInput, updateCommentObj, updateComment, auth, onHateItem } = props;
-
     return (
         <>
             <div style={{ borderBottom: `1px solid ${theme.color.font3}`, display: 'flex', padding: '16px', fontSize: theme.size.font4, width: `${isReply ? '80%' : '90%'}`, margin: `${isReply ? '0 0 0 auto' : '0'}` }}>
@@ -54,30 +53,29 @@ const CommentContent = (props) => {
                         {!isReply && ((localStorage.getItem('auth') && JSON.parse(localStorage.getItem('auth'))?.user_level >= 0) || (auth && auth?.user_level >= 0)) ?
                             <>
                                 <div style={{ marginRight: '6px', cursor: 'pointer' }} onClick={displayReplyInput}>답글</div>
+
                             </>
                             :
                             <>
                             </>}
                         {(JSON.parse(localStorage.getItem('auth'))?.pk == item.user_pk || JSON.parse(localStorage.getItem('auth'))?.user_level >= 40) || (auth?.pk == item.user_pk || auth?.user_level >= 40) ?
                             <>
-
                                 <div style={{ marginRight: '6px', cursor: 'pointer' }} onClick={() => displayUpdateInput(item.pk)}>수정</div>
                                 <div style={{ cursor: 'pointer' }} onClick={() => deleteComment(item.pk)}>지우기</div>
                             </>
                             :
                             <>
-                                {((localStorage.getItem('auth') && JSON.parse(localStorage.getItem('auth'))?.user_level >= 0) || (auth && auth?.user_level >= 0)) ?
-                                    <>
-                                        <div style={{ marginRight: '6px', cursor: 'pointer' }} onClick={() => { if (window.confirm('신고 하시겠습니까?')) { onHateItem(0, item.pk) } }}>신고</div>
-                                        <div style={{ marginRight: '6px', cursor: 'pointer' }} onClick={() => { if (window.confirm(`${item?.nickname} 유저를 차단 하시겠습니까?`)) { onHateItem(1, item.user_pk) } }}>사용자차단</div>
-                                    </>
-                                    :
-                                    <>
-                                    </>}
 
                             </>
                         }
-
+                        {item?.user_pk != JSON.parse(localStorage.getItem('auth'))?.pk && (JSON.parse(localStorage.getItem('auth'))?.user_level >= 0) ?
+                            <>
+                                <div style={{ marginRight: '6px', cursor: 'pointer' }} onClick={() => { if (window.confirm('신고 하시겠습니까?')) { onHateItem(0, item.pk) } }}>신고</div>
+                                <div style={{ marginRight: '6px', cursor: 'pointer' }} onClick={() => { if (window.confirm(`${item?.nickname} 유저를 차단 하시겠습니까?`)) { onHateItem(1, item.user_pk) } }}>사용자차단</div>
+                            </>
+                            :
+                            <>
+                            </>}
                     </div>
                 </div>
             </div>
@@ -153,7 +151,7 @@ const CommentComponent = (props) => {
         for (var i = 0; i < comment_list_desc.length; i++) {
             if (comment_list_desc[i]?.parent_pk != 0) {
                 if (!reply_obj[comment_list_desc[i]?.parent_pk]) {
-                    reply_obj[comment_list_desc[i]?.parent_pk] = []; 
+                    reply_obj[comment_list_desc[i]?.parent_pk] = [];
                 }
                 reply_obj[comment_list_desc[i]?.parent_pk].push(comment_list_desc[i])
             }

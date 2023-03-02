@@ -283,7 +283,12 @@ const Post = (props) => {
                               }}/>
                         </ViewerContainer>
                         {/* <ZoomButton/> */}
-                        <CommentComponent addComment={addComment} data={comments} fetchComments={fetchComments} updateComment={updateComment} auth={auth} />
+                        <CommentComponent 
+                        addComment={addComment} 
+                        data={comments} 
+                        fetchComments={fetchComments} 
+                        updateComment={updateComment} 
+                        auth={auth} />
 
                     </>}
 
