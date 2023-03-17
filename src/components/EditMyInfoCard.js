@@ -27,7 +27,7 @@ font-size:1rem;
 `
 const EditMyInfoCard = () => {
     const navigate = useNavigate();
-    const [typeNum, setTypeNum] = useState(0);
+    const [typeNum, setTypeNum] = useState(2);
 
     const [myPk, setMyPk] = useState(0);
     const [myId, setMyId] = useState("");
@@ -45,14 +45,9 @@ const EditMyInfoCard = () => {
     const [isCoinside, setIsCoinside] = useState(false);
     const [isSendSms, setIsSendSms] = useState(false)
     const [fixPhoneNumber, setFixPhoneNumber] = useState("")
-    const [zType, setZType] = useState([ { title: "닉네임 변경", type:1 }, { title: "비밀번호 변경", type:2 }, { title: "전화번호 변경", type:3 }])
+    const [zType, setZType] = useState([ { title: "비밀번호 변경", type:2 },{ title: "프로필 변경", type:0 }, { title: "닉네임 변경", type:1 }, { title: "전화번호 변경", type:3 }])
     useEffect(() => {
-        if(localStorage.getItem('is_ios')){
-            setTypeNum(1)
-        }else{
-            setZType([...[{ title: "프로필 변경", type:0 }],...zType])
-            setTypeNum(0);
-        }
+        setTypeNum(2);
         let auth = JSON.parse(localStorage.getItem('auth'))
         if (auth.profile_img) {
             setUrl(auth.profile_img.substring(0, 4) == "http" ? auth.profile_img : backUrl + auth.profile_img)
@@ -199,7 +194,12 @@ const EditMyInfoCard = () => {
                 <SelectType className="select-type">
                     {zType.map((item, idx) => (
                         <>
+                        {localStorage.getItem('is_ios') && item?.type==0 ?<>
+                        </>
+                        :
+                        <>
                             <Type style={{ borderBottom: `4px solid ${typeNum == item?.type ? theme.color.background1 : '#fff'}`, color: `${typeNum == item?.type ? theme.color.background1 : (localStorage.getItem('dark_mode') ? '#fff' : '#ccc')}` }} onClick={() => { onChangeTypeNum(item?.type) }}>{item.title}</Type>
+                        </>}
                         </>
                     ))}
 

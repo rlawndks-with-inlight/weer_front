@@ -65,6 +65,7 @@ const zRoute = [
     { link: '/oneeventlist', element: <OneEventList />, title: "하루1종목" },
     { link: '/noticelist', element: <NoticeList />, title: "공지사항" },
     { link: '/master/:pk', element: <Master />, title: "전문가칼럼" },
+    { link: '/master/:pk/:type', element: <Master />, title: "전문가칼럼" },
 
     { link: '/login', element: <Login />, title: "로그인" },
     { link: '/mypage', element: <MyPage />, title: "마이페이지" },

@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from '../assets/images/test/logo.svg';
 import kakao from '../assets/images/icon/kakao.png'
+import kakaoFotterIcon from '../assets/images/test/kakao-footer.png'
 const Wrappers = styled.footer`
     display:flex;
     flex-direction:column;
@@ -19,6 +20,23 @@ const Wrappers = styled.footer`
         font-size:${props => props.theme.size.font4};
 
     }
+`
+const KakaoImg = styled.img`
+width: 100px;
+cursor: pointer;
+margin-right:8px;
+animation: fadein 0.5s;
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@media screen and (max-width:650px) {
+    margin: 0 0 0 auto;
+}
 `
 const Post = styled.div`
 cursor:pointer;
@@ -66,6 +84,7 @@ const Footer = () => {
                         </div>
                         {/* <div style={{ marginTop: '8px' }}>서울시 마포구 양화로 127 7층(첨단빌딩)</div> */}
                         <Flex style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                            
                             <Flex>
 
                                 <div style={{ marginRight: '16px' }}>Email&nbsp;&nbsp;First_partner@naver.com</div>
@@ -75,6 +94,7 @@ const Footer = () => {
                                 <img src={kakao} />
                                 <div></div>
                             </div> */}
+                            <KakaoImg src={kakaoFotterIcon} style={{ display: `flex` }} onClick={() => window.open('http://pf.kakao.com/_xgKMUb/chat')} />
                         </Flex>
                     </Wrappers>
                 </>

@@ -108,8 +108,10 @@ const MyPage = () => {
         <>
             <Wrappers className="wrapper" style={{ maxWidth: '800px' }}>
                 <Title>마이페이지</Title>
-                <MdEdit style={{ margin: '2rem 0 1rem auto', color: `${theme.color.font2}`, fontSize: '24px', cursor: 'pointer' }} onClick={() => navigate('/editmyinfo')} />
-
+                <div style={{ margin: '2rem 0 1rem auto', color: `${theme.color.font2}`, fontSize: theme.size.font3, cursor: 'pointer', fontWeight: 'bold', display: 'flex', alignItems: 'center' }} onClick={() => { navigate('/editmyinfo') }}>
+                    <div style={{ paddingRight: '8px' }}>내정보 수정하기</div>
+                    <MdEdit />
+                </div>
                 <MyCard>
                     <ProfileContainer>
                         <img src={auth?.profile_img ? auth?.profile_img.substring(0, 4) == "http" ? auth?.profile_img : backUrl + auth?.profile_img : defaultImg} alt="#" onError={defaultImg} style={{ height: '125px', width: '125px', borderRadius: '50%', background: '#fff', margin: 'auto' }} />

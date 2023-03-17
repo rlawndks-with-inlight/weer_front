@@ -35,21 +35,21 @@ const Master = () => {
     const params = useParams();
     const { state } = useLocation();
     const [posts, setPosts] = useState([]);
-    const [typeNum, setTypeNum] = useState(1)
+    const [typeNum, setTypeNum] = useState(undefined)
     const [subTypeNum, setSubTypeNum] = useState(0)
     const [master, setMaster] = useState({})
     useEffect(() => {
         async function fetchPosts() {
             const {data:master_response} = await axios.get(`/api/item?table=user&pk=${params.pk}`);
             setMaster(master_response?.data)
-            const { data: response } = await axios.get(`/api/items?table=strategy&user_pk=${params.pk}`);
-            setPosts(response.data)
+            changeType(params?.type??1);
         }
         fetchPosts();
     }, [])
 
     const changeType = async (num) => {
         setTypeNum(num);
+
         let str = "";
         if (num == 1) {
             str = `/api/items?table=strategy&user_pk=${params.pk}`
@@ -64,6 +64,7 @@ const Master = () => {
             }
             setPosts(list);
         }
+        window.history.pushState(null, null, `/master/${params.pk}/${num}`)
     }
     return (
         <>

@@ -163,7 +163,7 @@ const Home = () => {
 
                         </Content>
                         <Title className='pointer' link={'/onewordlist'}>하루 1단어</Title>
-                        <Content onClick={() => { navigate(`/post/oneword/${oneWord?.pk}`) }} className='pointer' style={{ minHeight: '40px' }}>
+                        <Content onClick={() => { navigate(`/post/oneword/${oneWord?.pk}`) }} className='pointer' style={{ minHeight: '40px',marginBottom:'2rem' }}>
                             <div >{oneWord?.title ?? ""}</div>
                             <div style={{ fontSize: `${theme.size.font4}`, padding: '6px 0 0 0' }}>{oneWord?.hash ?? ""}</div>
                         </Content>
