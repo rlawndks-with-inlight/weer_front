@@ -94,7 +94,7 @@ const Footer = () => {
                                 <img src={kakao} />
                                 <div></div>
                             </div> */}
-                            <KakaoImg src={kakaoFotterIcon} style={{ display: `flex` }} onClick={() => window.open('http://pf.kakao.com/_xgKMUb/chat')} />
+                            <KakaoImg src={kakaoFotterIcon} style={{ display: `flex` }} onClick={() => window.open('http://pf.kakao.com/_ERhKxj/chat')} />
                         </Flex>
                     </Wrappers>
                 </>

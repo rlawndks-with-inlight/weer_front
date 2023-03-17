@@ -168,7 +168,8 @@ const Headers = () => {
   const [isAlarm, setIsAlarm] = useState(false);
   const [lastNoticePk, setLastNoticePk] = useState(0);
   const [lastAlarmePk, setLastAlarmPk] = useState(0);
-  const [popupList, setPopupList] = useState([])
+  const [popupList, setPopupList] = useState([]);
+  const [uriQueue, setUriQueue] = useState([]);
   useEffect(() => {
 
 
@@ -200,13 +201,21 @@ const Headers = () => {
       fetchPopup();
     }
     insertVisit(location.pathname);
-    
   }, [location])
+  useEffect(()=>{
+    if (uriQueue[uriQueue.length - 1]) {
+      if (uriQueue[uriQueue.length - 1] != location.pathname) {
+        setUriQueue([...uriQueue, location.pathname]);
+      }
+    } else {
+      setUriQueue([...uriQueue, location.pathname]);
+    }
+  },[location.pathname])
   const insertVisit = async (pathname) => {
-    const {data : response} = await axios.post('/api/insertvisit',{
-      pathname:pathname
+    const { data: response } = await axios.post('/api/insertvisit', {
+      pathname: pathname
     });
-    if(response?.result<0){
+    if (response?.result < 0) {
       console.log(response?.message);
     }
   }
@@ -325,7 +334,12 @@ const Headers = () => {
     }
   }
   const onClickNavigateBefore = () => {
-    if (document.referrer) {
+    if (uriQueue.length > 1) {
+      let uri_queue = [...uriQueue];
+      let bafore_link = uriQueue[uriQueue.length-2];
+      uri_queue.pop();
+      uri_queue.pop();
+      setUriQueue(uri_queue);
       navigate(-1);
     } else {
       navigate('/home');
