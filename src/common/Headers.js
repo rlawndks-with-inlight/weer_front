@@ -199,7 +199,17 @@ const Headers = () => {
     if (location.pathname == '/' || location.pathname == '/home') {
       fetchPopup();
     }
+    insertVisit(location.pathname);
+    
   }, [location])
+  const insertVisit = async (pathname) => {
+    const {data : response} = await axios.post('/api/insertvisit',{
+      pathname:pathname
+    });
+    if(response?.result<0){
+      console.log(response?.message);
+    }
+  }
   async function fetchPopup() {
     const { data: response } = await axios.get('/api/items?table=popup&status=1')
     setPopupList(response?.data ?? []);

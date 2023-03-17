@@ -176,7 +176,7 @@ const Notice = () => {
                             <Viewer initialValue={post?.note ?? `<body></body>`} 
                             customHTMLRenderer={{
                                 htmlBlock: {
-                                  iframe(node: any) {
+                                  iframe(node) {
                                     return [
                                       {
                                         type: "openTag",
