@@ -226,7 +226,7 @@ const MNoticeEdit = () => {
                                         }}
                                         customHTMLRenderer={{
                                             htmlBlock: {
-                                                iframe(node: any) {
+                                                iframe(node) {
                                                     console.log(node)
                                                     return [
                                                         {

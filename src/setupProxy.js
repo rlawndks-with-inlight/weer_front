@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://localhost:8001',
+      target: 'https://purplevery6.cafe24.com:8443',
       changeOrigin: true,
       
     })

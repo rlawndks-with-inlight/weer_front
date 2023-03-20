@@ -175,12 +175,16 @@ const MItemEdit = () => {
                     if (response.result > 0) {
                         alert('성공적으로 저장되었습니다.')
                         navigate(-1);
+                    }else{
+                        alert(response?.message);
                     }
                 } else {
                     const { data: response } = await axios.post(`/api/additem`, formData)
                     if (response.result > 0) {
                         alert('성공적으로 추가 되었습니다.');
                         navigate(-1);
+                    }else{
+                        alert(response?.message);
                     }
 
                 }

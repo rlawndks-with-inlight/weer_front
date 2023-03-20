@@ -51,6 +51,8 @@ const MIssueCategoryEdit = () => {
                     if (response.result > 0) {
                         alert('성공적으로 수정되었습니다.');
                         window.history.back();
+                    }else{
+                        alert(response?.message);
                     }
                 } else {
                     const { data: response } = await axios.post('/api/addissuecategory', formData);
@@ -58,6 +60,8 @@ const MIssueCategoryEdit = () => {
                         alert('성공적으로 추가되었습니다.');
                         window.history.back();
 
+                    }else{
+                        alert(response?.message);
                     }
                 }
             }
