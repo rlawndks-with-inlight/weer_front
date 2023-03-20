@@ -106,6 +106,10 @@ const Post = (props) => {
                         navigate(-1);
                     }
                 }
+                if(!response?.data){
+                    alert('존재하지 않는 게시물 입니다.');
+                    navigate('/home');
+                }
                 let obj = response.data ?? {};
                 if(obj?.note && (typeof obj?.note == 'string')){
                     obj.note = obj?.note.replaceAll('<p><br></p>', '<br>');
