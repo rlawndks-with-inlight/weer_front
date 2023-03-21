@@ -132,8 +132,11 @@ const Notice = () => {
         })
 
         if (response.result > 0) {
-            $(`.comment-${parent_pk ?? 0}`).val("");
+            $(`.comment-${parent_pk ?? 0}`).val("")
             fetchComments();
+            if(response.result==150){
+                alert(response.message);
+            }
         } else {
             alert(response.message);
         }

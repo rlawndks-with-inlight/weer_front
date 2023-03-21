@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Title, ViewerContainer, Wrappers } from "../../../components/elements/UserContentTemplete";
 import { axiosInstance, backUrl } from "../../../data/Data";
@@ -8,14 +8,16 @@ import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import $ from 'jquery'
 import styled from "styled-components";
 import { BsFillShareFill } from 'react-icons/bs';
-import { commarNumber, categoryToNumber, getViewerAlignByNumber, getViewerMarginByNumber } from "../../../functions/utils";
+import { commarNumber, categoryToNumber, getViewerAlignByNumber, getViewerMarginByNumber, settingQlEditor } from "../../../functions/utils";
 import CommentComponent from "../../../components/CommentComponent";
 import { Viewer } from '@toast-ui/react-editor';
 import Loading from '../../../components/Loading'
 import MetaTag from "../../../components/MetaTag";
 import ScrollToTopButton from "../../../components/ScrollToTopButton";
 import ZoomButton from "../../../components/ZoomButton";
-
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css';
+import './post.css';
 const Progress = styled.progress`
 
 appearance: none;
@@ -49,7 +51,8 @@ const Post = (props) => {
     const [loading, setLoading] = useState(false)
     const [postPk, setPostPk] = useState(0);
     const [postTable, setPostTable] = useState('');
-    const [loadingText, setLoadingText] = useState("")
+    const [loadingText, setLoadingText] = useState("");
+    const viewerRef = useRef();
     const returnTitle = (ttl) => {
         if (postTable == 'notice') {
             return "weare-first - 위아 : 퍼스트 파트너스 - 공지사항 / " + ttl;
@@ -78,9 +81,9 @@ const Post = (props) => {
                 // if (obj['is_ios']) {
                 //     await localStorage.setItem('is_ios', '1');
                 // }
-                if(obj?.data?.id){
+                if (obj?.data?.id) {
                     await onLoginBySns(obj.data);
-                }else{
+                } else {
                     alert("로그인 해주세요.");
                     navigate('/login');
                 }
@@ -106,13 +109,15 @@ const Post = (props) => {
                         navigate(-1);
                     }
                 }
-                if(!response?.data){
+                if (!response?.data) {
                     alert('존재하지 않는 게시물 입니다.');
                     navigate('/home');
                 }
                 let obj = response.data ?? {};
-                if(obj?.note && (typeof obj?.note == 'string')){
+                if (obj?.note && (typeof obj?.note == 'string')) {
+                    obj.note = obj?.note.replaceAll('youtube.com/embed', 'youtube-nocookie.com/embed');
                     obj.note = obj?.note.replaceAll('<p><br></p>', '<br>');
+                    obj.note = obj?.note.replaceAll('<img ', '<img style="width:100%;" ');
                     obj.note = obj?.note.replaceAll('http://localhost:8001', backUrl);
                     obj.note = obj?.note.replaceAll('https://weare-first.com:8443', backUrl);
                 }
@@ -139,13 +144,15 @@ const Post = (props) => {
                     $('.footer').addClass("dark-mode");
                     $('.viewer > div > div > div > p').addClass("dark-mode");
                 }
+                $('div.viewer > div > div > div.ql-editor').addClass('none-padding');
+
             } catch (err) {
                 if (err?.message?.includes('timeout of')) {
                     if (window.confirm('요청시간이 초과되었습니다. (인터넷 환경을 확인해주시기 바랍니다.)')) {
 
                     }
-                }else{
-                    if(window.confirm(err?.message)){
+                } else {
+                    if (window.confirm(err?.message)) {
                     }
                 }
             }
@@ -209,6 +216,9 @@ const Post = (props) => {
         if (response.result > 0) {
             $(`.comment-${parent_pk ?? 0}`).val("")
             fetchComments();
+            if(response.result==150){
+                alert(response.message);
+            }
         } else {
             alert(response.message)
         }
@@ -247,7 +257,7 @@ const Post = (props) => {
                 <MetaTag title={returnTitle(post?.title ?? "")} />
                 {loading ?
                     <>
-                        <Loading text={loadingText}/>
+                        <Loading text={loadingText} />
                     </>
                     :
                     <>
@@ -263,35 +273,22 @@ const Post = (props) => {
                         <Title not_arrow={true}>{post.title}</Title>
                         <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post.hash}</div>
                         <ViewerContainer className="viewer" style={{ margin: `${getViewerMarginByNumber(post?.note_align)}` }}>
-                            <Viewer initialValue={post?.note ?? `<body></body>`} 
-                            customHTMLRenderer={{
-                                htmlBlock: {
-                                  iframe(node: any) {
-                                    return [
-                                      {
-                                        type: "openTag",
-                                        tagName: "iframe",
-                                        outerNewLine: true,
-                                        attributes: node.attrs,
-                                      },
-                                      { type: "html", content: node.childrenHTML },
-                                      {
-                                        type: "closeTag",
-                                        tagName: "iframe",
-                                        outerNewLine: false,
-                                      },
-                                    ];
-                                  },
-                                },
-                              }}/>
+                            {/* <Viewer initialValue={post?.note ?? `<body></body>`} /> */}
+                            <ReactQuill
+                                value={post?.note ?? `<body></body>`}
+                                readOnly={true}
+                                theme={"bubble"}
+                                bounds={'.app'}
+                                ref={viewerRef}
+                            />
                         </ViewerContainer>
                         {/* <ZoomButton/> */}
-                        <CommentComponent 
-                        addComment={addComment} 
-                        data={comments} 
-                        fetchComments={fetchComments} 
-                        updateComment={updateComment} 
-                        auth={auth} />
+                        <CommentComponent
+                            addComment={addComment}
+                            data={comments}
+                            fetchComments={fetchComments}
+                            updateComment={updateComment}
+                            auth={auth} />
 
                     </>}
 

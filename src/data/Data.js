@@ -304,7 +304,17 @@ export const objManagerListContent = {
             { name: '수정', width: 8, type: 'edit', column: 'edit' },
             { name: '삭제', width: 8, type: 'delete', column: 'delete' }
         ],
-    }
+    },
+    prohibit_comment: {
+        breadcrumb: '금지단어',
+        schema: 'prohibit_comment',
+        zColumn: [
+            { name: '단어', width: 38, type: 'text', column: 'note' },
+            { name: '생성시간', width: 38, type: 'text', column: 'date' },
+            { name: '수정', width: 12, type: 'edit', column: 'edit' },
+            { name: '삭제', width: 12, type: 'delete', column: 'delete' }
+        ],
+    },
 }
 export const getManagerListApi = (table, num) => {
     let str = "";

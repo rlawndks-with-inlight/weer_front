@@ -45,6 +45,7 @@ import Notice from '../pages/User/Notice/Notice';
 import MAlarmEdit from '../pages/Manager/MAlarmEdit';
 import MPopupEdit from '../pages/Manager/MPopupEdit';
 import BlockUserSetting from '../pages/User/Auth/BlockUserSetting';
+import MProhibitCommentEdit from '../pages/Manager/MProhibitCommentEdit';
 
 const zRoute = [
     { link: '/', element: <Home />, title: "홈" },
@@ -90,6 +91,7 @@ const zRoute = [
     { link: '/manager/edit/notice/:pk', element: <MNoticeEdit />, title: "공지사항관리" },
     { link: '/manager/edit/alarm/:pk', element: <MAlarmEdit />, title: "알람관리" },
     { link: '/manager/edit/popup/:pk', element: <MPopupEdit />, title: "팝업관리" },
+    { link: '/manager/edit/prohibit_comment/:pk', element: <MProhibitCommentEdit />, title: "금지단어관리" },
     { link: '/manager/edit/issue_category/:pk', element: <MIssueCategoryEdit />, title: "핵심이슈카테고리관리" },
     { link: '/manager/edit/feature_category/:pk', element: <MFeatureCategoryEdit />, title: "특징주카테고리관리" },
     { link: '/manager/edit/setting', element: <MSettingEdit />, title: "환경설정" },

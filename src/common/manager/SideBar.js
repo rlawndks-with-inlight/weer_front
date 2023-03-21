@@ -100,6 +100,7 @@ const SideBar = () => {
         { name: '전문가관리', link: '/manager/list/master', icon: <FaChalkboardTeacher />, level: 40, allow_list: ['/manager/list/master'] },
         { name: '채널관리', link: '/manager/list/channel', icon: <FaChalkboardTeacher />, level: 40, allow_list: ['/manager/list/channel'] },
         { name: '댓글관리', link: '/manager/list/comment', icon: <BiCommentDetail />, level: 40, allow_list: ['/manager/list/comment'] },
+        { name: '금지단어관리', link: '/manager/list/prohibit_comment', icon: <BiCommentDetail />, level: 40, allow_list: ['/manager/list/prohibit_comment'] },
         { name: '게시물관리', link: '/manager/list/all', icon: <MdOutlineStickyNote2 />, level: 40, allow_list: ['/manager/list/all'] },
         //{ name: '댓글관리', link: '/manager/list/comment', icon: <AiOutlineComment />, level: 40, allow_list: ['/manager/list/comment'] },
         { name: '하루1단어', link: '/manager/list/oneword', icon: <WiDayHaze />, level: 30, allow_list: ['/manager/list/oneword'] },

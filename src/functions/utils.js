@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import $ from 'jquery';
 // 웹뷰에서 RN으로 데이터를 보낼때 사용합니다.
 export function sendToRN(num) {
     if (window.ReactNativeWebView) {
@@ -176,4 +176,20 @@ export const getViewerAlignByNumber = (num) =>{
     }else{
         return "center";
     }
+}
+export function base64toFile(base_data, filename) {
+    var arr = base_data.split(','),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n);
+
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename, { type: mime });
+}
+export const settingQlEditor = () => {
+    $('.ql-editor').attr('style', 'max-height:300px !important;min-height:300px !important;overflow-y:scroll !important;');
 }

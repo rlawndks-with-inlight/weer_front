@@ -153,9 +153,27 @@ background-blend-mode: multiply;
 margin: 18px auto;
 
 }
+.viewer > div > div > div.ql-editor > p > a > img{
+    max-width: 1000px !important;
+}
+.viewer > div > div > div.ql-editor > p > img{
+    max-width: 1000px !important;
+}
+.none-padding{
+    padding: 0 !important;
+}
+/* .ql-editor{
+    padding: 0 !important;
+} */
 @media screen and (max-width:1200px) {
     .video-img{
         height: 28.266666666vw;
+    }
+    .viewer > div > div > div.ql-editor > p > a > img{
+        width: 100% !important;
+    }
+    .viewer > div > div > div.ql-editor > p > img{
+        width: 100% !important;
     }
 }
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate, Link, useParams, useLocation } from 'react-router-dom';
 import ManagerWrappers from '../../components/elements/ManagerWrappers';
@@ -9,7 +9,7 @@ import Breadcrumb from '../../common/manager/Breadcrumb';
 import ButtonContainer from '../../components/elements/button/ButtonContainer';
 import AddButton from '../../components/elements/button/AddButton';
 import $ from 'jquery';
-import { addItem, updateItem } from '../../functions/utils';
+import { addItem, base64toFile, settingQlEditor, updateItem } from '../../functions/utils';
 import { Card, Title, Input, Row, Col, Select } from '../../components/elements/ManagerTemplete';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -24,7 +24,11 @@ import { backUrl } from '../../data/Data';
 import { objManagerListContent } from '../../data/Data';
 import { categoryToNumber } from '../../functions/utils';
 import CommentComponent from '../../components/CommentComponent';
-
+import ReactQuill, { Quill } from "react-quill";
+import ImageResize from "quill-image-resize-module-react";
+import "react-quill/dist/quill.snow.css";
+import quillEmoji from "react-quill-emoji";
+import "react-quill-emoji/dist/quill-emoji.css";
 const MNoticeEdit = () => {
     const { pathname } = useLocation();
     const params = useParams();
@@ -36,6 +40,47 @@ const MNoticeEdit = () => {
     const [auth, setAuth] = useState({});
     const [noteFormData] = useState(new FormData());
     const [channelList, setChannelList] = useState([]);
+      const [note, setNote] = useState("");
+    const modules = useMemo(() => ({
+        toolbar: {
+            container: [
+                [
+                    { header: [1, 2, 3, 4, 5, 6] },
+                    { font: [] }
+                ],
+                [{ size: [] }],
+                [{ color: [] }, { background: [] }],
+                ["bold", "italic", "underline", "strike", "blockquote", "regular"],
+                [{ align: [] }],
+                [{ list: "ordered" }, { list: "bullet" }],
+                ["link", "image", "video"],
+                ["emoji"],
+                ["clean"],
+                ["code-block"]
+            ],
+        },
+        "emoji-toolbar": true,
+        "emoji-textarea": true,
+        "emoji-shortname": true
+    }), [])
+    const formats = [
+        'font',
+        'header',
+        'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'list', 'bullet', 'indent',
+        'link', 'image',
+        'align', 'color', 'background',
+    ]
+    Quill.register("modules/imageResize", ImageResize);
+    Quill.register(
+        {
+            "formats/emoji": quillEmoji.EmojiBlot,
+            "modules/emoji-toolbar": quillEmoji.ToolbarEmoji,
+            "modules/emoji-textarea": quillEmoji.TextAreaEmoji,
+            "modules/emoji-shortname": quillEmoji.ShortNameEmoji
+        },
+        true
+    );
     useEffect(() => {
         let authObj = JSON.parse(localStorage.getItem('auth'));
         setAuth(authObj);
@@ -45,15 +90,16 @@ const MNoticeEdit = () => {
                 let obj = response.data??{};
                 $(`.title`).val(response.data.title);
                 $('.note-align').val(response.data.note_align);
-                editorRef.current.getInstance().setHTML(response.data.note.replaceAll('http://localhost:8001', backUrl));
-                editorRef.current.getInstance().setHTML(response.data.note.replaceAll('https://weare-first.com:8443', backUrl));
-
+                obj.note = obj.note.replaceAll('http://localhost:8001', backUrl);
+                obj.note = obj.note.replaceAll('https://weare-first.com:8443', backUrl);
+                setNote(obj.note);
                 $('br').removeClass('ProseMirror-trailingBreak');
             }
         }
         $('div.toastui-editor-defaultUI-toolbar > div:nth-child(4)').append(`<button type="button" class='emoji' aria-label='이모티콘' style='font-size:18px;'>🙂</button>`);
         fetchPost();
         fetchComments();
+        settingQlEditor();
     }, [pathname])
     useEffect(()=>{
         $('html').on('click',function(e) { 
@@ -94,7 +140,7 @@ const MNoticeEdit = () => {
                 title: $('.title').val(),
                 note_align: $('.note-align').val(),
                 want_push: $(`.want-push`).val(),
-                note: editorRef.current.getInstance().getHTML()
+                note: note
             }
             if (params.pk > 0) obj.pk = params.pk;
 
@@ -130,8 +176,11 @@ const MNoticeEdit = () => {
         })
 
         if (response.result > 0) {
-            $(`.comment-${parent_pk??0}`).val("")
+            $(`.comment-${parent_pk ?? 0}`).val("")
             fetchComments();
+            if(response.result==150){
+                alert(response.message);
+            }
         } else {
             alert(response.message)
         }
@@ -195,50 +244,32 @@ const MNoticeEdit = () => {
                             <Col>
                                 <Title>내용</Title>
                                 <div id="editor">
-                                    <Picker onEmojiClick={onEmojiClick} style={{ color: 'red' }} />
-                                    <Editor
-                                        placeholder="내용을 입력해주세요."
-                                        previewStyle="vertical"
-                                        height="600px"
-                                        initialEditType="wysiwyg"
-                                        useCommandShortcut={false}
-                                        useTuiEditorEmoji={true}
-                                        hideModeSwitch={false}
-                                        plugins={[colorSyntax, fontSize]}
-                                        language="ko-KR"
-                                        ref={editorRef}
-                                        onChange={onChangeEditor}
-
-                                        hooks={{
-
-                                            addImageBlobHook: async (blob, callback) => {
-
-                                                noteFormData.append('note', blob);
-                                                const { data: response } = await axios.post('/api/addimage', noteFormData);
-                                                if (response.result > 0) {
-                                                    callback(backUrl + response.data.filename)
-                                                    noteFormData.delete('note');
-                                                } else {
-                                                    noteFormData.delete('note');
-                                                    return;
+                                    <ReactQuill
+                                        modules={modules}
+                                        theme="snow"
+                                        defaultValue={note ?? ""}
+                                        value={note ?? ""}
+                                        onChange={async (e) => {
+                                            try {
+                                                let note = e;
+                                                if (e.includes('<img src="') && e.includes('base64,')) {
+                                                    let base64_list = e.split('<img src="');
+                                                    for (var i = 0; i < base64_list.length; i++) {
+                                                        if (base64_list[i].includes('base64,')) {
+                                                            let img_src = base64_list[i];
+                                                            img_src = await img_src.split(`"></p>`);
+                                                            let base64 = img_src[0];
+                                                            img_src = await base64toFile(img_src[0], 'note.png');
+                                                            let formData = new FormData();
+                                                            await formData.append('note', img_src);
+                                                            const { data: response } = await axios.post('/api/addimageitems', formData);
+                                                            note = await note.replace(base64, `${backUrl + response?.data[0]?.filename}`)
+                                                        }
+                                                    }
                                                 }
-                                            }
-                                        }}
-                                        customHTMLRenderer={{
-                                            htmlBlock: {
-                                                iframe(node) {
-                                                    console.log(node)
-                                                    return [
-                                                        {
-                                                            type: 'openTag',
-                                                            tagName: 'iframe',
-                                                            outerNewLine: true,
-                                                            attributes: node.attrs
-                                                        },
-                                                        { type: 'html', content: node.childrenHTML },
-                                                        { type: 'closeTag', tagName: 'iframe', outerNewLine: true }
-                                                    ];
-                                                }
+                                                setNote(note);
+                                            } catch (err) {
+                                                console.log(err);
                                             }
                                         }}
                                     />

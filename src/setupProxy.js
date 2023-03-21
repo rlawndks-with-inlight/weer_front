@@ -4,10 +4,11 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'https://purplevery6.cafe24.com:8443',
+      target: 'http://localhost:8001',
       changeOrigin: true,
       
     })
   );
 };
-//http://weare-first.com:8001
+//https://purplevery6.cafe24.com:8443
+//http://localhost:8001

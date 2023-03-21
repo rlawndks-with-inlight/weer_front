@@ -86,6 +86,8 @@ const MItemList = () => {
                 str = `/api/items?table=${params.table}&page=1&order=pk`
             } else if (params.table == 'all') {
                 str = `/api/getallposts?page=1&order=date`
+            } else if (params.table == 'prohibit_comment') {
+                str = `/api/items?table=prohibit_comment&page=1&order=pk`
             } else if (params.table == 'user_statistics') {
                 const { data: count_response } = await axios.get('/api/itemcount?table=user');
                 setUserCount(count_response?.data?.count ?? 0);
@@ -105,7 +107,6 @@ const MItemList = () => {
                     str += `&user_pk=${auth.pk}`
                 }
             }
-            console.log(str)
             const { data: response } = await axios.get(str);
             setPosts(response.data.data);
             setPageList(range(1, response.data.maxPage));
@@ -134,6 +135,8 @@ const MItemList = () => {
             str = `/api/items?table=${params.table}&order=pk&`
         } else if (params.table == 'all') {
             str = `/api/getallposts?order=date&`
+        }else if (params.table == 'prohibit_comment') {
+            str = `/api/items?table=prohibit_comment&order=pk&`
         } else if (params.table == 'user_statistics') {
             str = `/api/getuserstatistics?type=${$('.statistics-type').val()}&year=${$('.statistics-year').val()}&month=${$('.statistics-month').val() ?? parseInt(returnMoment().substring(5, 7))}&`
         } else {

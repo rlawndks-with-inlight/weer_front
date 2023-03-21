@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Title, Wrappers, ViewerContainer } from "../../../components/elements/UserContentTemplete";
 import { axiosInstance, backUrl, slideSetting } from "../../../data/Data";
@@ -21,6 +21,9 @@ import MetaTag from "../../../components/MetaTag";
 import { BsFillShareFill } from 'react-icons/bs';
 import ZoomButton from "../../../components/ZoomButton";
 import youtubeIcon from '../../../assets/images/icon/youtube.svg'
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css';
+import './post.css';
 export const Img = styled.div`
 width: 700px;
 height: 525px;
@@ -94,7 +97,7 @@ const Video = () => {
     const [auth, setAuth] = useState({})
     const [loading, setLoading] = useState(false)
     const [loadingText, setLoadingText] = useState("")
-
+    const viewerRef = useRef();
     const settings = {
         infinite: false,
         speed: 500,
@@ -150,6 +153,9 @@ const Video = () => {
                 let obj = response.data.video;
                 obj.link = getIframeLinkByLink(obj.link);
                 if(obj?.note && (typeof obj?.note == 'string')){
+                    obj.note = obj?.note.replaceAll('youtube.com/embed', 'youtube-nocookie.com/embed');
+                    obj.note = obj?.note.replaceAll('<p><br></p>', '<br>');
+                    obj.note = obj?.note.replaceAll('<img ', '<img style="width:100%;" ');
                     obj.note = obj?.note.replaceAll('http://localhost:8001', backUrl);
                     obj.note = obj?.note.replaceAll('https://weare-first.com:8443', backUrl);
                 }
@@ -253,6 +259,9 @@ const Video = () => {
         if (response.result > 0) {
             $(`.comment-${parent_pk ?? 0}`).val("")
             fetchComments();
+            if(response.result==150){
+                alert(response.message);
+            }
         } else {
             alert(response.message)
         }
@@ -322,27 +331,14 @@ const Video = () => {
                         </Iframe>
                         <div style={{ fontSize: `${theme.size.font4}`, color: `${theme.color.font2}` }}>{post?.hash}</div>
                         <ViewerContainer className="viewer" style={{ margin: `${getViewerMarginByNumber(post?.note_align)}` }}>
-                            <Viewer initialValue={post?.note ?? `<body></body>`} 
-                            customHTMLRenderer={{
-                                htmlBlock: {
-                                  iframe(node: any) {
-                                    return [
-                                      {
-                                        type: "openTag",
-                                        tagName: "iframe",
-                                        outerNewLine: true,
-                                        attributes: node.attrs,
-                                      },
-                                      { type: "html", content: node.childrenHTML },
-                                      {
-                                        type: "closeTag",
-                                        tagName: "iframe",
-                                        outerNewLine: false,
-                                      },
-                                    ];
-                                  },
-                                },
-                              }}/>
+                            {/* <Viewer initialValue={post?.note ?? `<body></body>`} /> */}
+                            <ReactQuill
+                                value={post?.note ?? `<body></body>`}
+                                readOnly={true}
+                                theme={"bubble"}
+                                bounds={'.app'}
+                                ref={viewerRef}
+                            />
                         </ViewerContainer>
                         <Title>관련 영상</Title>
                         <Content>

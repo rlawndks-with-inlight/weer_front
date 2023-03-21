@@ -8,7 +8,10 @@ import ThemeCard from "../../../components/ThemeCard";
 import { getIframeLinkByLink } from "../../../functions/utils";
 import { backUrl } from "../../../data/Data";
 import VideoCard from "../../../components/VideoCard";
-
+import MBottomContent from "../../../components/elements/MBottomContent";
+import PageButton from "../../../components/elements/pagination/PageButton";
+import PageContainer from "../../../components/elements/pagination/PageContainer";
+import { range } from "../../../functions/utils";
 
 const Type = styled.div`
 width:50%;
@@ -37,33 +40,43 @@ const Master = () => {
     const [posts, setPosts] = useState([]);
     const [typeNum, setTypeNum] = useState(undefined)
     const [subTypeNum, setSubTypeNum] = useState(0)
-    const [master, setMaster] = useState({})
+    const [master, setMaster] = useState({});
+    const [page, setPage] = useState(1);
+    const [pageList, setPageList] = useState([]);
     useEffect(() => {
-        async function fetchPosts() {
-            const {data:master_response} = await axios.get(`/api/item?table=user&pk=${params.pk}`);
-            setMaster(master_response?.data)
-            changeType(params?.type??1);
-        }
-        fetchPosts();
+
+        getMaster();
     }, [])
+    const getMaster = async () => {
+        const { data: master_response } = await axios.get(`/api/item?table=user&pk=${params.pk}`);
+        setMaster(master_response?.data)
+        changeType(params?.type ?? 1, 1);
+    }
 
-    const changeType = async (num) => {
+    const changeType = async (num, page_num) => {
         setTypeNum(num);
-
+        setPage(page_num);
         let str = "";
         if (num == 1) {
-            str = `/api/items?table=strategy&user_pk=${params.pk}`
+            str = `/api/items?table=strategy&user_pk=${params.pk}&status=1`
+            str += `&page=${page_num}&page_cut=10`
             const { data: response } = await axios.get(str);
-            setPosts(response.data);
+            setPosts(response.data.data);
+            setPageList(range(1, response?.data?.maxPage));
+
         } else {
-            str = `/api/items?table=video&user_pk=${params.pk}`
+            str = `/api/items?table=video&user_pk=${params.pk}&status=1`
+            str += `&page=${page_num}&page_cut=10`
             const { data: response } = await axios.get(str);
-            let list = response.data;
+            let list = response.data.data;
             for (var i = 0; i < list.length; i++) {
                 list[i].link = getIframeLinkByLink(list[i].link);
             }
             setPosts(list);
+            setPageList(range(1, response?.data?.maxPage));
+
         }
+        window.scrollTo(0, 0);
         window.history.pushState(null, null, `/master/${params.pk}/${num}`)
     }
     return (
@@ -77,11 +90,11 @@ const Master = () => {
                     <img style={{ position: 'absolute', bottom: '0', right: '5%', height: '80%' }} alt="#" src={backUrl + master?.profile_img} />
                 </Card2>
                 <SelectType className="select-type">
-                    <Type style={{ borderBottom: `4px solid ${typeNum == 1 ? theme.color.background1 : '#fff'}`, color: `${typeNum == 1 ? theme.color.background1 : '#ccc'}` }} onClick={() => { changeType(1) }}>전문가칼럼</Type>
-                    <Type style={{ borderBottom: `4px solid ${typeNum == 2 ? theme.color.background1 : '#fff'}`, color: `${typeNum == 2 ? theme.color.background1 : '#ccc'}` }} onClick={() => { changeType(2) }}>핵심비디오</Type>
+                    <Type style={{ borderBottom: `4px solid ${typeNum == 1 ? theme.color.background1 : '#fff'}`, color: `${typeNum == 1 ? theme.color.background1 : '#ccc'}` }} onClick={() => { changeType(1, 1) }}>전문가칼럼</Type>
+                    <Type style={{ borderBottom: `4px solid ${typeNum == 2 ? theme.color.background1 : '#fff'}`, color: `${typeNum == 2 ? theme.color.background1 : '#ccc'}` }} onClick={() => { changeType(2, 1) }}>핵심비디오</Type>
                 </SelectType>
                 <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                    {posts.map((item, idx) => (
+                    {posts && posts.map((item, idx) => (
                         <>
                             {typeNum == 1 ?
                                 <>
@@ -97,6 +110,25 @@ const Master = () => {
                         </>
                     ))}
                 </div>
+                <MBottomContent>
+                    <div />
+                    <PageContainer>
+                        <PageButton onClick={() => changeType(typeNum, 1)}>
+                            처음
+                        </PageButton>
+                        {pageList.map((item, index) => (
+                            <>
+                                <PageButton onClick={() => changeType(typeNum, item)} style={{ color: `${page == item ? '#fff' : ''}`, background: `${page == item ? theme.color.background1 : ''}`, display: `${Math.abs(index + 1 - page) > 4 ? 'none' : ''}` }}>
+                                    {item}
+                                </PageButton>
+                            </>
+                        ))}
+                        <PageButton onClick={() => changeType(typeNum, pageList.length ?? 1)}>
+                            마지막
+                        </PageButton>
+                    </PageContainer>
+                    <div />
+                </MBottomContent>
             </Wrappers>
         </>
     )
