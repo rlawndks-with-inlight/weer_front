@@ -22,7 +22,6 @@ const FeatureList = () => {
         fetchPosts(1);
     }, [])
     async function fetchPosts(num) {
-        window.scrollTo(0, 0);
         setPage(num);
         const { data: response } = await axios.get(`/api/items?table=feature&category_pk=${params.pk}&status=1&page=${num}&page_cut=10`);
         window.scrollTo(0, 0);

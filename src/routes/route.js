@@ -46,6 +46,7 @@ import MAlarmEdit from '../pages/Manager/MAlarmEdit';
 import MPopupEdit from '../pages/Manager/MPopupEdit';
 import BlockUserSetting from '../pages/User/Auth/BlockUserSetting';
 import MProhibitCommentEdit from '../pages/Manager/MProhibitCommentEdit';
+import Page404 from '../pages/Page404';
 
 const zRoute = [
     { link: '/', element: <Home />, title: "홈" },
@@ -98,5 +99,6 @@ const zRoute = [
     { link: '/manager/edit/:table/:pk', element: <MItemEdit />, title: "" },
     { link: '/manager/list/:table/:pk', element: <MItemList />, title: "" },
     { link: '/manager/list/:table', element: <MItemList />, title: "" },
+    { link: '*', element: <Page404 />, title: "" },
 ]
 export { zRoute }
