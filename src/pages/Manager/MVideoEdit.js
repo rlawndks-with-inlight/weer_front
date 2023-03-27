@@ -29,11 +29,10 @@ import { objManagerListContent } from '../../data/Data';
 import { categoryToNumber } from '../../functions/utils';
 import CommentComponent from '../../components/CommentComponent';
 import ReactQuill, { Quill } from "react-quill";
-import ImageResize from "quill-image-resize-module-react";
-import "react-quill/dist/quill.snow.css";
 import quillEmoji from "react-quill-emoji";
 import "react-quill-emoji/dist/quill-emoji.css";
-const Font = ReactQuill.Quill.import('formats/font');
+import ImageResize from 'quill-image-resize';
+Quill.register('modules/ImageResize', ImageResize);
 const MVideoEdit = () => {
     const { pathname } = useLocation();
     const params = useParams();
@@ -66,7 +65,10 @@ const MVideoEdit = () => {
         },
         "emoji-toolbar": true,
         "emoji-textarea": true,
-        "emoji-shortname": true
+        "emoji-shortname": true,
+        ImageResize: {
+            parchment: Quill.import('parchment')
+        }
     }), [])
     const formats = [
         'font',

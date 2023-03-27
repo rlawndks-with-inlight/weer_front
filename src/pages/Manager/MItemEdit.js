@@ -28,11 +28,11 @@ import { base64toFile, categoryToNumber, settingQlEditor } from '../../functions
 import CommentComponent from '../../components/CommentComponent';
 import videoPlugin from '@leeonfield/editor-plugin-video';
 import ReactQuill, { Quill } from "react-quill";
-import ImageResize from "quill-image-resize-module-react";
 import "react-quill/dist/quill.snow.css";
 import quillEmoji from "react-quill-emoji";
 import "react-quill-emoji/dist/quill-emoji.css";
-
+import ImageResize from 'quill-image-resize';
+Quill.register('modules/ImageResize', ImageResize);
 const MItemEdit = () => {
     const { pathname } = useLocation();
     const params = useParams();
@@ -77,7 +77,10 @@ const MItemEdit = () => {
         },
         "emoji-toolbar": true,
         "emoji-textarea": true,
-        "emoji-shortname": true
+        "emoji-shortname": true,
+        ImageResize: {
+            parchment: Quill.import('parchment')
+        }
     }), [])
     const formats = [
         'font',

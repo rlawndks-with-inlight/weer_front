@@ -25,10 +25,10 @@ import { objManagerListContent } from '../../data/Data';
 import { categoryToNumber } from '../../functions/utils';
 import CommentComponent from '../../components/CommentComponent';
 import ReactQuill, { Quill } from "react-quill";
-import ImageResize from "quill-image-resize-module-react";
-import "react-quill/dist/quill.snow.css";
 import quillEmoji from "react-quill-emoji";
 import "react-quill-emoji/dist/quill-emoji.css";
+import ImageResize from 'quill-image-resize';
+Quill.register('modules/ImageResize', ImageResize);
 const MNoticeEdit = () => {
     const { pathname } = useLocation();
     const params = useParams();
@@ -59,9 +59,20 @@ const MNoticeEdit = () => {
                 ["code-block"]
             ],
         },
+        
         "emoji-toolbar": true,
         "emoji-textarea": true,
-        "emoji-shortname": true
+        "emoji-shortname": true,
+        ImageResize: {
+            parchment: Quill.import('parchment')
+        },
+        imageCompress: {
+            quality: 0.7, // default
+            maxWidth: 1000, // default
+            maxHeight: 1000, // default
+            imageType: 'image/jpeg', // default
+            debug: true, // default
+        }
     }), [])
     const formats = [
         'font',

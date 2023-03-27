@@ -275,12 +275,14 @@ const Post = (props) => {
                         <ViewerContainer className="viewer" style={{ margin: `${getViewerMarginByNumber(post?.note_align)}` }}>
                             {/* <Viewer initialValue={post?.note ?? `<body></body>`} /> */}
                             <ReactQuill
+                                style={{width:'100%'}}
                                 value={post?.note ?? `<body></body>`}
                                 readOnly={true}
                                 theme={"bubble"}
                                 bounds={'.app'}
                                 ref={viewerRef}
                             />
+                            
                         </ViewerContainer>
                         {/* <ZoomButton/> */}
                         <CommentComponent

@@ -160,6 +160,26 @@ margin: 18px auto;
     max-width: 1000px !important;
     height: auto !important;
 }
+.viewer > div > div > div.ql-editor > h5 > span > img{
+    max-width: 1000px !important;
+    height: auto !important;
+}
+.viewer > div > div > div.ql-editor > h4 > span > img{
+    max-width: 1000px !important;
+    height: auto !important;
+}
+.viewer > div > div > div.ql-editor > h3 > span > img{
+    max-width: 1000px !important;
+    height: auto !important;
+}
+.viewer > div > div > div.ql-editor > h2 > span > img{
+    max-width: 1000px !important;
+    height: auto !important;
+}
+.ql-editor > span > img{
+    max-width: 1000px !important;
+    height: auto !important;
+}
 .none-padding{
     padding: 0 !important;
 }
@@ -174,6 +194,21 @@ margin: 18px auto;
         width: 100% !important;
     }
     .viewer > div > div > div.ql-editor > p > img{
+        width: 100% !important;
+    }
+    .viewer > div > div > div.ql-editor > h5 > span > img{
+        width: 100% !important;
+    }
+    .viewer > div > div > div.ql-editor > h4 > span > img{
+        width: 100% !important;
+    }
+    .viewer > div > div > div.ql-editor > h3 > span > img{
+        width: 100% !important;
+    }
+    .viewer > div > div > div.ql-editor > h2 > span > img{
+        width: 100% !important;
+    }
+    .ql-editor > span > img{
         width: 100% !important;
     }
 }
