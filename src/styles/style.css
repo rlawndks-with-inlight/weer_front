@@ -158,6 +158,7 @@ margin: 18px auto;
 }
 .viewer > div > div > div.ql-editor > p > img{
     max-width: 1000px !important;
+    height: auto !important;
 }
 .none-padding{
     padding: 0 !important;

@@ -61,7 +61,7 @@ const CommentContent = (props) => {
                         {(JSON.parse(localStorage.getItem('auth'))?.pk == item.user_pk || JSON.parse(localStorage.getItem('auth'))?.user_level >= 40) || (auth?.pk == item.user_pk || auth?.user_level >= 40) ?
                             <>
                                 <div style={{ marginRight: '6px', cursor: 'pointer' }} onClick={() => displayUpdateInput(item.pk)}>수정</div>
-                                <div style={{ cursor: 'pointer' }} onClick={() => deleteComment(item.pk)}>지우기</div>
+                                <div style={{ marginRight: '6px', cursor: 'pointer' }} onClick={() => deleteComment(item.pk)}>지우기</div>
                             </>
                             :
                             <>
